@@ -137,6 +137,14 @@
                                     </select>
                                 </div>
                             </div>
+                            <div>
+                                <label class="block text-[10px] text-slate-400 font-bold uppercase mb-1">आउटपुट फॉरमॅट</label>
+                                <select id="formatSelect" class="w-full px-3 py-2 bg-white border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-indigo-500 outline-none">
+                                    <option value="jpeg">JPEG / JPG</option>
+                                    <option value="png">PNG</option>
+                                </select>
+                            </div>
+                            <p id="sizeWarning" class="hidden text-[11px] text-amber-700 bg-amber-50 border border-amber-200 rounded-lg px-3 py-2"></p>
                         </div>
 
                         <!-- Bg color options -->
@@ -223,6 +231,8 @@
         const resultBox = document.getElementById('resultBox');
         const newFileSize = document.getElementById('newFileSize');
         const downloadBtn = document.getElementById('downloadBtn');
+        const formatSelect = document.getElementById('formatSelect');
+        const sizeWarning = document.getElementById('sizeWarning');
 
         let originalImg = new Image();
         let loadedFile = null;
@@ -352,6 +362,7 @@
         function drawToCanvas(canvas, ctx, w, h) {
             canvas.width = w;
             canvas.height = h;
+            ctx.clearRect(0, 0, w, h);
 
             if (changeBg.checked) {
                 ctx.fillStyle = bgColor.value;
@@ -370,9 +381,13 @@
                 const dx = (w - drawW) / 2;
                 const dy = (h - drawH) / 2;
                 ctx.drawImage(originalImg, dx, dy, drawW, drawH);
+            } else if (formatSelect.value === 'png') {
+                // PNG supports transparency, so keep it — don't force a
+                // white fill when the user hasn't asked for a background.
+                ctx.drawImage(originalImg, 0, 0, w, h);
             } else {
-                // No background chosen: fill white first so PNG/WEBP
-                // transparency doesn't turn black when saved as JPEG.
+                // JPEG has no transparency support: fill white first so
+                // PNG/WEBP source transparency doesn't turn black.
                 ctx.fillStyle = '#ffffff';
                 ctx.fillRect(0, 0, w, h);
                 ctx.drawImage(originalImg, 0, 0, w, h);
@@ -392,31 +407,59 @@
             let limitKB = parseFloat(fileSizeVal.value);
             if (fileSizeUnit.value === 'mb') limitKB *= 1024;
 
+            const outFormat = formatSelect.value; // 'jpeg' or 'png'
+            const mimeType = outFormat === 'png' ? 'image/png' : 'image/jpeg';
+
             const canvas = document.createElement('canvas');
             const ctx = canvas.getContext('2d');
             drawToCanvas(canvas, ctx, targetW, targetH);
 
-            let minQ = 0.05, maxQ = 0.95, q = 0.8, blob = null;
+            let blob = null;
 
-            for (let i = 0; i < 7; i++) {
-                q = (minQ + maxQ) / 2;
-                blob = await new Promise(res => canvas.toBlob(res, 'image/jpeg', q));
-                if ((blob.size / 1024) < limitKB) minQ = q;
-                else maxQ = q;
-            }
-
-            if ((blob.size / 1024) > limitKB) {
+            if (outFormat === 'png') {
+                // PNG is lossless: there's no "quality" knob to shrink it
+                // with, so if it doesn't already fit the limit we shrink
+                // the actual pixel dimensions instead.
+                blob = await new Promise(res => canvas.toBlob(res, mimeType));
                 let scale = 0.9;
                 while ((blob.size / 1024) > limitKB && scale > 0.2) {
                     drawToCanvas(canvas, ctx, Math.round(targetW * scale), Math.round(targetH * scale));
-                    blob = await new Promise(res => canvas.toBlob(res, 'image/jpeg', 0.45));
+                    blob = await new Promise(res => canvas.toBlob(res, mimeType));
                     scale -= 0.1;
+                }
+            } else {
+                let minQ = 0.05, maxQ = 0.95, q = 0.8;
+                for (let i = 0; i < 7; i++) {
+                    q = (minQ + maxQ) / 2;
+                    blob = await new Promise(res => canvas.toBlob(res, mimeType, q));
+                    if ((blob.size / 1024) < limitKB) minQ = q;
+                    else maxQ = q;
+                }
+                if ((blob.size / 1024) > limitKB) {
+                    let scale = 0.9;
+                    while ((blob.size / 1024) > limitKB && scale > 0.2) {
+                        drawToCanvas(canvas, ctx, Math.round(targetW * scale), Math.round(targetH * scale));
+                        blob = await new Promise(res => canvas.toBlob(res, mimeType, 0.45));
+                        scale -= 0.1;
+                    }
                 }
             }
 
             finalBlob = blob;
             newFileSize.textContent = (blob.size / 1024).toFixed(1) + ' KB';
             resultBox.classList.remove('hidden');
+
+            // Guidance: if we still couldn't get under the requested limit
+            // (very small limit + PNG, or extremely tight KB target), tell
+            // the user plainly instead of silently handing over an
+            // oversized file.
+            if ((blob.size / 1024) > limitKB) {
+                sizeWarning.textContent = 'सूचना: दिलेल्या साईझ मर्यादेत बसवणं शक्य झालं नाही (फोटो/डायमेंशन खूप लहान मर्यादेसाठी मोठे आहेत). ' +
+                    (outFormat === 'png' ? 'PNG ऐवजी JPEG निवडून बघा — ते अधिक कॉम्प्रेस होतं.' : 'डायमेंशन थोडे कमी करून किंवा टारगेट साईझ थोडी वाढवून पुन्हा प्रयत्न करा.');
+                sizeWarning.classList.remove('hidden');
+            } else {
+                sizeWarning.classList.add('hidden');
+            }
 
             // Fix: show the ACTUAL processed result (with background/crop
             // applied) in the preview, instead of leaving the original
@@ -431,10 +474,11 @@
 
         downloadBtn.addEventListener('click', () => {
             if (!finalBlob) return;
+            const ext = formatSelect.value === 'png' ? '.png' : '.jpg';
             const url = URL.createObjectURL(finalBlob);
             const a = document.createElement('a');
             a.href = url;
-            a.download = 'nidar_' + loadedFile.name.split('.')[0] + '.jpg';
+            a.download = 'nidar_' + loadedFile.name.split('.')[0] + ext;
             document.body.appendChild(a);
             a.click();
             document.body.removeChild(a);
