@@ -8,6 +8,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         body { font-family: 'Poppins', sans-serif; }
+        #dropZone.dragover { border-color: #4f46e5; background-color: #eef2ff; }
     </style>
 </head>
 <body class="bg-slate-50 min-h-screen flex flex-col justify-between">
@@ -33,7 +34,7 @@
 
     <!-- App Container -->
     <div class="max-w-7xl mx-auto px-4 py-8 w-full flex-grow grid grid-cols-1 lg:grid-cols-12 gap-8">
-        
+
         <!-- Left Sidebar: Tools Directory (3 Columns) -->
         <aside class="lg:col-span-3 space-y-4">
             <div class="bg-white rounded-2xl border border-slate-200 p-4 shadow-sm">
@@ -69,7 +70,7 @@
 
         <!-- Right Side: Active Tool (9 Columns) -->
         <main class="lg:col-span-9 space-y-6">
-            
+
             <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 sm:p-8 space-y-6">
                 <div>
                     <h2 class="text-2xl font-bold text-slate-800">सुपर इमेज रिसायझर व कॉम्प्रेसर</h2>
@@ -88,10 +89,10 @@
 
                 <!-- Settings & Interactive area (Hidden initially) -->
                 <div id="settingsSection" class="hidden grid grid-cols-1 md:grid-cols-12 gap-8">
-                    
+
                     <!-- Form Controls (7 cols) -->
                     <div class="md:col-span-7 space-y-6">
-                        
+
                         <!-- Dimension selector -->
                         <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-4">
                             <h3 class="text-xs font-bold text-slate-500 uppercase tracking-wider">१. आकारमान सेटिंग (Dimensions)</h3>
@@ -151,6 +152,7 @@
                                     <span class="text-xs text-slate-400">रंग निवडा (उदा. पांढरा / निळा)</span>
                                 </div>
                             </div>
+                            <p class="text-[10px] text-slate-400">टीप: बॅकग्राउंड न जोडल्यास व फाईल PNG/WEBP असल्यास ट्रान्सपरन्सी कायम राहील.</p>
                         </div>
 
                         <!-- Action Button -->
@@ -226,13 +228,58 @@
         let loadedFile = null;
         let finalBlob = null;
 
+        // Store the TRUE pixel dimensions of the loaded image separately
+        // from whatever is currently shown in the width/height inputs.
+        let basePxWidth = 0;
+        let basePxHeight = 0;
+
+        const DPI = 300; // standard conversion reference for print units
+
+        function pxToUnit(px, unit) {
+            if (unit === 'px') return Math.round(px);
+            if (unit === 'in') return +(px / DPI).toFixed(2);
+            if (unit === 'cm') return +((px / DPI) * 2.54).toFixed(2);
+            if (unit === 'mm') return +((px / DPI) * 25.4).toFixed(2);
+            return px;
+        }
+
+        function unitToPx(val, unit) {
+            const num = parseFloat(val) || 0;
+            if (unit === 'px') return num;
+            if (unit === 'in') return num * DPI;
+            if (unit === 'cm') return (num / 2.54) * DPI;
+            if (unit === 'mm') return (num / 25.4) * DPI;
+            return num;
+        }
+
         changeBg.addEventListener('change', () => {
             bgColorContainer.classList.toggle('hidden', !changeBg.checked);
         });
 
+        // ---- File selection (click) ----
         dropZone.addEventListener('click', () => fileInput.click());
         fileInput.addEventListener('change', (e) => {
             if (e.target.files.length > 0) handleFile(e.target.files[0]);
+        });
+
+        // ---- Drag & Drop support (this was missing before) ----
+        ['dragenter', 'dragover'].forEach(evt => {
+            dropZone.addEventListener(evt, (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                dropZone.classList.add('dragover');
+            });
+        });
+        ['dragleave', 'drop'].forEach(evt => {
+            dropZone.addEventListener(evt, (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                dropZone.classList.remove('dragover');
+            });
+        });
+        dropZone.addEventListener('drop', (e) => {
+            const files = e.dataTransfer.files;
+            if (files.length > 0) handleFile(files[0]);
         });
 
         function handleFile(file) {
@@ -256,33 +303,41 @@
             settingsSection.classList.remove('hidden');
             infoOrigDim.textContent = `${originalImg.width} x ${originalImg.height} PX`;
 
-            imgWidth.value = originalImg.width;
-            imgHeight.value = originalImg.height;
+            basePxWidth = originalImg.width;
+            basePxHeight = originalImg.height;
+
             unitSelect.value = 'px';
+            imgWidth.value = basePxWidth;
+            imgHeight.value = basePxHeight;
         };
+
+        // Fix: when the unit dropdown changes, convert the CURRENT pixel
+        // dimensions into the newly selected unit, instead of leaving the
+        // raw number unchanged (which used to make sizes come out wrong).
+        unitSelect.addEventListener('change', () => {
+            if (!originalImg.src) return;
+            const curPxW = unitToPx(imgWidth.value, unitSelect.dataset.prevUnit || 'px');
+            const curPxH = unitToPx(imgHeight.value, unitSelect.dataset.prevUnit || 'px');
+            imgWidth.value = pxToUnit(curPxW, unitSelect.value);
+            imgHeight.value = pxToUnit(curPxH, unitSelect.value);
+            unitSelect.dataset.prevUnit = unitSelect.value;
+        });
+        unitSelect.dataset.prevUnit = 'px';
 
         imgWidth.addEventListener('input', () => {
             if (aspectRatio.checked && originalImg.src) {
-                const r = originalImg.height / originalImg.width;
-                imgHeight.value = Math.round(parseFloat(imgWidth.value) * r);
+                const r = basePxHeight / basePxWidth;
+                const wPx = unitToPx(imgWidth.value, unitSelect.value);
+                imgHeight.value = pxToUnit(wPx * r, unitSelect.value);
             }
         });
         imgHeight.addEventListener('input', () => {
             if (aspectRatio.checked && originalImg.src) {
-                const r = originalImg.width / originalImg.height;
-                imgWidth.value = Math.round(parseFloat(imgHeight.value) * r);
+                const r = basePxWidth / basePxHeight;
+                const hPx = unitToPx(imgHeight.value, unitSelect.value);
+                imgWidth.value = pxToUnit(hPx * r, unitSelect.value);
             }
         });
-
-        function toPx(val, unit) {
-            const dpi = 300; // standard for print
-            const num = parseFloat(val);
-            if (unit === 'px') return num;
-            if (unit === 'in') return num * dpi;
-            if (unit === 'cm') return (num / 2.54) * dpi;
-            if (unit === 'mm') return (num / 25.4) * dpi;
-            return num;
-        }
 
         processBtn.addEventListener('click', async () => {
             if (!loadedFile) return;
@@ -291,8 +346,8 @@
             processBtn.innerHTML = '<span>⏳</span> प्रोसेसिंग सुरू आहे...';
 
             const targetUnit = unitSelect.value;
-            const targetW = Math.round(toPx(imgWidth.value, targetUnit));
-            const targetH = Math.round(toPx(imgHeight.value, targetUnit));
+            const targetW = Math.max(1, Math.round(unitToPx(imgWidth.value, targetUnit)));
+            const targetH = Math.max(1, Math.round(unitToPx(imgHeight.value, targetUnit)));
 
             let limitKB = parseFloat(fileSizeVal.value);
             if (fileSizeUnit.value === 'mb') limitKB *= 1024;
@@ -302,10 +357,14 @@
             canvas.width = targetW;
             canvas.height = targetH;
 
+            // Fix: if no background chosen, fill white by default so PNG/WEBP
+            // transparency doesn't turn black when exported as JPEG.
             if (changeBg.checked) {
                 ctx.fillStyle = bgColor.value;
-                ctx.fillRect(0, 0, targetW, targetH);
+            } else {
+                ctx.fillStyle = '#ffffff';
             }
+            ctx.fillRect(0, 0, targetW, targetH);
 
             ctx.drawImage(originalImg, 0, 0, targetW, targetH);
 
@@ -323,11 +382,8 @@
                 while ((blob.size / 1024) > limitKB && scale > 0.2) {
                     canvas.width = targetW * scale;
                     canvas.height = targetH * scale;
-                    ctx.clearRect(0, 0, canvas.width, canvas.height);
-                    if (changeBg.checked) {
-                        ctx.fillStyle = bgColor.value;
-                        ctx.fillRect(0, 0, canvas.width, canvas.height);
-                    }
+                    ctx.fillStyle = changeBg.checked ? bgColor.value : '#ffffff';
+                    ctx.fillRect(0, 0, canvas.width, canvas.height);
                     ctx.drawImage(originalImg, 0, 0, canvas.width, canvas.height);
                     blob = await new Promise(res => canvas.toBlob(res, 'image/jpeg', 0.45));
                     scale -= 0.1;
