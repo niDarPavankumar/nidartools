@@ -339,6 +339,46 @@
             }
         });
 
+        // Draw the source image onto a canvas of size (w x h).
+        // Fix: when a solid background is requested, the image is drawn in
+        // "contain" mode — scaled to fit fully inside the frame while keeping
+        // its own aspect ratio — so the background colour is actually visible
+        // in the leftover space (top/bottom or left/right bars). Previously
+        // the image was always stretched to cover the whole canvas, which
+        // completely hid the background colour no matter what was chosen.
+        // When no background is requested, the image still stretches to
+        // exactly fill the target width/height (old behaviour, e.g. for
+        // plain resize/compress use where an exact custom size is wanted).
+        function drawToCanvas(canvas, ctx, w, h) {
+            canvas.width = w;
+            canvas.height = h;
+
+            if (changeBg.checked) {
+                ctx.fillStyle = bgColor.value;
+                ctx.fillRect(0, 0, w, h);
+
+                const srcRatio = originalImg.width / originalImg.height;
+                const dstRatio = w / h;
+                let drawW, drawH;
+                if (srcRatio > dstRatio) {
+                    drawW = w;
+                    drawH = w / srcRatio;
+                } else {
+                    drawH = h;
+                    drawW = h * srcRatio;
+                }
+                const dx = (w - drawW) / 2;
+                const dy = (h - drawH) / 2;
+                ctx.drawImage(originalImg, dx, dy, drawW, drawH);
+            } else {
+                // No background chosen: fill white first so PNG/WEBP
+                // transparency doesn't turn black when saved as JPEG.
+                ctx.fillStyle = '#ffffff';
+                ctx.fillRect(0, 0, w, h);
+                ctx.drawImage(originalImg, 0, 0, w, h);
+            }
+        }
+
         processBtn.addEventListener('click', async () => {
             if (!loadedFile) return;
 
@@ -354,19 +394,7 @@
 
             const canvas = document.createElement('canvas');
             const ctx = canvas.getContext('2d');
-            canvas.width = targetW;
-            canvas.height = targetH;
-
-            // Fix: if no background chosen, fill white by default so PNG/WEBP
-            // transparency doesn't turn black when exported as JPEG.
-            if (changeBg.checked) {
-                ctx.fillStyle = bgColor.value;
-            } else {
-                ctx.fillStyle = '#ffffff';
-            }
-            ctx.fillRect(0, 0, targetW, targetH);
-
-            ctx.drawImage(originalImg, 0, 0, targetW, targetH);
+            drawToCanvas(canvas, ctx, targetW, targetH);
 
             let minQ = 0.05, maxQ = 0.95, q = 0.8, blob = null;
 
@@ -380,11 +408,7 @@
             if ((blob.size / 1024) > limitKB) {
                 let scale = 0.9;
                 while ((blob.size / 1024) > limitKB && scale > 0.2) {
-                    canvas.width = targetW * scale;
-                    canvas.height = targetH * scale;
-                    ctx.fillStyle = changeBg.checked ? bgColor.value : '#ffffff';
-                    ctx.fillRect(0, 0, canvas.width, canvas.height);
-                    ctx.drawImage(originalImg, 0, 0, canvas.width, canvas.height);
+                    drawToCanvas(canvas, ctx, Math.round(targetW * scale), Math.round(targetH * scale));
                     blob = await new Promise(res => canvas.toBlob(res, 'image/jpeg', 0.45));
                     scale -= 0.1;
                 }
@@ -393,6 +417,12 @@
             finalBlob = blob;
             newFileSize.textContent = (blob.size / 1024).toFixed(1) + ' KB';
             resultBox.classList.remove('hidden');
+
+            // Fix: show the ACTUAL processed result (with background/crop
+            // applied) in the preview, instead of leaving the original
+            // untouched photo displayed — this was why background changes
+            // looked like they "didn't happen".
+            previewImg.src = URL.createObjectURL(finalBlob);
 
             processBtn.disabled = false;
             processBtn.innerHTML = '<span>⚙️</span> पुन्हा बदल करा';
