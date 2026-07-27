@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="mr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>इमेज टू PDF कन्व्हर्टर — मोफत, सुरक्षित | niDar Tools</title>
+    <meta name="description" content="JPG, PNG फोटोंचं मोफत PDF बनवा. एकापेक्षा जास्त फोटो एकत्र करून एक PDF तयार करा — पेज साईझ, ओरिएंटेशन, मार्जिन कस्टमाइझ करा. सुरक्षित — सर्व प्रक्रिया तुमच्याच ब्राऊझरमध्ये, कोणताही फोटो सर्व्हरवर अपलोड होत नाही.">
+    <meta name="keywords" content="image to pdf, jpg to pdf, png to pdf, photo to pdf, इमेज टू पीडीएफ, फोटो टू पीडीएफ, फोटो पीडीएफ बनवा, jpg ला pdf मध्ये बदला">
+    <link rel="canonical" href="https://nidartools.com/image-to-pdf.html">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="इमेज टू PDF कन्व्हर्टर — मोफत, सुरक्षित | niDar Tools">
+    <meta property="og:description" content="JPG/PNG फोटोंचं मोफत, सुरक्षित PDF बनवा. साईन-अप नाही, अपलोड नाही — सर्व प्रक्रिया तुमच्याच ब्राऊझरमध्ये.">
+    <meta property="og:url" content="https://nidartools.com/image-to-pdf.html">
+    <meta property="og:locale" content="mr_IN">
+
+    <!-- Structured data for search engines -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "इमेज टू PDF कन्व्हर्टर",
+        "applicationCategory": "UtilitiesApplication",
+        "operatingSystem": "Any (Web Browser)",
+        "url": "https://nidartools.com/image-to-pdf.html",
+        "description": "JPG, PNG फोटोंचं मोफत PDF बनवा. सर्व प्रक्रिया ब्राऊझरमध्ये, कोणताही डेटा अपलोड होत नाही.",
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "INR" },
+        "publisher": { "@type": "Organization", "name": "niDar Marketing And Services" }
+    }
+    </script>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <style>
+        body { font-family: 'Poppins', sans-serif; }
+        #dropZone.dragover { border-color: #4f46e5; background-color: #eef2ff; }
+        .thumb-card.dragging { opacity: 0.4; }
+    </style>
+</head>
+<body class="bg-slate-50 min-h-screen flex flex-col justify-between">
+
+    <!-- Top Navigation -->
+    <header class="bg-white border-b border-slate-200 py-4 sticky top-0 z-50 shadow-sm">
+        <div class="max-w-3xl mx-auto px-4 flex justify-between items-center gap-3">
+            <a href="/" class="flex items-center gap-3">
+                <div class="bg-indigo-600 text-white p-2 rounded-lg font-bold text-xl shadow-md">nD</div>
+                <div>
+                    <h1 class="text-xl font-extrabold text-slate-800">niDar Tools</h1>
+                    <p class="text-xs text-slate-500">by niDar Marketing And Services</p>
+                </div>
+            </a>
+            <a href="/" class="text-xs font-semibold text-indigo-700 hover:underline">← सर्व टूल्स</a>
+        </div>
+    </header>
+
+    <!-- App Container -->
+    <div class="max-w-3xl mx-auto px-4 py-8 w-full flex-grow">
+
+        <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 sm:p-8 space-y-6">
+            <div>
+                <h2 class="text-2xl font-bold text-slate-800">इमेज टू PDF कन्व्हर्टर</h2>
+                <p class="text-sm text-slate-500 mt-1">एक किंवा अनेक फोटो निवडा — क्रम बदला, सेटिंग ठरवा आणि एक PDF बनवा.</p>
+            </div>
+
+            <!-- File Drop Area -->
+            <div id="dropZone" class="border-2 border-dashed border-slate-300 hover:border-indigo-500 rounded-xl p-8 text-center cursor-pointer transition-all bg-slate-50 hover:bg-indigo-50/10">
+                <input type="file" id="fileInput" accept="image/*" multiple class="hidden">
+                <div class="flex flex-col items-center">
+                    <svg class="w-12 h-12 text-slate-400 mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                    <p class="text-slate-700 font-bold text-sm">फोटो(ने) येथे ड्रॅग करा किंवा सिलेक्ट करा</p>
+                    <p class="text-slate-400 text-xs mt-1">एकापेक्षा जास्त फोटो एकाच वेळी निवडता येतील</p>
+                </div>
+            </div>
+
+            <!-- Selected images list -->
+            <div id="listSection" class="hidden space-y-3">
+                <div class="flex items-center justify-between">
+                    <h3 class="text-xs font-bold text-slate-500 uppercase tracking-wider">निवडलेले फोटो (<span id="imgCount">0</span>)</h3>
+                    <button id="clearAllBtn" class="text-xs font-semibold text-red-600 hover:underline">सर्व काढा</button>
+                </div>
+                <p class="text-[11px] text-slate-400">क्रम बदलण्यासाठी ↑ ↓ बटणं वापरा — PDF मध्ये हाच क्रम राहील.</p>
+                <div id="imgList" class="space-y-2"></div>
+            </div>
+
+            <!-- Settings -->
+            <div id="settingsSection" class="hidden space-y-4">
+                <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-4">
+                    <h3 class="text-xs font-bold text-slate-500 uppercase tracking-wider">PDF सेटिंग</h3>
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                        <div>
+                            <label class="block text-[10px] text-slate-400 font-bold uppercase mb-1">पेज साईझ</label>
+                            <select id="pageSize" class="w-full px-3 py-2 bg-white border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-indigo-500 outline-none">
+                                <option value="a4">A4</option>
+                                <option value="letter">Letter</option>
+                                <option value="fit">फोटोच्या साईझप्रमाणे (Fit)</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-[10px] text-slate-400 font-bold uppercase mb-1">ओरिएंटेशन</label>
+                            <select id="orientation" class="w-full px-3 py-2 bg-white border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-indigo-500 outline-none">
+                                <option value="auto">प्रत्येक फोटोप्रमाणे (Auto)</option>
+                                <option value="portrait">उभं (Portrait)</option>
+                                <option value="landscape">आडवं (Landscape)</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-[10px] text-slate-400 font-bold uppercase mb-1">मार्जिन</label>
+                            <select id="marginSize" class="w-full px-3 py-2 bg-white border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-indigo-500 outline-none">
+                                <option value="0">मार्जिन नाही</option>
+                                <option value="10" selected>थोडं (10mm)</option>
+                                <option value="20">जास्त (20mm)</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <button id="makePdfBtn" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-6 rounded-xl transition-all shadow-lg flex items-center justify-center gap-2">
+                    <span>📑</span> PDF बनवा
+                </button>
+            </div>
+
+            <!-- Result -->
+            <div id="resultBox" class="hidden bg-emerald-50 rounded-xl p-4 border border-emerald-200 space-y-3">
+                <div class="text-center">
+                    <h4 class="font-bold text-emerald-800 text-sm">PDF तयार झालं!</h4>
+                    <p class="text-xs text-emerald-600 mt-0.5"><span id="pdfPages">0</span> पेजेस · <span id="pdfSize">0 KB</span></p>
+                </div>
+                <button id="downloadBtn" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2.5 px-4 rounded-lg transition-all shadow text-sm flex items-center justify-center gap-2">
+                    <span>📥</span> PDF डाऊनलोड करा
+                </button>
+            </div>
+            <p id="errorMsg" class="hidden text-sm text-red-600 bg-red-50 border border-red-200 rounded-lg px-3 py-2"></p>
+        </div>
+
+        <!-- Technical / trust note -->
+        <div class="mt-6 bg-white rounded-2xl border border-slate-200 p-5 text-xs text-slate-500 space-y-2">
+            <h3 class="text-xs font-bold text-slate-600 uppercase tracking-wider">हे टूल कसं काम करतं?</h3>
+            <p>तुमचे फोटो तुमच्याच फोन/ब्राऊझरमध्ये प्रोसेस होऊन थेट PDF मध्ये रूपांतरित होतात — कोणताही फोटो किंवा PDF आमच्या सर्व्हरवर अपलोड होत नाही किंवा साठवला जात नाही. मोठ्या फोटोंचं आपोआप ऑप्टिमायझेशन होतं जेणेकरून PDF चा आकार वाजवी राहील.</p>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-slate-900 text-slate-500 py-6 text-center text-xs border-t border-slate-800">
+        <div class="flex flex-wrap justify-center gap-x-4 gap-y-1 font-semibold mb-2">
+            <a href="/" class="hover:text-white">सर्व टूल्स</a>
+            <a href="about.html" class="hover:text-white">आमच्याबद्दल</a>
+            <a href="contact.html" class="hover:text-white">संपर्क</a>
+            <a href="privacy-policy.html" class="hover:text-white">प्रायव्हसी पॉलिसी</a>
+        </div>
+        <p>© 2026 niDar Tools. Developed by niDar Marketing And Services.</p>
+        <p class="text-[10px] text-slate-600 mt-1">सर्व प्रक्रिया तुमच्या स्वतःच्या ब्राऊझरमध्ये होते, कोणताही डेटा गोळा केला जात नाही.</p>
+    </footer>
+
+    <script>
+        const { jsPDF } = window.jspdf;
+
+        const dropZone = document.getElementById('dropZone');
+        const fileInput = document.getElementById('fileInput');
+        const listSection = document.getElementById('listSection');
+        const imgList = document.getElementById('imgList');
+        const imgCount = document.getElementById('imgCount');
+        const clearAllBtn = document.getElementById('clearAllBtn');
+        const settingsSection = document.getElementById('settingsSection');
+        const pageSize = document.getElementById('pageSize');
+        const orientation = document.getElementById('orientation');
+        const marginSize = document.getElementById('marginSize');
+        const makePdfBtn = document.getElementById('makePdfBtn');
+        const resultBox = document.getElementById('resultBox');
+        const pdfPages = document.getElementById('pdfPages');
+        const pdfSize = document.getElementById('pdfSize');
+        const downloadBtn = document.getElementById('downloadBtn');
+        const errorMsg = document.getElementById('errorMsg');
+
+        let images = []; // { file, dataUrl, width, height }
+        let finalPdfBlob = null;
+
+        dropZone.addEventListener('click', () => fileInput.click());
+        fileInput.addEventListener('change', (e) => addFiles(e.target.files));
+
+        ['dragenter', 'dragover'].forEach(evt => {
+            dropZone.addEventListener(evt, (e) => {
+                e.preventDefault(); e.stopPropagation();
+                dropZone.classList.add('dragover');
+            });
+        });
+        ['dragleave', 'drop'].forEach(evt => {
+            dropZone.addEventListener(evt, (e) => {
+                e.preventDefault(); e.stopPropagation();
+                dropZone.classList.remove('dragover');
+            });
+        });
+        dropZone.addEventListener('drop', (e) => addFiles(e.dataTransfer.files));
+
+        function addFiles(fileListRaw) {
+            errorMsg.classList.add('hidden');
+            const fileList = Array.from(fileListRaw).filter(f => f.type.startsWith('image/'));
+            if (fileList.length === 0) return;
+
+            let pending = fileList.length;
+            fileList.forEach(file => {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    const img = new Image();
+                    img.onload = () => {
+                        images.push({ file, dataUrl: e.target.result, width: img.width, height: img.height });
+                        pending--;
+                        if (pending === 0) renderList();
+                    };
+                    img.src = e.target.result;
+                };
+                reader.readAsDataURL(file);
+            });
+        }
+
+        function renderList() {
+            imgList.innerHTML = '';
+            images.forEach((item, idx) => {
+                const row = document.createElement('div');
+                row.className = 'thumb-card flex items-center gap-3 bg-slate-50 border border-slate-200 rounded-xl p-2';
+                row.innerHTML = `
+                    <img src="${item.dataUrl}" class="w-14 h-14 object-cover rounded-lg border border-slate-200 flex-shrink-0">
+                    <div class="flex-grow min-w-0">
+                        <p class="text-xs font-semibold text-slate-700 truncate">${idx + 1}. ${item.file.name}</p>
+                        <p class="text-[10px] text-slate-400">${item.width} × ${item.height} PX · ${(item.file.size / 1024).toFixed(0)} KB</p>
+                    </div>
+                    <div class="flex flex-col gap-1">
+                        <button data-idx="${idx}" data-dir="-1" class="moveBtn text-slate-500 hover:text-indigo-600 disabled:opacity-30" ${idx === 0 ? 'disabled' : ''}>▲</button>
+                        <button data-idx="${idx}" data-dir="1" class="moveBtn text-slate-500 hover:text-indigo-600 disabled:opacity-30" ${idx === images.length - 1 ? 'disabled' : ''}>▼</button>
+                    </div>
+                    <button data-idx="${idx}" class="removeBtn text-red-500 hover:text-red-700 text-lg px-1">×</button>
+                `;
+                imgList.appendChild(row);
+            });
+
+            imgList.querySelectorAll('.moveBtn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const i = parseInt(btn.dataset.idx);
+                    const dir = parseInt(btn.dataset.dir);
+                    const j = i + dir;
+                    if (j < 0 || j >= images.length) return;
+                    [images[i], images[j]] = [images[j], images[i]];
+                    renderList();
+                });
+            });
+            imgList.querySelectorAll('.removeBtn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    images.splice(parseInt(btn.dataset.idx), 1);
+                    renderList();
+                });
+            });
+
+            imgCount.textContent = images.length;
+            const hasImages = images.length > 0;
+            listSection.classList.toggle('hidden', !hasImages);
+            settingsSection.classList.toggle('hidden', !hasImages);
+            resultBox.classList.add('hidden');
+        }
+
+        clearAllBtn.addEventListener('click', () => {
+            images = [];
+            renderList();
+        });
+
+        makePdfBtn.addEventListener('click', async () => {
+            if (images.length === 0) return;
+            errorMsg.classList.add('hidden');
+            makePdfBtn.disabled = true;
+            makePdfBtn.innerHTML = '<span>⏳</span> PDF बनतंय...';
+
+            try {
+                const margin = parseInt(marginSize.value);
+                const sizeChoice = pageSize.value;
+                let doc = null;
+
+                for (let i = 0; i < images.length; i++) {
+                    const item = images[i];
+                    const imgIsLandscape = item.width > item.height;
+                    let pageOrientation = orientation.value;
+                    if (pageOrientation === 'auto') {
+                        pageOrientation = imgIsLandscape ? 'landscape' : 'portrait';
+                    }
+
+                    let format = sizeChoice === 'fit' ? [item.width, item.height] : sizeChoice;
+                    let unit = sizeChoice === 'fit' ? 'px' : 'mm';
+
+                    if (i === 0) {
+                        doc = new jsPDF({ orientation: pageOrientation, unit, format });
+                    } else {
+                        doc.addPage(format, pageOrientation);
+                    }
+
+                    const pageW = doc.internal.pageSize.getWidth();
+                    const pageH = doc.internal.pageSize.getHeight();
+                    const usableW = pageW - margin * 2;
+                    const usableH = pageH - margin * 2;
+
+                    const imgRatio = item.width / item.height;
+                    const boxRatio = usableW / usableH;
+                    let drawW, drawH;
+                    if (imgRatio > boxRatio) {
+                        drawW = usableW;
+                        drawH = usableW / imgRatio;
+                    } else {
+                        drawH = usableH;
+                        drawW = usableH * imgRatio;
+                    }
+                    const x = (pageW - drawW) / 2;
+                    const y = (pageH - drawH) / 2;
+
+                    const imgType = item.file.type.includes('png') ? 'PNG' : 'JPEG';
+                    doc.addImage(item.dataUrl, imgType, x, y, drawW, drawH, undefined, 'MEDIUM');
+                }
+
+                const pdfBlob = doc.output('blob');
+                finalPdfBlob = pdfBlob;
+                pdfPages.textContent = images.length;
+                pdfSize.textContent = (pdfBlob.size / 1024).toFixed(1) + ' KB';
+                resultBox.classList.remove('hidden');
+                resultBox.scrollIntoView({ behavior: 'smooth' });
+            } catch (err) {
+                errorMsg.textContent = 'PDF बनवताना अडचण आली. कृपया पुन्हा प्रयत्न करा किंवा फोटोंची संख्या/साईझ कमी करा.';
+                errorMsg.classList.remove('hidden');
+            }
+
+            makePdfBtn.disabled = false;
+            makePdfBtn.innerHTML = '<span>📑</span> PDF बनवा';
+        });
+
+        downloadBtn.addEventListener('click', () => {
+            if (!finalPdfBlob) return;
+            const url = URL.createObjectURL(finalPdfBlob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'nidar_document.pdf';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        });
+    </script>
+</body>
+</html>
