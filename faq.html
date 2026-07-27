@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="mr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>वारंवार विचारले जाणारे प्रश्न (FAQ) | niDar Tools</title>
+    <meta name="description" content="niDar Tools बद्दल वारंवार विचारले जाणारे प्रश्न — टूल्स मोफत आहेत का, डेटा सुरक्षित आहे का, साईन-अप लागतं का इत्यादी.">
+    <link rel="canonical" href="https://nidartools.com/faq.html">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Poppins', sans-serif; }
+        .faq-a { max-height: 0; overflow: hidden; transition: max-height 0.25s ease; }
+        .faq-item.open .faq-a { max-height: 300px; }
+        .faq-item.open .faq-icon { transform: rotate(45deg); }
+        .faq-icon { transition: transform 0.2s ease; }
+    </style>
+</head>
+<body class="bg-slate-50 min-h-screen flex flex-col justify-between">
+    <header class="bg-white border-b border-slate-200 py-4 sticky top-0 z-50 shadow-sm">
+        <div class="max-w-3xl mx-auto px-4 flex justify-between items-center gap-3">
+            <a href="/" class="flex items-center gap-3">
+                <div class="bg-indigo-600 text-white p-2 rounded-lg font-bold text-xl shadow-md">nD</div>
+                <div>
+                    <h1 class="text-xl font-extrabold text-slate-800">niDar Tools</h1>
+                    <p class="text-xs text-slate-500">by niDar Marketing And Services</p>
+                </div>
+            </a>
+            <a href="/" class="text-xs font-semibold text-indigo-700 hover:underline">← सर्व टूल्स</a>
+        </div>
+    </header>
+
+    <div class="max-w-3xl mx-auto px-4 py-8 w-full flex-grow">
+        <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 sm:p-8 space-y-4">
+            <h2 class="text-2xl font-bold text-slate-800">वारंवार विचारले जाणारे प्रश्न</h2>
+
+            <div id="faqList" class="space-y-2"></div>
+        </div>
+    </div>
+
+    <footer class="bg-slate-900 text-slate-500 py-6 text-center text-xs border-t border-slate-800">
+        <div class="flex flex-wrap justify-center gap-x-4 gap-y-1 font-semibold mb-2">
+            <a href="/" class="hover:text-white">सर्व टूल्स</a>
+            <a href="support.html" class="hover:text-white">सपोर्ट</a>
+            <a href="contact.html" class="hover:text-white">संपर्क</a>
+            <a href="privacy-policy.html" class="hover:text-white">प्रायव्हसी पॉलिसी</a>
+        </div>
+        <p>© 2026 niDar Tools. Developed by niDar Marketing And Services.</p>
+    </footer>
+
+    <script>
+        const faqs = [
+            { q: 'niDar Tools वापरण्यासाठी पैसे लागतात का?', a: 'नाही, सर्व टूल्स पूर्णपणे मोफत आहेत. कोणतंही सबस्क्रिप्शन किंवा लपलेलं शुल्क नाही.' },
+            { q: 'माझा फोटो/डेटा सुरक्षित आहे का?', a: 'हो. सर्व प्रोसेसिंग तुमच्याच फोन/ब्राऊझरमध्ये होते — तुमचा फोटो किंवा फाईल आमच्या सर्व्हरवर कधीही अपलोड होत नाही.' },
+            { q: 'वापरण्यासाठी साईन-अप/अकाउंट लागतं का?', a: 'नाही, कोणतंही अकाउंट न बनवता थेट टूल्स वापरता येतात.' },
+            { q: 'सध्या कोणती टूल्स उपलब्ध आहेत?', a: 'इमेज रिसायझर व कॉम्प्रेसर, इमेज टू PDF, वय कॅल्क्युलेटर — आणि अधिक टूल्स लवकरच येत आहेत.' },
+            { q: 'एखाद्या टूलमध्ये बिघाड आढळल्यास काय करावं?', a: 'कृपया Contact पेजवरून आम्हाला ईमेल करा — आम्ही लवकरात लवकर सुधारणा करू.' },
+            { q: 'मोबाईलवर टूल्स नीट चालतात का?', a: 'हो, niDar Tools मोबाईल-फर्स्ट पद्धतीने बनवलेली आहे आणि Android/iOS दोन्ही ब्राऊझरवर नीट चालते.' }
+        ];
+
+        const faqList = document.getElementById('faqList');
+        faqs.forEach((item) => {
+            const div = document.createElement('div');
+            div.className = 'faq-item border border-slate-200 rounded-xl overflow-hidden';
+            div.innerHTML = `
+                <button class="faq-q w-full flex items-center justify-between px-4 py-3 text-left font-semibold text-sm text-slate-700 bg-slate-50 hover:bg-slate-100">
+                    <span>${item.q}</span>
+                    <span class="faq-icon text-indigo-600 text-lg font-bold">+</span>
+                </button>
+                <div class="faq-a px-4 text-sm text-slate-600">
+                    <p class="py-3">${item.a}</p>
+                </div>
+            `;
+            div.querySelector('.faq-q').addEventListener('click', () => {
+                div.classList.toggle('open');
+            });
+            faqList.appendChild(div);
+        });
+    </script>
+</body>
+</html>
