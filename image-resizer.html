@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="mr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>इमेज रिसायझर व कॉम्प्रेसर | niDar Tools</title>
+    <meta name="description" content="फोटोची रुंदी-उंची (cm/mm/px/in) आणि फाईल साईझ (KB/MB) मोफत बदला. पासपोर्ट/SIR फोटो साईझसाठीही योग्य. सर्व प्रोसेसिंग तुमच्याच ब्राऊझरमध्ये.">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Poppins', sans-serif; }
+        #dropZone.dragover { border-color: #4f46e5; background-color: #eef2ff; }
+    </style>
+</head>
+<body class="bg-slate-50 min-h-screen flex flex-col justify-between">
+
+    <!-- Top Navigation -->
+    <header class="bg-white border-b border-slate-200 py-4 sticky top-0 z-50 shadow-sm">
+        <div class="max-w-3xl mx-auto px-4 flex justify-between items-center gap-3">
+            <a href="/" class="flex items-center gap-3">
+                <div class="bg-indigo-600 text-white p-2 rounded-lg font-bold text-xl shadow-md">nD</div>
+                <div>
+                    <h1 class="text-xl font-extrabold text-slate-800">niDar Tools</h1>
+                    <p class="text-xs text-slate-500">by niDar Marketing And Services</p>
+                </div>
+            </a>
+            <a href="/" class="text-xs font-semibold text-indigo-700 hover:underline">← सर्व टूल्स</a>
+        </div>
+    </header>
+
+    <!-- App Container -->
+    <div class="max-w-3xl mx-auto px-4 py-8 w-full flex-grow">
+
+        <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 sm:p-8 space-y-6">
+            <div>
+                <h2 class="text-2xl font-bold text-slate-800">सुपर इमेज रिसायझर व कॉम्प्रेसर</h2>
+                <p class="text-sm text-slate-500 mt-1">तुमच्या फोटोची रुंदी-उंची (CM/MM/PX/IN) आणि फाईल आकार (KB/MB) एकाच वेळी बदला.</p>
+            </div>
+
+            <!-- File Drop Area -->
+            <div id="dropZone" class="border-2 border-dashed border-slate-300 hover:border-indigo-500 rounded-xl p-8 text-center cursor-pointer transition-all bg-slate-50 hover:bg-indigo-50/10">
+                <input type="file" id="fileInput" accept="image/*" class="hidden">
+                <div class="flex flex-col items-center">
+                    <svg class="w-12 h-12 text-slate-400 mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                    <p class="text-slate-700 font-bold text-sm">तुमचा फोटो येथे ड्रॅग करा किंवा सिलेक्ट करा</p>
+                    <p class="text-slate-400 text-xs mt-1">PNG, JPG, JPEG, WEBP (मर्यादा: 20MB)</p>
+                </div>
+            </div>
+
+            <!-- Settings & Interactive area (Hidden initially) -->
+            <div id="settingsSection" class="hidden grid grid-cols-1 md:grid-cols-12 gap-8">
+
+                <!-- Form Controls (7 cols) -->
+                <div class="md:col-span-7 space-y-6">
+
+                    <!-- Dimension selector -->
+                    <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-4">
+                        <h3 class="text-xs font-bold text-slate-500 uppercase tracking-wider">१. आकारमान सेटिंग (Dimensions)</h3>
+                        <div class="grid grid-cols-3 gap-3">
+                            <div>
+                                <label class="block text-[10px] text-slate-400 font-bold uppercase mb-1">युनिट</label>
+                                <select id="unitSelect" class="w-full px-3 py-2 bg-white border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-indigo-500 outline-none">
+                                    <option value="px">Pixels (PX)</option>
+                                    <option value="cm">Centimeters (CM)</option>
+                                    <option value="mm">Millimeters (MM)</option>
+                                    <option value="in">Inches (IN)</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-[10px] text-slate-400 font-bold uppercase mb-1">रुंदी (Width)</label>
+                                <input type="number" id="imgWidth" class="w-full px-3 py-2 bg-white border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-indigo-500 outline-none font-semibold">
+                            </div>
+                            <div>
+                                <label class="block text-[10px] text-slate-400 font-bold uppercase mb-1">उंची (Height)</label>
+                                <input type="number" id="imgHeight" class="w-full px-3 py-2 bg-white border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-indigo-500 outline-none font-semibold">
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-2 pt-1">
+                            <input type="checkbox" id="aspectRatio" checked class="rounded text-indigo-600 focus:ring-indigo-500">
+                            <label for="aspectRatio" class="text-xs text-slate-500">प्रमाण कायम ठेवा (Maintain Aspect Ratio)</label>
+                        </div>
+                    </div>
+
+                    <!-- File size setting -->
+                    <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-4">
+                        <h3 class="text-xs font-bold text-slate-500 uppercase tracking-wider">२. फाईल साईझ मर्यादा (File Size Limit)</h3>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-[10px] text-slate-400 font-bold uppercase mb-1">टारगेट साईझ</label>
+                                <input type="number" id="fileSizeVal" value="50" class="w-full px-3 py-2 bg-white border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-indigo-500 outline-none font-bold">
+                            </div>
+                            <div>
+                                <label class="block text-[10px] text-slate-400 font-bold uppercase mb-1">युनिट</label>
+                                <select id="fileSizeUnit" class="w-full px-3 py-2 bg-white border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-indigo-500 outline-none">
+                                    <option value="kb">Kilobytes (KB)</option>
+                                    <option value="mb">Megabytes (MB)</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-[10px] text-slate-400 font-bold uppercase mb-1">आउटपुट फॉरमॅट</label>
+                            <select id="formatSelect" class="w-full px-3 py-2 bg-white border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-indigo-500 outline-none">
+                                <option value="jpeg">JPEG / JPG</option>
+                                <option value="png">PNG</option>
+                            </select>
+                        </div>
+                        <p id="sizeWarning" class="hidden text-[11px] text-amber-700 bg-amber-50 border border-amber-200 rounded-lg px-3 py-2"></p>
+                    </div>
+
+                    <!-- Bg color options -->
+                    <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-3">
+                        <h3 class="text-xs font-bold text-slate-500 uppercase tracking-wider">३. बॅकग्राउंड सेटिंग (Solid Color Background)</h3>
+                        <div class="flex items-center gap-4">
+                            <div class="flex items-center gap-2">
+                                <input type="checkbox" id="changeBg" class="rounded text-indigo-600 focus:ring-indigo-500">
+                                <label for="changeBg" class="text-xs font-semibold text-slate-700">सॉलिड बॅकग्राउंड जोडा</label>
+                            </div>
+                            <div id="bgColorContainer" class="hidden flex items-center gap-2">
+                                <input type="color" id="bgColor" value="#ffffff" class="w-8 h-8 rounded border border-slate-300 cursor-pointer">
+                                <span class="text-xs text-slate-400">रंग निवडा (उदा. पांढरा / निळा)</span>
+                            </div>
+                        </div>
+                        <p class="text-[10px] text-slate-400">टीप: हे फक्त फोटोभोवतीची रिकामी जागा भरतं (फोटो प्रमाणात न बसल्यास). फोटोच्या मागचा भाग (व्यक्तीमागचा बॅकग्राउंड) हे बदलत नाही.</p>
+                    </div>
+
+                    <!-- Action Button -->
+                    <button id="processBtn" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-6 rounded-xl transition-all shadow-lg hover:shadow-indigo-500/20 flex items-center justify-center gap-2">
+                        <span>⚙️</span> फोटो रिसाईझ व कॉम्प्रेस करा
+                    </button>
+                </div>
+
+                <!-- Live Previews (5 cols) -->
+                <div class="md:col-span-5 flex flex-col justify-between space-y-6">
+                    <div class="bg-slate-50 border border-slate-200 rounded-xl p-4 flex-grow flex flex-col justify-between">
+                        <span class="text-[10px] font-bold text-slate-400 uppercase mb-2 block">फोटो प्रिव्ह्यू</span>
+                        <div class="border border-slate-200 rounded bg-white h-48 flex items-center justify-center overflow-hidden p-1">
+                            <img id="previewImg" class="max-h-full max-w-full object-contain hidden" src="" alt="Preview">
+                        </div>
+                        <div class="mt-3 space-y-1 text-xs text-slate-500 border-t border-slate-200 pt-3">
+                            <div class="flex justify-between"><span>मूळ साईझ:</span> <span id="infoOrigSize" class="font-bold text-slate-700">-</span></div>
+                            <div class="flex justify-between"><span>मूळ आकारमान:</span> <span id="infoOrigDim" class="font-bold text-slate-700">-</span></div>
+                        </div>
+                    </div>
+
+                    <!-- Result Section -->
+                    <div id="resultBox" class="hidden bg-emerald-50 rounded-xl p-4 border border-emerald-200 space-y-3">
+                        <div class="text-center">
+                            <h4 class="font-bold text-emerald-800 text-sm">यशस्वीरित्या बदलले!</h4>
+                            <p class="text-xs text-emerald-600 mt-0.5">नवीन फाईल साईझ: <span id="newFileSize" class="font-bold">0 KB</span></p>
+                        </div>
+                        <button id="downloadBtn" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2.5 px-4 rounded-lg transition-all shadow text-sm flex items-center justify-center gap-2">
+                            <span>📥</span> फाईल डाऊनलोड करा
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-slate-900 text-slate-500 py-6 text-center text-xs border-t border-slate-800">
+        <div class="flex flex-wrap justify-center gap-x-4 gap-y-1 font-semibold mb-2">
+            <a href="/" class="hover:text-white">सर्व टूल्स</a>
+            <a href="about.html" class="hover:text-white">आमच्याबद्दल</a>
+            <a href="contact.html" class="hover:text-white">संपर्क</a>
+            <a href="privacy-policy.html" class="hover:text-white">प्रायव्हसी पॉलिसी</a>
+        </div>
+        <p>© 2026 niDar Tools. Developed by niDar Marketing And Services.</p>
+        <p class="text-[10px] text-slate-600 mt-1">सर्व प्रक्रिया तुमच्या स्वतःच्या ब्राऊझरमध्ये होते, कोणताही डेटा गोळा केला जात नाही.</p>
+    </footer>
+
+    <!-- Logic Script -->
+    <script>
+        const dropZone = document.getElementById('dropZone');
+        const fileInput = document.getElementById('fileInput');
+        const settingsSection = document.getElementById('settingsSection');
+        const previewImg = document.getElementById('previewImg');
+        const infoOrigSize = document.getElementById('infoOrigSize');
+        const infoOrigDim = document.getElementById('infoOrigDim');
+
+        const unitSelect = document.getElementById('unitSelect');
+        const imgWidth = document.getElementById('imgWidth');
+        const imgHeight = document.getElementById('imgHeight');
+        const aspectRatio = document.getElementById('aspectRatio');
+        const fileSizeVal = document.getElementById('fileSizeVal');
+        const fileSizeUnit = document.getElementById('fileSizeUnit');
+        const changeBg = document.getElementById('changeBg');
+        const bgColorContainer = document.getElementById('bgColorContainer');
+        const bgColor = document.getElementById('bgColor');
+        const formatSelect = document.getElementById('formatSelect');
+        const sizeWarning = document.getElementById('sizeWarning');
+
+        const processBtn = document.getElementById('processBtn');
+        const resultBox = document.getElementById('resultBox');
+        const newFileSize = document.getElementById('newFileSize');
+        const downloadBtn = document.getElementById('downloadBtn');
+
+        let originalImg = new Image();
+        let loadedFile = null;
+        let finalBlob = null;
+        let basePxWidth = 0;
+        let basePxHeight = 0;
+
+        const DPI = 300;
+
+        function pxToUnit(px, unit) {
+            if (unit === 'px') return Math.round(px);
+            if (unit === 'in') return +(px / DPI).toFixed(2);
+            if (unit === 'cm') return +((px / DPI) * 2.54).toFixed(2);
+            if (unit === 'mm') return +((px / DPI) * 25.4).toFixed(2);
+            return px;
+        }
+        function unitToPx(val, unit) {
+            const num = parseFloat(val) || 0;
+            if (unit === 'px') return num;
+            if (unit === 'in') return num * DPI;
+            if (unit === 'cm') return (num / 2.54) * DPI;
+            if (unit === 'mm') return (num / 25.4) * DPI;
+            return num;
+        }
+
+        changeBg.addEventListener('change', () => {
+            bgColorContainer.classList.toggle('hidden', !changeBg.checked);
+        });
+
+        dropZone.addEventListener('click', () => fileInput.click());
+        fileInput.addEventListener('change', (e) => {
+            if (e.target.files.length > 0) handleFile(e.target.files[0]);
+        });
+
+        ['dragenter', 'dragover'].forEach(evt => {
+            dropZone.addEventListener(evt, (e) => {
+                e.preventDefault(); e.stopPropagation();
+                dropZone.classList.add('dragover');
+            });
+        });
+        ['dragleave', 'drop'].forEach(evt => {
+            dropZone.addEventListener(evt, (e) => {
+                e.preventDefault(); e.stopPropagation();
+                dropZone.classList.remove('dragover');
+            });
+        });
+        dropZone.addEventListener('drop', (e) => {
+            const files = e.dataTransfer.files;
+            if (files.length > 0) handleFile(files[0]);
+        });
+
+        function handleFile(file) {
+            if (!file.type.startsWith('image/')) {
+                alert('कृपया वैध फोटो फाईल सिलेक्ट करा.');
+                return;
+            }
+            loadedFile = file;
+            infoOrigSize.textContent = (file.size / 1024).toFixed(1) + ' KB';
+            const reader = new FileReader();
+            reader.onload = (e) => { originalImg.src = e.target.result; };
+            reader.readAsDataURL(file);
+        }
+
+        originalImg.onload = () => {
+            previewImg.src = originalImg.src;
+            previewImg.classList.remove('hidden');
+            settingsSection.classList.remove('hidden');
+            infoOrigDim.textContent = `${originalImg.width} x ${originalImg.height} PX`;
+            basePxWidth = originalImg.width;
+            basePxHeight = originalImg.height;
+            unitSelect.value = 'px';
+            imgWidth.value = basePxWidth;
+            imgHeight.value = basePxHeight;
+        };
+
+        unitSelect.addEventListener('change', () => {
+            if (!originalImg.src) return;
+            const curPxW = unitToPx(imgWidth.value, unitSelect.dataset.prevUnit || 'px');
+            const curPxH = unitToPx(imgHeight.value, unitSelect.dataset.prevUnit || 'px');
+            imgWidth.value = pxToUnit(curPxW, unitSelect.value);
+            imgHeight.value = pxToUnit(curPxH, unitSelect.value);
+            unitSelect.dataset.prevUnit = unitSelect.value;
+        });
+        unitSelect.dataset.prevUnit = 'px';
+
+        imgWidth.addEventListener('input', () => {
+            if (aspectRatio.checked && originalImg.src) {
+                const r = basePxHeight / basePxWidth;
+                const wPx = unitToPx(imgWidth.value, unitSelect.value);
+                imgHeight.value = pxToUnit(wPx * r, unitSelect.value);
+            }
+        });
+        imgHeight.addEventListener('input', () => {
+            if (aspectRatio.checked && originalImg.src) {
+                const r = basePxWidth / basePxHeight;
+                const hPx = unitToPx(imgHeight.value, unitSelect.value);
+                imgWidth.value = pxToUnit(hPx * r, unitSelect.value);
+            }
+        });
+
+        function drawToCanvas(canvas, ctx, w, h) {
+            canvas.width = w;
+            canvas.height = h;
+            ctx.clearRect(0, 0, w, h);
+
+            if (changeBg.checked) {
+                ctx.fillStyle = bgColor.value;
+                ctx.fillRect(0, 0, w, h);
+                const srcRatio = originalImg.width / originalImg.height;
+                const dstRatio = w / h;
+                let drawW, drawH;
+                if (srcRatio > dstRatio) { drawW = w; drawH = w / srcRatio; }
+                else { drawH = h; drawW = h * srcRatio; }
+                const dx = (w - drawW) / 2;
+                const dy = (h - drawH) / 2;
+                ctx.drawImage(originalImg, dx, dy, drawW, drawH);
+            } else if (formatSelect.value === 'png') {
+                ctx.drawImage(originalImg, 0, 0, w, h);
+            } else {
+                ctx.fillStyle = '#ffffff';
+                ctx.fillRect(0, 0, w, h);
+                ctx.drawImage(originalImg, 0, 0, w, h);
+            }
+        }
+
+        processBtn.addEventListener('click', async () => {
+            if (!loadedFile) return;
+            processBtn.disabled = true;
+            processBtn.innerHTML = '<span>⏳</span> प्रोसेसिंग सुरू आहे...';
+
+            const targetUnit = unitSelect.value;
+            const targetW = Math.max(1, Math.round(unitToPx(imgWidth.value, targetUnit)));
+            const targetH = Math.max(1, Math.round(unitToPx(imgHeight.value, targetUnit)));
+
+            let limitKB = parseFloat(fileSizeVal.value);
+            if (fileSizeUnit.value === 'mb') limitKB *= 1024;
+
+            const outFormat = formatSelect.value;
+            const mimeType = outFormat === 'png' ? 'image/png' : 'image/jpeg';
+
+            const canvas = document.createElement('canvas');
+            const ctx = canvas.getContext('2d');
+            drawToCanvas(canvas, ctx, targetW, targetH);
+
+            let blob = null;
+
+            if (outFormat === 'png') {
+                blob = await new Promise(res => canvas.toBlob(res, mimeType));
+                let scale = 0.9;
+                while ((blob.size / 1024) > limitKB && scale > 0.2) {
+                    drawToCanvas(canvas, ctx, Math.round(targetW * scale), Math.round(targetH * scale));
+                    blob = await new Promise(res => canvas.toBlob(res, mimeType));
+                    scale -= 0.1;
+                }
+            } else {
+                let minQ = 0.05, maxQ = 0.95, q = 0.8;
+                for (let i = 0; i < 7; i++) {
+                    q = (minQ + maxQ) / 2;
+                    blob = await new Promise(res => canvas.toBlob(res, mimeType, q));
+                    if ((blob.size / 1024) < limitKB) minQ = q; else maxQ = q;
+                }
+                if ((blob.size / 1024) > limitKB) {
+                    let scale = 0.9;
+                    while ((blob.size / 1024) > limitKB && scale > 0.2) {
+                        drawToCanvas(canvas, ctx, Math.round(targetW * scale), Math.round(targetH * scale));
+                        blob = await new Promise(res => canvas.toBlob(res, mimeType, 0.45));
+                        scale -= 0.1;
+                    }
+                }
+            }
+
+            finalBlob = blob;
+            newFileSize.textContent = (blob.size / 1024).toFixed(1) + ' KB';
+            resultBox.classList.remove('hidden');
+            previewImg.src = URL.createObjectURL(finalBlob);
+
+            if ((blob.size / 1024) > limitKB) {
+                sizeWarning.textContent = 'सूचना: दिलेल्या साईझ मर्यादेत बसवणं शक्य झालं नाही. ' +
+                    (outFormat === 'png' ? 'PNG ऐवजी JPEG निवडून बघा — ते अधिक कॉम्प्रेस होतं.' : 'डायमेंशन थोडे कमी करून किंवा टारगेट साईझ थोडी वाढवून पुन्हा प्रयत्न करा.');
+                sizeWarning.classList.remove('hidden');
+            } else {
+                sizeWarning.classList.add('hidden');
+            }
+
+            processBtn.disabled = false;
+            processBtn.innerHTML = '<span>⚙️</span> पुन्हा बदल करा';
+            resultBox.scrollIntoView({ behavior: 'smooth' });
+        });
+
+        downloadBtn.addEventListener('click', () => {
+            if (!finalBlob) return;
+            const ext = formatSelect.value === 'png' ? '.png' : '.jpg';
+            const url = URL.createObjectURL(finalBlob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'nidar_' + loadedFile.name.split('.')[0] + ext;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        });
+    </script>
+</body>
+</html>
