@@ -218,7 +218,10 @@
                 segmenter = new SelfieSegmentation({
                     locateFile: (file) => `https://cdn.jsdelivr.net/npm/@mediapipe/selfie_segmentation/${file}`
                 });
-                segmenter.setOptions({ modelSelection: 1 });
+                // modelSelection 0 = general model — more accurate for
+                // close-up portrait/passport-style photos than the
+                // landscape model (1), which is tuned for full-body/wide shots.
+                segmenter.setOptions({ modelSelection: 0 });
             }
             return segmenter;
         }
@@ -235,10 +238,15 @@
                     const w = img.naturalWidth || img.width;
                     const h = img.naturalHeight || img.height;
 
+                    // Feather the mask edges with a small blur before using
+                    // it as alpha — this smooths the jagged/pixelated look
+                    // around hair and edges that a hard cutout produces.
                     const maskCanvas = document.createElement('canvas');
                     maskCanvas.width = w; maskCanvas.height = h;
                     const mctx = maskCanvas.getContext('2d');
+                    mctx.filter = 'blur(1.5px)';
                     mctx.drawImage(results.segmentationMask, 0, 0, w, h);
+                    mctx.filter = 'none';
                     const maskData = mctx.getImageData(0, 0, w, h).data;
 
                     const outCanvas = document.createElement('canvas');
