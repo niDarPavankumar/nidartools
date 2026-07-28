@@ -90,20 +90,20 @@ document.addEventListener("DOMContentLoaded", () => {
 
     window.addEventListener("load", () => {
 
-      navigator.serviceWorker
-        .register("/sw.js")
-
-        .then(() => {
-
-          console.log("Service Worker Registered");
-
-        })
-
-        .catch(error => {
-
-          console.error(error);
-
-        });
+//      navigator.serviceWorker
+//        .register("/sw.js")
+//
+//        .then(() => {
+//
+//          console.log("Service Worker Registered");
+//
+//        })
+//
+//        .catch(error => {
+//
+//          console.error(error);
+//
+//        });
 
     });
 
