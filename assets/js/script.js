@@ -112,3 +112,143 @@ document.addEventListener("DOMContentLoaded", () => {
   console.log("niDar Tools v3 Loaded");
 
 });
+
+/* =====================================================
+   Part 2 - Search, Scroll Top, Reveal & Utilities
+   ===================================================== */
+
+document.addEventListener("DOMContentLoaded", () => {
+
+  /* ==========================
+     Live Tool Search
+  ========================== */
+
+  const searchInput = document.getElementById("searchInput");
+
+  if (searchInput) {
+
+    searchInput.addEventListener("input", () => {
+
+      const keyword = searchInput.value.toLowerCase();
+
+      document.querySelectorAll(".card").forEach(card => {
+
+        const text = card.innerText.toLowerCase();
+
+        card.style.display =
+          text.includes(keyword) ? "" : "none";
+
+      });
+
+    });
+
+  }
+
+  /* ==========================
+     Scroll To Top Button
+  ========================== */
+
+  const scrollBtn = document.getElementById("scrollTopBtn");
+
+  if (scrollBtn) {
+
+    window.addEventListener("scroll", () => {
+
+      if (window.scrollY > 300) {
+
+        scrollBtn.style.display = "block";
+
+      } else {
+
+        scrollBtn.style.display = "none";
+
+      }
+
+    });
+
+    scrollBtn.addEventListener("click", () => {
+
+      window.scrollTo({
+
+        top: 0,
+        behavior: "smooth"
+
+      });
+
+    });
+
+  }
+
+  /* ==========================
+     Scroll Reveal Animation
+  ========================== */
+
+  const revealItems = document.querySelectorAll(".card,.hero,.section");
+
+  if ("IntersectionObserver" in window) {
+
+    const observer = new IntersectionObserver(entries => {
+
+      entries.forEach(entry => {
+
+        if (entry.isIntersecting) {
+
+          entry.target.classList.add("fade-in");
+
+          observer.unobserve(entry.target);
+
+        }
+
+      });
+
+    }, {
+      threshold: 0.15
+    });
+
+    revealItems.forEach(item => observer.observe(item));
+
+  }
+
+  /* ==========================
+     Lazy Loading Images
+  ========================== */
+
+  document.querySelectorAll("img").forEach(img => {
+
+    img.loading = "lazy";
+
+  });
+
+  /* ==========================
+     Toast Notification
+  ========================== */
+
+  window.showToast = function(message) {
+
+    const toast = document.createElement("div");
+
+    toast.textContent = message;
+
+    toast.style.position = "fixed";
+    toast.style.bottom = "20px";
+    toast.style.right = "20px";
+    toast.style.padding = "12px 18px";
+    toast.style.background = "#0d6efd";
+    toast.style.color = "#fff";
+    toast.style.borderRadius = "8px";
+    toast.style.zIndex = "9999";
+
+    document.body.appendChild(toast);
+
+    setTimeout(() => {
+
+      toast.remove();
+
+    }, 3000);
+
+  };
+
+  console.log("Professional Utilities Loaded");
+
+});
+
