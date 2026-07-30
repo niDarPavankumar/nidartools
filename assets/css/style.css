@@ -802,3 +802,32 @@ text-align:center;
 
 }
 
+
+/* =====================================================
+   Part 4 - Sticky Back to Home Button
+   ===================================================== */
+
+#backHomeBtn{
+display:none;
+position:fixed;
+bottom:20px;
+left:20px;
+width:48px;
+height:48px;
+border:none;
+border-radius:50%;
+background:var(--primary);
+color:#fff;
+font-size:22px;
+align-items:center;
+justify-content:center;
+box-shadow:var(--shadow);
+transition:var(--transition);
+z-index:9999;
+cursor:pointer;
+}
+
+#backHomeBtn:hover{
+background:var(--primary-dark);
+transform:translateY(-4px);
+}
