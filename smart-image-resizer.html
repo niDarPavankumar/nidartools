@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Image Resizer & Background Editor - niDar Tools</title>
+    <style>
+        :root {
+            --primary: #4f46e5;
+            --primary-hover: #4338ca;
+            --bg: #f8fafc;
+            --card-bg: #ffffff;
+            --text: #0f172a;
+            --border: #e2e8f0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            background: var(--card-bg);
+            padding: 30px;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 25px;
+            color: var(--primary);
+        }
+
+        .workspace {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+
+        @media (max-width: 768px) {
+            .workspace { grid-template-columns: 1fr; }
+        }
+
+        /* Controls Panel */
+        .controls-panel {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .upload-box {
+            border: 2px dashed var(--primary);
+            padding: 30px;
+            text-align: center;
+            border-radius: 12px;
+            cursor: pointer;
+            background: #f0fdf4;
+            transition: 0.3s;
+        }
+
+        .upload-box:hover { background: #dcfce7; }
+
+        .btn-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 5px;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 12px;
+            border: 1px solid var(--border);
+            background: white;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: 0.2s;
+        }
+
+        .btn.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        .section {
+            border-top: 1px solid var(--border);
+            padding-top: 15px;
+        }
+
+        .hidden { display: none; }
+
+        /* Color Options */
+        .color-palette {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-top: 10px;
+        }
+
+        .color-dot {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            cursor: pointer;
+            border: 2px solid white;
+            box-shadow: 0 0 4px rgba(0,0,0,0.2);
+        }
+
+        .color-mixers {
+            margin-top: 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .mixer-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .mixer-row input { flex: 1; }
+
+        /* Size Inputs */
+        .size-inputs {
+            display: flex;
+            gap: 15px;
+            margin-top: 10px;
+        }
+
+        .size-inputs label {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            font-size: 14px;
+            gap: 5px;
+        }
+
+        .size-inputs input {
+            padding: 10px;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+        }
+
+        /* Preview Panel */
+        .preview-panel {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: #f1f5f9;
+            border-radius: 12px;
+            padding: 20px;
+            min-height: 350px;
+            position: relative;
+            border: 1px solid var(--border);
+        }
+
+        /* Transparency Grid Pattern for Preview Background */
+        .preview-canvas-container {
+            max-width: 100%;
+            max-height: 400px;
+            overflow: auto;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            background-image: linear-gradient(45deg, #ccc 25%, transparent 25%), 
+                              linear-gradient(-45deg, #ccc 25%, transparent 25%), 
+                              linear-gradient(45deg, transparent 75%, #ccc 75%), 
+                              linear-gradient(-45deg, transparent 75%, #ccc 75%);
+            background-size: 20px 20px;
+            background-position: 0 0, 0 10px, 10px -10px, -10px 0;
+            border-radius: 8px;
+        }
+
+        canvas {
+            display: block;
+            max-width: 100%;
+            height: auto;
+        }
+
+        .download-btn {
+            margin-top: 20px;
+            background: #10b981;
+            color: white;
+            border: none;
+            padding: 14px 28px;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+            width: 100%;
+            transition: 0.2s;
+        }
+
+        .download-btn:hover { background: #059669; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>📸 Smart Image Resizer & Background Editor</h2>
+    
+    <div class="workspace">
+        <!-- बाएं भाग: कंट्रोल्स -->
+        <div class="controls-panel">
+            <!-- इमेज अपलोड -->
+            <div class="upload-box" onclick="document.getElementById('imageLoader').click()">
+                <p>📁 यहां क्लिक करें या फोटो ड्रैग करके छोड़ें</p>
+                <input type="file" id="imageLoader" accept="image/*" class="hidden">
+            </div>
+
+            <!-- बैकग्राउंड टाइप चयन -->
+            <div class="section">
+                <label style="font-weight: bold;">बैकग्राउंड का प्रकार चुनें:</label>
+                <div class="btn-group">
+                    <button class="btn active" id="btn-transparent" onclick="setBgType('transparent')">🏁 ट्रांसपेरेंट (Transparent)</button>
+                    <button class="btn" id="btn-solid" onclick="setBgType('solid')">🎨 सॉलिड कलर (Solid Color)</button>
+                </div>
+            </div>
+
+            <!-- ट्रांसपेरेंट के ऑप्शंस -->
+            <div id="transparent-options" class="section">
+                <label style="font-weight: bold;">पारदर्शिता स्तर (Opacity):</label>
+                <div class="mixer-row" style="margin-top:10px;">
+                    <input type="range" id="transparency-range" min="0" max="100" value="0" oninput="updatePreview()">
+                    <span id="opacity-val">100%</span>
+                </div>
+            </div>
+
+            <!-- |सॉलिड कलर के ऑप्शंस -->
+            <div id="solid-options" class="section hidden">
+                <label style="font-weight: bold;">त्वरित रंग बॉक्स (Quick Colors):</label>
+                <div class="color-palette">
+                    <div class="color-dot" style="background: #ffffff;" onclick="pickQuickColor('#ffffff')"></div>
+                    <div class="color-dot" style="background: #000000;" onclick="pickQuickColor('#000000')"></div>
+                    <div class="color-dot" style="background: #ef4444;" onclick="pickQuickColor('#ef4444')"></div>
+                    <div class="color-dot" style="background: #3b82f6;" onclick="pickQuickColor('#3b82f6')"></div>
+                    <div class="color-dot" style="background: #10b981;" onclick="pickQuickColor('#10b981')"></div>
+                    <div class="color-dot" style="background: #eab308;" onclick="pickQuickColor('#eab308')"></div>
+                </div>
+
+                <!-- मैन्युअल कलर मिक्सर (RGB Slider) -->
+                <div class="color-mixers">
+                    <label style="font-weight: bold; font-size:14px; margin-top:10px;">मैन्युअल कलर मिक्सर (Mix Colors):</label>
+                    <div class="mixer-row">
+                        <span>R</span><input type="range" id="mix-red" min="0" max="255" value="255" oninput="mixColors()">
+                    </div>
+                    <div class="mixer-row">
+                        <span>G</span><input type="range" id="mix-green" min="0" max="255" value="255" oninput="mixColors()">
+                    </div>
+                    <div class="mixer-row">
+                        <span>B</span><input type="range" id="mix-blue" min="0" max="255" value="255" oninput="mixColors()">
+                    </div>
+                    <div class="mixer-row" style="margin-top: 10px;">
+                        <span>कस्टम कलर व्हील:</span>
+                        <input type="color" id="color-wheel" value="#ffffff" oninput="wheelColorChanged(this.value)">
+                    </div>
+                </div>
+            </div>
+
+            <!-- साइजिंग कंट्रोल्स (Custom Size) -->
+            <div class="section">
+                <label style="font-weight: bold;">इमेज का आकार (Custom Size - Pixels):</label>
+                <div class="size-inputs">
+                    <label>चौड़ाई (Width)
+                        <input type="number" id="img-width" value="500" oninput="updatePreview()">
+                    </label>
+                    <label>ऊंचाई (Height)
+                        <input type="number" id="img-height" value="500" oninput="updatePreview()">
+                    </label>
+                </div>
+            </div>
+
+            <button class="download-btn" onclick="downloadImage()">💾 एडिटेड इमेज डाउनलोड करें</button>
+        </div>
+
+        <!-- दाएं भाग: लाइव प्रीव्यू -->
+        <div class="preview-panel">
+            <p id="no-image-text" style="color: #64748b;">लाइव प्रीव्यू देखने के लिए कृपया इमेज अपलोड करें।</p>
+            <div class="preview-canvas-container hidden" id="canvas-container">
+                <canvas id="imageCanvas"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    let canvas = document.getElementById('imageCanvas');
+    let ctx = canvas.getContext('2d');
+<div class="container">
+    <h2>📸 Smart Image Resizer & Background Editor</h2>
+    <div class="workspace">
+        <!-- बायां पैनल: कंट्रोल्स -->
+        <div class="controls-panel">
+            <div class="upload-box" onclick="document.getElementById('imageLoader').click()">
+                <p>📁 यहां क्लिक करें या फोटो ड्रैग करके छोड़ें</p>
+                <input type="file" id="imageLoader" accept="image/*" class="hidden">
+            </div>
+            <div class="section">
+                <label style="font-weight: bold;">बैकग्राउंड का प्रकार चुनें:</label>
+                <div class="btn-group">
+                    <button class="btn active" id="btn-transparent" onclick="setBgType('transparent')">🏁 ट्रांसपेरेंट</button>
+                    <button class="btn" id="btn-solid" onclick="setBgType('solid')">🎨 सॉलिड कलर</button>
+                </div>
+            </div>
+            <div id="transparent-options" class="section">
+                <label style="font-weight: bold;">पारदर्शिता स्तर (Opacity):</label>
+                <div class="mixer-row" style="margin-top:10px;">
+                    <input type="range" id="transparency-range" min="0" max="100" value="0" oninput="updatePreview()">
+                    <span id="opacity-val">100%</span>
+                </div>
+            </div>
+            <div id="solid-options" class="section hidden">
+                <label style="font-weight: bold;">त्वरित रंग बॉक्स (Quick Colors):</label>
+                <div class="color-palette">
+                    <div class="color-dot" style="background: #ffffff;" onclick="pickQuickColor('#ffffff')"></div>
+                    <div class="color-dot" style="background: #000000;" onclick="pickQuickColor('#000000')"></div>
+                    <div class="color-dot" style="background: #ef4444;" onclick="pickQuickColor('#ef4444')"></div>
+                    <div class="color-dot" style="background: #3b82f6;" onclick="pickQuickColor('#3b82f6')"></div>
+                    <div class="color-dot" style="background: #10b981;" onclick="pickQuickColor('#10b981')"></div>
+                    <div class="color-dot" style="background: #eab308;" onclick="pickQuickColor('#eab308')"></div>
+                </div>
+                <div class="color-mixers">
+                    <label style="font-weight: bold; font-size:14px; margin-top:10px;">मैन्युअल कलर मिक्सर:</label>
+                    <div class="mixer-row"><span>R</span><input type="range" id="mix-red" min="0" max="255" value="255" oninput="mixColors()"></div>
+                    <div class="mixer-row"><span>G</span><input type="range" id="mix-green" min="0" max="255" value="255" oninput="mixColors()"></div>
+                    <div class="mixer-row"><span>B</span><input type="range" id="mix-blue" min="0" max="255" value="255" oninput="mixColors()"></div>
+                    <div class="mixer-row" style="margin-top: 10px;">
+                        <span>कस्टम कलर व्हील:</span>
+                        <input type="color" id="color-wheel" value="#ffffff" oninput="wheelColorChanged(this.value)">
+                    </div>
+                </div>
+            </div>
+            <div class="section">
+                <label style="font-weight: bold;">इमेज का आकार (Custom Size - Pixels):</label>
+                <div class="size-inputs">
+                    <label>चौड़ाई<input type="number" id="img-width" value="500" oninput="updatePreview()"></label>
+                    <label>ऊंचाई<input type="number" id="img-height" value="500" oninput="updatePreview()"></label>
+                </div>
+            </div>
+            <button class="download-btn" onclick="downloadImage()">💾 एडिटेड इमेज डाउनलोड करें</button>
+        </div>
+        <!-- दायां पैनल: लाइव प्रीव्यू -->
+        <div class="preview-panel">
+            <p id="no-image-text" style="color: #64748b;">लाइव प्रीव्यू देखने के लिए कृपया इमेज अपलोड करें।</p>
+            <div class="preview-canvas-container hidden" id="canvas-container">
+                <canvas id="imageCanvas"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    let canvas = document.getElementById('imageCanvas');
+    let ctx = canvas.getContext('2d');
+    let originalImage = new Image();
+    let currentBgType = 'transparent';
+    let selectedColor = { r: 255, g: 255, b: 255 };
+
+    document.getElementById('imageLoader').addEventListener('change', function(e) {
+        let reader = new FileReader();
+        reader.onload = function(event) {
+            originalImage.onload = function() {
+                document.getElementById('img-width').value = originalImage.width;
+                document.getElementById('img-height').value = originalImage.height;
+                document.getElementById('no-image-text').classList.add('hidden');
+                document.getElementById('canvas-container').classList.remove('hidden');
+                updatePreview();
+            }
+            originalImage.src = event.target.result;
+        }
+        reader.readAsDataURL(e.target.files);
+    });
+
+    function setBgType(type) {
+        currentBgType = type;
+        document.getElementById('btn-transparent').classList.toggle('active', type === 'transparent');
+        document.getElementById('btn-solid').classList.toggle('active', type === 'solid');
+        document.getElementById('transparent-options').classList.toggle('hidden', type !== 'transparent');
+        document.getElementById('solid-options').classList.toggle('hidden', type !== 'solid');
+        updatePreview();
+    }
+
+    function pickQuickColor(hex) {
+        document.getElementById('color-wheel').value = hex;
+        wheelColorChanged(hex);
+    }
+
+    function wheelColorChanged(hex) {
+        let result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+        selectedColor = result ? { r: parseInt(result, 16), g: parseInt(result, 16), b: parseInt(result, 16) } : { r: 255, g: 255, b: 255 };
+        document.getElementById('mix-red').value = selectedColor.r;
+        document.getElementById('mix-green').value = selectedColor.g;
+        document.getElementById('mix-blue').value = selectedColor.b;
+        updatePreview();
+    }
+
+    function mixColors() {
+        selectedColor.r = document.getElementById('mix-red').value;
+        selectedColor.g = document.getElementById('mix-green').value;
+        selectedColor.b = document.getElementById('mix-blue').value;
+        let hex = "#" + ((1 << 24) + (Number(selectedColor.r) << 16) + (Number(selectedColor.g) << 8) + Number(selectedColor.b)).toString(16).slice(1);
+        document.getElementById('color-wheel').value = hex;
+        updatePreview();
+    }
+
+    function updatePreview() {
+        if (!originalImage.src) return;
+        let targetWidth = parseInt(document.getElementById('img-width').value) || originalImage.width;
+        let targetHeight = parseInt(document.getElementById('img-height').value) || originalImage.height;
+        canvas.width = targetWidth;
+        canvas.height = targetHeight;
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        if (currentBgType === 'solid') {
+            ctx.fillStyle = `rgb(${selectedColor.r}, ${selectedColor.g}, ${selectedColor.b})`;
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+        } else {
+            let transparencySlider = document.getElementById('transparency-range').value;
+            let alpha = (100 - transparencySlider) / 100;
+            document.getElementById('opacity-val').innerText = (alpha * 100) + "%";
+            ctx.globalAlpha = alpha;
+        }
+
+        let wrh = originalImage.width / originalImage.height;
+        let newWidth = canvas.width;
+        let newHeight = newWidth / wrh;
+        if (newHeight > canvas.height) {
+            newHeight = canvas.height;
+            newWidth = newHeight * wrh;
+        }
+        let xOffset = (canvas.width - newWidth) / 2;
+        let yOffset = (canvas.height - newHeight) / 2;
+        ctx.drawImage(originalImage, xOffset, yOffset, newWidth, newHeight);
+        ctx.globalAlpha = 1.0;
+    }
+
+    function downloadImage() {
+        if (!originalImage.src) { alert("कृपया इमेज अपलोड करें!"); return; }
+        let link = document.createElement('a');
+        link.download = 'nidar-tools-resized.png';
+        link.href = canvas.toDataURL();
+        link.click();
+    }
+</script>
+</body>
+</html>
