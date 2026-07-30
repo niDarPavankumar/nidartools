@@ -252,3 +252,35 @@ document.addEventListener("DOMContentLoaded", () => {
 
 });
 
+
+/* =====================================================
+   Part 4 - Sticky Back to Home Button
+   ===================================================== */
+
+document.addEventListener("DOMContentLoaded", () => {
+
+  const path = window.location.pathname;
+  const isHome = path.endsWith("index.html") || path === "/" || path === "";
+
+  if (!isHome) {
+
+    const backBtn = document.createElement("button");
+    backBtn.id = "backHomeBtn";
+    backBtn.title = "Back to Home";
+    backBtn.innerHTML = "⌂";
+    document.body.appendChild(backBtn);
+
+    backBtn.addEventListener("click", () => {
+      window.location.href = "index.html";
+    });
+
+    window.addEventListener("scroll", () => {
+      if (window.scrollY > 150) {
+        backBtn.style.display = "flex";
+      } else {
+        backBtn.style.display = "none";
+      }
+    });
+  }
+
+});
