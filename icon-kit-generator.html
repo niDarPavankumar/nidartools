@@ -52,6 +52,13 @@
     <img id="previewImg" style="max-width:200px;border-radius:10px;border:1px solid var(--border);">
   </div>
 
+  <div class="mt-20">
+    <label>
+      <input type="checkbox" id="removeBgCheckbox">
+      Remove background (best for logos with a solid-color background)
+    </label>
+  </div>
+
 </section>
 
 <section class="card">
@@ -111,7 +118,9 @@ Developed by
   const errorMsg = document.getElementById('errorMsg');
 
   let sourceImg = new Image();
+  let processedImg = null; // background-removed version, cached per upload
   let zipBlob = null;
+  const removeBgCheckbox = document.getElementById('removeBgCheckbox');
 
   fileInput.addEventListener('change', (e) => {
     const file = e.target.files[0];
@@ -119,6 +128,7 @@ Developed by
     const reader = new FileReader();
     reader.onload = (ev) => {
       sourceImg = new Image();
+      processedImg = null;
       sourceImg.onload = () => {
         previewImg.src = sourceImg.src;
         previewWrap.classList.remove('hidden');
@@ -128,19 +138,66 @@ Developed by
     reader.readAsDataURL(file);
   });
 
+  removeBgCheckbox.addEventListener('change', () => {
+    processedImg = null;
+  });
+
+  function removeSolidBackground(img) {
+    return new Promise((resolve) => {
+      const w = img.naturalWidth || img.width;
+      const h = img.naturalHeight || img.height;
+      const canvas = document.createElement('canvas');
+      canvas.width = w;
+      canvas.height = h;
+      const ctx = canvas.getContext('2d');
+      ctx.drawImage(img, 0, 0, w, h);
+      const imgData = ctx.getImageData(0, 0, w, h);
+      const d = imgData.data;
+
+      function pixelAt(x, y) {
+        const i = (y * w + x) * 4;
+        return [d[i], d[i + 1], d[i + 2]];
+      }
+      const corners = [pixelAt(0, 0), pixelAt(w - 1, 0), pixelAt(0, h - 1), pixelAt(w - 1, h - 1)];
+      const bg = [0, 1, 2].map(k => Math.round(corners.reduce((s, c) => s + c[k], 0) / 4));
+
+      const threshold = 40;
+      const softRange = 30;
+
+      for (let i = 0; i < d.length; i += 4) {
+        const dist = Math.sqrt(
+          Math.pow(d[i] - bg[0], 2) +
+          Math.pow(d[i + 1] - bg[1], 2) +
+          Math.pow(d[i + 2] - bg[2], 2)
+        );
+        if (dist < threshold) {
+          d[i + 3] = 0;
+        } else if (dist < threshold + softRange) {
+          d[i + 3] = Math.round(255 * (dist - threshold) / softRange);
+        }
+      }
+
+      ctx.putImageData(imgData, 0, 0);
+      const out = new Image();
+      out.onload = () => resolve(out);
+      out.src = canvas.toDataURL('image/png');
+    });
+  }
+
   function resizeToBlob(size) {
+    const img = processedImg || sourceImg;
     return new Promise((resolve) => {
       const canvas = document.createElement('canvas');
       canvas.width = size;
       canvas.height = size;
       const ctx = canvas.getContext('2d');
-      const ratio = Math.min(size / sourceImg.width, size / sourceImg.height);
-      const w = sourceImg.width * ratio;
-      const h = sourceImg.height * ratio;
+      const ratio = Math.min(size / img.width, size / img.height);
+      const w = img.width * ratio;
+      const h = img.height * ratio;
       const x = (size - w) / 2;
       const y = (size - h) / 2;
       ctx.clearRect(0, 0, size, size);
-      ctx.drawImage(sourceImg, x, y, w, h);
+      ctx.drawImage(img, x, y, w, h);
       canvas.toBlob((blob) => resolve(blob), 'image/png');
     });
   }
@@ -187,6 +244,14 @@ Developed by
     genBtn.textContent = '⏳ Generating...';
 
     try {
+      if (removeBgCheckbox.checked && !processedImg) {
+        genBtn.textContent = '⏳ Removing background...';
+        processedImg = await removeSolidBackground(sourceImg);
+      } else if (!removeBgCheckbox.checked) {
+        processedImg = null;
+      }
+      genBtn.textContent = '⏳ Generating...';
+
       const zip = new JSZip();
 
       const sizes = [
