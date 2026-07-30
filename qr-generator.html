@@ -1,133 +1,155 @@
 <!DOCTYPE html>
-<html lang="mr">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>QR कोड जनरेटर — मोफत | niDar Tools</title>
-    <meta name="description" content="कोणत्याही लिंक, मजकूर, किंवा माहितीसाठी मोफत QR कोड बनवा. रंग कस्टमाइझ करा आणि PNG डाउनलोड करा. सर्व प्रक्रिया तुमच्याच ब्राऊझरमध्ये.">
-    <meta name="keywords" content="qr code generator, free qr code, qr कोड बनवा, क्यूआर कोड जनरेटर">
-    <link rel="canonical" href="https://nidartools.com/qr-generator.html">
-    <link rel="icon" type="image/x-icon" href="assets/favicon/favicon.ico">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>QR Code Generator - niDar Tools</title>
+
+<meta name="description" content="Create a free QR code for any link, text, or message. Customize size and color, then download as PNG. Everything runs in your browser.">
+<meta name="keywords" content="qr code generator, free qr code, create qr code online">
+
+<link rel="canonical" href="https://nidartools.com/qr-generator.html">
+<link rel="icon" type="image/x-icon" href="assets/favicon/favicon.ico">
 <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon/favicon-16x16.png">
 <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon/favicon-32x32.png">
 <link rel="apple-touch-icon" sizes="180x180" href="assets/favicon/apple-touch-icon.png">
-<script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
-    <style>body { font-family: 'Poppins', sans-serif; }</style>
+<link rel="stylesheet" href="assets/css/style.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 </head>
-<body class="bg-slate-50 min-h-screen flex flex-col justify-between">
-    <header class="bg-white border-b border-slate-200 py-4 sticky top-0 z-50 shadow-sm">
-        <div class="max-w-3xl mx-auto px-4 flex justify-between items-center gap-3">
-            <a href="/" class="flex items-center gap-3">
-                <div class="bg-indigo-600 text-white p-2 rounded-lg font-bold text-xl shadow-md">nD</div>
-                <div>
-                    <h1 class="text-xl font-extrabold text-slate-800">niDar Tools</h1>
-                    <p class="text-xs text-slate-500">by niDar Marketing And Services</p>
-                </div>
-            </a>
-            <a href="/" class="text-xs font-semibold text-indigo-700 hover:underline">← सर्व टूल्स</a>
-        </div>
-    </header>
 
-    <div class="max-w-3xl mx-auto px-4 py-8 w-full flex-grow">
-        <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 sm:p-8 space-y-6">
-            <div>
-                <h2 class="text-2xl font-bold text-slate-800">QR कोड जनरेटर</h2>
-                <p class="text-sm text-slate-500 mt-1">कोणतीही लिंक, मजकूर, फोन नंबर किंवा माहिती टाका — त्वरित QR कोड मिळेल.</p>
-            </div>
+<body>
 
-            <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-4">
-                <div>
-                    <label class="block text-[10px] text-slate-400 font-bold uppercase mb-1">मजकूर / लिंक</label>
-                    <textarea id="qrText" rows="3" placeholder="उदा. https://nidartools.com किंवा कोणताही मजकूर" class="w-full px-3 py-2 bg-white border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-indigo-500 outline-none"></textarea>
-                </div>
-                <div class="grid grid-cols-2 gap-4">
-                    <div>
-                        <label class="block text-[10px] text-slate-400 font-bold uppercase mb-1">साईझ</label>
-                        <select id="qrSize" class="w-full px-3 py-2 bg-white border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-indigo-500 outline-none">
-                            <option value="200">लहान (200px)</option>
-                            <option value="300" selected>मध्यम (300px)</option>
-                            <option value="500">मोठं (500px)</option>
-                        </select>
-                    </div>
-                    <div>
-                        <label class="block text-[10px] text-slate-400 font-bold uppercase mb-1">रंग</label>
-                        <input type="color" id="qrColor" value="#1e1b4b" class="w-full h-9 rounded-lg border border-slate-300 cursor-pointer">
-                    </div>
-                </div>
-            </div>
+<header>
+  <div class="container nav">
+    <h2>niDar Tools</h2>
 
-            <button id="genBtn" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-6 rounded-xl transition-all shadow-lg flex items-center justify-center gap-2">
-                <span>🎯</span> QR कोड बनवा
-            </button>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+      <a href="support.html">Support</a>
+    </nav>
+  </div>
+</header>
 
-            <div id="resultBox" class="hidden bg-emerald-50 rounded-xl p-5 border border-emerald-200 space-y-4 text-center">
-                <div id="qrCanvas" class="flex justify-center bg-white p-4 rounded-lg inline-block mx-auto"></div>
-                <button id="downloadBtn" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2.5 px-4 rounded-lg transition-all shadow text-sm flex items-center justify-center gap-2">
-                    <span>📥</span> PNG डाऊनलोड करा
-                </button>
-            </div>
-            <p id="errorMsg" class="hidden text-sm text-red-600 bg-red-50 border border-red-200 rounded-lg px-3 py-2"></p>
-        </div>
+<main class="container">
+
+<section class="hero">
+  <h1>QR Code Generator</h1>
+
+  <p>
+    Enter any link, text, or contact detail — get an instant QR code.
+  </p>
+</section>
+
+<section class="card">
+
+  <h2>Text or Link</h2>
+  <textarea id="qrText" rows="3" placeholder="e.g. https://nidartools.com"></textarea>
+
+  <div class="grid mt-20">
+    <div>
+      <label>Size</label>
+      <select id="qrSize">
+        <option value="200">Small (200px)</option>
+        <option value="300" selected>Medium (300px)</option>
+        <option value="500">Large (500px)</option>
+      </select>
     </div>
+    <div>
+      <label>Color</label>
+      <input type="color" id="qrColor" value="#0d6efd">
+    </div>
+  </div>
 
-    <footer class="bg-slate-900 text-slate-500 py-6 text-center text-xs border-t border-slate-800">
-        <div class="flex flex-wrap justify-center gap-x-4 gap-y-1 font-semibold mb-2">
-            <a href="/" class="hover:text-white">सर्व टूल्स</a>
-            <a href="about.html" class="hover:text-white">आमच्याबद्दल</a>
-            <a href="contact.html" class="hover:text-white">संपर्क</a>
-            <a href="privacy-policy.html" class="hover:text-white">प्रायव्हसी पॉलिसी</a>
-        </div>
-        <p>© 2026 niDar Tools. Developed by niDar Marketing And Services.</p>
-        <p class="text-[10px] text-slate-600 mt-1">सर्व प्रक्रिया तुमच्या स्वतःच्या ब्राऊझरमध्ये होते, कोणताही डेटा गोळा केला जात नाही.</p>
-    </footer>
+  <button id="genBtn" class="btn mt-20">Generate QR Code</button>
 
-    <script>
-        const qrText = document.getElementById('qrText');
-        const qrSize = document.getElementById('qrSize');
-        const qrColor = document.getElementById('qrColor');
-        const genBtn = document.getElementById('genBtn');
-        const resultBox = document.getElementById('resultBox');
-        const qrCanvas = document.getElementById('qrCanvas');
-        const downloadBtn = document.getElementById('downloadBtn');
-        const errorMsg = document.getElementById('errorMsg');
+  <p id="errorMsg" class="alert alert-danger hidden mt-20"></p>
 
-        genBtn.addEventListener('click', () => {
-            errorMsg.classList.add('hidden');
-            const text = qrText.value.trim();
-            if (!text) {
-                errorMsg.textContent = 'कृपया मजकूर किंवा लिंक टाका.';
-                errorMsg.classList.remove('hidden');
-                return;
-            }
+</section>
 
-            qrCanvas.innerHTML = '';
-            new QRCode(qrCanvas, {
-                text: text,
-                width: parseInt(qrSize.value),
-                height: parseInt(qrSize.value),
-                colorDark: qrColor.value,
-                colorLight: '#ffffff',
-                correctLevel: QRCode.CorrectLevel.H
-            });
+<section class="card hidden text-center" id="resultCard">
 
-            resultBox.classList.remove('hidden');
-            resultBox.scrollIntoView({ behavior: 'smooth' });
-        });
+  <h2>Your QR Code</h2>
 
-        downloadBtn.addEventListener('click', () => {
-            const img = qrCanvas.querySelector('img');
-            const canvas = qrCanvas.querySelector('canvas');
-            const src = img ? img.src : (canvas ? canvas.toDataURL('image/png') : null);
-            if (!src) return;
-            const a = document.createElement('a');
-            a.href = src;
-            a.download = 'nidar_qrcode.png';
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-        });
-    </script>
+  <div id="qrCanvas" class="flex-center mt-20"></div>
+
+  <button id="downloadBtn" class="btn mt-20">Download PNG</button>
+
+</section>
+
+</main>
+
+<footer>
+
+<p>
+© 2026 niDar Tools
+</p>
+
+<p>
+Developed by
+<strong>niDar Marketing And Services</strong>
+</p>
+
+</footer>
+
+<script src="assets/js/script.js"></script>
+<script>
+(function () {
+  const qrText = document.getElementById('qrText');
+  const qrSize = document.getElementById('qrSize');
+  const qrColor = document.getElementById('qrColor');
+  const genBtn = document.getElementById('genBtn');
+  const resultCard = document.getElementById('resultCard');
+  const qrCanvas = document.getElementById('qrCanvas');
+  const downloadBtn = document.getElementById('downloadBtn');
+  const errorMsg = document.getElementById('errorMsg');
+
+  genBtn.addEventListener('click', () => {
+    errorMsg.classList.add('hidden');
+    const text = qrText.value.trim();
+    if (!text) {
+      errorMsg.textContent = 'Please enter some text or a link.';
+      errorMsg.classList.remove('hidden');
+      return;
+    }
+
+    qrCanvas.innerHTML = '';
+    new QRCode(qrCanvas, {
+      text: text,
+      width: parseInt(qrSize.value),
+      height: parseInt(qrSize.value),
+      colorDark: qrColor.value,
+      colorLight: '#ffffff',
+      correctLevel: QRCode.CorrectLevel.H
+    });
+
+    resultCard.classList.remove('hidden');
+    resultCard.scrollIntoView({ behavior: 'smooth' });
+  });
+
+  downloadBtn.addEventListener('click', () => {
+    const canvas = qrCanvas.querySelector('canvas');
+    if (!canvas) {
+      errorMsg.textContent = 'Please generate a QR code first.';
+      errorMsg.classList.remove('hidden');
+      return;
+    }
+    canvas.toBlob((blob) => {
+      if (!blob) return;
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'nidar_qrcode.png';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    }, 'image/png');
+  });
+})();
+</script>
+
 </body>
 </html>
