@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Favicon &amp; Icon Kit Generator - niDar Tools</title>
+
+<meta name="description" content="Upload one image/logo and instantly generate a complete website icon kit — favicon.ico, favicon-16x16, favicon-32x32, apple-touch-icon, android icons (192/512) — all packed in one ZIP. Free, and everything runs in your browser.">
+<meta name="keywords" content="favicon generator, icon kit generator, website icon generator, logo to favicon, apple touch icon generator, android icon generator">
+
+<link rel="canonical" href="https://nidartools.com/icon-kit-generator.html">
+<link rel="stylesheet" href="assets/css/style.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+</head>
+
+<body>
+
+<header>
+  <div class="container nav">
+    <h2>niDar Tools</h2>
+
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+      <a href="support.html">Support</a>
+    </nav>
+  </div>
+</header>
+
+<main class="container">
+
+<section class="hero">
+  <h1>Favicon &amp; Icon Kit Generator</h1>
+
+  <p>
+    Upload one logo or image — get every icon size and format
+    your website needs, packed in a single ZIP. Nothing is
+    uploaded anywhere; everything is generated on your own device.
+  </p>
+</section>
+
+<section class="card">
+
+  <h2>1. Upload Your Image</h2>
+
+  <input type="file" id="fileInput" accept="image/*">
+
+  <div id="previewWrap" class="hidden mt-20">
+    <p><strong>Preview:</strong></p>
+    <img id="previewImg" style="max-width:200px;border-radius:10px;border:1px solid var(--border);">
+  </div>
+
+</section>
+
+<section class="card">
+
+  <h2>2. Generate Icon Kit</h2>
+
+  <p>
+    This will create the following files:
+    favicon.ico, favicon-16x16.png, favicon-32x32.png,
+    apple-touch-icon.png (180×180), icon-192.png, icon-512.png.
+  </p>
+
+  <button id="genBtn" class="btn">⚙️ Generate Icon Kit</button>
+
+</section>
+
+<section class="card hidden" id="resultCard">
+
+  <h2>✅ Your Icon Kit is Ready</h2>
+
+  <p id="resultInfo"></p>
+
+  <button id="downloadBtn" class="btn">📥 Download ZIP</button>
+
+</section>
+
+<section class="card hidden alert alert-danger" id="errorCard">
+  <p id="errorMsg"></p>
+</section>
+
+</main>
+
+<footer>
+
+<p>
+© 2026 niDar Tools
+</p>
+
+<p>
+Developed by
+<strong>niDar Marketing And Services</strong>
+</p>
+
+</footer>
+
+<script src="assets/js/script.js"></script>
+<script>
+(function () {
+  const fileInput = document.getElementById('fileInput');
+  const previewWrap = document.getElementById('previewWrap');
+  const previewImg = document.getElementById('previewImg');
+  const genBtn = document.getElementById('genBtn');
+  const resultCard = document.getElementById('resultCard');
+  const resultInfo = document.getElementById('resultInfo');
+  const downloadBtn = document.getElementById('downloadBtn');
+  const errorCard = document.getElementById('errorCard');
+  const errorMsg = document.getElementById('errorMsg');
+
+  let sourceImg = new Image();
+  let zipBlob = null;
+
+  fileInput.addEventListener('change', (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = (ev) => {
+      sourceImg = new Image();
+      sourceImg.onload = () => {
+        previewImg.src = sourceImg.src;
+        previewWrap.classList.remove('hidden');
+      };
+      sourceImg.src = ev.target.result;
+    };
+    reader.readAsDataURL(file);
+  });
+
+  function resizeToBlob(size) {
+    return new Promise((resolve) => {
+      const canvas = document.createElement('canvas');
+      canvas.width = size;
+      canvas.height = size;
+      const ctx = canvas.getContext('2d');
+      const ratio = Math.min(size / sourceImg.width, size / sourceImg.height);
+      const w = sourceImg.width * ratio;
+      const h = sourceImg.height * ratio;
+      const x = (size - w) / 2;
+      const y = (size - h) / 2;
+      ctx.clearRect(0, 0, size, size);
+      ctx.drawImage(sourceImg, x, y, w, h);
+      canvas.toBlob((blob) => resolve(blob), 'image/png');
+    });
+  }
+
+  async function buildIco(pngBlob) {
+    const pngBuf = await pngBlob.arrayBuffer();
+    const pngBytes = new Uint8Array(pngBuf);
+
+    const headerSize = 6;
+    const entrySize = 16;
+    const offset = headerSize + entrySize;
+    const icoBuf = new ArrayBuffer(offset + pngBytes.length);
+    const view = new DataView(icoBuf);
+
+    view.setUint16(0, 0, true);
+    view.setUint16(2, 1, true);
+    view.setUint16(4, 1, true);
+
+    view.setUint8(6, 32);
+    view.setUint8(7, 32);
+    view.setUint8(8, 0);
+    view.setUint8(9, 0);
+    view.setUint16(10, 1, true);
+    view.setUint16(12, 32, true);
+    view.setUint32(14, pngBytes.length, true);
+    view.setUint32(18, offset, true);
+
+    const bytes = new Uint8Array(icoBuf);
+    bytes.set(pngBytes, offset);
+
+    return new Blob([bytes], { type: 'image/x-icon' });
+  }
+
+  genBtn.addEventListener('click', async () => {
+    errorCard.classList.add('hidden');
+
+    if (!sourceImg.src) {
+      errorMsg.textContent = 'Please upload an image first.';
+      errorCard.classList.remove('hidden');
+      return;
+    }
+
+    genBtn.disabled = true;
+    genBtn.textContent = '⏳ Generating...';
+
+    try {
+      const zip = new JSZip();
+
+      const sizes = [
+        { name: 'favicon-16x16.png', size: 16 },
+        { name: 'favicon-32x32.png', size: 32 },
+        { name: 'apple-touch-icon.png', size: 180 },
+        { name: 'icon-192.png', size: 192 },
+        { name: 'icon-512.png', size: 512 },
+      ];
+
+      for (const item of sizes) {
+        const blob = await resizeToBlob(item.size);
+        zip.file(item.name, blob);
+      }
+
+      const icoSourceBlob = await resizeToBlob(32);
+      const icoBlob = await buildIco(icoSourceBlob);
+      zip.file('favicon.ico', icoBlob);
+
+      zipBlob = await zip.generateAsync({ type: 'blob' });
+
+      resultInfo.textContent = 'Includes favicon.ico, favicon-16x16.png, favicon-32x32.png, apple-touch-icon.png, icon-192.png, icon-512.png — (' + (zipBlob.size / 1024).toFixed(1) + ' KB)';
+      resultCard.classList.remove('hidden');
+      resultCard.scrollIntoView({ behavior: 'smooth' });
+    } catch (err) {
+      errorMsg.textContent = 'Something went wrong while generating the icon kit. Please try a different image.';
+      errorCard.classList.remove('hidden');
+    }
+
+    genBtn.disabled = false;
+    genBtn.textContent = '⚙️ Generate Icon Kit';
+  });
+
+  downloadBtn.addEventListener('click', () => {
+    if (!zipBlob) return;
+    const url = URL.createObjectURL(zipBlob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'nidar-icon-kit.zip';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  });
+})();
+</script>
+
+</body>
+</html>
