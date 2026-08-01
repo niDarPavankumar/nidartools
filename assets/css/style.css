@@ -831,3 +831,90 @@ cursor:pointer;
 background:var(--primary-dark);
 transform:translateY(-4px);
 }
+
+/* =====================================================
+   Part 5 - Enhanced Buttons & Cards (Premium Look)
+   ===================================================== */
+
+.btn{
+background:linear-gradient(135deg,var(--primary),#4f8cff);
+box-shadow:0 4px 14px rgba(13,110,253,.35);
+font-weight:600;
+letter-spacing:.2px;
+border:none;
+cursor:pointer;
+font-size:15px;
+}
+
+.btn:hover{
+background:linear-gradient(135deg,var(--primary-dark),var(--primary));
+box-shadow:0 6px 20px rgba(13,110,253,.45);
+transform:translateY(-2px);
+}
+
+.btn:active{
+transform:translateY(0);
+box-shadow:0 2px 8px rgba(13,110,253,.35);
+}
+
+.btn:disabled{
+opacity:.6;
+cursor:not-allowed;
+transform:none;
+}
+
+.card{
+border-radius:16px;
+transition:transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+}
+
+.card:hover{
+transform:translateY(-4px);
+box-shadow:0 16px 34px rgba(13,110,253,.12);
+border-color:rgba(13,110,253,.25);
+}
+
+input[type="text"],
+input[type="number"],
+input[type="date"],
+input[type="file"],
+select,
+textarea{
+border-radius:10px;
+transition:border-color .2s ease, box-shadow .2s ease;
+}
+
+input[type="text"]:focus,
+input[type="number"]:focus,
+input[type="date"]:focus,
+select:focus,
+textarea:focus{
+box-shadow:0 0 0 4px rgba(13,110,253,.12);
+}
+
+input[type="color"]{
+border-radius:8px;
+border:1px solid var(--border);
+width:44px;
+height:38px;
+cursor:pointer;
+padding:2px;
+}
+
+.stat-box{
+border-radius:14px;
+transition:transform .2s ease;
+}
+
+.stat-box:hover{
+transform:translateY(-3px);
+}
+
+.stat-box h2{
+font-size:28px;
+}
+
+.alert{
+border-radius:10px;
+font-size:14px;
+}
