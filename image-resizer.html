@@ -278,8 +278,8 @@ Developed by
 
   bgType.addEventListener('change', () => {
     bgColorContainer.classList.toggle('hidden', bgType.value !== 'custom');
-    const usesRealBg = bgType.value !== 'none' && bgType.value !== 'transparent';
-    aiOption.classList.toggle('hidden', !usesRealBg);
+    const needsBackgroundHandling = bgType.value !== 'none';
+    aiOption.classList.toggle('hidden', !needsBackgroundHandling);
     if (bgType.value === 'transparent' && formatSelect.value !== 'png') {
       formatSelect.value = 'png';
     }
@@ -359,10 +359,21 @@ Developed by
         const maskCanvas = document.createElement('canvas');
         maskCanvas.width = w; maskCanvas.height = h;
         const mctx = maskCanvas.getContext('2d');
-        mctx.filter = 'blur(1.5px)';
+        mctx.filter = 'blur(1px)';
         mctx.drawImage(results.segmentationMask, 0, 0, w, h);
         mctx.filter = 'none';
-        const maskData = mctx.getImageData(0, 0, w, h).data;
+        const rawMask = mctx.getImageData(0, 0, w, h).data;
+
+        const LOW = 90, HIGH = 200;
+        const maskData = new Uint8ClampedArray(rawMask.length);
+        for (let i = 0; i < rawMask.length; i += 4) {
+          const v = rawMask[i];
+          let a;
+          if (v <= LOW) a = 0;
+          else if (v >= HIGH) a = 255;
+          else a = Math.round(((v - LOW) / (HIGH - LOW)) * 255);
+          maskData[i] = a;
+        }
 
         const outCanvas = document.createElement('canvas');
         outCanvas.width = w; outCanvas.height = h;
@@ -426,9 +437,9 @@ Developed by
     aiStatus.classList.add('hidden');
 
     let sourceImg = originalImg;
-    const usesRealBg = bgType.value !== 'none' && bgType.value !== 'transparent';
+    const needsBackgroundHandling = bgType.value !== 'none';
 
-    if (usesRealBg && aiRemoveBg.checked) {
+    if (needsBackgroundHandling && aiRemoveBg.checked) {
       try {
         if (!cutoutImg) {
           aiStatus.textContent = 'AI is detecting the person... (first use downloads the model, may take a moment)';
