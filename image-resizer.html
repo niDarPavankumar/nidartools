@@ -62,7 +62,16 @@
 
   <h2>2. Dimensions</h2>
 
-  <div class="grid">
+  <label>Photo size preset</label>
+  <select id="sizePreset">
+    <option value="custom">Custom (set below)</option>
+    <option value="3.5x4.5">Passport / ID Photo — 3.5 × 4.5 cm</option>
+    <option value="2.5x3.5">PAN Card / Voter ID (SIR) — 2.5 × 3.5 cm</option>
+    <option value="2x2in">US Visa / Passport — 2 × 2 in</option>
+    <option value="35x45mm">UK/EU Passport — 35 × 45 mm</option>
+  </select>
+
+  <div class="grid mt-20">
     <div>
       <label>Unit</label>
       <select id="unitSelect">
@@ -113,14 +122,26 @@
 
   <h2 class="mt-20">4. Background</h2>
 
-  <label>
-    <input type="checkbox" id="changeBg">
-    Add a solid background
-  </label>
+  <label>Fit mode</label>
+  <select id="fitMode">
+    <option value="fill">Fill frame exactly (crop, no border) — best for passport photos</option>
+    <option value="fit">Show full photo (may add a border on the shorter side)</option>
+  </select>
+
+  <label class="mt-20">Background type</label>
+  <select id="bgType">
+    <option value="none">Keep original / transparency as-is</option>
+    <option value="transparent">Transparent (PNG only)</option>
+    <option value="white">White</option>
+    <option value="lightblue">Light Blue (common official colour)</option>
+    <option value="lightgrey">Light Grey</option>
+    <option value="red">Red (some ID photo requirements)</option>
+    <option value="custom">Custom colour</option>
+  </select>
   <div id="bgColorContainer" class="hidden mt-20">
     <input type="color" id="bgColor" value="#ffffff">
   </div>
-  <p style="font-size:12px;">Note: without this, PNG/WEBP transparency stays as-is; this only fills empty space where the photo doesn't fill the frame.</p>
+  <p style="font-size:12px;">Note: "Fill frame exactly" removes any border by cropping instead of padding. Transparent background requires PNG output format.</p>
 
   <div id="aiOption" class="hidden mt-20">
     <label>
@@ -130,7 +151,10 @@
     <p id="aiStatus" class="alert hidden mt-20"></p>
   </div>
 
-  <button id="processBtn" class="btn mt-20">Resize &amp; Compress</button>
+  <div class="flex mt-20" style="align-items:center;gap:12px;">
+    <button id="processBtn" class="btn">Resize &amp; Compress</button>
+    <img id="loadingSpinner" src="assets/favicon/favicon-32x32.png" class="hidden" style="width:28px;height:28px;animation:spin 1s linear infinite;">
+  </div>
 
 </section>
 
@@ -174,13 +198,15 @@ Developed by
   const infoOrigDim = document.getElementById('infoOrigDim');
   const settingsSection = document.getElementById('settingsSection');
 
+  const sizePreset = document.getElementById('sizePreset');
   const unitSelect = document.getElementById('unitSelect');
   const imgWidth = document.getElementById('imgWidth');
   const imgHeight = document.getElementById('imgHeight');
   const aspectRatio = document.getElementById('aspectRatio');
   const fileSizeVal = document.getElementById('fileSizeVal');
   const fileSizeUnit = document.getElementById('fileSizeUnit');
-  const changeBg = document.getElementById('changeBg');
+  const fitMode = document.getElementById('fitMode');
+  const bgType = document.getElementById('bgType');
   const bgColorContainer = document.getElementById('bgColorContainer');
   const bgColor = document.getElementById('bgColor');
   const formatSelect = document.getElementById('formatSelect');
@@ -188,6 +214,7 @@ Developed by
   const aiOption = document.getElementById('aiOption');
   const aiRemoveBg = document.getElementById('aiRemoveBg');
   const aiStatus = document.getElementById('aiStatus');
+  const loadingSpinner = document.getElementById('loadingSpinner');
 
   const processBtn = document.getElementById('processBtn');
   const resultCard = document.getElementById('resultCard');
@@ -203,6 +230,23 @@ Developed by
   let segmenter = null;
 
   const DPI = 300;
+
+  const PRESETS = {
+    '3.5x4.5': { unit: 'cm', w: 3.5, h: 4.5 },
+    '2.5x3.5': { unit: 'cm', w: 2.5, h: 3.5 },
+    '2x2in':   { unit: 'in', w: 2, h: 2 },
+    '35x45mm': { unit: 'mm', w: 35, h: 45 },
+  };
+
+  sizePreset.addEventListener('change', () => {
+    const p = PRESETS[sizePreset.value];
+    if (!p) return;
+    aspectRatio.checked = false;
+    unitSelect.value = p.unit;
+    unitSelect.dataset.prevUnit = p.unit;
+    imgWidth.value = p.w;
+    imgHeight.value = p.h;
+  });
 
   function pxToUnit(px, unit) {
     if (unit === 'px') return Math.round(px);
@@ -220,9 +264,25 @@ Developed by
     return num;
   }
 
-  changeBg.addEventListener('change', () => {
-    bgColorContainer.classList.toggle('hidden', !changeBg.checked);
-    aiOption.classList.toggle('hidden', !changeBg.checked);
+  const BG_COLORS = {
+    white: '#ffffff',
+    lightblue: '#a9d3f5',
+    lightgrey: '#d9d9d9',
+    red: '#c0392b',
+  };
+
+  function currentBgColor() {
+    if (bgType.value === 'custom') return bgColor.value;
+    return BG_COLORS[bgType.value] || '#ffffff';
+  }
+
+  bgType.addEventListener('change', () => {
+    bgColorContainer.classList.toggle('hidden', bgType.value !== 'custom');
+    const usesRealBg = bgType.value !== 'none' && bgType.value !== 'transparent';
+    aiOption.classList.toggle('hidden', !usesRealBg);
+    if (bgType.value === 'transparent' && formatSelect.value !== 'png') {
+      formatSelect.value = 'png';
+    }
   });
 
   fileInput.addEventListener('change', (e) => {
@@ -329,37 +389,46 @@ Developed by
     canvas.height = h;
     ctx.clearRect(0, 0, w, h);
 
-    if (changeBg.checked) {
-      ctx.fillStyle = bgColor.value;
+    const srcW = srcImg.naturalWidth || srcImg.width;
+    const srcH = srcImg.naturalHeight || srcImg.height;
+    const srcRatio = srcW / srcH;
+    const dstRatio = w / h;
+
+    const wantsColorFill = bgType.value !== 'none' && bgType.value !== 'transparent';
+    const wantsTransparent = bgType.value === 'transparent';
+
+    if (wantsColorFill) {
+      ctx.fillStyle = currentBgColor();
       ctx.fillRect(0, 0, w, h);
-      const srcW = srcImg.naturalWidth || srcImg.width;
-      const srcH = srcImg.naturalHeight || srcImg.height;
-      const srcRatio = srcW / srcH;
-      const dstRatio = w / h;
-      let drawW, drawH;
-      if (srcRatio > dstRatio) { drawW = w; drawH = w / srcRatio; }
-      else { drawH = h; drawW = h * srcRatio; }
-      const dx = (w - drawW) / 2;
-      const dy = (h - drawH) / 2;
-      ctx.drawImage(srcImg, dx, dy, drawW, drawH);
-    } else if (formatSelect.value === 'png') {
-      ctx.drawImage(srcImg, 0, 0, w, h);
-    } else {
+    } else if (!wantsTransparent && formatSelect.value !== 'png') {
       ctx.fillStyle = '#ffffff';
       ctx.fillRect(0, 0, w, h);
-      ctx.drawImage(srcImg, 0, 0, w, h);
     }
+
+    let drawW, drawH;
+    if (fitMode.value === 'fill') {
+      if (srcRatio > dstRatio) { drawH = h; drawW = h * srcRatio; }
+      else { drawW = w; drawH = w / srcRatio; }
+    } else {
+      if (srcRatio > dstRatio) { drawW = w; drawH = w / srcRatio; }
+      else { drawH = h; drawW = h * srcRatio; }
+    }
+    const dx = (w - drawW) / 2;
+    const dy = (h - drawH) / 2;
+    ctx.drawImage(srcImg, dx, dy, drawW, drawH);
   }
 
   processBtn.addEventListener('click', async () => {
     if (!loadedFile) return;
     processBtn.disabled = true;
     processBtn.textContent = '⏳ Processing...';
+    loadingSpinner.classList.remove('hidden');
     aiStatus.classList.add('hidden');
 
     let sourceImg = originalImg;
+    const usesRealBg = bgType.value !== 'none' && bgType.value !== 'transparent';
 
-    if (changeBg.checked && aiRemoveBg.checked) {
+    if (usesRealBg && aiRemoveBg.checked) {
       try {
         if (!cutoutImg) {
           aiStatus.textContent = 'AI is detecting the person... (first use downloads the model, may take a moment)';
@@ -381,6 +450,10 @@ Developed by
 
     let limitKB = parseFloat(fileSizeVal.value);
     if (fileSizeUnit.value === 'mb') limitKB *= 1024;
+
+    if (bgType.value === 'transparent' && formatSelect.value !== 'png') {
+      formatSelect.value = 'png';
+    }
 
     const outFormat = formatSelect.value;
     const mimeType = outFormat === 'png' ? 'image/png' : 'image/jpeg';
@@ -431,6 +504,7 @@ Developed by
 
     processBtn.disabled = false;
     processBtn.textContent = 'Resize & Compress';
+    loadingSpinner.classList.add('hidden');
     resultCard.scrollIntoView({ behavior: 'smooth' });
   });
 
