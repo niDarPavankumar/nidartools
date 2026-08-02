@@ -151,8 +151,28 @@
     <p id="aiStatus" class="alert hidden mt-20"></p>
   </div>
 
+  <h2 class="mt-20">5. Adjustments</h2>
+
+  <div class="grid">
+    <button id="rotateLeftBtn" class="btn" type="button">⟲ Rotate Left</button>
+    <button id="rotateRightBtn" class="btn" type="button">⟳ Rotate Right</button>
+    <button id="flipBtn" class="btn" type="button">⇋ Flip Horizontal</button>
+  </div>
+
+  <div class="grid mt-20">
+    <div>
+      <label>Brightness (<span id="brightnessVal">100</span>%)</label>
+      <input type="range" id="brightness" min="50" max="150" value="100">
+    </div>
+    <div>
+      <label>Contrast (<span id="contrastVal">100</span>%)</label>
+      <input type="range" id="contrast" min="50" max="150" value="100">
+    </div>
+  </div>
+
   <div class="flex mt-20" style="align-items:center;gap:12px;">
     <button id="processBtn" class="btn">Resize &amp; Compress</button>
+    <button id="resetBtn" class="btn" type="button" style="background:var(--secondary);">↺ Start Over</button>
     <img id="loadingSpinner" src="assets/favicon/favicon-32x32.png" class="hidden" style="width:28px;height:28px;animation:spin 1s linear infinite;">
   </div>
 
@@ -220,6 +240,17 @@ Developed by
   const resultCard = document.getElementById('resultCard');
   const newFileSize = document.getElementById('newFileSize');
   const downloadBtn = document.getElementById('downloadBtn');
+  const rotateLeftBtn = document.getElementById('rotateLeftBtn');
+  const rotateRightBtn = document.getElementById('rotateRightBtn');
+  const flipBtn = document.getElementById('flipBtn');
+  const brightness = document.getElementById('brightness');
+  const contrast = document.getElementById('contrast');
+  const brightnessVal = document.getElementById('brightnessVal');
+  const contrastVal = document.getElementById('contrastVal');
+  const resetBtn = document.getElementById('resetBtn');
+
+  let rotation = 0;   // 0, 90, 180, 270
+  let flipped = false;
 
   let originalImg = new Image();
   let loadedFile = null;
@@ -230,6 +261,41 @@ Developed by
   let segmenter = null;
 
   const DPI = 300;
+
+  rotateLeftBtn.addEventListener('click', () => {
+    rotation = (rotation - 90 + 360) % 360;
+    cutoutImg = null;
+  });
+  rotateRightBtn.addEventListener('click', () => {
+    rotation = (rotation + 90) % 360;
+    cutoutImg = null;
+  });
+  flipBtn.addEventListener('click', () => {
+    flipped = !flipped;
+    cutoutImg = null;
+  });
+  brightness.addEventListener('input', () => { brightnessVal.textContent = brightness.value; });
+  contrast.addEventListener('input', () => { contrastVal.textContent = contrast.value; });
+
+  resetBtn.addEventListener('click', () => {
+    fileInput.value = '';
+    loadedFile = null;
+    cutoutImg = null;
+    rotation = 0;
+    flipped = false;
+    brightness.value = 100; brightnessVal.textContent = '100';
+    contrast.value = 100; contrastVal.textContent = '100';
+    sizePreset.value = 'custom';
+    fitMode.value = 'fill';
+    bgType.value = 'none';
+    bgColorContainer.classList.add('hidden');
+    aiOption.classList.add('hidden');
+    aiRemoveBg.checked = false;
+    previewWrap.classList.add('hidden');
+    settingsSection.classList.add('hidden');
+    resultCard.classList.add('hidden');
+    sizeWarning.classList.add('hidden');
+  });
 
   const PRESETS = {
     '3.5x4.5': { unit: 'cm', w: 3.5, h: 4.5 },
@@ -296,6 +362,8 @@ Developed by
     }
     loadedFile = file;
     cutoutImg = null;
+    rotation = 0;
+    flipped = false;
     infoOrigSize.textContent = (file.size / 1024).toFixed(1) + ' KB';
     const reader = new FileReader();
     reader.onload = (e) => { originalImg.src = e.target.result; };
@@ -400,8 +468,11 @@ Developed by
     canvas.height = h;
     ctx.clearRect(0, 0, w, h);
 
-    const srcW = srcImg.naturalWidth || srcImg.width;
-    const srcH = srcImg.naturalHeight || srcImg.height;
+    const rawW = srcImg.naturalWidth || srcImg.width;
+    const rawH = srcImg.naturalHeight || srcImg.height;
+    const rotated90 = (rotation === 90 || rotation === 270);
+    const srcW = rotated90 ? rawH : rawW;
+    const srcH = rotated90 ? rawW : rawH;
     const srcRatio = srcW / srcH;
     const dstRatio = w / h;
 
@@ -424,9 +495,16 @@ Developed by
       if (srcRatio > dstRatio) { drawW = w; drawH = w / srcRatio; }
       else { drawH = h; drawW = h * srcRatio; }
     }
-    const dx = (w - drawW) / 2;
-    const dy = (h - drawH) / 2;
-    ctx.drawImage(srcImg, dx, dy, drawW, drawH);
+
+    ctx.save();
+    ctx.filter = `brightness(${brightness.value}%) contrast(${contrast.value}%)`;
+    ctx.translate(w / 2, h / 2);
+    ctx.rotate((rotation * Math.PI) / 180);
+    if (flipped) ctx.scale(-1, 1);
+    const paintW = rotated90 ? drawH : drawW;
+    const paintH = rotated90 ? drawW : drawH;
+    ctx.drawImage(srcImg, -paintW / 2, -paintH / 2, paintW, paintH);
+    ctx.restore();
   }
 
   processBtn.addEventListener('click', async () => {
