@@ -35,7 +35,7 @@
 
 <div class="container">
 
-<nav class="navbar nav">
+<nav class="navbar">
 
 <a href="index.html" class="logo">
 niDar <span>Tools</span>
@@ -45,7 +45,7 @@ niDar <span>Tools</span>
 ☰
 </button>
 
-<ul class="nav-links" aria-label="Primary Navigation">
+<ul class="nav-links">
 
 <li><a href="index.html">Home</a></li>
 
@@ -64,7 +64,7 @@ niDar <span>Tools</span>
 </ul>
 
 <button
-id="themeToggle" aria-label="Toggle dark mode" title="Toggle dark mode"
+id="themeToggle"
 class="btn">
 
 🌙 Theme
