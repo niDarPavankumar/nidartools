@@ -920,6 +920,73 @@ font-size:14px;
 }
 
 /* =====================================================
+   Part 6 - Improved Hamburger Menu Button
+   ===================================================== */
+
+.menu-btn{
+width:44px;
+height:44px;
+display:flex;
+align-items:center;
+justify-content:center;
+border-radius:10px;
+background:rgba(13,110,253,.08);
+color:var(--primary);
+font-size:24px;
+line-height:1;
+transition:var(--transition);
+}
+
+.menu-btn:hover,
+.menu-btn:active{
+background:rgba(13,110,253,.18);
+transform:scale(0.96);
+}
+
+body.dark .menu-btn{
+background:rgba(255,255,255,.08);
+color:#fff;
+}
+
+body.dark .menu-btn:hover,
+body.dark .menu-btn:active{
+background:rgba(255,255,255,.16);
+}
+
+/* =====================================================
+   Part 6 - Improved Hamburger Menu Button
+   ===================================================== */
+
+.menu-btn{
+width:44px;
+height:44px;
+display:flex;
+align-items:center;
+justify-content:center;
+border-radius:10px;
+background:rgba(13,110,253,.08);
+color:var(--primary);
+font-size:24px;
+line-height:1;
+transition:var(--transition);
+}
+
+.menu-btn:hover,
+.menu-btn:active{
+background:rgba(13,110,253,.18);
+transform:scale(0.96);
+}
+
+body.dark .menu-btn{
+background:rgba(255,255,255,.08);
+color:#fff;
+}
+
+body.dark .menu-btn:hover,
+body.dark .menu-btn:active{
+background:rgba(255,255,255,.16);
+}
+
 /* =====================================================
    Part 6 - Improved Hamburger Menu Button
    ===================================================== */
