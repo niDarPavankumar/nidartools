@@ -113,6 +113,21 @@ Developed by
     return 0.299 * r + 0.587 * g + 0.114 * b;
   }
 
+  function ensureScannableColor(hex) {
+    let r = parseInt(hex.substr(1, 2), 16);
+    let g = parseInt(hex.substr(3, 2), 16);
+    let b = parseInt(hex.substr(5, 2), 16);
+    let factor = 1;
+    while ((0.299 * r + 0.587 * g + 0.114 * b) > 120 && factor > 0.1) {
+      factor -= 0.05;
+      r = Math.round(r * (1 - 0.05));
+      g = Math.round(g * (1 - 0.05));
+      b = Math.round(b * (1 - 0.05));
+    }
+    const toHex = (v) => v.toString(16).padStart(2, '0');
+    return { hex: '#' + toHex(r) + toHex(g) + toHex(b), adjusted: factor < 1 };
+  }
+
   genBtn.addEventListener('click', () => {
     errorMsg.classList.add('hidden');
     const text = qrText.value.trim();
@@ -122,9 +137,9 @@ Developed by
       return;
     }
 
-    const luminance = colorLuminance(qrColor.value);
-    if (luminance > 140) {
-      errorMsg.textContent = 'Warning: this colour may be too light to scan reliably. For best results, choose a darker colour (e.g. dark blue, dark green, black).';
+    const safe = ensureScannableColor(qrColor.value);
+    if (safe.adjusted) {
+      errorMsg.textContent = 'Note: your chosen colour was too light to scan reliably, so it was automatically darkened for this QR code.';
       errorMsg.classList.remove('hidden');
     }
 
@@ -133,7 +148,7 @@ Developed by
       text: text,
       width: parseInt(qrSize.value),
       height: parseInt(qrSize.value),
-      colorDark: qrColor.value,
+      colorDark: safe.hex,
       colorLight: '#ffffff',
       correctLevel: QRCode.CorrectLevel.H
     });
