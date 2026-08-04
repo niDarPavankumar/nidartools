@@ -1,0 +1,101 @@
+
+compressBtn.addEventListener("click",()=>{
+
+if(!selectedFile){
+
+result.innerHTML=
+'<div class="alert alert-danger">Please select an image first.</div>';
+
+return;
+
+}
+
+const reader=new FileReader();
+
+reader.onload=(e)=>{
+
+const img=new Image();
+
+img.onload=()=>{
+
+const canvas=document.createElement("canvas");
+
+canvas.width=img.width;
+canvas.height=img.height;
+
+const ctx=canvas.getContext("2d");
+
+ctx.drawImage(img,0,0);
+
+const qualityLevel=Number(quality.value)/100;
+
+canvas.toBlob((blob)=>{
+
+if(!blob){
+
+result.innerHTML=
+'<div class="alert alert-danger">Compression failed.</div>';
+
+return;
+
+}
+
+const originalSize=selectedFile.size;
+
+const compressedSize=blob.size;
+
+const savedPercent=
+
+(
+100-
+(compressedSize/originalSize*100)
+
+).toFixed(1);
+
+const downloadUrl=
+
+URL.createObjectURL(blob);
+
+result.innerHTML=`
+
+<div class="card">
+
+<h2>
+
+Compression Complete
+
+</h2>
+
+<p>
+
+Original Size :
+<strong>
+
+${(originalSize/1024).toFixed(1)} KB
+
+</strong>
+
+</p>
+
+<p>
+
+Compressed Size :
+<strong>
+
+${(compressedSize/1024).toFixed(1)} KB
+
+</strong>
+
+</p>
+
+<p>
+
+Saved :
+<strong>
+
+${savedPercent}%
+
+</strong>
+
+</p>
+

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+name="viewport"
+content="width=device-width,initial-scale=1.0">
+
+<title>
+
+Image Compressor
+-
+niDar Tools
+
+</title>
+
+<meta
+name="description"
+content="Compress JPG PNG and WebP images online for free.">
+
+<link
+rel="canonical"
+href="https://nidartools.com/image-compressor.html">
+
+<link
+rel="stylesheet"
+href="assets/css/style.css">
+
+</head>
+
+<body>
+
+<header>
+
+<div class="container">
+
+<nav class="navbar nav">
+
+<a
+href="index.html"
+class="logo">
+
+niDar
+<span>Tools</span>
+
+</a>
+
+<button
+class="menu-btn"
+aria-label="Menu">
+
+☰
+
+</button>
+
+<ul
+class="nav-links">
+
+<li>
+<a href="index.html">
+Home
+</a>
+</li>
+
+<li>
+<a href="about.html">
+About
+</a>
+</li>
+
+<li>
+<a href="contact.html">
+Contact
+</a>
+</li>
+
+<li>
+<a href="support.html">
+Support
+</a>
+</li>
+
+</ul>
+
+</nav>
+
+</div>
+
+</header>
+
+<main class="container">

@@ -1,0 +1,82 @@
+
+<section class="hero">
+
+<div class="container">
+
+<span class="badge">
+
+🖼️ Professional Image Compression
+
+</span>
+
+<h1>
+
+Compress Images
+Without Losing Quality
+
+</h1>
+
+<p>
+
+Reduce JPG, PNG and WebP image size
+directly in your browser.
+
+Fast, secure and completely free.
+
+</p>
+
+</div>
+
+</section>
+
+<section class="card">
+
+<h2>
+
+Select Image
+
+</h2>
+
+<input
+type="file"
+id="imageInput"
+accept="image/jpeg,image/png,image/webp">
+
+<div class="mt-20">
+
+<label>
+
+Compression Quality
+
+</label>
+
+<input
+type="range"
+id="quality"
+min="10"
+max="100"
+value="80">
+
+<p
+id="qualityValue">
+
+80%
+
+</p>
+
+</div>
+
+<div
+id="preview"
+class="mt-20">
+
+</div>
+
+<button
+id="compressBtn"
+class="btn mt-20">
+
+Compress Image
+
+</button>
+
