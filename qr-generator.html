@@ -106,6 +106,13 @@ Developed by
   const downloadBtn = document.getElementById('downloadBtn');
   const errorMsg = document.getElementById('errorMsg');
 
+  function colorLuminance(hex) {
+    const r = parseInt(hex.substr(1, 2), 16);
+    const g = parseInt(hex.substr(3, 2), 16);
+    const b = parseInt(hex.substr(5, 2), 16);
+    return 0.299 * r + 0.587 * g + 0.114 * b;
+  }
+
   genBtn.addEventListener('click', () => {
     errorMsg.classList.add('hidden');
     const text = qrText.value.trim();
@@ -113,6 +120,12 @@ Developed by
       errorMsg.textContent = 'Please enter some text or a link.';
       errorMsg.classList.remove('hidden');
       return;
+    }
+
+    const luminance = colorLuminance(qrColor.value);
+    if (luminance > 140) {
+      errorMsg.textContent = 'Warning: this colour may be too light to scan reliably. For best results, choose a darker colour (e.g. dark blue, dark green, black).';
+      errorMsg.classList.remove('hidden');
     }
 
     qrCanvas.innerHTML = '';
