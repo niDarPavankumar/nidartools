@@ -955,3 +955,37 @@ body.dark .menu-btn:hover,
 body.dark .menu-btn:active{
 background:rgba(255,255,255,.16);
 }
+
+/* ===== Professional Hamburger Button ===== */
+
+.menu-btn{
+display:flex !important;
+align-items:center;
+justify-content:center;
+
+width:48px;
+height:48px;
+
+padding:0;
+margin-right:8px;
+
+font-size:26px;
+line-height:1;
+
+background:var(--surface);
+border:1px solid rgba(0,0,0,.15);
+border-radius:14px;
+
+box-shadow:0 3px 10px rgba(0,0,0,.12);
+
+overflow:hidden;
+}
+
+.menu-btn:hover{
+transform:none;
+}
+
+.menu-btn:active{
+transform:scale(.97);
+}
+
