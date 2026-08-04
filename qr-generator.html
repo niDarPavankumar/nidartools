@@ -158,23 +158,29 @@ Developed by
   });
 
   downloadBtn.addEventListener('click', () => {
-    const canvas = qrCanvas.querySelector('canvas');
-    if (!canvas) {
+    const srcCanvas = qrCanvas.querySelector('canvas');
+    if (!srcCanvas) {
       errorMsg.textContent = 'Please generate a QR code first.';
       errorMsg.classList.remove('hidden');
       return;
     }
-    canvas.toBlob((blob) => {
-      if (!blob) return;
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = 'nidar_qrcode.png';
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-      URL.revokeObjectURL(url);
-    }, 'image/png');
+
+    const size = 2048;
+    const out = document.createElement('canvas');
+    out.width = size;
+    out.height = size;
+
+    const ctx = out.getContext('2d');
+    ctx.fillStyle = '#ffffff';
+    ctx.fillRect(0, 0, size, size);
+
+    const margin = Math.round(size * 0.08);
+    ctx.drawImage(srcCanvas, margin, margin, size - margin * 2, size - margin * 2);
+
+    const link = document.createElement('a');
+    link.download = 'nidar_qrcode.png';
+    link.href = out.toDataURL('image/png');
+    link.click();
   });
 })();
 </script>
