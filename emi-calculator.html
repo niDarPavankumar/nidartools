@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>EMI Calculator - niDar Tools</title>
+
+<meta name="description" content="Free EMI calculator for loans — calculate your monthly EMI, total interest, and total payment for home, car, or personal loans instantly.">
+<meta name="keywords" content="emi calculator, loan emi calculator, home loan emi, car loan emi calculator">
+
+<link rel="canonical" href="https://nidartools.com/emi-calculator.html">
+<link rel="icon" type="image/x-icon" href="assets/favicon/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="assets/favicon/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="assets/favicon/favicon-32x32.png">
+<link rel="apple-touch-icon" sizes="180x180" href="assets/favicon/apple-touch-icon.png">
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+
+<body>
+
+<header>
+  <div class="container nav">
+    <h2>niDar Tools</h2>
+
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+      <a href="support.html">Support</a>
+    </nav>
+  </div>
+</header>
+
+<main class="container">
+
+<section class="hero">
+  <h1>EMI Calculator</h1>
+  <p>Calculate your monthly loan installment (EMI), total interest, and total payment.</p>
+</section>
+
+<section class="card">
+  <h2>Loan Details</h2>
+
+  <div class="grid">
+    <div>
+      <label>Loan Amount (₹)</label>
+      <input type="number" id="principal" placeholder="e.g. 500000">
+    </div>
+    <div>
+      <label>Interest Rate (% per year)</label>
+      <input type="number" id="rate" placeholder="e.g. 9.5" step="0.01">
+    </div>
+    <div>
+      <label>Loan Tenure (years)</label>
+      <input type="number" id="tenure" placeholder="e.g. 5">
+    </div>
+  </div>
+
+  <button class="btn mt-20" onclick="calcEMI()">Calculate EMI</button>
+
+  <p id="errorMsg" class="alert alert-danger hidden mt-20"></p>
+</section>
+
+<section class="card hidden" id="resultCard">
+  <h2>Result</h2>
+  <div class="grid">
+    <div class="stat-box">
+      <h2 id="emiVal">-</h2>
+      <p>Monthly EMI (₹)</p>
+    </div>
+    <div class="stat-box">
+      <h2 id="interestVal">-</h2>
+      <p>Total Interest (₹)</p>
+    </div>
+    <div class="stat-box">
+      <h2 id="totalVal">-</h2>
+      <p>Total Payment (₹)</p>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+<p>© 2026 niDar Tools</p>
+<p>Developed by <strong>niDar Marketing And Services</strong></p>
+</footer>
+
+<script src="assets/js/script.js"></script>
+<script>
+function formatINR(num) {
+  return Math.round(num).toLocaleString('en-IN');
+}
+
+function calcEMI() {
+  const P = parseFloat(document.getElementById('principal').value);
+  const annualRate = parseFloat(document.getElementById('rate').value);
+  const years = parseFloat(document.getElementById('tenure').value);
+  const errorMsg = document.getElementById('errorMsg');
+  const resultCard = document.getElementById('resultCard');
+
+  errorMsg.classList.add('hidden');
+  resultCard.classList.add('hidden');
+
+  if (isNaN(P) || isNaN(annualRate) || isNaN(years) || P <= 0 || annualRate <= 0 || years <= 0) {
+    errorMsg.textContent = 'Please fill in all fields with valid positive numbers.';
+    errorMsg.classList.remove('hidden');
+    return;
+  }
+
+  const r = annualRate / 12 / 100;
+  const n = years * 12;
+  const emi = (P * r * Math.pow(1 + r, n)) / (Math.pow(1 + r, n) - 1);
+  const totalPayment = emi * n;
+  const totalInterest = totalPayment - P;
+
+  document.getElementById('emiVal').textContent = '₹' + formatINR(emi);
+  document.getElementById('interestVal').textContent = '₹' + formatINR(totalInterest);
+  document.getElementById('totalVal').textContent = '₹' + formatINR(totalPayment);
+
+  resultCard.classList.remove('hidden');
+  resultCard.scrollIntoView({ behavior: 'smooth' });
+}
+</script>
+
+</body>
+</html>
