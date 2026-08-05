@@ -6,8 +6,8 @@
 
 <title>EMI Calculator - niDar Tools</title>
 
-<meta name="description" content="Free EMI calculator for loans — calculate your monthly EMI, total interest, and total payment for home, car, or personal loans instantly.">
-<meta name="keywords" content="emi calculator, loan emi calculator, home loan emi, car loan emi calculator">
+<meta name="description" content="Free EMI calculator with full month-by-month amortization schedule and prepayment/foreclosure settlement calculator for home, car, or personal loans.">
+<meta name="keywords" content="emi calculator, loan emi calculator, amortization schedule, loan prepayment calculator, foreclosure calculator">
 
 <link rel="canonical" href="https://nidartools.com/emi-calculator.html">
 <link rel="icon" type="image/x-icon" href="assets/favicon/favicon.ico">
@@ -36,11 +36,11 @@
 
 <section class="hero">
   <h1>EMI Calculator</h1>
-  <p>Calculate your monthly loan installment (EMI), total interest, and total payment.</p>
+  <p>Monthly EMI, full amortization schedule, and prepayment/foreclosure settlement — for short, medium, or long-term loans.</p>
 </section>
 
 <section class="card">
-  <h2>Loan Details</h2>
+  <h2>1. Loan Details</h2>
 
   <div class="grid">
     <div>
@@ -52,18 +52,45 @@
       <input type="number" id="rate" placeholder="e.g. 9.5" step="0.01">
     </div>
     <div>
-      <label>Loan Tenure (years)</label>
+      <label>Tenure</label>
+      <select id="tenureUnit">
+        <option value="months">Months</option>
+        <option value="years" selected>Years</option>
+      </select>
+    </div>
+    <div>
+      <label>Duration</label>
       <input type="number" id="tenure" placeholder="e.g. 5">
     </div>
   </div>
-
-  <button class="btn mt-20" onclick="calcEMI()">Calculate EMI</button>
-
-  <p id="errorMsg" class="alert alert-danger hidden mt-20"></p>
 </section>
 
-<section class="card hidden" id="resultCard">
-  <h2>Result</h2>
+<section class="card">
+  <h2>2. Prepayment / Foreclosure (optional)</h2>
+  <p>Planning to pay off the loan early? Fill this in to see your settlement amount.</p>
+
+  <div class="grid">
+    <div>
+      <label>Paying off after month #</label>
+      <input type="number" id="prepayMonth" placeholder="e.g. 12">
+    </div>
+    <div>
+      <label>Prepayment penalty (%)</label>
+      <input type="number" id="penaltyPct" placeholder="e.g. 2" step="0.01">
+    </div>
+    <div>
+      <label>Settlement discount (%)</label>
+      <input type="number" id="settlementPct" placeholder="e.g. 0" step="0.01">
+    </div>
+  </div>
+  <p style="font-size:12px;">Settlement discount = if the lender agrees to waive a percentage off the outstanding amount as part of a negotiated settlement. Leave at 0 if not applicable.</p>
+</section>
+
+<button class="btn" onclick="calcEMI()">Calculate</button>
+<p id="errorMsg" class="alert alert-danger hidden mt-20"></p>
+
+<section class="card hidden mt-40" id="resultCard">
+  <h2>Full Tenure Summary</h2>
   <div class="grid">
     <div class="stat-box">
       <h2 id="emiVal">-</h2>
@@ -77,6 +104,42 @@
       <h2 id="totalVal">-</h2>
       <p>Total Payment (₹)</p>
     </div>
+  </div>
+</section>
+
+<section class="card hidden" id="prepayCard">
+  <h2>Foreclosure / Settlement Summary</h2>
+  <div class="grid">
+    <div class="stat-box">
+      <h2 id="outstandingVal">-</h2>
+      <p>Outstanding Principal (₹)</p>
+    </div>
+    <div class="stat-box">
+      <h2 id="penaltyVal">-</h2>
+      <p>Prepayment Penalty (₹)</p>
+    </div>
+    <div class="stat-box">
+      <h2 id="discountVal">-</h2>
+      <p>Settlement Discount (₹)</p>
+    </div>
+    <div class="stat-box">
+      <h2 id="finalPayoffVal">-</h2>
+      <p>Final Payoff Amount (₹)</p>
+    </div>
+    <div class="stat-box">
+      <h2 id="interestSavedVal">-</h2>
+      <p>Interest Saved (₹)</p>
+    </div>
+  </div>
+</section>
+
+<section class="card hidden" id="scheduleCard">
+  <h2>Month-by-Month Schedule</h2>
+  <div style="max-height:400px; overflow-y:auto;">
+    <table>
+      <tr><th>Month</th><th>EMI (₹)</th><th>Principal (₹)</th><th>Interest (₹)</th><th>Balance (₹)</th></tr>
+      <tbody id="scheduleBody"></tbody>
+    </table>
   </div>
 </section>
 
@@ -96,30 +159,75 @@ function formatINR(num) {
 function calcEMI() {
   const P = parseFloat(document.getElementById('principal').value);
   const annualRate = parseFloat(document.getElementById('rate').value);
-  const years = parseFloat(document.getElementById('tenure').value);
+  const tenureVal = parseFloat(document.getElementById('tenure').value);
+  const tenureUnit = document.getElementById('tenureUnit').value;
+  const prepayMonth = parseInt(document.getElementById('prepayMonth').value);
+  const penaltyPct = parseFloat(document.getElementById('penaltyPct').value) || 0;
+  const settlementPct = parseFloat(document.getElementById('settlementPct').value) || 0;
+
   const errorMsg = document.getElementById('errorMsg');
   const resultCard = document.getElementById('resultCard');
+  const prepayCard = document.getElementById('prepayCard');
+  const scheduleCard = document.getElementById('scheduleCard');
 
   errorMsg.classList.add('hidden');
   resultCard.classList.add('hidden');
+  prepayCard.classList.add('hidden');
+  scheduleCard.classList.add('hidden');
 
-  if (isNaN(P) || isNaN(annualRate) || isNaN(years) || P <= 0 || annualRate <= 0 || years <= 0) {
-    errorMsg.textContent = 'Please fill in all fields with valid positive numbers.';
+  if (isNaN(P) || isNaN(annualRate) || isNaN(tenureVal) || P <= 0 || annualRate <= 0 || tenureVal <= 0) {
+    errorMsg.textContent = 'Please fill in Loan Amount, Interest Rate, and Duration with valid positive numbers.';
     errorMsg.classList.remove('hidden');
     return;
   }
 
+  const n = tenureUnit === 'years' ? Math.round(tenureVal * 12) : Math.round(tenureVal);
   const r = annualRate / 12 / 100;
-  const n = years * 12;
   const emi = (P * r * Math.pow(1 + r, n)) / (Math.pow(1 + r, n) - 1);
-  const totalPayment = emi * n;
-  const totalInterest = totalPayment - P;
+
+  let balance = P;
+  let totalInterestPaid = 0;
+  const schedule = [];
+  for (let m = 1; m <= n; m++) {
+    const interestPart = balance * r;
+    let principalPart = emi - interestPart;
+    if (m === n) principalPart = balance;
+    balance = Math.max(0, balance - principalPart);
+    totalInterestPaid += interestPart;
+    schedule.push({ month: m, emi: (m === n ? principalPart + interestPart : emi), principal: principalPart, interest: interestPart, balance });
+  }
+
+  const totalPayment = emi * (n - 1) + schedule[n - 1].emi;
 
   document.getElementById('emiVal').textContent = '₹' + formatINR(emi);
-  document.getElementById('interestVal').textContent = '₹' + formatINR(totalInterest);
+  document.getElementById('interestVal').textContent = '₹' + formatINR(totalInterestPaid);
   document.getElementById('totalVal').textContent = '₹' + formatINR(totalPayment);
-
   resultCard.classList.remove('hidden');
+
+  if (!isNaN(prepayMonth) && prepayMonth > 0 && prepayMonth < n) {
+    const outstanding = schedule[prepayMonth - 1].balance;
+    const penaltyAmt = outstanding * (penaltyPct / 100);
+    const beforeDiscount = outstanding + penaltyAmt;
+    const discountAmt = beforeDiscount * (settlementPct / 100);
+    const finalPayoff = beforeDiscount - discountAmt;
+
+    const interestPaidTillPrepay = schedule.slice(0, prepayMonth).reduce((s, row) => s + row.interest, 0);
+    const interestSaved = totalInterestPaid - interestPaidTillPrepay;
+
+    document.getElementById('outstandingVal').textContent = '₹' + formatINR(outstanding);
+    document.getElementById('penaltyVal').textContent = '₹' + formatINR(penaltyAmt);
+    document.getElementById('discountVal').textContent = '₹' + formatINR(discountAmt);
+    document.getElementById('finalPayoffVal').textContent = '₹' + formatINR(finalPayoff);
+    document.getElementById('interestSavedVal').textContent = '₹' + formatINR(interestSaved);
+    prepayCard.classList.remove('hidden');
+  }
+
+  const tbody = document.getElementById('scheduleBody');
+  tbody.innerHTML = schedule.map(row =>
+    `<tr><td>${row.month}</td><td>${formatINR(row.emi)}</td><td>${formatINR(row.principal)}</td><td>${formatINR(row.interest)}</td><td>${formatINR(row.balance)}</td></tr>`
+  ).join('');
+  scheduleCard.classList.remove('hidden');
+
   resultCard.scrollIntoView({ behavior: 'smooth' });
 }
 </script>
