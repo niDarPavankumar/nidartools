@@ -1006,3 +1006,20 @@ color:#ffffff;
 margin-bottom:16px;
 box-shadow:0 4px 12px rgba(13,110,253,.3);
 }
+
+/* =====================================================
+   Part 8 - Calculator Hub Icons
+   ===================================================== */
+
+.calc-icon{
+width:56px;
+height:56px;
+border-radius:14px;
+display:flex;
+align-items:center;
+justify-content:center;
+background:linear-gradient(135deg,var(--primary),#4f8cff);
+color:#ffffff;
+margin-bottom:16px;
+box-shadow:0 4px 12px rgba(13,110,253,.3);
+}
