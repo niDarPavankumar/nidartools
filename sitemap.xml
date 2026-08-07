@@ -10,7 +10,7 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   </url>
 
   <url>
-    <loc>https://nidartools.com/about.html</loc>
+    <loc>https://nidartools.com/about</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>

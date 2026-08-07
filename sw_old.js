@@ -3,7 +3,7 @@ const CACHE_NAME = "nidartools-v1";
 const urlsToCache = [
   "/",
   "/index.html",
-  "/about.html",
+  "/about",
   "/contact.html",
   "/privacy-policy.html",
   "/terms.html",
