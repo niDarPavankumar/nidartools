@@ -1023,3 +1023,62 @@ color:#ffffff;
 margin-bottom:16px;
 box-shadow:0 4px 12px rgba(13,110,253,.3);
 }
+
+/* =====================================================
+   Part 9 - Equal-height Cards, Glossy Buttons & Search Box
+   ===================================================== */
+
+/* Make every card in a grid row equal height, with the button
+   always pinned to the bottom regardless of description length */
+.grid .card{
+display:flex;
+flex-direction:column;
+height:100%;
+}
+.grid .card .btn{
+margin-top:auto;
+align-self:center;
+}
+.grid .card p{
+flex-grow:1;
+}
+
+/* Glossy 3D buttons */
+.btn{
+background:linear-gradient(180deg,#4f8cff 0%, var(--primary) 55%, var(--primary-dark) 100%);
+box-shadow:
+  inset 0 1px 0 rgba(255,255,255,.5),
+  inset 0 -2px 4px rgba(0,0,0,.15),
+  0 4px 10px rgba(13,110,253,.35);
+border:none;
+position:relative;
+}
+.btn:hover{
+box-shadow:
+  inset 0 1px 0 rgba(255,255,255,.5),
+  inset 0 -2px 4px rgba(0,0,0,.15),
+  0 6px 16px rgba(13,110,253,.45);
+transform:translateY(-2px);
+}
+.btn:active{
+box-shadow:
+  inset 0 2px 6px rgba(0,0,0,.25);
+transform:translateY(1px);
+}
+
+/* Glossy 3D search box */
+.search-box input{
+border-radius:14px;
+box-shadow:
+  inset 0 1px 3px rgba(0,0,0,.08),
+  0 4px 14px rgba(13,110,253,.12);
+border:1px solid var(--border);
+transition:box-shadow .25s ease, border-color .25s ease;
+}
+.search-box input:focus{
+border-color:var(--primary);
+box-shadow:
+  inset 0 1px 3px rgba(0,0,0,.06),
+  0 0 0 4px rgba(13,110,253,.15),
+  0 6px 18px rgba(13,110,253,.2);
+}
