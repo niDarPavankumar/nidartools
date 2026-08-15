@@ -1,5 +1,8 @@
 User-agent: *
 
 Allow: /
+Disallow: /backups/
+Disallow: /under-construction.html
 
 Sitemap: https://nidartools.com/sitemap.xml
+
