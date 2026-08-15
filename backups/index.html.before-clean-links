@@ -19,10 +19,7 @@
 
 <link rel="manifest" href="manifest.json">
 
-<link rel="icon" href="assets/favicon/favicon-32x32.png">
-<link rel="icon" type="image/png" sizes="16x16" href="assets/favicon/favicon-16x16.png">
-<link rel="icon" type="image/x-icon" href="assets/favicon/favicon.ico">
-<link rel="apple-touch-icon" href="assets/favicon/apple-touch-icon.png">
+<link rel="icon" href="assets/favicon/favicon.png">
 
 <link rel="stylesheet" href="assets/css/style.css">
 
@@ -40,7 +37,7 @@
 
 <nav class="navbar nav">
 
-<a href="/" class="logo">
+<a href="index.html" class="logo">
 niDar <span>Tools</span>
 </a>
 
@@ -50,19 +47,19 @@ niDar <span>Tools</span>
 
 <ul class="nav-links" aria-label="Primary Navigation">
 
-<li><a href="/">Home</a></li>
+<li><a href="index.html">Home</a></li>
 
-<li><a href="/about/">About</a></li>
+<li><a href="/about">About</a></li>
 
-<li><a href="/contact/">Contact</a></li>
-<li><a href="/support/">Support</a></li>
-<li><a href="/user-guide/">Guide</a></li>
+<li><a href="/contact">Contact</a></li>
+<li><a href="/support">Support</a></li>
+<li><a href="/user-guide">Guide</a></li>
 
-<li><a href="/faq/">FAQ</a></li>
+<li><a href="/faq">FAQ</a></li>
 
-<li><a href="/privacy-policy/">Privacy</a></li>
+<li><a href="/privacy-policy">Privacy</a></li>
 
-<li><a href="/terms/">Terms</a></li>
+<li><a href="/terms">Terms</a></li>
 
 </ul>
 
@@ -117,7 +114,7 @@ Explore Tools
 
 </a>
 
-<a href="/about/" class="btn">
+<a href="/about" class="btn">
 
 Learn More
 
@@ -169,63 +166,63 @@ placeholder="Search tools...">
 <div class="tool-icon">🖼️</div>
 <h3>Image Resizer</h3>
 <p>Resize images online quickly without losing quality.</p>
-<a href="/image-resizer/" class="btn">Open Tool</a>
+<a href="/image-resizer" class="btn">Open Tool</a>
 </div>
 
 <div class="card">
 <div class="tool-icon">📄</div>
 <h3>Image to PDF</h3>
 <p>Convert JPG and PNG images into PDF files instantly.</p>
-<a href="/image-to-pdf/" class="btn">Open Tool</a>
+<a href="/image-to-pdf" class="btn">Open Tool</a>
 </div>
 
 <div class="card">
 <div class="tool-icon">🎂</div>
 <h3>Age Calculator</h3>
 <p>Calculate your exact age in years, months and days.</p>
-<a href="/age-calculator/" class="btn">Open Tool</a>
+<a href="/age-calculator" class="btn">Open Tool</a>
 </div>
 
 <div class="card">
 <div class="tool-icon">🔳</div>
 <h3>QR Generator</h3>
 <p>Create QR Codes for URLs, text and contact details.</p>
-<a href="/qr-generator/" class="btn">Open Tool</a>
+<a href="/qr-generator" class="btn">Open Tool</a>
 </div>
 
 <div class="card">
 <div class="tool-icon">🗜️</div>
 <h3>Image Compressor</h3>
 <p>Compress JPG, PNG and WebP images without losing quality.</p>
-<a href="/image-compressor/" class="btn">Open Tool</a>
+<a href="/image-compressor" class="btn">Open Tool</a>
 </div>
 
 <div class="card">
 <div class="tool-icon">🧩</div>
 <h3>Icon Kit Generator</h3>
 <p>Turn one logo into a complete favicon/icon set for your website.</p>
-<a href="/icon-kit-generator/" class="btn">Open Tool</a>
+<a href="/icon-kit-generator" class="btn">Open Tool</a>
 </div>
 
 <div class="card">
 <div class="tool-icon pct-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="5" x2="5" y2="19"></line><circle cx="6.5" cy="6.5" r="2.5"></circle><circle cx="17.5" cy="17.5" r="2.5"></circle></svg></div>
 <h3>Percentage Calculator</h3>
 <p>Find percentages, ratios and percentage increase/decrease instantly.</p>
-<a href="/percentage-calculator/" class="btn">Open Tool</a>
+<a href="/percentage-calculator" class="btn">Open Tool</a>
 </div>
 
 <div class="card">
     <div class="tool-icon">🏗️</div>
     <h3>Construction Cost Estimator</h3>
     <p>Estimate building material and labour costs quickly.</p>
-    <a href="/construction-cost-estimator/" class="btn">Open Tool</a>
+    <a href="/construction-cost-estimator" class="btn">Open Tool</a>
 </div>
 
 <div class="card">
 <div class="tool-icon">📝</div>
 <h3>Word & Character Counter</h3>
 <p>Count words, characters, sentences, paragraphs, reading time and keyword density instantly.</p>
-<a href="/word-counter/" class="btn">Open Tool</a>
+<a href="/word-counter" class="btn">Open Tool</a>
 </div>
 </div>
 </div>
@@ -380,19 +377,19 @@ Free Online Tools for Everyone
 
 <div class="footer-links">
 
-<a href="/">Home</a>
+<a href="index.html">Home</a>
 
-<a href="/about/">About</a>
+<a href="/about">About</a>
 
-<a href="/contact/">Contact</a>
-<a href="/support/">Support</a>
-<a href="/user-guide/">Guide</a>
+<a href="/contact">Contact</a>
+<a href="/support">Support</a>
+<a href="/user-guide">Guide</a>
 
-<a href="/faq/">FAQ</a>
+<a href="/faq">FAQ</a>
 
-<a href="/privacy-policy/">Privacy Policy</a>
+<a href="/privacy-policy">Privacy Policy</a>
 
-<a href="/terms/">Terms & Conditions</a>
+<a href="/terms">Terms & Conditions</a>
 
 </div>
 
