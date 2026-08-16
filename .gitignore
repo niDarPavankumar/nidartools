@@ -1,0 +1,6 @@
+# Local backups - never deploy
+audit-backup-2026-08-10/
+backups/
+
+# Local before-change backup files
+*.before-*
