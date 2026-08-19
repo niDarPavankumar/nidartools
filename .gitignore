@@ -4,3 +4,6 @@ backups/
 
 # Local before-change backup files
 *.before-*
+
+# Local backup files - keep out of production
+*.bak
