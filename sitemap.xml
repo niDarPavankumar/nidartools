@@ -14,6 +14,7 @@
   <!-- Tool Pages -->
   <url><loc>https://nidartools.com/qr-generator/</loc><priority>0.90</priority></url>
   <url><loc>https://nidartools.com/image-resizer/</loc><priority>0.90</priority></url>
+  <url><loc>https://nidartools.com/image-converter/</loc><priority>0.90</priority></url>
   <url><loc>https://nidartools.com/age-calculator/</loc><priority>0.90</priority></url>
   <url><loc>https://nidartools.com/image-to-pdf/</loc><priority>0.90</priority></url>
   <url><loc>https://nidartools.com/image-compressor/</loc><priority>0.90</priority></url>
@@ -25,6 +26,7 @@
   <!-- SEO Content Guide Pages -->
   <url><loc>https://nidartools.com/content/qr-generator/</loc><priority>0.85</priority></url>
   <url><loc>https://nidartools.com/content/image-resizer/</loc><priority>0.85</priority></url>
+  <url><loc>https://nidartools.com/content/image-converter/</loc><priority>0.85</priority></url>
   <url><loc>https://nidartools.com/content/age-calculator/</loc><priority>0.85</priority></url>
   <url><loc>https://nidartools.com/content/image-to-pdf/</loc><priority>0.85</priority></url>
   <url><loc>https://nidartools.com/content/image-compressor/</loc><priority>0.85</priority></url>
