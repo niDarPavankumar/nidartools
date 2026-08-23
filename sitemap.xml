@@ -22,6 +22,7 @@
   <url><loc>https://nidartools.com/percentage-calculator/</loc><priority>0.90</priority></url>
   <url><loc>https://nidartools.com/construction-cost-estimator/</loc><priority>0.90</priority></url>
   <url><loc>https://nidartools.com/word-counter/</loc><priority>0.90</priority></url>
+  <url><loc>https://nidartools.com/emi-calculator/</loc><priority>0.90</priority></url>
 
   <!-- SEO Content Guide Pages -->
   <url><loc>https://nidartools.com/content/qr-generator/</loc><priority>0.85</priority></url>
@@ -34,5 +35,6 @@
   <url><loc>https://nidartools.com/content/percentage-calculator/</loc><priority>0.85</priority></url>
   <url><loc>https://nidartools.com/content/construction-cost-estimator/</loc><priority>0.85</priority></url>
   <url><loc>https://nidartools.com/content/word-counter/</loc><priority>0.85</priority></url>
+  <url><loc>https://nidartools.com/content/emi-calculator/</loc><priority>0.85</priority></url>
 
 </urlset>
