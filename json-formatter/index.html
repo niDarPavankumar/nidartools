@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JSON Formatter & Validator - Free Online Tool | niDar Tools</title>
+<meta name="author" content="niDar Marketing And Services">
+<meta name="description" content="Free online JSON Formatter and Validator. Beautify, minify and validate JSON instantly in your browser. 100% client-side and secure.">
+<meta name="keywords" content="JSON Formatter, JSON Validator, JSON Beautifier, JSON Minifier, niDar Tools">
+<meta name="theme-color" content="#0d6efd">
+<style>
+  :root{
+    --bg:#f8f9fa; --card:#ffffff; --text:#212529; --muted:#6c757d;
+    --border:#e2e6ea; --primary:#0d6efd; --primary-dark:#0b5ed7;
+    --err:#dc3545; --ok:#198754;
+  }
+  [data-theme="dark"]{
+    --bg:#0f1115; --card:#181b21; --text:#e9ecef; --muted:#9aa4af;
+    --border:#2a2f37; --primary:#3d8bfd; --primary-dark:#2a72e0;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0; font-family:-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
+    background:var(--bg); color:var(--text); transition:background .2s,color .2s;
+  }
+  header{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:14px 20px; border-bottom:1px solid var(--border); background:var(--card);
+    position:sticky; top:0; z-index:10;
+  }
+  .brand{font-weight:700; font-size:1.15rem; text-decoration:none; color:var(--text);}
+  nav a{color:var(--muted); text-decoration:none; margin-left:16px; font-size:.9rem;}
+  nav a:hover{color:var(--primary);}
+  .theme-btn{background:none;border:1px solid var(--border);border-radius:8px;padding:6px 10px;cursor:pointer;color:var(--text);}
+  main{max-width:1000px;margin:0 auto;padding:24px 16px 60px;}
+  h1{font-size:1.6rem;margin-bottom:4px;}
+  .sub{color:var(--muted);margin-bottom:20px;font-size:.95rem;}
+  .toolbar{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px;}
+  button.action{
+    background:var(--primary); color:#fff; border:none; padding:9px 16px;
+    border-radius:8px; cursor:pointer; font-size:.9rem; font-weight:600;
+  }
+  button.action:hover{background:var(--primary-dark);}
+  button.secondary{
+    background:transparent; color:var(--text); border:1px solid var(--border);
+    padding:9px 16px; border-radius:8px; cursor:pointer; font-size:.9rem;
+  }
+  .grid{display:grid;grid-template-columns:1fr;gap:16px;}
+  @media(min-width:800px){.grid{grid-template-columns:1fr 1fr;}}
+  .panel{background:var(--card);border:1px solid var(--border);border-radius:12px;overflow:hidden;}
+  .panel-head{padding:10px 14px;border-bottom:1px solid var(--border);font-weight:600;font-size:.85rem;color:var(--muted);}
+  textarea, pre{
+    width:100%; height:420px; border:none; resize:vertical; padding:14px;
+    font-family:"SFMono-Regular",Consolas,Menlo,monospace; font-size:.85rem;
+    background:transparent; color:var(--text); outline:none; margin:0; white-space:pre-wrap; word-break:break-word; overflow:auto;
+  }
+  .status{padding:8px 14px;font-size:.85rem;border-top:1px solid var(--border);}
+  .status.ok{color:var(--ok);}
+  .status.err{color:var(--err);}
+  .stats{display:flex;gap:16px;flex-wrap:wrap;margin-top:14px;font-size:.85rem;color:var(--muted);}
+  .stats b{color:var(--text);}
+  footer{border-top:1px solid var(--border);padding:24px 16px;text-align:center;color:var(--muted);font-size:.85rem;}
+  footer a{color:var(--muted);text-decoration:none;margin:0 8px;}
+  .string{color:#198754;} .number{color:#0d6efd;} .boolean{color:#e8590c;} .null{color:#adb5bd;} .key{color:#8c1cff;font-weight:600;}
+  [data-theme="dark"] .string{color:#7ee2a8;} [data-theme="dark"] .number{color:#7cb8ff;}
+  [data-theme="dark"] .boolean{color:#ffa156;} [data-theme="dark"] .key{color:#c792ea;}
+</style>
+</head>
+<body>
+<header>
+  <a href="https://nidartools.com/" class="brand">niDar Tools</a>
+  <nav>
+    <a href="https://nidartools.com/#tools">Tools</a>
+    <a href="https://nidartools.com/about/">About</a>
+    <button class="theme-btn" id="themeToggle" aria-label="Toggle theme">🌙</button>
+  </nav>
+</header>
+
+<main>
+  <h1>JSON Formatter & Validator</h1>
+  <p class="sub">Beautify, minify and validate JSON instantly. 100% in your browser — your data never leaves your device.</p>
+
+  <div class="toolbar">
+    <button class="action" id="formatBtn">Format / Beautify</button>
+    <button class="secondary" id="minifyBtn">Minify</button>
+    <button class="secondary" id="copyBtn">Copy Output</button>
+    <button class="secondary" id="clearBtn">Clear</button>
+    <button class="secondary" id="sampleBtn">Load Sample</button>
+  </div>
+
+  <div class="grid">
+    <div class="panel">
+      <div class="panel-head">Input JSON</div>
+      <textarea id="input" placeholder='Paste your JSON here, e.g. {"name":"niDar","tools":10}'></textarea>
+    </div>
+    <div class="panel">
+      <div class="panel-head">Output</div>
+      <pre id="output"></pre>
+      <div class="status" id="status">Waiting for input…</div>
+    </div>
+  </div>
+
+  <div class="stats" id="stats"></div>
+</main>
+
+<footer>
+  <div>
+    <a href="https://nidartools.com/">Home</a>
+    <a href="https://nidartools.com/about/">About</a>
+    <a href="https://nidartools.com/contact/">Contact</a>
+    <a href="https://nidartools.com/privacy-policy/">Privacy</a>
+    <a href="https://nidartools.com/terms/">Terms</a>
+  </div>
+  <p style="margin-top:10px;">Developed by <strong>niDar Marketing And Services</strong><br>© 2026 niDar Tools. All Rights Reserved.</p>
+</footer>
+
+<script>
+  const input = document.getElementById('input');
+  const output = document.getElementById('output');
+  const status = document.getElementById('status');
+  const stats = document.getElementById('stats');
+  const themeToggle = document.getElementById('themeToggle');
+
+  // Theme
+  const saved = localStorage_safe_get();
+  function localStorage_safe_get(){ try{ return localStorage.getItem('theme'); }catch(e){ return null; } }
+  function localStorage_safe_set(v){ try{ localStorage.setItem('theme', v); }catch(e){} }
+  if(saved === 'dark'){ document.documentElement.setAttribute('data-theme','dark'); themeToggle.textContent='☀️'; }
+  themeToggle.addEventListener('click', () => {
+    const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+    if(isDark){ document.documentElement.removeAttribute('data-theme'); themeToggle.textContent='🌙'; localStorage_safe_set('light'); }
+    else{ document.documentElement.setAttribute('data-theme','dark'); themeToggle.textContent='☀️'; localStorage_safe_set('dark'); }
+  });
+
+  function syntaxHighlight(json){
+    json = json.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+    return json.replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false)\b|\bnull\b|-?\d+(\.\d+)?([eE][+-]?\d+)?)/g, function(match){
+      let cls = 'number';
+      if(/^"/.test(match)){
+        cls = /:$/.test(match) ? 'key' : 'string';
+      } else if(/true|false/.test(match)){
+        cls = 'boolean';
+      } else if(/null/.test(match)){
+        cls = 'null';
+      }
+      return '<span class="'+cls+'">'+match+'</span>';
+    });
+  }
+
+  function updateStats(obj, raw){
+    try{
+      const keys = JSON.stringify(obj).match(/"[^"]+":/g) || [];
+      stats.innerHTML =
+        '<span><b>' + raw.length + '</b> characters</span>' +
+        '<span><b>' + (new Blob([raw]).size) + '</b> bytes</span>' +
+        '<span><b>' + keys.length + '</b> keys</span>';
+    }catch(e){ stats.innerHTML=''; }
+  }
+
+  function format(){
+    const val = input.value.trim();
+    if(!val){ status.textContent='Waiting for input…'; status.className='status'; output.textContent=''; stats.innerHTML=''; return; }
+    try{
+      const obj = JSON.parse(val);
+      const pretty = JSON.stringify(obj, null, 2);
+      output.innerHTML = syntaxHighlight(pretty);
+      status.textContent = '✓ Valid JSON';
+      status.className = 'status ok';
+      updateStats(obj, pretty);
+    }catch(e){
+      output.textContent = '';
+      status.textContent = '✗ Invalid JSON — ' + e.message;
+      status.className = 'status err';
+      stats.innerHTML='';
+    }
+  }
+
+  function minify(){
+    const val = input.value.trim();
+    if(!val){ return; }
+    try{
+      const obj = JSON.parse(val);
+      const min = JSON.stringify(obj);
+      output.innerHTML = syntaxHighlight(min);
+      status.textContent = '✓ Valid JSON (minified)';
+      status.className = 'status ok';
+      updateStats(obj, min);
+    }catch(e){
+      status.textContent = '✗ Invalid JSON — ' + e.message;
+      status.className = 'status err';
+    }
+  }
+
+  document.getElementById('formatBtn').addEventListener('click', format);
+  document.getElementById('minifyBtn').addEventListener('click', minify);
+  document.getElementById('clearBtn').addEventListener('click', () => {
+    input.value=''; output.textContent=''; status.textContent='Waiting for input…'; status.className='status'; stats.innerHTML='';
+  });
+  document.getElementById('copyBtn').addEventListener('click', () => {
+    const text = output.textContent || output.innerText;
+    if(!text) return;
+    navigator.clipboard.writeText(text).then(()=>{
+      const orig = status.textContent;
+      status.textContent = 'Copied to clipboard!';
+      setTimeout(()=>{ status.textContent = orig; }, 1500);
+    });
+  });
+  document.getElementById('sampleBtn').addEventListener('click', () => {
+    input.value = JSON.stringify({
+      site:"niDar Tools",
+      tools:10,
+      categories:["Image","PDF","Calculator","Developer"],
+      free:true,
+      contact:{email:"nidarmarketingandservices@gmail.com"}
+    }, null, 2);
+    format();
+  });
+
+  input.addEventListener('input', () => {
+    clearTimeout(window._t);
+    window._t = setTimeout(format, 250);
+  });
+</script>
+</body>
+</html>
