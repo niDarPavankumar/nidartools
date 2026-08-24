@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Base64 Encoder & Decoder - Free Online Tool | niDar Tools</title>
+<meta name="author" content="niDar Marketing And Services">
+<meta name="description" content="Free online Base64 Encoder and Decoder. Convert text, strings and files to and from Base64 instantly in your browser. 100% client-side and secure.">
+<meta name="keywords" content="Base64 Encoder, Base64 Decoder, Base64 Converter, niDar Tools">
+<meta name="theme-color" content="#0d6efd">
+<style>
+  :root{
+    --bg:#f8f9fa; --card:#ffffff; --text:#212529; --muted:#6c757d;
+    --border:#e2e6ea; --primary:#0d6efd; --primary-dark:#0b5ed7;
+    --err:#dc3545; --ok:#198754;
+  }
+  [data-theme="dark"]{
+    --bg:#0f1115; --card:#181b21; --text:#e9ecef; --muted:#9aa4af;
+    --border:#2a2f37; --primary:#3d8bfd; --primary-dark:#2a72e0;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0; font-family:-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
+    background:var(--bg); color:var(--text); transition:background .2s,color .2s;
+  }
+  header{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:14px 20px; border-bottom:1px solid var(--border); background:var(--card);
+    position:sticky; top:0; z-index:10;
+  }
+  .brand{font-weight:700; font-size:1.15rem; text-decoration:none; color:var(--text);}
+  nav a{color:var(--muted); text-decoration:none; margin-left:16px; font-size:.9rem;}
+  nav a:hover{color:var(--primary);}
+  .theme-btn{background:none;border:1px solid var(--border);border-radius:8px;padding:6px 10px;cursor:pointer;color:var(--text);}
+  main{max-width:1000px;margin:0 auto;padding:24px 16px 60px;}
+  h1{font-size:1.6rem;margin-bottom:4px;}
+  .sub{color:var(--muted);margin-bottom:20px;font-size:.95rem;}
+  .mode-switch{display:flex;gap:8px;margin-bottom:16px;}
+  .mode-btn{
+    flex:1; padding:10px; border-radius:8px; border:1px solid var(--border);
+    background:var(--card); color:var(--text); cursor:pointer; font-weight:600; font-size:.9rem;
+  }
+  .mode-btn.active{background:var(--primary); color:#fff; border-color:var(--primary);}
+  .toolbar{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px;}
+  button.action{
+    background:var(--primary); color:#fff; border:none; padding:9px 16px;
+    border-radius:8px; cursor:pointer; font-size:.9rem; font-weight:600;
+  }
+  button.action:hover{background:var(--primary-dark);}
+  button.secondary{
+    background:transparent; color:var(--text); border:1px solid var(--border);
+    padding:9px 16px; border-radius:8px; cursor:pointer; font-size:.9rem;
+  }
+  .grid{display:grid;grid-template-columns:1fr;gap:16px;}
+  @media(min-width:800px){.grid{grid-template-columns:1fr 1fr;}}
+  .panel{background:var(--card);border:1px solid var(--border);border-radius:12px;overflow:hidden;}
+  .panel-head{padding:10px 14px;border-bottom:1px solid var(--border);font-weight:600;font-size:.85rem;color:var(--muted);}
+  textarea{
+    width:100%; height:320px; border:none; resize:vertical; padding:14px;
+    font-family:"SFMono-Regular",Consolas,Menlo,monospace; font-size:.85rem;
+    background:transparent; color:var(--text); outline:none; margin:0;
+  }
+  .status{padding:8px 14px;font-size:.85rem;border-top:1px solid var(--border);}
+  .status.ok{color:var(--ok);}
+  .status.err{color:var(--err);}
+  .filebox{
+    border:2px dashed var(--border); border-radius:10px; padding:20px;
+    text-align:center; margin-top:14px; color:var(--muted); font-size:.85rem; cursor:pointer;
+  }
+  .filebox:hover{border-color:var(--primary); color:var(--primary);}
+  .stats{display:flex;gap:16px;flex-wrap:wrap;margin-top:14px;font-size:.85rem;color:var(--muted);}
+  .stats b{color:var(--text);}
+  footer{border-top:1px solid var(--border);padding:24px 16px;text-align:center;color:var(--muted);font-size:.85rem;}
+  footer a{color:var(--muted);text-decoration:none;margin:0 8px;}
+</style>
+</head>
+<body>
+<header>
+  <a href="https://nidartools.com/" class="brand">niDar Tools</a>
+  <nav>
+    <a href="https://nidartools.com/#tools">Tools</a>
+    <a href="https://nidartools.com/about/">About</a>
+    <button class="theme-btn" id="themeToggle" aria-label="Toggle theme">🌙</button>
+  </nav>
+</header>
+
+<main>
+  <h1>Base64 Encoder & Decoder</h1>
+  <p class="sub">Encode text or files to Base64, or decode Base64 back to text — instantly, in your browser.</p>
+
+  <div class="mode-switch">
+    <button class="mode-btn active" id="encodeModeBtn">Encode</button>
+    <button class="mode-btn" id="decodeModeBtn">Decode</button>
+  </div>
+
+  <div class="toolbar">
+    <button class="action" id="convertBtn">Convert</button>
+    <button class="secondary" id="copyBtn">Copy Output</button>
+    <button class="secondary" id="swapBtn">Swap ⇅</button>
+    <button class="secondary" id="clearBtn">Clear</button>
+  </div>
+
+  <div class="grid">
+    <div class="panel">
+      <div class="panel-head" id="inputLabel">Input Text</div>
+      <textarea id="input" placeholder="Type or paste text here…"></textarea>
+      <div class="filebox" id="fileBox">📁 Or click to select a file to encode</div>
+      <input type="file" id="fileInput" style="display:none;">
+    </div>
+    <div class="panel">
+      <div class="panel-head">Output</div>
+      <textarea id="output" readonly placeholder="Result will appear here…"></textarea>
+      <div class="status" id="status">Ready</div>
+    </div>
+  </div>
+
+  <div class="stats" id="stats"></div>
+</main>
+
+<footer>
+  <div>
+    <a href="https://nidartools.com/">Home</a>
+    <a href="https://nidartools.com/about/">About</a>
+    <a href="https://nidartools.com/contact/">Contact</a>
+    <a href="https://nidartools.com/privacy-policy/">Privacy</a>
+    <a href="https://nidartools.com/terms/">Terms</a>
+  </div>
+  <p style="margin-top:10px;">Developed by <strong>niDar Marketing And Services</strong><br>© 2026 niDar Tools. All Rights Reserved.</p>
+</footer>
+
+<script>
+  const input = document.getElementById('input');
+  const output = document.getElementById('output');
+  const status = document.getElementById('status');
+  const stats = document.getElementById('stats');
+  const themeToggle = document.getElementById('themeToggle');
+  const inputLabel = document.getElementById('inputLabel');
+  const encodeModeBtn = document.getElementById('encodeModeBtn');
+  const decodeModeBtn = document.getElementById('decodeModeBtn');
+  const fileBox = document.getElementById('fileBox');
+  const fileInput = document.getElementById('fileInput');
+  let mode = 'encode';
+
+  function ls_get(k){ try{ return localStorage.getItem(k); }catch(e){ return null; } }
+  function ls_set(k,v){ try{ localStorage.setItem(k,v); }catch(e){} }
+
+  if(ls_get('theme') === 'dark'){ document.documentElement.setAttribute('data-theme','dark'); themeToggle.textContent='☀️'; }
+  themeToggle.addEventListener('click', () => {
+    const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+    if(isDark){ document.documentElement.removeAttribute('data-theme'); themeToggle.textContent='🌙'; ls_set('theme','light'); }
+    else{ document.documentElement.setAttribute('data-theme','dark'); themeToggle.textContent='☀️'; ls_set('theme','dark'); }
+  });
+
+  function setMode(m){
+    mode = m;
+    encodeModeBtn.classList.toggle('active', m==='encode');
+    decodeModeBtn.classList.toggle('active', m==='decode');
+    inputLabel.textContent = m==='encode' ? 'Input Text' : 'Input Base64';
+    fileBox.style.display = m==='encode' ? 'block' : 'none';
+    output.value=''; status.textContent='Ready'; status.className='status'; stats.innerHTML='';
+  }
+  encodeModeBtn.addEventListener('click', () => setMode('encode'));
+  decodeModeBtn.addEventListener('click', () => setMode('decode'));
+
+  function utf8ToB64(str){
+    return btoa(unescape(encodeURIComponent(str)));
+  }
+  function b64ToUtf8(str){
+    return decodeURIComponent(escape(atob(str)));
+  }
+
+  function convert(){
+    const val = input.value;
+    if(!val){ status.textContent='Please enter some input.'; status.className='status err'; return; }
+    try{
+      let result;
+      if(mode === 'encode'){
+        result = utf8ToB64(val);
+      }else{
+        result = b64ToUtf8(val.trim());
+      }
+      output.value = result;
+      status.textContent = mode==='encode' ? '✓ Encoded successfully' : '✓ Decoded successfully';
+      status.className = 'status ok';
+      stats.innerHTML =
+        '<span><b>' + val.length + '</b> input chars</span>' +
+        '<span><b>' + result.length + '</b> output chars</span>';
+    }catch(e){
+      output.value = '';
+      status.textContent = mode==='encode' ? '✗ Could not encode input' : '✗ Invalid Base64 string';
+      status.className = 'status err';
+      stats.innerHTML='';
+    }
+  }
+
+  document.getElementById('convertBtn').addEventListener('click', convert);
+  document.getElementById('clearBtn').addEventListener('click', () => {
+    input.value=''; output.value=''; status.textContent='Ready'; status.className='status'; stats.innerHTML='';
+  });
+  document.getElementById('swapBtn').addEventListener('click', () => {
+    const tmp = input.value;
+    input.value = output.value;
+    output.value = tmp;
+    setMode(mode==='encode' ? 'decode' : 'encode');
+  });
+  document.getElementById('copyBtn').addEventListener('click', () => {
+    if(!output.value) return;
+    navigator.clipboard.writeText(output.value).then(()=>{
+      const orig = status.textContent;
+      status.textContent = 'Copied to clipboard!';
+      setTimeout(()=>{ status.textContent = orig; }, 1500);
+    });
+  });
+
+  fileBox.addEventListener('click', () => fileInput.click());
+  fileInput.addEventListener('change', (e) => {
+    const file = e.target.files[0];
+    if(!file) return;
+    const reader = new FileReader();
+    reader.onload = () => {
+      const result = reader.result.split(',')[1];
+      output.value = result;
+      status.textContent = '✓ File encoded: ' + file.name;
+      status.className = 'status ok';
+      stats.innerHTML =
+        '<span><b>' + file.name + '</b></span>' +
+        '<span><b>' + (file.size/1024).toFixed(2) + ' KB</b> original</span>' +
+        '<span><b>' + result.length + '</b> output chars</span>';
+    };
+    reader.readAsDataURL(file);
+  });
+
+  input.addEventListener('keydown', (e) => {
+    if(e.ctrlKey && e.key === 'Enter') convert();
+  });
+</script>
+</body>
+</html>
