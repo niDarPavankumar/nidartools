@@ -73,7 +73,7 @@ imgInput.addEventListener('change', async (e) => {
   statusMsg.textContent = 'Removing background... this can take a few seconds on first use.';
   try {
     const resultBlob = await removeBackground(file, {
-      publicPath: "https://cdn.jsdelivr.net/npm/@imgly/background-removal@1.5.5/dist/"
+      publicPath: "https://staticimgly.com/@imgly/background-removal-data/1.5.5/dist/"
     });
     const resultUrl = URL.createObjectURL(resultBlob);
     resultPreview.src = resultUrl;
