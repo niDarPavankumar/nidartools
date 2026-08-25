@@ -73,7 +73,18 @@ imgInput.addEventListener('change', async (e) => {
   statusMsg.textContent = 'Removing background... this can take a few seconds on first use.';
   try {
     const resultBlob = await removeBackground(file, {
-      publicPath: "https://staticimgly.com/@imgly/background-removal-data/1.5.5/dist/"
+      publicPath: "https://staticimgly.com/@imgly/background-removal-data/1.5.5/dist/",
+      model: "isnet_fp16",
+      device: "gpu",
+      proxyToWorker: true,
+      output: {
+        format: "image/png",
+        quality: 1
+      },
+      progress: (key, current, total) => {
+        const percent = total ? Math.round((current / total) * 100) : 0;
+        statusMsg.textContent = `Removing background... ${percent}%`;
+      }
     });
     const resultUrl = URL.createObjectURL(resultBlob);
     resultPreview.src = resultUrl;
