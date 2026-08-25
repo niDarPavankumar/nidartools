@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Background Remover - Remove Image Background Free Online | niDar Tools</title>
+<meta name="description" content="Remove the background from any photo instantly and free. AI-powered, works entirely in your browser — no upload, no signup, no watermark.">
+<meta name="keywords" content="background remover, remove background from image, transparent background, photo background eraser, free background remover">
+<link rel="canonical" href="https://nidartools.com/background-remover/">
+<link rel="icon" type="image/x-icon" href="../assets/favicon/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="../assets/favicon/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon/favicon-32x32.png">
+<link rel="apple-touch-icon" sizes="180x180" href="../assets/favicon/apple-touch-icon.png">
+<link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body>
+<header>
+<div class="container nav">
+<h2>niDar Tools</h2>
+<nav>
+<a href="../">Home</a>
+<a href="/about/">About</a>
+<a href="/contact/">Contact</a>
+<a href="/support/">Support</a>
+</nav>
+</div>
+</header>
+<main class="container">
+<section class="hero">
+<h1>Background Remover</h1><div class="mt-10"><a href="/content/background-remover/" class="guide-link"><span class="icon">📖</span><span>Read Background Removal Guide →</span></a></div>
+<p>Upload a photo and remove its background instantly — 100% free, no watermark, processed entirely in your browser.</p>
+</section>
+<section class="card">
+<h2>1. Upload Photo</h2>
+<input type="file" id="imgInput" accept="image/*">
+<p id="statusMsg" class="mt-10"></p>
+</section>
+<section class="card hidden" id="previewCard">
+<h2>2. Result</h2>
+<div class="grid">
+<div>
+<p><strong>Original</strong></p>
+<img id="originalPreview" style="max-width:100%;border-radius:8px;">
+</div>
+<div>
+<p><strong>Background Removed</strong></p>
+<img id="resultPreview" style="max-width:100%;border-radius:8px;background:repeating-conic-gradient(#ccc 0% 25%, #fff 0% 50%) 50% / 20px 20px;">
+</div>
+</div>
+<a id="downloadBtn" class="btn mt-20" download="background-removed.png">Download PNG</a>
+</section>
+</main>
+<footer>
+<p>© 2026 niDar Tools</p>
+<p>Developed by <strong>niDar Marketing And Services</strong></p>
+</footer>
+<script src="../assets/js/script.js"></script>
+<script type="module">
+import { removeBackground } from "https://cdn.jsdelivr.net/npm/@imgly/background-removal@1.5.5/dist/browser.mjs";
+
+const imgInput = document.getElementById('imgInput');
+const statusMsg = document.getElementById('statusMsg');
+const previewCard = document.getElementById('previewCard');
+const originalPreview = document.getElementById('originalPreview');
+const resultPreview = document.getElementById('resultPreview');
+const downloadBtn = document.getElementById('downloadBtn');
+
+imgInput.addEventListener('change', async (e) => {
+  const file = e.target.files[0];
+  if (!file) return;
+  originalPreview.src = URL.createObjectURL(file);
+  previewCard.classList.add('hidden');
+  statusMsg.textContent = 'Removing background... this can take a few seconds on first use.';
+  try {
+    const resultBlob = await removeBackground(file);
+    const resultUrl = URL.createObjectURL(resultBlob);
+    resultPreview.src = resultUrl;
+    downloadBtn.href = resultUrl;
+    previewCard.classList.remove('hidden');
+    statusMsg.textContent = 'Done! Your image background has been removed.';
+  } catch (err) {
+    statusMsg.textContent = 'Something went wrong. Please try a different image.';
+    console.error(err);
+  }
+});
+</script>
+</body>
+</html>
