@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Word to PDF Converter - Free Online, No Upload | niDar Tools</title>
+<meta name="description" content="Convert Word documents (.docx) to PDF instantly and free, right in your browser. No upload, no sign-up, no watermark.">
+<meta name="keywords" content="word to pdf, convert docx to pdf, word to pdf converter free, docx to pdf online">
+<link rel="canonical" href="https://nidartools.com/word-to-pdf/">
+<link rel="icon" type="image/x-icon" href="../assets/favicon/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="../assets/favicon/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon/favicon-32x32.png">
+<link rel="apple-touch-icon" sizes="180x180" href="../assets/favicon/apple-touch-icon.png">
+<link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body>
+<header>
+<div class="container nav">
+<h2>niDar Tools</h2>
+<nav>
+<a href="../">Home</a>
+<a href="/about/">About</a>
+<a href="/contact/">Contact</a>
+<a href="/support/">Support</a>
+</nav>
+</div>
+</header>
+<main class="container">
+<section class="hero">
+<h1>Word to PDF Converter</h1>
+<div class="mt-10"><a href="/content/word-to-pdf/" class="guide-link"><span class="icon">📖</span><span>Read Word to PDF Guide →</span></a></div>
+<p>Convert a .docx file to PDF instantly — 100% free, no watermark, processed entirely in your browser.</p>
+</section>
+<section class="card">
+<h2>1. Upload Word File (.docx)</h2>
+<input type="file" id="docxInput" accept=".docx">
+<p id="statusMsg" class="mt-10"></p>
+</section>
+<section class="card hidden" id="previewCard">
+<h2>2. Preview</h2>
+<div id="docPreview" style="border:1px solid #ddd;padding:16px;max-height:400px;overflow:auto;background:#fff;"></div>
+<button id="downloadBtn" class="btn mt-20">Download PDF</button>
+</section>
+</main>
+<footer>
+<p>© 2026 niDar Tools</p>
+<p>Developed by <strong>niDar Marketing And Services</strong></p>
+</footer>
+<script src="../assets/js/script.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/mammoth@1.8.0/mammoth.browser.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/html2pdf.js@0.10.2/dist/html2pdf.bundle.min.js"></script>
+<script>
+const docxInput = document.getElementById('docxInput');
+const statusMsg = document.getElementById('statusMsg');
+const previewCard = document.getElementById('previewCard');
+const docPreview = document.getElementById('docPreview');
+const downloadBtn = document.getElementById('downloadBtn');
+
+docxInput.addEventListener('change', (e) => {
+  const file = e.target.files[0];
+  if (!file) return;
+  previewCard.classList.add('hidden');
+  statusMsg.textContent = 'Converting...';
+
+  const reader = new FileReader();
+  reader.onload = function(event) {
+    mammoth.convertToHtml({ arrayBuffer: event.target.result })
+      .then(function(result) {
+        docPreview.innerHTML = result.value;
+        previewCard.classList.remove('hidden');
+        statusMsg.textContent = 'Done! Review the preview below, then download as PDF.';
+      })
+      .catch(function(err) {
+        statusMsg.textContent = 'Error: ' + err.message;
+        console.error(err);
+      });
+  };
+  reader.readAsArrayBuffer(file);
+});
+
+downloadBtn.addEventListener('click', () => {
+  const opt = {
+    margin: 0.5,
+    filename: 'converted-document.pdf',
+    image: { type: 'jpeg', quality: 0.98 },
+    html2canvas: { scale: 2 },
+    jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' }
+  };
+  html2pdf().set(opt).from(docPreview).save();
+});
+</script>
+</body>
+</html>
