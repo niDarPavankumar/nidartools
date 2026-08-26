@@ -4,8 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>PDF to Word Converter - Free Online, No Upload | niDar Tools</title>
-<meta name="description" content="Convert PDF files to editable Word (.docx) documents instantly and free, right in your browser. No upload, no sign-up, no watermark.">
-<meta name="keywords" content="pdf to word, convert pdf to word, pdf to docx converter free, pdf to word online">
+<meta name="description" content="Convert PDF files to editable Word (.docx) documents instantly and free, right in your browser. Supports OCR mode for Marathi/Hindi documents.">
+<meta name="keywords" content="pdf to word, convert pdf to word, pdf to docx converter free, marathi pdf to word, hindi pdf to word">
 <link rel="canonical" href="https://nidartools.com/pdf-to-word/">
 <link rel="icon" type="image/x-icon" href="../assets/favicon/favicon.ico">
 <link rel="icon" type="image/png" sizes="16x16" href="../assets/favicon/favicon-16x16.png">
@@ -30,10 +30,12 @@
 <h1>PDF to Word Converter</h1>
 <div class="mt-10"><a href="/content/pdf-to-word/" class="guide-link"><span class="icon">📖</span><span>Read PDF to Word Guide →</span></a></div>
 <p>Convert a PDF file to an editable Word (.docx) document — 100% free, no watermark, processed entirely in your browser.</p>
-<p style="font-size:0.9em;opacity:0.85;">Note: this extracts and converts the text content of your PDF. Complex layouts, images, and exact formatting may not be fully preserved.</p>
 </section>
 <section class="card">
 <h2>1. Upload PDF File</h2>
+<label style="display:block;margin-bottom:10px;">
+<input type="checkbox" id="ocrMode"> Marathi / Hindi document (OCR mode — slower but more accurate for regional-language PDFs)
+</label>
 <input type="file" id="pdfInput" accept="application/pdf">
 <p id="statusMsg" class="mt-10"></p>
 </section>
@@ -50,10 +52,12 @@
 <script src="../assets/js/script.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/build/pdf.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/docx@8.5.0/build/index.umd.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/tesseract.js@5.1.0/dist/tesseract.min.js"></script>
 <script>
 pdfjsLib.GlobalWorkerOptions.workerSrc = "https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/build/pdf.worker.min.js";
 
 const pdfInput = document.getElementById('pdfInput');
+const ocrMode = document.getElementById('ocrMode');
 const statusMsg = document.getElementById('statusMsg');
 const previewCard = document.getElementById('previewCard');
 const textPreview = document.getElementById('textPreview');
@@ -64,7 +68,6 @@ pdfInput.addEventListener('change', async (e) => {
   const file = e.target.files[0];
   if (!file) return;
   previewCard.classList.add('hidden');
-  statusMsg.textContent = 'Extracting text from PDF...';
   extractedParagraphs = [];
 
   try {
@@ -72,12 +75,34 @@ pdfInput.addEventListener('change', async (e) => {
     const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
     let fullText = '';
 
-    for (let i = 1; i <= pdf.numPages; i++) {
-      const page = await pdf.getPage(i);
-      const content = await page.getTextContent();
-      const pageText = content.items.map(item => item.str).join(' ');
-      extractedParagraphs.push(pageText);
-      fullText += pageText + '\\n\\n';
+    if (ocrMode.checked) {
+      statusMsg.textContent = 'Loading OCR engine (first time may take longer)...';
+      const worker = await Tesseract.createWorker('mar+eng');
+
+      for (let i = 1; i <= pdf.numPages; i++) {
+        statusMsg.textContent = 'Reading page ' + i + ' of ' + pdf.numPages + ' with OCR...';
+        const page = await pdf.getPage(i);
+        const viewport = page.getViewport({ scale: 2 });
+        const canvas = document.createElement('canvas');
+        canvas.width = viewport.width;
+        canvas.height = viewport.height;
+        const ctx = canvas.getContext('2d');
+        await page.render({ canvasContext: ctx, viewport: viewport }).promise;
+
+        const { data: { text } } = await worker.recognize(canvas);
+        extractedParagraphs.push(text);
+        fullText += text + '\\n\\n';
+      }
+      await worker.terminate();
+    } else {
+      statusMsg.textContent = 'Extracting text from PDF...';
+      for (let i = 1; i <= pdf.numPages; i++) {
+        const page = await pdf.getPage(i);
+        const content = await page.getTextContent();
+        const pageText = content.items.map(item => item.str).join(' ');
+        extractedParagraphs.push(pageText);
+        fullText += pageText + '\\n\\n';
+      }
     }
 
     textPreview.textContent = fullText;
