@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PDF to Word Converter - Free Online, No Upload | niDar Tools</title>
+<meta name="description" content="Convert PDF files to editable Word (.docx) documents instantly and free, right in your browser. No upload, no sign-up, no watermark.">
+<meta name="keywords" content="pdf to word, convert pdf to word, pdf to docx converter free, pdf to word online">
+<link rel="canonical" href="https://nidartools.com/pdf-to-word/">
+<link rel="icon" type="image/x-icon" href="../assets/favicon/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="../assets/favicon/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon/favicon-32x32.png">
+<link rel="apple-touch-icon" sizes="180x180" href="../assets/favicon/apple-touch-icon.png">
+<link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body>
+<header>
+<div class="container nav">
+<h2>niDar Tools</h2>
+<nav>
+<a href="../">Home</a>
+<a href="/about/">About</a>
+<a href="/contact/">Contact</a>
+<a href="/support/">Support</a>
+</nav>
+</div>
+</header>
+<main class="container">
+<section class="hero">
+<h1>PDF to Word Converter</h1>
+<div class="mt-10"><a href="/content/pdf-to-word/" class="guide-link"><span class="icon">📖</span><span>Read PDF to Word Guide →</span></a></div>
+<p>Convert a PDF file to an editable Word (.docx) document — 100% free, no watermark, processed entirely in your browser.</p>
+<p style="font-size:0.9em;opacity:0.85;">Note: this extracts and converts the text content of your PDF. Complex layouts, images, and exact formatting may not be fully preserved.</p>
+</section>
+<section class="card">
+<h2>1. Upload PDF File</h2>
+<input type="file" id="pdfInput" accept="application/pdf">
+<p id="statusMsg" class="mt-10"></p>
+</section>
+<section class="card hidden" id="previewCard">
+<h2>2. Preview Extracted Text</h2>
+<div id="textPreview" style="border:1px solid #ddd;padding:16px;max-height:300px;overflow:auto;background:#fff;color:#000;white-space:pre-wrap;font-size:0.9em;"></div>
+<button id="downloadBtn" class="btn mt-20">Download Word (.docx)</button>
+</section>
+</main>
+<footer>
+<p>© 2026 niDar Tools</p>
+<p>Developed by <strong>niDar Marketing And Services</strong></p>
+</footer>
+<script src="../assets/js/script.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/build/pdf.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/docx@8.5.0/build/index.umd.js"></script>
+<script>
+pdfjsLib.GlobalWorkerOptions.workerSrc = "https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/build/pdf.worker.min.js";
+
+const pdfInput = document.getElementById('pdfInput');
+const statusMsg = document.getElementById('statusMsg');
+const previewCard = document.getElementById('previewCard');
+const textPreview = document.getElementById('textPreview');
+const downloadBtn = document.getElementById('downloadBtn');
+let extractedParagraphs = [];
+
+pdfInput.addEventListener('change', async (e) => {
+  const file = e.target.files[0];
+  if (!file) return;
+  previewCard.classList.add('hidden');
+  statusMsg.textContent = 'Extracting text from PDF...';
+  extractedParagraphs = [];
+
+  try {
+    const arrayBuffer = await file.arrayBuffer();
+    const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
+    let fullText = '';
+
+    for (let i = 1; i <= pdf.numPages; i++) {
+      const page = await pdf.getPage(i);
+      const content = await page.getTextContent();
+      const pageText = content.items.map(item => item.str).join(' ');
+      extractedParagraphs.push(pageText);
+      fullText += pageText + '\\n\\n';
+    }
+
+    textPreview.textContent = fullText;
+    previewCard.classList.remove('hidden');
+    statusMsg.textContent = 'Done! Review the extracted text, then download as Word.';
+  } catch (err) {
+    statusMsg.textContent = 'Error: ' + err.message;
+    console.error(err);
+  }
+});
+
+downloadBtn.addEventListener('click', () => {
+  const { Document, Packer, Paragraph } = docx;
+
+  const paragraphs = extractedParagraphs.map(text =>
+    new Paragraph({ text: text })
+  );
+
+  const doc = new Document({
+    sections: [{ children: paragraphs }]
+  });
+
+  Packer.toBlob(doc).then(blob => {
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'converted-document.docx';
+    a.click();
+    URL.revokeObjectURL(url);
+  });
+});
+</script>
+</body>
+</html>

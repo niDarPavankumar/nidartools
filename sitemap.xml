@@ -30,6 +30,8 @@
 
   <url><loc>https://nidartools.com/word-to-pdf/</loc><priority>0.90</priority></url>
 
+  <url><loc>https://nidartools.com/pdf-to-word/</loc><priority>0.90</priority></url>
+
   <!-- SEO Content Guide Pages -->
   <url><loc>https://nidartools.com/content/qr-generator/</loc><priority>0.85</priority></url>
   <url><loc>https://nidartools.com/content/image-resizer/</loc><priority>0.85</priority></url>
@@ -48,5 +50,7 @@
   <url><loc>https://nidartools.com/content/background-remover/</loc><priority>0.85</priority></url>
 
   <url><loc>https://nidartools.com/content/word-to-pdf/</loc><priority>0.85</priority></url>
+
+  <url><loc>https://nidartools.com/content/pdf-to-word/</loc><priority>0.85</priority></url>
 
 </urlset>
