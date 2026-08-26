@@ -38,7 +38,7 @@
 </section>
 <section class="card hidden" id="previewCard">
 <h2>2. Preview</h2>
-<div id="docPreview" style="border:1px solid #ddd;padding:16px;max-height:400px;overflow:auto;background:#fff;"></div>
+<div id="docPreview" style="border:1px solid #ddd;padding:16px;max-height:400px;overflow:auto;background:#fff;color:#000;"></div>
 <button id="downloadBtn" class="btn mt-20">Download PDF</button>
 </section>
 </main>
@@ -79,14 +79,23 @@ docxInput.addEventListener('change', (e) => {
 });
 
 downloadBtn.addEventListener('click', () => {
+  const originalMaxHeight = docPreview.style.maxHeight;
+  const originalOverflow = docPreview.style.overflow;
+  docPreview.style.maxHeight = 'none';
+  docPreview.style.overflow = 'visible';
+
   const opt = {
     margin: 0.5,
     filename: 'converted-document.pdf',
     image: { type: 'jpeg', quality: 0.98 },
-    html2canvas: { scale: 2 },
+    html2canvas: { scale: 2, windowWidth: docPreview.scrollWidth },
     jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' }
   };
-  html2pdf().set(opt).from(docPreview).save();
+
+  html2pdf().set(opt).from(docPreview).save().then(() => {
+    docPreview.style.maxHeight = originalMaxHeight;
+    docPreview.style.overflow = originalOverflow;
+  });
 });
 </script>
 </body>
