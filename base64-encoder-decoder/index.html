@@ -8,33 +8,17 @@
 <meta name="description" content="Free online Base64 Encoder and Decoder. Convert text, strings and files to and from Base64 instantly in your browser. 100% client-side and secure.">
 <meta name="keywords" content="Base64 Encoder, Base64 Decoder, Base64 Converter, niDar Tools">
 <meta name="theme-color" content="#0d6efd">
+
+<link rel="canonical" href="https://nidartools.com/base64-encoder-decoder/">
+
+<!-- Absolute paths for Assets -->
+<link rel="icon" type="image/x-icon" href="/assets/favicon/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon/favicon-32x32.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/favicon/apple-touch-icon.png">
+<link rel="stylesheet" href="/assets/css/style.css">
+
 <style>
-  :root{
-    --bg:#f8f9fa; --card:#ffffff; --text:#212529; --muted:#6c757d;
-    --border:#e2e6ea; --primary:#0d6efd; --primary-dark:#0b5ed7;
-    --err:#dc3545; --ok:#198754;
-  }
-  [data-theme="dark"]{
-    --bg:#0f1115; --card:#181b21; --text:#e9ecef; --muted:#9aa4af;
-    --border:#2a2f37; --primary:#3d8bfd; --primary-dark:#2a72e0;
-  }
-  *{box-sizing:border-box;}
-  body{
-    margin:0; font-family:-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
-    background:var(--bg); color:var(--text); transition:background .2s,color .2s;
-  }
-  header{
-    display:flex; align-items:center; justify-content:space-between;
-    padding:14px 20px; border-bottom:1px solid var(--border); background:var(--card);
-    position:sticky; top:0; z-index:10;
-  }
-  .brand{font-weight:700; font-size:1.15rem; text-decoration:none; color:var(--text);}
-  nav a{color:var(--muted); text-decoration:none; margin-left:16px; font-size:.9rem;}
-  nav a:hover{color:var(--primary);}
-  .theme-btn{background:none;border:1px solid var(--border);border-radius:8px;padding:6px 10px;cursor:pointer;color:var(--text);}
-  main{max-width:1000px;margin:0 auto;padding:24px 16px 60px;}
-  h1{font-size:1.6rem;margin-bottom:4px;}
-  .sub{color:var(--muted);margin-bottom:20px;font-size:.95rem;}
   .mode-switch{display:flex;gap:8px;margin-bottom:16px;}
   .mode-btn{
     flex:1; padding:10px; border-radius:8px; border:1px solid var(--border);
@@ -46,7 +30,7 @@
     background:var(--primary); color:#fff; border:none; padding:9px 16px;
     border-radius:8px; cursor:pointer; font-size:.9rem; font-weight:600;
   }
-  button.action:hover{background:var(--primary-dark);}
+  button.action:hover{background:var(--primary-dark, #0b5ed7);}
   button.secondary{
     background:transparent; color:var(--text); border:1px solid var(--border);
     padding:9px 16px; border-radius:8px; cursor:pointer; font-size:.9rem;
@@ -61,8 +45,8 @@
     background:transparent; color:var(--text); outline:none; margin:0;
   }
   .status{padding:8px 14px;font-size:.85rem;border-top:1px solid var(--border);}
-  .status.ok{color:var(--ok);}
-  .status.err{color:var(--err);}
+  .status.ok{color:var(--ok, #198754);}
+  .status.err{color:var(--err, #dc3545);}
   .filebox{
     border:2px dashed var(--border); border-radius:10px; padding:20px;
     text-align:center; margin-top:14px; color:var(--muted); font-size:.85rem; cursor:pointer;
@@ -70,23 +54,38 @@
   .filebox:hover{border-color:var(--primary); color:var(--primary);}
   .stats{display:flex;gap:16px;flex-wrap:wrap;margin-top:14px;font-size:.85rem;color:var(--muted);}
   .stats b{color:var(--text);}
-  footer{border-top:1px solid var(--border);padding:24px 16px;text-align:center;color:var(--muted);font-size:.85rem;}
-  footer a{color:var(--muted);text-decoration:none;margin:0 8px;}
 </style>
 </head>
 <body>
-<header>
-  <a href="https://nidartools.com/" class="brand">niDar Tools</a>
-  <nav>
-    <a href="https://nidartools.com/#tools">Tools</a>
-    <a href="https://nidartools.com/about/">About</a>
-    <button class="theme-btn" id="themeToggle" aria-label="Toggle theme">🌙</button>
-  </nav>
+
+<header class="header">
+  <div class="container navbar">
+    <a href="/" class="logo">niDar<span>Tools</span></a>
+    <nav>
+      <a href="/">Home</a>
+      <a href="/about/">About</a>
+      <a href="/contact/">Contact</a>
+      <a href="/support/">Support</a>
+    </nav>
+    <button class="btn btn-theme" id="themeToggle" aria-label="Toggle theme">🌙 Theme</button>
+  </div>
 </header>
 
-<main>
-  <h1>Base64 Encoder & Decoder</h1>
-  <p class="sub">Encode text or files to Base64, or decode Base64 back to text — instantly, in your browser.</p>
+<main class="container mt-40">
+  <section class="hero-card text-center mb-30">
+    <h1>Base64 Encoder & Decoder</h1>
+    
+    <!-- Content Guide Interlinking -->
+    <div class="mt-10">
+      <a href="/content/base64-encoder-decoder/" class="guide-link">
+        <span class="icon">📖</span> Read Detailed Base64 Guide →
+      </a>
+    </div>
+
+    <p class="mt-10">
+      Encode text or files to Base64, or decode Base64 back to text — instantly and securely in your browser.
+    </p>
+  </section>
 
   <div class="mode-switch">
     <button class="mode-btn active" id="encodeModeBtn">Encode</button>
@@ -114,42 +113,28 @@
     </div>
   </div>
 
-  <div class="stats" id="stats"></div>
+  <div class="stats mb-40" id="stats"></div>
 </main>
 
-<footer>
-  <div>
-    <a href="https://nidartools.com/">Home</a>
-    <a href="https://nidartools.com/about/">About</a>
-    <a href="https://nidartools.com/contact/">Contact</a>
-    <a href="https://nidartools.com/privacy-policy/">Privacy</a>
-    <a href="https://nidartools.com/terms/">Terms</a>
+<footer class="footer">
+  <div class="container text-center">
+    <p>© 2026 niDar Tools. All Rights Reserved.</p>
+    <p>Developed by <strong>niDar Marketing And Services</strong></p>
   </div>
-  <p style="margin-top:10px;">Developed by <strong>niDar Marketing And Services</strong><br>© 2026 niDar Tools. All Rights Reserved.</p>
 </footer>
 
+<script src="/assets/js/script.js"></script>
 <script>
   const input = document.getElementById('input');
   const output = document.getElementById('output');
   const status = document.getElementById('status');
   const stats = document.getElementById('stats');
-  const themeToggle = document.getElementById('themeToggle');
   const inputLabel = document.getElementById('inputLabel');
   const encodeModeBtn = document.getElementById('encodeModeBtn');
   const decodeModeBtn = document.getElementById('decodeModeBtn');
   const fileBox = document.getElementById('fileBox');
   const fileInput = document.getElementById('fileInput');
   let mode = 'encode';
-
-  function ls_get(k){ try{ return localStorage.getItem(k); }catch(e){ return null; } }
-  function ls_set(k,v){ try{ localStorage.setItem(k,v); }catch(e){} }
-
-  if(ls_get('theme') === 'dark'){ document.documentElement.setAttribute('data-theme','dark'); themeToggle.textContent='☀️'; }
-  themeToggle.addEventListener('click', () => {
-    const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
-    if(isDark){ document.documentElement.removeAttribute('data-theme'); themeToggle.textContent='🌙'; ls_set('theme','light'); }
-    else{ document.documentElement.setAttribute('data-theme','dark'); themeToggle.textContent='☀️'; ls_set('theme','dark'); }
-  });
 
   function setMode(m){
     mode = m;
