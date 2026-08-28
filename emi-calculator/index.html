@@ -10,88 +10,98 @@
 <meta name="keywords" content="emi calculator, loan emi calculator, amortization schedule, loan prepayment calculator, foreclosure calculator">
 
 <link rel="canonical" href="https://nidartools.com/emi-calculator/">
-<link rel="icon" type="image/x-icon" href="../assets/favicon/favicon.ico">
-<link rel="icon" type="image/png" sizes="16x16" href="../assets/favicon/favicon-16x16.png">
-<link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon/favicon-32x32.png">
-<link rel="apple-touch-icon" sizes="180x180" href="../assets/favicon/apple-touch-icon.png">
-<link rel="stylesheet" href="../assets/css/style.css">
+
+<!-- Absolute paths for Assets -->
+<link rel="icon" type="image/x-icon" href="/assets/favicon/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon/favicon-32x32.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/favicon/apple-touch-icon.png">
+<link rel="stylesheet" href="/assets/css/style.css">
 </head>
 
 <body>
 
-<header>
-  <div class="container nav">
-    <h2>niDar Tools</h2>
-
+<header class="header">
+  <div class="container navbar">
+    <a href="/" class="logo">niDar<span>Tools</span></a>
     <nav>
-      <a href="../">Home</a>
+      <a href="/">Home</a>
       <a href="/about/">About</a>
       <a href="/contact/">Contact</a>
       <a href="/support/">Support</a>
     </nav>
+    <button class="btn btn-theme" id="themeToggle" aria-label="Toggle theme">🌙 Theme</button>
   </div>
 </header>
 
-<main class="container">
+<main class="container mt-40">
 
-<section class="hero">
-  <h1>EMI Calculator</h1><div class="mt-10"><a href="/content/emi-calculator/" class="guide-link"><span class="icon">📖</span><span>Read EMI Loan Planning Guide →</span></a></div>
-  <p>Monthly EMI, full amortization schedule, and prepayment/foreclosure settlement — for short, medium, or long-term loans.</p>
+<section class="hero-card text-center mb-30">
+  <h1>EMI Calculator</h1>
+  
+  <!-- Content Guide Interlinking -->
+  <div class="mt-10">
+    <a href="/content/emi-calculator/" class="guide-link">
+      <span class="icon">📖</span><span>Read EMI Loan Planning Guide →</span>
+    </a>
+  </div>
+  
+  <p class="mt-10">Monthly EMI, full amortization schedule, and prepayment/foreclosure settlement — for short, medium, or long-term loans.</p>
 </section>
 
-<section class="card">
+<section class="card mb-20">
   <h2>1. Loan Details</h2>
 
-  <div class="grid">
+  <div class="grid mt-20">
     <div>
       <label>Loan Amount (₹)</label>
-      <input type="number" id="principal" placeholder="e.g. 500000">
+      <input type="number" id="principal" placeholder="e.g. 500000" class="form-control">
     </div>
     <div>
       <label>Interest Rate (% per year)</label>
-      <input type="number" id="rate" placeholder="e.g. 9.5" step="0.01">
+      <input type="number" id="rate" placeholder="e.g. 9.5" step="0.01" class="form-control">
     </div>
     <div>
-      <label>Tenure</label>
-      <select id="tenureUnit">
+      <label>Tenure Unit</label>
+      <select id="tenureUnit" class="form-control">
         <option value="months">Months</option>
         <option value="years" selected>Years</option>
       </select>
     </div>
     <div>
       <label>Duration</label>
-      <input type="number" id="tenure" placeholder="e.g. 5">
+      <input type="number" id="tenure" placeholder="e.g. 5" class="form-control">
     </div>
   </div>
 </section>
 
-<section class="card">
+<section class="card mb-20">
   <h2>2. Prepayment / Foreclosure (optional)</h2>
-  <p>Planning to pay off the loan early? Fill this in to see your settlement amount.</p>
+  <p class="text-muted mb-20">Planning to pay off the loan early? Fill this in to see your settlement amount.</p>
 
   <div class="grid">
     <div>
       <label>Paying off after month #</label>
-      <input type="number" id="prepayMonth" placeholder="e.g. 12">
+      <input type="number" id="prepayMonth" placeholder="e.g. 12" class="form-control">
     </div>
     <div>
       <label>Prepayment penalty (%)</label>
-      <input type="number" id="penaltyPct" placeholder="e.g. 2" step="0.01">
+      <input type="number" id="penaltyPct" placeholder="e.g. 2" step="0.01" class="form-control">
     </div>
     <div>
       <label>Settlement discount (%)</label>
-      <input type="number" id="settlementPct" placeholder="e.g. 0" step="0.01">
+      <input type="number" id="settlementPct" placeholder="e.g. 0" step="0.01" class="form-control">
     </div>
   </div>
-  <p style="font-size:12px;">Settlement discount = if the lender agrees to waive a percentage off the outstanding amount as part of a negotiated settlement. Leave at 0 if not applicable.</p>
+  <p class="text-muted mt-10" style="font-size:12px;">Settlement discount = if the lender agrees to waive a percentage off the outstanding amount as part of a negotiated settlement. Leave at 0 if not applicable.</p>
 </section>
 
-<button class="btn" onclick="calcEMI()">Calculate</button>
+<button class="btn btn-primary" onclick="calcEMI()">Calculate</button>
 <p id="errorMsg" class="alert alert-danger hidden mt-20"></p>
 
-<section class="card hidden mt-40" id="resultCard">
+<section class="card hidden mt-40 mb-20" id="resultCard">
   <h2>Full Tenure Summary</h2>
-  <div class="grid">
+  <div class="grid mt-20">
     <div class="stat-box">
       <h2 id="emiVal">-</h2>
       <p>Monthly EMI (₹)</p>
@@ -107,9 +117,9 @@
   </div>
 </section>
 
-<section class="card hidden" id="prepayCard">
+<section class="card hidden mb-20" id="prepayCard">
   <h2>Foreclosure / Settlement Summary</h2>
-  <div class="grid">
+  <div class="grid mt-20">
     <div class="stat-box">
       <h2 id="outstandingVal">-</h2>
       <p>Outstanding Principal (₹)</p>
@@ -133,11 +143,13 @@
   </div>
 </section>
 
-<section class="card hidden" id="scheduleCard">
+<section class="card hidden mb-40" id="scheduleCard">
   <h2>Month-by-Month Schedule</h2>
-  <div style="max-height:400px; overflow-y:auto;">
-    <table>
-      <tr><th>Month</th><th>EMI (₹)</th><th>Principal (₹)</th><th>Interest (₹)</th><th>Balance (₹)</th></tr>
+  <div class="mt-20" style="max-height:400px; overflow-y:auto;">
+    <table class="table">
+      <thead>
+        <tr><th>Month</th><th>EMI (₹)</th><th>Principal (₹)</th><th>Interest (₹)</th><th>Balance (₹)</th></tr>
+      </thead>
       <tbody id="scheduleBody"></tbody>
     </table>
   </div>
@@ -145,12 +157,14 @@
 
 </main>
 
-<footer>
-<p>© 2026 niDar Tools</p>
-<p>Developed by <strong>niDar Marketing And Services</strong></p>
+<footer class="footer">
+  <div class="container text-center">
+    <p>© 2026 niDar Tools. All Rights Reserved.</p>
+    <p>Developed by <strong>niDar Marketing And Services</strong></p>
+  </div>
 </footer>
 
-<script src="../assets/js/script.js"></script>
+<script src="/assets/js/script.js"></script>
 <script>
 function formatINR(num) {
   return Math.round(num).toLocaleString('en-IN');
@@ -228,7 +242,7 @@ function calcEMI() {
   ).join('');
   scheduleCard.classList.remove('hidden');
 
-  resultCard.scrollIntoView({ behavior: 'smooth' });
+  resultCard.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 }
 </script>
 
