@@ -10,58 +10,71 @@
 <meta name="keywords" content="construction cost calculator, brick calculator, cement sand calculator, building cost estimator india, wall material calculator">
 
 <link rel="canonical" href="https://nidartools.com/construction-cost-estimator/">
-<link rel="icon" type="image/x-icon" href="../assets/favicon/favicon.ico">
-<link rel="icon" type="image/png" sizes="16x16" href="../assets/favicon/favicon-16x16.png">
-<link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon/favicon-32x32.png">
-<link rel="apple-touch-icon" sizes="180x180" href="../assets/favicon/apple-touch-icon.png">
-<link rel="stylesheet" href="../assets/css/style.css">
+
+<!-- Absolute paths for Assets -->
+<link rel="icon" type="image/x-icon" href="/assets/favicon/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon/favicon-32x32.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/favicon/apple-touch-icon.png">
+<link rel="stylesheet" href="/assets/css/style.css">
 </head>
 
 <body>
 
-<header>
-  <div class="container nav">
-    <h2>niDar Tools</h2>
+<header class="header">
+  <div class="container navbar">
+    <a href="/" class="logo">niDar<span>Tools</span></a>
     <nav>
-      <a href="../">Home</a>
+      <a href="/">Home</a>
       <a href="/about/">About</a>
       <a href="/contact/">Contact</a>
       <a href="/support/">Support</a>
     </nav>
+    <button class="btn btn-theme" id="themeToggle" aria-label="Toggle theme">🌙 Theme</button>
   </div>
 </header>
 
-<main class="container">
+<main class="container mt-40">
 
-<section class="hero">
-  <h1>Construction Cost Estimator</h1><div class="mt-10"><a href="/content/construction-cost-estimator/" class="guide-link"><span class="icon">📖</span><span>Read Construction Cost Material Guide →</span></a></div>
-  <p>Calculate brick &amp; mortar quantity from your wall size, then add your own local rates for a full cost estimate.</p>
+<section class="hero-card text-center mb-30">
+  <h1>Construction Cost Estimator</h1>
+  
+  <!-- Content Guide Interlinking -->
+  <div class="mt-10">
+    <a href="/content/construction-cost-estimator/" class="guide-link">
+      <span class="icon">📖</span> Read Construction Cost Material Guide →
+    </a>
+  </div>
+
+  <p class="mt-10">
+    Calculate brick &amp; mortar quantity from your wall size, then add your own local rates for a full cost estimate.
+  </p>
 </section>
 
-<section class="card alert alert-warning">
-  <p><strong>Important:</strong> This tool gives a rough estimate using standard formulas. Material rates, labor charges, and structural requirements (column/beam sizing, steel design) vary by location and must be confirmed with a local contractor, mason, or structural engineer before actual construction. Do not rely on this alone for structural safety decisions.</p>
+<section class="card alert alert-warning mb-20">
+  <p><strong>Important:</strong> This tool gives a rough estimate using standard formulas. Material rates, labor charges, and structural requirements vary by location and must be confirmed with a local contractor, mason, or structural engineer before actual construction.</p>
 </section>
 
-<section class="card">
+<section class="card mb-20">
   <h2>1. Wall / Brickwork Quantity</h2>
-  <p>Enter your wall size and brick details — quantities are calculated using standard civil engineering formulas (not price-based).</p>
+  <p class="text-muted mb-20">Enter your wall size and brick details — quantities are calculated using standard civil engineering formulas.</p>
 
   <div class="grid">
-    <div><label>Wall Length (ft)</label><input type="number" id="wallLen" placeholder="e.g. 20"></div>
-    <div><label>Wall Height (ft)</label><input type="number" id="wallHt" placeholder="e.g. 10"></div>
-    <div><label>Wall Thickness (inch)</label><input type="number" id="wallThk" placeholder="e.g. 9"></div>
+    <div><label>Wall Length (ft)</label><input type="number" id="wallLen" placeholder="e.g. 20" class="form-control"></div>
+    <div><label>Wall Height (ft)</label><input type="number" id="wallHt" placeholder="e.g. 10" class="form-control"></div>
+    <div><label>Wall Thickness (inch)</label><input type="number" id="wallThk" placeholder="e.g. 9" class="form-control"></div>
   </div>
 
   <div class="grid mt-20">
-    <div><label>Brick Length (inch)</label><input type="number" id="brickL" value="9"></div>
-    <div><label>Brick Width (inch)</label><input type="number" id="brickW" value="4.5"></div>
-    <div><label>Brick Height (inch)</label><input type="number" id="brickH" value="3"></div>
+    <div><label>Brick Length (inch)</label><input type="number" id="brickL" value="9" class="form-control"></div>
+    <div><label>Brick Width (inch)</label><input type="number" id="brickW" value="4.5" class="form-control"></div>
+    <div><label>Brick Height (inch)</label><input type="number" id="brickH" value="3" class="form-control"></div>
   </div>
 
   <div class="grid mt-20">
-    <div><label>Mortar Joint Thickness (inch)</label><input type="number" id="joint" value="0.4" step="0.1"></div>
+    <div><label>Mortar Joint Thickness (inch)</label><input type="number" id="joint" value="0.4" step="0.1" class="form-control"></div>
     <div><label>Cement : Sand Ratio</label>
-      <select id="ratio">
+      <select id="ratio" class="form-control">
         <option value="1:4">1 : 4</option>
         <option value="1:6" selected>1 : 6</option>
         <option value="1:8">1 : 8</option>
@@ -69,11 +82,11 @@
     </div>
   </div>
 
-  <button class="btn mt-20" onclick="calcBricks()">Calculate Quantity</button>
+  <button class="btn btn-primary mt-20" onclick="calcBricks()">Calculate Quantity</button>
   <p id="brickError" class="alert alert-danger hidden mt-20"></p>
 
   <div id="brickResult" class="hidden mt-20">
-    <table>
+    <table class="table">
       <tr><td>Wall Volume</td><td id="wallVolOut">-</td></tr>
       <tr><td>Estimated Bricks Needed</td><td id="brickCountOut">-</td></tr>
       <tr><td>Cement Required (bags)</td><td id="cementBagsOut">-</td></tr>
@@ -82,38 +95,38 @@
   </div>
 </section>
 
-<section class="card">
+<section class="card mb-20">
   <h2>2. Your Material &amp; Labor Rates</h2>
-  <p>Enter the rates that apply in your area — these are used only for the cost total below.</p>
+  <p class="text-muted mb-20">Enter the rates that apply in your area — these are used for the cost total below.</p>
 
   <div class="grid">
-    <div><label>Rate per Brick (₹)</label><input type="number" id="rateBrick" placeholder="e.g. 8"></div>
-    <div><label>Rate per Cement Bag (₹)</label><input type="number" id="rateCement" placeholder="e.g. 380"></div>
-    <div><label>Rate per cft Sand (₹)</label><input type="number" id="rateSand" placeholder="e.g. 60"></div>
+    <div><label>Rate per Brick (₹)</label><input type="number" id="rateBrick" placeholder="e.g. 8" class="form-control"></div>
+    <div><label>Rate per Cement Bag (₹)</label><input type="number" id="rateCement" placeholder="e.g. 380" class="form-control"></div>
+    <div><label>Rate per cft Sand (₹)</label><input type="number" id="rateSand" placeholder="e.g. 60" class="form-control"></div>
   </div>
 </section>
 
-<section class="card">
-  <h2>3. Other Costs / Quantities (enter what applies)</h2>
+<section class="card mb-20">
+  <h2>3. Other Costs / Quantities (optional)</h2>
 
-  <div class="grid">
-    <div><label>Steel / Saria (kg)</label><input type="number" id="steelQty" placeholder="Quantity"></div>
-    <div><label>Rate per kg Steel (₹)</label><input type="number" id="steelRate" placeholder="Rate"></div>
-    <div><label>Aggregate / Gitti (cft)</label><input type="number" id="gittiQty" placeholder="Quantity"></div>
-    <div><label>Rate per cft Gitti (₹)</label><input type="number" id="gittiRate" placeholder="Rate"></div>
-    <div><label>Labor Charge (₹)</label><input type="number" id="laborCost" placeholder="Lump sum"></div>
-    <div><label>Centering Cost (₹)</label><input type="number" id="centeringCost" placeholder="Lump sum"></div>
-    <div><label>Electrical Cost (₹)</label><input type="number" id="electricalCost" placeholder="Lump sum"></div>
-    <div><label>Transport Cost (₹)</label><input type="number" id="transportCost" placeholder="Lump sum"></div>
-    <div><label>Architect / Builder Fee (₹)</label><input type="number" id="architectCost" placeholder="Lump sum"></div>
+  <div class="grid mt-20">
+    <div><label>Steel / Saria (kg)</label><input type="number" id="steelQty" placeholder="Quantity" class="form-control"></div>
+    <div><label>Rate per kg Steel (₹)</label><input type="number" id="steelRate" placeholder="Rate" class="form-control"></div>
+    <div><label>Aggregate / Gitti (cft)</label><input type="number" id="gittiQty" placeholder="Quantity" class="form-control"></div>
+    <div><label>Rate per cft Gitti (₹)</label><input type="number" id="gittiRate" placeholder="Rate" class="form-control"></div>
+    <div><label>Labor Charge (₹)</label><input type="number" id="laborCost" placeholder="Lump sum" class="form-control"></div>
+    <div><label>Centering Cost (₹)</label><input type="number" id="centeringCost" placeholder="Lump sum" class="form-control"></div>
+    <div><label>Electrical Cost (₹)</label><input type="number" id="electricalCost" placeholder="Lump sum" class="form-control"></div>
+    <div><label>Transport Cost (₹)</label><input type="number" id="transportCost" placeholder="Lump sum" class="form-control"></div>
+    <div><label>Architect / Builder Fee (₹)</label><input type="number" id="architectCost" placeholder="Lump sum" class="form-control"></div>
   </div>
 
-  <button class="btn mt-20" onclick="calcTotal()">Calculate Total Estimated Cost</button>
+  <button class="btn btn-primary mt-20" onclick="calcTotal()">Calculate Total Estimated Cost</button>
 </section>
 
-<section class="card hidden" id="totalCard">
+<section class="card hidden mb-40" id="totalCard">
   <h2>Total Estimated Cost</h2>
-  <table id="costTable"></table>
+  <table id="costTable" class="table mt-20"></table>
   <div class="stat-box mt-20">
     <h2 id="grandTotalOut">₹0</h2>
     <p>Grand Total (approximate)</p>
@@ -122,12 +135,14 @@
 
 </main>
 
-<footer>
-<p>© 2026 niDar Tools</p>
-<p>Developed by <strong>niDar Marketing And Services</strong></p>
+<footer class="footer">
+  <div class="container text-center">
+    <p>© 2026 niDar Tools. All Rights Reserved.</p>
+    <p>Developed by <strong>niDar Marketing And Services</strong></p>
+  </div>
 </footer>
 
-<script src="../assets/js/script.js"></script>
+<script src="/assets/js/script.js"></script>
 <script>
 let lastCementBags = 0, lastSandCft = 0, lastBrickCount = 0;
 
@@ -221,7 +236,7 @@ function calcTotal() {
   ).join('');
   document.getElementById('grandTotalOut').textContent = '₹' + Math.round(grandTotal).toLocaleString('en-IN');
   document.getElementById('totalCard').classList.remove('hidden');
-  document.getElementById('totalCard').scrollIntoView({ behavior: 'smooth' });
+  document.getElementById('totalCard').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 }
 </script>
 
