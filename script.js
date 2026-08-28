@@ -1,82 +1,103 @@
-// niDar Tools - Main JavaScript
+/* =====================================================
+   niDar Tools - Main Script Logic
+   ===================================================== */
 
-// Theme Switcher Functionality
-function changeTheme(theme) {
-    document.documentElement.setAttribute('data-theme', theme);
-    localStorage.setItem('nidar_theme', theme);
+// 1. Theme Switcher Functionality
+function changeTheme(themeName) {
+  document.body.classList.remove('dark', 'senior-theme');
+  
+  if (themeName === 'dark') {
+    document.body.classList.add('dark');
+  } else if (themeName === 'senior') {
+    document.body.classList.add('senior-theme');
+  }
+  
+  localStorage.setItem('nidar_theme', themeName);
 }
 
 // Load saved theme on startup
-window.addEventListener('DOMContentLoaded', () => {
-    const savedTheme = localStorage.getItem('nidar_theme') || 'light';
-    document.documentElement.setAttribute('data-theme', savedTheme);
-    const themeSelector = document.getElementById('themeSelector');
-    if (themeSelector) {
-        themeSelector.value = savedTheme;
-    }
+document.addEventListener('DOMContentLoaded', () => {
+  const savedTheme = localStorage.getItem('nidar_theme') || 'light';
+  const themeSelector = document.getElementById('themeSelector');
+  if (themeSelector) {
+    themeSelector.value = savedTheme;
+  }
+  changeTheme(savedTheme);
 });
 
-// Search Filter for Tools
+// 2. Search Functionality
 const searchInput = document.getElementById('searchInput');
 if (searchInput) {
-    searchInput.addEventListener('input', function(e) {
-        const query = e.target.value.toLowerCase();
-        const toolCards = document.querySelectorAll('.tools-grid .tool-card');
-        
-        toolCards.forEach(card => {
-            const title = card.querySelector('h3').textContent.toLowerCase();
-            const desc = card.querySelector('p').textContent.toLowerCase();
-            if (title.includes(query) || desc.includes(query)) {
-                card.style.display = 'flex';
-            } else {
-                card.style.display = 'none';
-            }
-        });
+  searchInput.addEventListener('input', (e) => {
+    const query = e.target.value.toLowerCase().trim();
+    const cards = document.querySelectorAll('.tool-card');
+
+    cards.forEach(card => {
+      const title = card.querySelector('h3').textContent.toLowerCase();
+      const desc = card.querySelector('p').textContent.toLowerCase();
+
+      if (title.includes(query) || desc.includes(query)) {
+        card.style.display = 'flex';
+      } else {
+        card.style.display = 'none';
+      }
     });
+  });
 }
 
-// Share Tool Function
-function shareTool(toolName, toolUrl) {
-    const fullUrl = window.location.origin + toolUrl;
-    if (navigator.share) {
-        navigator.share({
-            title: toolName + ' - niDar Tools',
-            text: 'Check out this free tool on niDar Tools:',
-            url: fullUrl,
-        }).catch(console.error);
-    } else {
-        navigator.clipboard.writeText(fullUrl);
-        alert('Tool link copied to clipboard!');
-    }
-}
+// 3. Floating Back To Top Button Logic
+const backToTopBtn = document.getElementById('backToTop');
 
-// Back to Top Button Logic
-window.onscroll = function() {
-    const backToTopBtn = document.getElementById('backToTop');
-    if (backToTopBtn) {
-        if (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) {
-            backToTopBtn.style.display = 'block';
-        } else {
-            backToTopBtn.style.display = 'none';
-        }
-    }
-};
+window.addEventListener('scroll', () => {
+  if (window.scrollY > 300) {
+    if (backToTopBtn) backToTopBtn.style.display = 'flex';
+  } else {
+    if (backToTopBtn) backToTopBtn.style.display = 'none';
+  }
+});
 
 function scrollToTop() {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+  window.scrollTo({
+    top: 0,
+    behavior: 'smooth'
+  });
 }
 
-// Comment Form Handler
+// 4. Share Tool Function
+function shareTool(title, url) {
+  const fullUrl = window.location.origin + url;
+  if (navigator.share) {
+    navigator.share({
+      title: title,
+      text: `Check out this free tool: ${title}`,
+      url: fullUrl
+    }).catch(() => {});
+  } else {
+    navigator.clipboard.writeText(fullUrl);
+    alert(`Link copied to clipboard: ${fullUrl}`);
+  }
+}
+
+// 5. Comment Section Logic
 function handleComment(event) {
-    event.preventDefault();
-    const name = document.getElementById('commenterName').value;
-    const text = document.getElementById('commentText').value;
-    
-    const commentsList = document.getElementById('commentsList');
-    const commentDiv = document.createElement('div');
-    commentDiv.className = 'comment-item';
-    commentDiv.innerHTML = `<strong>${name}</strong><p>${text}</p><small>Just now</small>`;
-    
-    commentsList.prepend(commentDiv);
-    document.getElementById('commentForm').reset();
+  event.preventDefault();
+  const nameInput = document.getElementById('commenterName');
+  const textInput = document.getElementById('commentText');
+  const commentsList = document.getElementById('commentsList');
+
+  if (!nameInput.value || !textInput.value) return;
+
+  const commentDiv = document.createElement('div');
+  commentDiv.className = 'comment-item';
+  commentDiv.innerHTML = `<strong>${escapeHtml(nameInput.value)}</strong> <small>Just now</small><p>${escapeHtml(textInput.value)}</p>`;
+
+  commentsList.prepend(commentDiv);
+
+  nameInput.value = '';
+  textInput.value = '';
+  alert('Thank you for your feedback!');
+}
+
+function escapeHtml(str) {
+  return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 }
