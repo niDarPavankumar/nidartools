@@ -1,41 +1,49 @@
 export async function onRequestPost(context) {
+  const corsHeaders = {
+    "Access-Control-Allow-Origin": "*",
+    "Access-Control-Allow-Methods": "POST, OPTIONS",
+    "Access-Control-Allow-Headers": "Content-Type",
+    "Content-Type": "application/json"
+  };
+
   try {
     const { request, env } = context;
     const body = await request.json();
     const { resumeText, jobDescription } = body;
 
     if (!resumeText || !jobDescription) {
-      return new Response(JSON.stringify({ error: "Resume content and Job Description are required." }), {
+      return new Response(JSON.stringify({ error: "Resume and Job Description are required." }), {
         status: 400,
-        headers: { "Content-Type": "application/json" }
+        headers: corsHeaders
       });
     }
 
     const apiKey = env.GEMINI_API_KEY;
     if (!apiKey) {
-      return new Response(JSON.stringify({ error: "API Key environment variable is missing." }), {
+      return new Response(JSON.stringify({ error: "GEMINI_API_KEY is missing in Cloudflare environment variables." }), {
         status: 500,
-        headers: { "Content-Type": "application/json" }
+        headers: corsHeaders
       });
     }
 
     const promptText = `
-You are an expert Applicant Tracking System (ATS) and Senior Technical Recruiter.
+You are an expert ATS Resume Analyzer.
 Analyze the following Resume against the Job Description.
 
-Resume Content:
+Resume:
 ${resumeText}
 
 Job Description:
 ${jobDescription}
 
-Provide a detailed JSON response strictly with the following keys (do not include markdown codeblocks or extra text):
+Respond strictly in raw valid JSON format without any markdown code block formatting (do not wrap in \`\`\`json).
+JSON Structure:
 {
-  "atsScore": number (0-100),
-  "matchingKeywords": [array of string],
-  "missingKeywords": [array of string],
-  "formattingFeedback": [array of string],
-  "actionableSuggestions": [array of string]
+  "atsScore": 85,
+  "matchingKeywords": ["HTML5", "CSS3", "JavaScript"],
+  "missingKeywords": ["React.js", "REST API"],
+  "formattingFeedback": ["Clear structure", "Good section headers"],
+  "actionableSuggestions": ["Add React projects", "Highlight API work"]
 }
 `;
 
@@ -50,27 +58,39 @@ Provide a detailed JSON response strictly with the following keys (do not includ
     });
 
     const geminiData = await geminiResponse.json();
-    
+
     if (!geminiResponse.ok) {
-      return new Response(JSON.stringify({ error: geminiData.error?.message || "Error calling Gemini API" }), {
+      return new Response(JSON.stringify({ error: geminiData.error?.message || "Gemini API Error" }), {
         status: geminiResponse.status,
-        headers: { "Content-Type": "application/json" }
+        headers: corsHeaders
       });
     }
 
-    let rawOutput = geminiData.candidates[0].content.parts[0].text;
-    rawOutput = rawOutput.replace(/```json/g, "").replace(/```/g, "").trim();
-    const parsedResult = JSON.parse(rawOutput);
+    let rawText = geminiData.candidates[0].content.parts[0].text;
+    rawText = rawText.replace(/```json/gi, "").replace(/```/g, "").trim();
 
-    return new Response(JSON.stringify(parsedResult), {
+    const parsedData = JSON.parse(rawText);
+
+    return new Response(JSON.stringify(parsedData), {
       status: 200,
-      headers: { "Content-Type": "application/json" }
+      headers: corsHeaders
     });
 
   } catch (err) {
-    return new Response(JSON.stringify({ error: "Internal Server Error: " + err.message }), {
+    return new Response(JSON.stringify({ error: "Server Error: " + err.message }), {
       status: 500,
-      headers: { "Content-Type": "application/json" }
+      headers: corsHeaders
     });
   }
+}
+
+export async function onRequestOptions() {
+  return new Response(null, {
+    status: 204,
+    headers: {
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Methods": "POST, OPTIONS",
+      "Access-Control-Allow-Headers": "Content-Type"
+    }
+  });
 }
