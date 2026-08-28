@@ -10,60 +10,68 @@
 <meta name="keywords" content="image resizer, photo resizer, compress image, passport photo size, resize image online">
 
 <link rel="canonical" href="https://nidartools.com/image-resizer/">
-<link rel="icon" type="image/x-icon" href="../assets/favicon/favicon.ico">
-<link rel="icon" type="image/png" sizes="16x16" href="../assets/favicon/favicon-16x16.png">
-<link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon/favicon-32x32.png">
-<link rel="apple-touch-icon" sizes="180x180" href="../assets/favicon/apple-touch-icon.png">
-<link rel="stylesheet" href="../assets/css/style.css">
+
+<!-- Absolute paths for Assets -->
+<link rel="icon" type="image/x-icon" href="/assets/favicon/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon/favicon-32x32.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/favicon/apple-touch-icon.png">
+<link rel="stylesheet" href="/assets/css/style.css">
 <script src="https://cdn.jsdelivr.net/npm/@mediapipe/selfie_segmentation/selfie_segmentation.js"></script>
 </head>
 
 <body>
 
-<header>
-  <div class="container nav">
-    <h2>niDar Tools</h2>
-
+<header class="header">
+  <div class="container navbar">
+    <a href="/" class="logo">niDar<span>Tools</span></a>
     <nav>
-      <a href="../">Home</a>
+      <a href="/">Home</a>
       <a href="/about/">About</a>
       <a href="/contact/">Contact</a>
       <a href="/support/">Support</a>
     </nav>
+    <button class="btn btn-theme" id="themeToggle" aria-label="Toggle theme">🌙 Theme</button>
   </div>
 </header>
 
-<main class="container">
+<main class="container mt-40">
 
-<section class="hero">
-  <h1>Image Resizer &amp; Compressor</h1><div class="mt-10"><a href="/content/image-resizer/" class="guide-link"><span class="icon">📖</span><span>Read Detailed Guide Dimensions Info →</span></a></div>
+<section class="hero-card text-center mb-30">
+  <h1>Image Resizer &amp; Compressor</h1>
+  
+  <div class="mt-10">
+    <a href="/content/image-resizer/" class="guide-link">
+      <span class="icon">📖</span><span>Read Image Resizer Guide →</span>
+    </a>
+  </div>
 
-  <p>
+  <p class="mt-10">
     Set exact width/height (cm/mm/px/in) and target file size
     (KB/MB) at the same time — great for passport-size photos.
   </p>
 </section>
 
-<section class="card">
+<section class="card mb-20">
 
   <h2>1. Upload Your Photo</h2>
 
-  <input type="file" id="fileInput" accept="image/*">
+  <input type="file" id="fileInput" accept="image/*" class="form-control mt-10">
 
-  <div id="previewWrap" class="hidden mt-20">
+  <div id="previewWrap" class="hidden mt-20 text-center">
     <p><strong>Preview:</strong></p>
-    <img id="previewImg" style="max-width:220px;border-radius:10px;border:1px solid var(--border);">
-    <p class="mt-20">Original size: <span id="infoOrigSize">-</span> · Dimensions: <span id="infoOrigDim">-</span></p>
+    <img id="previewImg" style="max-width:220px;border-radius:10px;border:1px solid var(--border);" class="mt-10">
+    <p class="mt-10">Original size: <strong id="infoOrigSize">-</strong> · Dimensions: <strong id="infoOrigDim">-</strong></p>
   </div>
 
 </section>
 
-<section class="card hidden" id="settingsSection">
+<section class="card hidden mb-20" id="settingsSection">
 
   <h2>2. Dimensions</h2>
 
-  <label>Photo size preset</label>
-  <select id="sizePreset">
+  <label class="mt-10">Photo size preset</label>
+  <select id="sizePreset" class="form-control mt-10">
     <option value="custom">Custom (set below)</option>
     <option value="3.5x4.5">Passport / ID Photo — 3.5 × 4.5 cm</option>
     <option value="2.5x3.5">PAN Card / Voter ID (SIR) — 2.5 × 3.5 cm</option>
@@ -74,7 +82,7 @@
   <div class="grid mt-20">
     <div>
       <label>Unit</label>
-      <select id="unitSelect">
+      <select id="unitSelect" class="form-control mt-10">
         <option value="px">Pixels (PX)</option>
         <option value="cm">Centimeters (CM)</option>
         <option value="mm">Millimeters (MM)</option>
@@ -83,36 +91,36 @@
     </div>
     <div>
       <label>Width</label>
-      <input type="number" id="imgWidth">
+      <input type="number" id="imgWidth" class="form-control mt-10">
     </div>
     <div>
       <label>Height</label>
-      <input type="number" id="imgHeight">
+      <input type="number" id="imgHeight" class="form-control mt-10">
     </div>
   </div>
 
-  <label class="mt-20">
+  <label class="mt-20 block">
     <input type="checkbox" id="aspectRatio" checked>
     Maintain aspect ratio
   </label>
 
-  <h2 class="mt-20">3. File Size Limit</h2>
+  <h2 class="mt-30">3. File Size Limit</h2>
 
-  <div class="grid">
+  <div class="grid mt-10">
     <div>
       <label>Target size</label>
-      <input type="number" id="fileSizeVal" value="50">
+      <input type="number" id="fileSizeVal" value="50" class="form-control mt-10">
     </div>
     <div>
       <label>Unit</label>
-      <select id="fileSizeUnit">
+      <select id="fileSizeUnit" class="form-control mt-10">
         <option value="kb">Kilobytes (KB)</option>
         <option value="mb">Megabytes (MB)</option>
       </select>
     </div>
     <div>
       <label>Output format</label>
-      <select id="formatSelect">
+      <select id="formatSelect" class="form-control mt-10">
         <option value="jpeg">JPEG / JPG</option>
         <option value="png">PNG</option>
       </select>
@@ -120,16 +128,16 @@
   </div>
   <p id="sizeWarning" class="alert alert-warning hidden mt-20"></p>
 
-  <h2 class="mt-20">4. Background</h2>
+  <h2 class="mt-30">4. Background</h2>
 
-  <label>Fit mode</label>
-  <select id="fitMode">
+  <label class="mt-10">Fit mode</label>
+  <select id="fitMode" class="form-control mt-10">
     <option value="fill">Fill frame exactly (crop, no border) — best for passport photos</option>
     <option value="fit">Show full photo (may add a border on the shorter side)</option>
   </select>
 
   <label class="mt-20">Background type</label>
-  <select id="bgType">
+  <select id="bgType" class="form-control mt-10">
     <option value="none">Keep original / transparency as-is</option>
     <option value="transparent">Transparent (PNG only)</option>
     <option value="white">White</option>
@@ -138,22 +146,23 @@
     <option value="red">Red (some ID photo requirements)</option>
     <option value="custom">Custom colour</option>
   </select>
+
   <div id="bgColorContainer" class="hidden mt-20">
-    <input type="color" id="bgColor" value="#ffffff">
+    <input type="color" id="bgColor" value="#ffffff" class="form-control">
   </div>
-  <p style="font-size:12px;">Note: "Fill frame exactly" removes any border by cropping instead of padding. Transparent background requires PNG output format.</p>
+  <p class="text-muted mt-10" style="font-size:12px;">Note: "Fill frame exactly" removes any border by cropping instead of padding. Transparent background requires PNG output format.</p>
 
   <div id="aiOption" class="hidden mt-20">
-    <label>
+    <label class="block">
       <input type="checkbox" id="aiRemoveBg">
       Smart Background Change (AI) — replaces the real background behind a person
     </label>
     <p id="aiStatus" class="alert hidden mt-20"></p>
   </div>
 
-  <h2 class="mt-20">5. Adjustments</h2>
+  <h2 class="mt-30">5. Adjustments</h2>
 
-  <div class="grid">
+  <div class="grid mt-10">
     <button id="rotateLeftBtn" class="btn" type="button">⟲ Rotate Left</button>
     <button id="rotateRightBtn" class="btn" type="button">⟳ Rotate Right</button>
     <button id="flipBtn" class="btn" type="button">⇋ Flip Horizontal</button>
@@ -162,31 +171,31 @@
   <div class="grid mt-20">
     <div>
       <label>Brightness (<span id="brightnessVal">100</span>%)</label>
-      <input type="range" id="brightness" min="50" max="150" value="100">
+      <input type="range" id="brightness" min="50" max="150" value="100" class="form-control mt-10">
     </div>
     <div>
       <label>Contrast (<span id="contrastVal">100</span>%)</label>
-      <input type="range" id="contrast" min="50" max="150" value="100">
+      <input type="range" id="contrast" min="50" max="150" value="100" class="form-control mt-10">
     </div>
   </div>
 
-  <div class="flex mt-20" style="align-items:center;gap:12px;">
-    <button id="processBtn" class="btn">Resize &amp; Compress</button>
+  <div class="flex mt-30" style="align-items:center;gap:12px;">
+    <button id="processBtn" class="btn btn-primary">⚡ Resize &amp; Compress</button>
     <button id="resetBtn" class="btn" type="button" style="background:var(--secondary);">↺ Start Over</button>
-    <img id="loadingSpinner" src="../assets/favicon/favicon-32x32.png" class="hidden" style="width:28px;height:28px;animation:spin 1s linear infinite;">
+    <img id="loadingSpinner" src="/assets/favicon/favicon-32x32.png" class="hidden" style="width:28px;height:28px;animation:spin 1s linear infinite;">
   </div>
 
 </section>
 
-<section class="card hidden" id="resultCard">
+<section class="card hidden mb-20 text-center" id="resultCard">
   <h2>✅ Successfully Changed!</h2>
-  <p>New file size: <strong id="newFileSize">0 KB</strong></p>
-  <button id="downloadBtn" class="btn">Download File</button>
+  <p class="mt-10">New file size: <strong id="newFileSize">0 KB</strong></p>
+  <button id="downloadBtn" class="btn btn-primary mt-20">📥 Download File</button>
 </section>
 
-<section class="card">
+<section class="card mb-40">
   <h2>Passport / ID photo tip</h2>
-  <p>
+  <p class="text-muted mt-10">
     Standard passport/ID photo size is typically 3.5 × 4.5 cm on a
     plain white or light background. Turn off "Maintain aspect ratio"
     to set a custom size that differs from your original photo's shape.
@@ -195,20 +204,14 @@
 
 </main>
 
-<footer>
-
-<p>
-© 2026 niDar Tools
-</p>
-
-<p>
-Developed by
-<strong>niDar Marketing And Services</strong>
-</p>
-
+<footer class="footer">
+  <div class="container text-center">
+    <p>© 2026 niDar Tools. All Rights Reserved.</p>
+    <p>Developed by <strong>niDar Marketing And Services</strong></p>
+  </div>
 </footer>
 
-<script src="../assets/js/script.js"></script>
+<script src="/assets/js/script.js"></script>
 <script>
 (function () {
   const fileInput = document.getElementById('fileInput');
@@ -249,7 +252,7 @@ Developed by
   const contrastVal = document.getElementById('contrastVal');
   const resetBtn = document.getElementById('resetBtn');
 
-  let rotation = 0;   // 0, 90, 180, 270
+  let rotation = 0;
   let flipped = false;
 
   let originalImg = new Image();
@@ -566,48 +569,40 @@ Developed by
       for (let i = 0; i < 7; i++) {
         q = (minQ + maxQ) / 2;
         blob = await new Promise(res => canvas.toBlob(res, mimeType, q));
-        if ((blob.size / 1024) < limitKB) minQ = q; else maxQ = q;
-      }
-      if ((blob.size / 1024) > limitKB) {
-        let scale = 0.9;
-        while ((blob.size / 1024) > limitKB && scale > 0.2) {
-          drawToCanvas(canvas, ctx, Math.round(targetW * scale), Math.round(targetH * scale), sourceImg);
-          blob = await new Promise(res => canvas.toBlob(res, mimeType, 0.45));
-          scale -= 0.1;
+        if ((blob.size / 1024) > limitKB) {
+          maxQ = q;
+        } else {
+          minQ = q;
         }
       }
+      blob = await new Promise(res => canvas.toBlob(res, mimeType, minQ));
     }
 
     finalBlob = blob;
     newFileSize.textContent = (blob.size / 1024).toFixed(1) + ' KB';
-    resultCard.classList.remove('hidden');
-    previewImg.src = URL.createObjectURL(finalBlob);
 
     if ((blob.size / 1024) > limitKB) {
-      sizeWarning.textContent = 'Note: could not fit the requested size limit. ' +
-        (outFormat === 'png' ? 'Try JPEG instead — it compresses further.' : 'Try reducing dimensions or increasing the target size.');
+      sizeWarning.textContent = `Warning: Could not compress under ${limitKB} KB without significantly degrading image dimensions further. Current file size: ${(blob.size / 1024).toFixed(1)} KB`;
       sizeWarning.classList.remove('hidden');
     } else {
       sizeWarning.classList.add('hidden');
     }
 
+    resultCard.classList.remove('hidden');
+    resultCard.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+
     processBtn.disabled = false;
-    processBtn.textContent = 'Resize & Compress';
+    processBtn.textContent = '⚡ Resize & Compress';
     loadingSpinner.classList.add('hidden');
-    resultCard.scrollIntoView({ behavior: 'smooth' });
   });
 
   downloadBtn.addEventListener('click', () => {
     if (!finalBlob) return;
-    const ext = formatSelect.value === 'png' ? '.png' : '.jpg';
-    const url = URL.createObjectURL(finalBlob);
+    const ext = formatSelect.value === 'png' ? 'png' : 'jpg';
     const a = document.createElement('a');
-    a.href = url;
-    a.download = 'nidar_' + loadedFile.name.split('.')[0] + ext;
-    document.body.appendChild(a);
+    a.href = URL.createObjectURL(finalBlob);
+    a.download = `resized-photo.${ext}`;
     a.click();
-    document.body.removeChild(a);
-    URL.revokeObjectURL(url);
   });
 })();
 </script>
