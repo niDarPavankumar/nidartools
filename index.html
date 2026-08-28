@@ -1,103 +1,89 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>niDar Tools - The World's Smartest Free Online Tools Platform</title>
-    <meta name="description" content="Resize images, edit PDFs, use AI-powered tools, optimize files and boost productivity — all in one fast, secure and free platform.">
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>niDar Tools - Smart Online Tools Platform</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  <header>
+    <nav class="navbar">
+      <div class="logo">niDar Tools</div>
+      <ul class="nav-links">
+        <li><a href="/">Home</a></li>
+        <li><a href="/about.html">About</a></li>
+        <li><a href="/contact.html">Contact</a></li>
+        <li><a href="/privacy.html">Privacy</a></li>
+        <li><a href="/terms.html">Terms</a></li>
+      </ul>
+    </nav>
+  </header>
 
-    <!-- Header Section -->
-    <header class="navbar">
-        <div class="logo">
-            <a href="/" aria-label="niDar Tools Home Page">niDar Tools</a>
-        </div>
-        <nav class="nav-links">
-            <a href="/" aria-label="Go to Home Page">Home</a>
-            <a href="/about" aria-label="Learn more About Us">About</a>
-            <a href="/contact" aria-label="Contact Us Page">Contact</a>
-            <a href="/support" aria-label="Get Support">Support</a>
-            <a href="/guide" aria-label="User Guide and Documentation">Guide</a>
-            <a href="/faq" aria-label="Frequently Asked Questions">FAQ</a>
-            <a href="/privacy" aria-label="Read Privacy Policy">Privacy</a>
-            <a href="/terms" aria-label="Read Terms of Service">Terms</a>
-        </nav>
-        <button class="theme-btn" id="themeToggle" aria-label="Toggle Light or Dark Theme">Theme</button>
-    </header>
+  <section class="hero">
+    <span class="badge">Global • Fast • Secure • AI Ready</span>
+    <h1>The World's Smartest Free Online Tools Platform</h1>
+    <p>Resize images, edit PDFs, use AI-powered tools, optimize files and boost productivity — all in one fast, secure and free platform.</p>
+    <div class="hero-btns">
+      <a href="#tools" class="btn btn-primary">Explore Tools</a>
+      <a href="/about.html" class="btn btn-secondary">Learn More</a>
+    </div>
+  </section>
 
-    <!-- Main Content Section (Accessibility Fix) -->
-    <main id="main-content">
-        <!-- Hero Section -->
-        <section class="hero">
-            <div class="badge">Global • Fast • Secure • AI Ready</div>
-            <h1>The World's Smartest Free Online Tools Platform</h1>
-            <p>Resize images, edit PDFs, use AI-powered tools, optimize files and boost productivity — all in one fast, secure and free platform.</p>
-            <div class="hero-buttons">
-                <a href="#tools" class="btn btn-primary" aria-label="Explore all available online tools">Explore Tools</a>
-                <a href="/about" class="btn btn-secondary" aria-label="Learn more about niDar Tools platform">Learn More</a>
-            </div>
-        </section>
+  <main id="tools" class="container">
+    <h2>Find Your Tool</h2>
+    <p class="subtitle">Search from our growing collection of free online tools</p>
+    
+    <div class="search-box">
+      <input type="text" id="searchInput" placeholder="Search tools...">
+    </div>
 
-        <!-- Search & Tools Section -->
-        <section id="tools" class="tools-section">
-            <h2>Find Your Tool</h2>
-            <p>Search from our growing collection of free online tools</p>
-            
-            <div class="search-box">
-                <input type="text" id="toolSearch" placeholder="Search tools..." aria-label="Search through available tools">
-            </div>
+    <div class="tools-grid">
+      <!-- Image Resizer -->
+      <div class="tool-card">
+        <div class="tool-icon">🖼️</div>
+        <h3>Image Resizer</h3>
+        <p>Resize JPG, PNG, and WebP images instantly.</p>
+        <a href="/image-resizer/" class="btn">Try Tool</a>
+      </div>
 
-            <div class="tools-grid">
-                <!-- Tool Card 1 -->
-                <a href="/image-resizer" class="tool-card" aria-label="Open Image Resizer Tool to resize images online">
-                    <div class="tool-icon">🖼️</div>
-                    <h3>Image Resizer</h3>
-                    <p>Resize JPG, PNG, and WebP images instantly.</p>
-                </a>
+      <!-- Image Format Converter -->
+      <div class="tool-card">
+        <div class="tool-icon">🔄</div>
+        <h3>Image Format Converter</h3>
+        <p>Convert images between PNG, JPG, WebP, and SVG.</p>
+        <a href="/image-converter/" class="btn">Try Tool</a>
+      </div>
 
-                <!-- Tool Card 2 -->
-                <a href="/image-converter" class="tool-card" aria-label="Open Image Format Converter Tool">
-                    <div class="tool-icon">🔄</div>
-                    <h3>Image Format Converter</h3>
-                    <p>Convert images between PNG, JPG, WebP, and SVG.</p>
-                </a>
+      <!-- Image to PDF -->
+      <div class="tool-card">
+        <div class="tool-icon">📄</div>
+        <h3>Image to PDF</h3>
+        <p>Convert photos and documents into a single PDF file.</p>
+        <a href="/image-to-pdf/" class="btn">Try Tool</a>
+      </div>
 
-                <!-- Tool Card 3 -->
-                <a href="/image-to-pdf" class="tool-card" aria-label="Open Image to PDF Converter Tool">
-                    <div class="tool-icon">📄</div>
-                    <h3>Image to PDF</h3>
-                    <p>Convert photos and documents into a single PDF file.</p>
-                </a>
-
-                <!-- Tool Card 4 -->
-                <a href="/age-calculator" class="tool-card" aria-label="Open Age Calculator Tool">
-                    <div class="tool-icon">🎂</div>
-                    <h3>Age Calculator</h3>
-                    <p>Calculate your exact age in years, months, and days.</p>
-                </a>
-            </div>
+      <!-- Age Calculator -->
+      <div class="tool-card">
+        <div class="tool-icon">🎂</div>
+        <h3>Age Calculator</h3>
+        <p>Calculate your exact age in years, months, and days.</p>
+        <a href="/age-calculator/" class="btn">Try Tool</a>
+      </div>
 
       <!-- AI ATS Resume Checker -->
       <div class="tool-card">
-        <div class="tool-icon">📄</div>
+        <div class="tool-icon">📝</div>
         <h3>AI ATS Resume Checker</h3>
         <p>Analyze your resume against job descriptions using AI to boost your ATS match score and hiring chances.</p>
         <a href="/ats-checker/" class="btn">Try Tool</a>
       </div>
-        </section>
-    </main>
+    </div>
+  </main>
 
-    <!-- Footer Section -->
-    <footer>
-        <p>&copy; 2026 niDar Tools. All Rights Reserved.</p>
-        <div class="footer-links">
-            <a href="/privacy" aria-label="View Privacy Policy">Privacy Policy</a> | 
-            <a href="/terms" aria-label="View Terms of Service">Terms of Service</a> | 
-            <a href="/contact" aria-label="Get in touch via Contact Page">Contact Us</a>
-        </div>
-    </footer>
-
+  <footer>
+    <p>© 2026 niDar Tools. All Rights Reserved.</p>
+    <p><a href="/privacy.html">Privacy Policy</a> | <a href="/terms.html">Terms of Service</a> | <a href="/contact.html">Contact Us</a></p>
+  </footer>
 </body>
 </html>
