@@ -11,14 +11,16 @@
   <header>
     <nav class="navbar">
       <div class="logo">niDar Tools</div>
+      
+      <!-- Google Translate Widget Container -->
+      <div id="google_translate_element"></div>
+
       <ul class="nav-links">
         <li><a href="/">Home</a></li>
         <li><a href="/about/">About</a></li>
         <li><a href="/contact/">Contact</a></li>
         <li><a href="/user-guide/">Guide</a></li>
         <li><a href="/faq/">FAQ</a></li>
-        <li><a href="/privacy-policy/">Privacy</a></li>
-        <li><a href="/terms/">Terms</a></li>
         <li><button id="themeToggle" class="theme-btn" aria-label="Toggle Theme">🌓</button></li>
       </ul>
     </nav>
@@ -43,131 +45,311 @@
     </div>
 
     <div class="tools-grid">
-      <div class="tool-card">
+      <!-- 1. AI ATS Resume Checker -->
+      <div class="tool-card" id="card-ats-checker">
         <div class="tool-icon">📝</div>
         <h3>AI ATS Resume Checker</h3>
         <p>Analyze your resume against job descriptions using AI to boost your ATS match score.</p>
-        <a href="/ats-checker/" class="btn">Try Tool</a>
+        <div class="card-actions">
+          <a href="/ats-checker/" class="btn btn-primary">Open Tool</a>
+          <a href="/user-guide/#ats-checker" class="btn btn-secondary">Read More</a>
+        </div>
+        <div class="card-meta">
+          <div class="rating">⭐ 4.9/5</div>
+          <button class="share-btn" onclick="shareTool('AI ATS Resume Checker', '/ats-checker/')">🔗 Share</button>
+        </div>
       </div>
 
-      <div class="tool-card">
+      <!-- 2. Image Resizer -->
+      <div class="tool-card" id="card-image-resizer">
         <div class="tool-icon">🖼️</div>
         <h3>Image Resizer</h3>
         <p>Resize JPG, PNG, and WebP images instantly to exact dimensions.</p>
-        <a href="/image-resizer/" class="btn">Try Tool</a>
+        <div class="card-actions">
+          <a href="/image-resizer/" class="btn btn-primary">Open Tool</a>
+          <a href="/user-guide/#image-resizer" class="btn btn-secondary">Read More</a>
+        </div>
+        <div class="card-meta">
+          <div class="rating">⭐ 4.8/5</div>
+          <button class="share-btn" onclick="shareTool('Image Resizer', '/image-resizer/')">🔗 Share</button>
+        </div>
       </div>
 
-      <div class="tool-card">
+      <!-- 3. Image Format Converter -->
+      <div class="tool-card" id="card-image-converter">
         <div class="tool-icon">🔄</div>
         <h3>Image Format Converter</h3>
         <p>Convert images smoothly between PNG, JPG, WebP, and SVG formats.</p>
-        <a href="/image-converter/" class="btn">Try Tool</a>
+        <div class="card-actions">
+          <a href="/image-converter/" class="btn btn-primary">Open Tool</a>
+          <a href="/user-guide/#image-converter" class="btn btn-secondary">Read More</a>
+        </div>
+        <div class="card-meta">
+          <div class="rating">⭐ 4.7/5</div>
+          <button class="share-btn" onclick="shareTool('Image Format Converter', '/image-converter/')">🔗 Share</button>
+        </div>
       </div>
 
-      <div class="tool-card">
+      <!-- 4. Image to PDF -->
+      <div class="tool-card" id="card-image-to-pdf">
         <div class="tool-icon">📄</div>
         <h3>Image to PDF</h3>
         <p>Combine multiple photos and documents into a single professional PDF file.</p>
-        <a href="/image-to-pdf/" class="btn">Try Tool</a>
+        <div class="card-actions">
+          <a href="/image-to-pdf/" class="btn btn-primary">Open Tool</a>
+          <a href="/user-guide/#image-to-pdf" class="btn btn-secondary">Read More</a>
+        </div>
+        <div class="card-meta">
+          <div class="rating">⭐ 4.9/5</div>
+          <button class="share-btn" onclick="shareTool('Image to PDF', '/image-to-pdf/')">🔗 Share</button>
+        </div>
       </div>
 
-      <div class="tool-card">
+      <!-- 5. Age Calculator -->
+      <div class="tool-card" id="card-age-calculator">
         <div class="tool-icon">🎂</div>
         <h3>Age Calculator</h3>
         <p>Calculate your exact age in years, months, days, and upcoming birthday details.</p>
-        <a href="/age-calculator/" class="btn">Try Tool</a>
+        <div class="card-actions">
+          <a href="/age-calculator/" class="btn btn-primary">Open Tool</a>
+          <a href="/user-guide/#age-calculator" class="btn btn-secondary">Read More</a>
+        </div>
+        <div class="card-meta">
+          <div class="rating">⭐ 4.9/5</div>
+          <button class="share-btn" onclick="shareTool('Age Calculator', '/age-calculator/')">🔗 Share</button>
+        </div>
       </div>
 
-      <div class="tool-card">
+      <!-- 6. QR Code Generator -->
+      <div class="tool-card" id="card-qr-generator">
         <div class="tool-icon">🔳</div>
         <h3>QR Code Generator</h3>
         <p>Create custom, high-resolution QR codes for links, text, or contact data.</p>
-        <a href="/qr-generator/" class="btn">Try Tool</a>
+        <div class="card-actions">
+          <a href="/qr-generator/" class="btn btn-primary">Open Tool</a>
+          <a href="/user-guide/#qr-generator" class="btn btn-secondary">Read More</a>
+        </div>
+        <div class="card-meta">
+          <div class="rating">⭐ 4.8/5</div>
+          <button class="share-btn" onclick="shareTool('QR Code Generator', '/qr-generator/')">🔗 Share</button>
+        </div>
       </div>
 
-      <div class="tool-card">
+      <!-- 7. Image Compressor -->
+      <div class="tool-card" id="card-image-compressor">
         <div class="tool-icon">🗜️</div>
         <h3>Image Compressor</h3>
         <p>Compress image file sizes heavily without losing visual quality.</p>
-        <a href="/image-compressor/" class="btn">Try Tool</a>
+        <div class="card-actions">
+          <a href="/image-compressor/" class="btn btn-primary">Open Tool</a>
+          <a href="/user-guide/#image-compressor" class="btn btn-secondary">Read More</a>
+        </div>
+        <div class="card-meta">
+          <div class="rating">⭐ 4.8/5</div>
+          <button class="share-btn" onclick="shareTool('Image Compressor', '/image-compressor/')">🔗 Share</button>
+        </div>
       </div>
 
-      <div class="tool-card">
+      <!-- 8. Icon Kit Generator -->
+      <div class="tool-card" id="card-icon-kit">
         <div class="tool-icon">🧩</div>
         <h3>Icon Kit Generator</h3>
         <p>Turn a single logo image into a complete website favicon and icon kit package.</p>
-        <a href="/icon-kit-generator/" class="btn">Try Tool</a>
+        <div class="card-actions">
+          <a href="/icon-kit-generator/" class="btn btn-primary">Open Tool</a>
+          <a href="/user-guide/#icon-kit" class="btn btn-secondary">Read More</a>
+        </div>
+        <div class="card-meta">
+          <div class="rating">⭐ 4.7/5</div>
+          <button class="share-btn" onclick="shareTool('Icon Kit Generator', '/icon-kit-generator/')">🔗 Share</button>
+        </div>
       </div>
 
-      <div class="tool-card">
+      <!-- 9. Percentage Calculator -->
+      <div class="tool-card" id="card-percentage-calc">
         <div class="tool-icon">📊</div>
         <h3>Percentage Calculator</h3>
         <p>Calculate percentage increases, decreases, fractions, and values instantly.</p>
-        <a href="/percentage-calculator/" class="btn">Try Tool</a>
+        <div class="card-actions">
+          <a href="/percentage-calculator/" class="btn btn-primary">Open Tool</a>
+          <a href="/user-guide/#percentage-calculator" class="btn btn-secondary">Read More</a>
+        </div>
+        <div class="card-meta">
+          <div class="rating">⭐ 4.9/5</div>
+          <button class="share-btn" onclick="shareTool('Percentage Calculator', '/percentage-calculator/')">🔗 Share</button>
+        </div>
       </div>
 
-      <div class="tool-card">
+      <!-- 10. Construction Cost Estimator -->
+      <div class="tool-card" id="card-construction-estimator">
         <div class="tool-icon">🏗️</div>
         <h3>Construction Cost Estimator</h3>
         <p>Estimate building expenses and material costs easily based on area measurements.</p>
-        <a href="/construction-cost-estimator/" class="btn">Try Tool</a>
+        <div class="card-actions">
+          <a href="/construction-cost-estimator/" class="btn btn-primary">Open Tool</a>
+          <a href="/user-guide/#construction-estimator" class="btn btn-secondary">Read More</a>
+        </div>
+        <div class="card-meta">
+          <div class="rating">⭐ 4.8/5</div>
+          <button class="share-btn" onclick="shareTool('Construction Cost Estimator', '/construction-cost-estimator/')">🔗 Share</button>
+        </div>
       </div>
 
-      <div class="tool-card">
+      <!-- 11. Word Counter -->
+      <div class="tool-card" id="card-word-counter">
         <div class="tool-icon">📝</div>
         <h3>Word Counter</h3>
         <p>Count words, characters, sentences, paragraphs, and reading time in real-time.</p>
-        <a href="/word-counter/" class="btn">Try Tool</a>
+        <div class="card-actions">
+          <a href="/word-counter/" class="btn btn-primary">Open Tool</a>
+          <a href="/user-guide/#word-counter" class="btn btn-secondary">Read More</a>
+        </div>
+        <div class="card-meta">
+          <div class="rating">⭐ 4.9/5</div>
+          <button class="share-btn" onclick="shareTool('Word Counter', '/word-counter/')">🔗 Share</button>
+        </div>
       </div>
 
-      <div class="tool-card">
+      <!-- 12. Base64 Encoder / Decoder -->
+      <div class="tool-card" id="card-base64">
         <div class="tool-icon">🔐</div>
         <h3>Base64 Encoder / Decoder</h3>
         <p>Encode plain text into Base64 format or decode Base64 back safely.</p>
-        <a href="/base64-encoder-decoder/" class="btn">Try Tool</a>
+        <div class="card-actions">
+          <a href="/base64-encoder-decoder/" class="btn btn-primary">Open Tool</a>
+          <a href="/user-guide/#base64" class="btn btn-secondary">Read More</a>
+        </div>
+        <div class="card-meta">
+          <div class="rating">⭐ 4.8/5</div>
+          <button class="share-btn" onclick="shareTool('Base64 Encoder / Decoder', '/base64-encoder-decoder/')">🔗 Share</button>
+        </div>
       </div>
 
-      <div class="tool-card">
+      <!-- 13. JSON Formatter -->
+      <div class="tool-card" id="card-json-formatter">
         <div class="tool-icon">💻</div>
         <h3>JSON Formatter</h3>
         <p>Format, validate, parse, and beautify raw JSON strings instantly in-browser.</p>
-        <a href="/json-formatter/" class="btn">Try Tool</a>
+        <div class="card-actions">
+          <a href="/json-formatter/" class="btn btn-primary">Open Tool</a>
+          <a href="/user-guide/#json-formatter" class="btn btn-secondary">Read More</a>
+        </div>
+        <div class="card-meta">
+          <div class="rating">⭐ 4.9/5</div>
+          <button class="share-btn" onclick="shareTool('JSON Formatter', '/json-formatter/')">🔗 Share</button>
+        </div>
       </div>
 
-      <div class="tool-card">
+      <!-- 14. Background Remover -->
+      <div class="tool-card" id="card-bg-remover">
         <div class="tool-icon">🪄</div>
         <h3>Background Remover</h3>
         <p>Remove photo backgrounds automatically using secure client-side AI processing.</p>
-        <a href="/background-remover/" class="btn">Try Tool</a>
+        <div class="card-actions">
+          <a href="/background-remover/" class="btn btn-primary">Open Tool</a>
+          <a href="/user-guide/#bg-remover" class="btn btn-secondary">Read More</a>
+        </div>
+        <div class="card-meta">
+          <div class="rating">⭐ 4.9/5</div>
+          <button class="share-btn" onclick="shareTool('Background Remover', '/background-remover/')">🔗 Share</button>
+        </div>
       </div>
 
-      <div class="tool-card">
+      <!-- 15. Word to PDF -->
+      <div class="tool-card" id="card-word-to-pdf">
         <div class="tool-icon">📑</div>
         <h3>Word to PDF</h3>
         <p>Convert Microsoft Word (.docx) documents neatly into downloadable PDFs.</p>
-        <a href="/word-to-pdf/" class="btn">Try Tool</a>
+        <div class="card-actions">
+          <a href="/word-to-pdf/" class="btn btn-primary">Open Tool</a>
+          <a href="/user-guide/#word-to-pdf" class="btn btn-secondary">Read More</a>
+        </div>
+        <div class="card-meta">
+          <div class="rating">⭐ 4.8/5</div>
+          <button class="share-btn" onclick="shareTool('Word to PDF', '/word-to-pdf/')">🔗 Share</button>
+        </div>
       </div>
 
-      <div class="tool-card">
+      <!-- 16. PDF to Word -->
+      <div class="tool-card" id="card-pdf-to-word">
         <div class="tool-icon">📋</div>
         <h3>PDF to Word</h3>
         <p>Extract text contents from PDF files into editable Word (.docx) documents.</p>
-        <a href="/pdf-to-word/" class="btn">Try Tool</a>
+        <div class="card-actions">
+          <a href="/pdf-to-word/" class="btn btn-primary">Open Tool</a>
+          <a href="/user-guide/#pdf-to-word" class="btn btn-secondary">Read More</a>
+        </div>
+        <div class="card-meta">
+          <div class="rating">⭐ 4.8/5</div>
+          <button class="share-btn" onclick="shareTool('PDF to Word', '/pdf-to-word/')">🔗 Share</button>
+        </div>
       </div>
 
-      <div class="tool-card">
+      <!-- 17. EMI Calculator -->
+      <div class="tool-card" id="card-emi-calc">
         <div class="tool-icon">💳</div>
         <h3>EMI Calculator</h3>
         <p>Calculate loan EMIs, total interest payouts, and monthly payment amortization.</p>
-        <a href="/emi-calculator/" class="btn">Try Tool</a>
+        <div class="card-actions">
+          <a href="/emi-calculator/" class="btn btn-primary">Open Tool</a>
+          <a href="/user-guide/#emi-calc" class="btn btn-secondary">Read More</a>
+        </div>
+        <div class="card-meta">
+          <div class="rating">⭐ 4.9/5</div>
+          <button class="share-btn" onclick="shareTool('EMI Calculator', '/emi-calculator/')">🔗 Share</button>
+        </div>
       </div>
     </div>
+
+    <!-- User Feedback / Comment Section -->
+    <section class="comment-section">
+      <h3>💬 Leave Your Feedback & Comments</h3>
+      <p>We value your thoughts! Let us know how we can improve niDar Tools.</p>
+      <form id="commentForm" onsubmit="handleComment(event)">
+        <input type="text" id=" commenterName" placeholder="Your Name" required>
+        <textarea id="commentText" placeholder="Write your comment here..." rows="4" required></textarea>
+        <button type="submit" class="btn btn-primary">Post Comment</button>
+      </form>
+      <div id="commentsList" class="comments-list"></div>
+    </section>
   </main>
 
-  <footer>
-    <p>© 2026 niDar Tools. All Rights Reserved.</p>
-    <p><a href="/privacy-policy/">Privacy Policy</a> | <a href="/terms/">Terms of Service</a> | <a href="/contact/">Contact Us</a></p>
+  <footer class="modern-footer">
+    <div class="footer-content container">
+      <div class="footer-col">
+        <h3>niDar Tools</h3>
+        <p>The world's smartest free online tools platform, designed for speed, privacy, and ease of use.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="/">Home</a></li>
+          <li><a href="/about/">About Us</a></li>
+          <li><a href="/user-guide/">User Guide</a></li>
+          <li><a href="/faq/">FAQ</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Legal & Support</h4>
+        <ul>
+          <li><a href="/privacy-policy/">Privacy Policy</a></li>
+          <li><a href="/terms/">Terms of Service</a></li>
+          <li><a href="/contact/">Contact Us</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 niDar Tools. All Rights Reserved. Developed by <strong>niDar Marketing And Services</strong></p>
+    </div>
   </footer>
+
+  <!-- Google Translate Script -->
+  <script type="text/javascript">
+    function googleTranslateElementInit() {
+      new google.translate.TranslateElement({pageLanguage: 'en', layout: google.translate.TranslateElement.InlineLayout.SIMPLE}, 'google_translate_element');
+    }
+  </script>
+  <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
   <script src="script.js"></script>
 </body>
 </html>
