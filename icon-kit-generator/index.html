@@ -10,50 +10,60 @@
 <meta name="keywords" content="favicon generator, icon kit generator, website icon generator, logo to favicon, apple touch icon generator, android icon generator">
 
 <link rel="canonical" href="https://nidartools.com/icon-kit-generator/">
-<link rel="icon" type="image/x-icon" href="../assets/favicon/favicon.ico">
-<link rel="icon" type="image/png" sizes="16x16" href="../assets/favicon/favicon-16x16.png">
-<link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon/favicon-32x32.png">
-<link rel="apple-touch-icon" sizes="180x180" href="../assets/favicon/apple-touch-icon.png">
-<link rel="stylesheet" href="../assets/css/style.css">
+
+<!-- Absolute paths for Assets -->
+<link rel="icon" type="image/x-icon" href="/assets/favicon/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon/favicon-32x32.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/favicon/apple-touch-icon.png">
+<link rel="stylesheet" href="/assets/css/style.css">
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 </head>
 
 <body>
 
-<header>
-  <div class="container nav">
-    <h2>niDar Tools</h2>
-
+<header class="header">
+  <div class="container navbar">
+    <a href="/" class="logo">niDar<span>Tools</span></a>
     <nav>
-      <a href="../">Home</a>
+      <a href="/">Home</a>
       <a href="/about/">About</a>
       <a href="/contact/">Contact</a>
       <a href="/support/">Support</a>
     </nav>
+    <button class="btn btn-theme" id="themeToggle" aria-label="Toggle theme">🌙 Theme</button>
   </div>
 </header>
 
-<main class="container">
+<main class="container mt-40">
 
-<section class="hero">
-  <h1>Favicon &amp; Icon Kit Generator</h1><div class="mt-10"><a href="/content/icon-kit-generator/" class="guide-link"><span class="icon">📖</span><span>Read Icon Kit Favicon Guide →</span></a></div>
+<section class="hero-card text-center mb-30">
+  <h1>Favicon &amp; Icon Kit Generator</h1>
+  
+  <!-- Content Guide Interlinking -->
+  <div class="mt-10">
+    <a href="/content/icon-kit-generator/" class="guide-link">
+      <span class="icon">📖</span><span>Read Icon Kit Favicon Guide →</span>
+    </a>
+  </div>
 
-  <p>
+  <p class="mt-10">
     Upload one logo or image — get every icon size and format
     your website needs, packed in a single ZIP. Nothing is
     uploaded anywhere; everything is generated on your own device.
   </p>
 </section>
 
-<section class="card">
+<section class="card mb-20">
 
   <h2>1. Upload Your Image</h2>
 
-  <input type="file" id="fileInput" accept="image/*">
+  <input type="file" id="fileInput" accept="image/*" class="form-control mt-20">
 
   <div id="previewWrap" class="hidden mt-20">
     <p><strong>Preview:</strong></p>
-    <img id="previewImg" style="max-width:200px;border-radius:10px;border:1px solid var(--border);">
+    <img id="previewImg" style="max-width:200px;border-radius:10px;border:1px solid var(--border);" class="mt-10">
   </div>
 
   <div class="mt-20">
@@ -65,50 +75,44 @@
 
 </section>
 
-<section class="card">
+<section class="card mb-20">
 
   <h2>2. Generate Icon Kit</h2>
 
-  <p>
+  <p class="text-muted mt-10">
     This will create the following files:
     favicon.ico, favicon-16x16.png, favicon-32x32.png,
     apple-touch-icon.png (180×180), icon-192.png, icon-512.png.
   </p>
 
-  <button id="genBtn" class="btn">⚙️ Generate Icon Kit</button>
+  <button id="genBtn" class="btn btn-primary mt-20">⚙️ Generate Icon Kit</button>
 
 </section>
 
-<section class="card hidden" id="resultCard">
+<section class="card hidden mb-20" id="resultCard">
 
   <h2>✅ Your Icon Kit is Ready</h2>
 
-  <p id="resultInfo"></p>
+  <p id="resultInfo" class="mt-10 text-muted"></p>
 
-  <button id="downloadBtn" class="btn">📥 Download ZIP</button>
+  <button id="downloadBtn" class="btn btn-primary mt-20">📥 Download ZIP</button>
 
 </section>
 
-<section class="card hidden alert alert-danger" id="errorCard">
+<section class="card hidden alert alert-danger mb-20" id="errorCard">
   <p id="errorMsg"></p>
 </section>
 
 </main>
 
-<footer>
-
-<p>
-© 2026 niDar Tools
-</p>
-
-<p>
-Developed by
-<strong>niDar Marketing And Services</strong>
-</p>
-
+<footer class="footer">
+  <div class="container text-center">
+    <p>© 2026 niDar Tools. All Rights Reserved.</p>
+    <p>Developed by <strong>niDar Marketing And Services</strong></p>
+  </div>
 </footer>
 
-<script src="../assets/js/script.js"></script>
+<script src="/assets/js/script.js"></script>
 <script>
 (function () {
   const fileInput = document.getElementById('fileInput');
@@ -279,7 +283,7 @@ Developed by
 
       resultInfo.textContent = 'Includes favicon.ico, favicon-16x16.png, favicon-32x32.png, apple-touch-icon.png, icon-192.png, icon-512.png — (' + (zipBlob.size / 1024).toFixed(1) + ' KB)';
       resultCard.classList.remove('hidden');
-      resultCard.scrollIntoView({ behavior: 'smooth' });
+      resultCard.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     } catch (err) {
       errorMsg.textContent = 'Something went wrong while generating the icon kit. Please try a different image.';
       errorCard.classList.remove('hidden');
