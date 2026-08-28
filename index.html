@@ -5,12 +5,21 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>niDar Tools - The World's Smartest Free Online Tools Platform</title>
   <meta name="description" content="Access 17+ free online tools including AI ATS Resume Checker, Image Resizer, Converters, Calculators, and Developer utilities. Fast, secure, and client-side processing.">
+  
+  <!-- Animated Rainbow SVG Favicon -->
+  <link rel="icon" type="image/svg+xml" href="assets/logos/animated-favicon.svg">
+  
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <header>
     <nav class="navbar">
-      <div class="logo">niDar Tools</div>
+      <div class="logo">
+        <a href="/">
+          <img src="assets/logos/animated-favicon.svg" alt="niDar Logo" class="header-logo-icon">
+          <span>niDar Tools</span>
+        </a>
+      </div>
       
       <!-- Google Translate Widget Container -->
       <div id="google_translate_element"></div>
@@ -21,7 +30,15 @@
         <li><a href="/contact/">Contact</a></li>
         <li><a href="/user-guide/">Guide</a></li>
         <li><a href="/faq/">FAQ</a></li>
-        <li><button id="themeToggle" class="theme-btn" aria-label="Toggle Theme">🌓</button></li>
+        
+        <!-- Multi-Theme Selector Dropdown -->
+        <li class="theme-select-wrapper">
+          <select id="themeSelector" onchange="changeTheme(this.value)" class="theme-dropdown" aria-label="Select Theme">
+            <option value="light">☀️ Normal</option>
+            <option value="senior">👓 Senior / High Contrast</option>
+            <option value="dark">🌙 Dark</option>
+          </select>
+        </li>
       </ul>
     </nav>
   </header>
@@ -306,7 +323,7 @@
       <h3>💬 Leave Your Feedback & Comments</h3>
       <p>We value your thoughts! Let us know how we can improve niDar Tools.</p>
       <form id="commentForm" onsubmit="handleComment(event)">
-        <input type="text" id=" commenterName" placeholder="Your Name" required>
+        <input type="text" id="commenterName" placeholder="Your Name" required>
         <textarea id="commentText" placeholder="Write your comment here..." rows="4" required></textarea>
         <button type="submit" class="btn btn-primary">Post Comment</button>
       </form>
@@ -342,6 +359,9 @@
       <p>© 2026 niDar Tools. All Rights Reserved. Developed by <strong>niDar Marketing And Services</strong></p>
     </div>
   </footer>
+
+  <!-- Sticky Back to Top Button -->
+  <button id="backToTop" class="back-to-top" onclick="scrollToTop()" aria-label="Back to Top">↑</button>
 
   <!-- Google Translate Script -->
   <script type="text/javascript">
