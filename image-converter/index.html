@@ -4,65 +4,68 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Image Format Converter - JPG, PNG & WebP | niDar Tools</title>
+<title>Image Format Converter - JPG, PNG &amp; WebP | niDar Tools</title>
 <meta name="description" content="Free online image format converter. Convert JPG to PNG, PNG to JPG, JPG to WebP, WebP to JPG and more directly in your browser. No image upload required.">
+<meta name="keywords" content="image converter, convert jpg to png, png to webp, webp to jpg, online image converter">
+
 <link rel="canonical" href="https://nidartools.com/image-converter/">
 
-<link rel="icon" type="image/x-icon" href="../assets/favicon/favicon.ico">
-<link rel="icon" type="image/png" sizes="16x16" href="../assets/favicon/favicon-16x16.png">
-<link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon/favicon-32x32.png">
-<link rel="apple-touch-icon" sizes="180x180" href="../assets/favicon/apple-touch-icon.png">
-
-<link rel="stylesheet" href="../assets/css/style.css">
+<!-- Absolute paths for Assets -->
+<link rel="icon" type="image/x-icon" href="/assets/favicon/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon/favicon-32x32.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/favicon/apple-touch-icon.png">
+<link rel="stylesheet" href="/assets/css/style.css">
 </head>
 
 <body>
 
-<header>
-  <div class="container nav">
-    <h2>niDar Tools</h2>
+<header class="header">
+  <div class="container navbar">
+    <a href="/" class="logo">niDar<span>Tools</span></a>
     <nav>
-      <a href="../">Home</a>
+      <a href="/">Home</a>
       <a href="/about/">About</a>
       <a href="/contact/">Contact</a>
       <a href="/support/">Support</a>
     </nav>
+    <button class="btn btn-theme" id="themeToggle" aria-label="Toggle theme">🌙 Theme</button>
   </div>
 </header>
 
-<main class="container">
+<main class="container mt-40">
 
-<section class="hero">
+<section class="hero-card text-center mb-30">
   <h1>Image Format Converter</h1>
 
   <div class="mt-10">
-    <a href="/content/image-converter/"
-       style="font-size:14px;color:var(--primary);font-weight:bold;">
-      📖 Read Detailed Guide
+    <a href="/content/image-converter/" class="guide-link">
+      <span class="icon">📖</span><span>Read Image Converter Guide →</span>
     </a>
   </div>
 
-  <p class="mt-20">
-    Convert JPG, PNG and WebP images quickly and privately.
+  <p class="mt-10">
+    Convert JPG, PNG, and WebP images quickly and privately.
     Everything happens directly in your browser.
   </p>
 </section>
 
-<section class="card">
+<section class="card mb-20">
 
   <h2>1. Upload Your Image</h2>
 
-  <label for="fileInput">Choose an image</label>
+  <label for="fileInput" class="mt-10">Choose an image</label>
 
   <input
     type="file"
     id="fileInput"
     accept="image/jpeg,image/png,image/webp"
     aria-describedby="fileHelp"
+    class="form-control mt-10"
   >
 
-  <p id="fileHelp" style="font-size:13px;">
-    Supported formats: JPG, PNG and WebP. Maximum recommended file size: 25 MB.
+  <p id="fileHelp" class="text-muted mt-10" style="font-size:13px;">
+    Supported formats: JPG, PNG, and WebP. Maximum recommended file size: 25 MB.
   </p>
 
   <div
@@ -74,7 +77,7 @@
     aria-label="Drag and drop an image here or choose an image"
   >
     <strong>Drag &amp; Drop Your Image Here</strong>
-    <p>or tap this area to choose a file</p>
+    <p class="text-muted mt-10">or tap this area to choose a file</p>
   </div>
 
   <div id="previewWrap" class="hidden mt-20">
@@ -85,6 +88,7 @@
       id="previewImg"
       alt="Selected image preview"
       style="display:block;max-width:100%;max-height:360px;margin:auto;border-radius:10px;border:1px solid var(--border);"
+      class="mt-10"
     >
 
     <p class="mt-20">
@@ -92,7 +96,7 @@
       <strong id="originalFileName">-</strong>
     </p>
 
-    <p>
+    <p class="mt-10">
       Original size:
       <strong id="originalSize">-</strong>
       · Dimensions:
@@ -105,13 +109,13 @@
 
 </section>
 
-<section class="card hidden" id="settingsSection">
+<section class="card hidden mb-20" id="settingsSection">
 
   <h2>2. Choose Output Format</h2>
 
-  <label for="formatSelect">Convert image to</label>
+  <label for="formatSelect" class="mt-10">Convert image to</label>
 
-  <select id="formatSelect">
+  <select id="formatSelect" class="form-control mt-10">
     <option value="image/jpeg">JPG / JPEG</option>
     <option value="image/png">PNG</option>
     <option value="image/webp">WebP</option>
@@ -129,9 +133,10 @@
       min="10"
       max="100"
       value="92"
+      class="form-control mt-10"
     >
 
-    <p style="font-size:13px;">
+    <p class="text-muted mt-10" style="font-size:13px;">
       Quality mainly affects JPG and WebP output.
       PNG uses lossless encoding.
     </p>
@@ -143,12 +148,12 @@
       JPG background for transparent images
     </label>
 
-    <select id="jpegBackground">
+    <select id="jpegBackground" class="form-control mt-10">
       <option value="#ffffff">White</option>
       <option value="#000000">Black</option>
     </select>
 
-    <p style="font-size:13px;">
+    <p class="text-muted mt-10" style="font-size:13px;">
       JPG does not support transparency, so transparent areas need a solid background.
     </p>
 
@@ -156,8 +161,8 @@
 
   <div class="mt-20">
 
-    <button id="convertBtn" class="btn" type="button">
-      Convert Image
+    <button id="convertBtn" class="btn btn-primary" type="button">
+      ⚡ Convert Image
     </button>
 
     <button
@@ -180,7 +185,7 @@
 
 </section>
 
-<section class="card hidden" id="resultCard">
+<section class="card hidden mb-20" id="resultCard">
 
   <h2>✅ Conversion Complete</h2>
 
@@ -188,6 +193,7 @@
     id="resultPreview"
     alt="Converted image preview"
     style="display:block;max-width:100%;max-height:360px;margin:auto;border-radius:10px;border:1px solid var(--border);"
+    class="mt-10"
   >
 
   <div class="mt-20">
@@ -197,34 +203,34 @@
       <strong id="resultFormat">-</strong>
     </p>
 
-    <p>
+    <p class="mt-10">
       New file size:
       <strong id="resultSize">-</strong>
     </p>
 
-    <p>
+    <p class="mt-10">
       Dimensions:
       <strong id="resultDimensions">-</strong>
     </p>
 
   </div>
 
-  <button id="downloadBtn" class="btn" type="button">
-    Download Converted Image
+  <button id="downloadBtn" class="btn btn-primary mt-20" type="button">
+    📥 Download Converted Image
   </button>
 
 </section>
 
-<section class="card">
+<section class="card mb-20">
 
   <h2>Convert JPG, PNG &amp; WebP</h2>
 
-  <p>
+  <p class="text-muted mt-10">
     Use this free image format converter to convert common image formats
     directly in your browser.
   </p>
 
-  <ul>
+  <ul class="mt-10">
     <li>JPG to PNG</li>
     <li>JPG to WebP</li>
     <li>PNG to JPG</li>
@@ -233,23 +239,23 @@
     <li>WebP to PNG</li>
   </ul>
 
-  <p>
+  <p class="text-muted mt-10">
     No account is required and the conversion is designed to happen
     locally in your browser.
   </p>
 
 </section>
 
-<section class="card">
+<section class="card mb-40">
 
   <h2>Privacy First</h2>
 
-  <p>
+  <p class="text-muted mt-10">
     Your selected image is processed using your browser's File and Canvas
     APIs. The tool does not need to upload the image to a conversion server.
   </p>
 
-  <p>
+  <p class="text-muted mt-10">
     For sensitive files, always use a trusted device and browser.
   </p>
 
@@ -257,20 +263,14 @@
 
 </main>
 
-<footer>
-
-<p>
-© 2026 niDar Tools
-</p>
-
-<p>
-Developed by
-<strong>niDar Marketing And Services</strong>
-</p>
-
+<footer class="footer">
+  <div class="container text-center">
+    <p>© 2026 niDar Tools. All Rights Reserved.</p>
+    <p>Developed by <strong>niDar Marketing And Services</strong></p>
+  </div>
 </footer>
 
-<script src="../assets/js/script.js"></script>
+<script src="/assets/js/script.js"></script>
 
 <script>
 (function () {
@@ -467,7 +467,7 @@ Developed by
     hideStatus();
 
     convertBtn.disabled = false;
-    convertBtn.textContent = "Convert Image";
+    convertBtn.textContent = "⚡ Convert Image";
   }
 
   function loadFile(file) {
@@ -691,7 +691,7 @@ Developed by
 
       resultCard.scrollIntoView({
         behavior: "smooth",
-        block: "start"
+        block: "nearest"
       });
 
     } catch (error) {
@@ -704,7 +704,7 @@ Developed by
 
     } finally {
       convertBtn.disabled = false;
-      convertBtn.textContent = "Convert Image";
+      convertBtn.textContent = "⚡ Convert Image";
     }
   }
 
