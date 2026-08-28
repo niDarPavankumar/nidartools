@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Free AI ATS Resume Checker - niDar Tools</title>
-    <meta name="description" content="Check your resume against job descriptions using AI. Instant ATS score, missing keywords, and formatting suggestions.">
+    <title>AI ATS Resume Checker - niDar Tools</title>
+    <meta name="description" content="Free AI ATS Resume Checker tool to match resumes with job descriptions.">
     <link rel="canonical" href="https://nidartools.com/ats-checker">
     <meta name="robots" content="index, follow">
     <link rel="stylesheet" href="style.css">
@@ -52,7 +52,7 @@
         <div class="consent-box">
             <input type="checkbox" id="userConsent">
             <label for="userConsent">
-                I agree to <a href="/terms" target="_blank">Terms</a> and <a href="/privacy" target="_blank">Privacy Policy</a>. My resume is securely processed transiently via AI and not permanently saved.
+                I agree to <a href="/terms" target="_blank">Terms</a> and <a href="/privacy" target="_blank">Privacy Policy</a>. My resume is securely processed transiently via AI.
             </label>
         </div>
 
@@ -116,12 +116,14 @@
                     body: JSON.stringify({ resumeText, jobDescription })
                 });
 
-                const contentType = response.headers.get("content-type");
-                if (!contentType || !contentType.includes("application/json")) {
-                    throw new Error("Server returned non-JSON response. Please check Cloudflare Functions status.");
-                }
+                const rawText = await response.text();
+                let data;
 
-                const data = await response.json();
+                try {
+                    data = JSON.parse(rawText);
+                } catch (e) {
+                    throw new Error("Server Response Error: " + rawText.substring(0, 100));
+                }
 
                 if (!response.ok) {
                     throw new Error(data.error || "Failed to analyze resume.");
