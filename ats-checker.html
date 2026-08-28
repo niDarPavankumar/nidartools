@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Free AI ATS Resume Checker - niDar Tools</title>
+    <meta name="description" content="Check your resume against job descriptions using AI. Instant ATS score, missing keywords, and formatting suggestions for job seekers.">
+    <link rel="canonical" href="https://nidartools.com/ats-checker">
+    <meta name="robots" content="index, follow">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .ats-container { max-width: 900px; margin: 2rem auto; padding: 0 1rem; }
+        .form-group { margin-bottom: 1.5rem; }
+        .form-group label { display: block; font-weight: bold; margin-bottom: 0.5rem; }
+        .form-group textarea { width: 100%; height: 180px; padding: 0.8rem; border: 1px solid #ccc; border-radius: 6px; font-family: inherit; resize: vertical; }
+        .consent-box { background: #f8f9fa; border: 1px solid #e9ecef; padding: 1rem; border-radius: 6px; margin-bottom: 1.5rem; display: flex; align-items: flex-start; gap: 0.75rem; }
+        .consent-box input { margin-top: 0.25rem; }
+        .btn-submit { background-color: #0070f3; color: white; border: none; padding: 0.8rem 1.8rem; border-radius: 6px; font-size: 1rem; cursor: pointer; transition: background 0.3s; }
+        .btn-submit:disabled { background-color: #a0aec0; cursor: not-allowed; }
+        .result-card { display: none; margin-top: 2rem; background: #fff; border: 1px solid #e2e8f0; border-radius: 8px; padding: 1.5rem; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
+        .score-badge { display: inline-block; padding: 0.5rem 1rem; font-size: 1.5rem; font-weight: bold; color: white; background-color: #38a169; border-radius: 6px; margin-bottom: 1rem; }
+        .list-section { margin-top: 1rem; }
+        .list-section h4 { margin-bottom: 0.5rem; }
+        .list-section ul { padding-left: 1.2rem; }
+    </style>
+</head>
+<body>
+
+    <header class="navbar">
+        <div class="logo"><a href="/" aria-label="niDar Tools Home">niDar Tools</a></div>
+        <nav class="nav-links">
+            <a href="/" aria-label="Home">Home</a>
+            <a href="/ats-checker" aria-label="ATS Resume Checker">ATS Checker</a>
+            <a href="/about" aria-label="About Us">About</a>
+            <a href="/privacy" aria-label="Privacy Policy">Privacy</a>
+            <a href="/terms" aria-label="Terms of Service">Terms</a>
+        </nav>
+    </header>
+
+    <main class="ats-container">
+        <h1>AI ATS Resume Checker</h1>
+        <p>Optimize your resume for Applicant Tracking Systems (ATS) to land more job interviews.</p>
+
+        <div class="form-group">
+            <label for="resumeText">1. Paste Resume Text:</label>
+            <textarea id="resumeText" placeholder="Paste full resume text here..."></textarea>
+        </div>
+
+        <div class="form-group">
+            <label for="jobDesc">2. Paste Job Description (JD):</label>
+            <textarea id="jobDesc" placeholder="Paste the job description or requirement text here..."></textarea>
+        </div>
+
+        <div class="consent-box">
+            <input type="checkbox" id="userConsent">
+            <label for="userConsent">
+                I agree to the <a href="/terms" target="_blank">Terms of Service</a> and <a href="/privacy" target="_blank">Privacy Policy</a>. I understand my input is securely processed transiently via AI to generate evaluation results and is not permanently saved.
+            </label>
+        </div>
+
+        <button id="analyzeBtn" class="btn-submit" disabled>Analyze Resume</button>
+
+        <div id="resultBox" class="result-card">
+            <h2>Analysis Results</h2>
+            <div><strong>ATS Score:</strong> <span id="scoreBadge" class="score-badge">0/100</span></div>
+
+            <div class="list-section">
+                <h4>Missing Keywords:</h4>
+                <ul id="missingKeywordsList"></ul>
+            </div>
+
+            <div class="list-section">
+                <h4>Matching Keywords:</h4>
+                <ul id="matchingKeywordsList"></ul>
+            </div>
+
+            <div class="list-section">
+                <h4>Formatting & Layout Feedback:</h4>
+                <ul id="formattingFeedbackList"></ul>
+            </div>
+
+            <div class="list-section">
+                <h4>Actionable Recommendations:</h4>
+                <ul id="suggestionsList"></ul>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 niDar Tools. All Rights Reserved.</p>
+    </footer>
+
+    <script>
+        const consentBox = document.getElementById('userConsent');
+        const analyzeBtn = document.getElementById('analyzeBtn');
+        const resultBox = document.getElementById('resultBox');
+
+        consentBox.addEventListener('change', () => {
+            analyzeBtn.disabled = !consentBox.checked;
+        });
+
+        analyzeBtn.addEventListener('click', async () => {
+            const resumeText = document.getElementById('resumeText').value.trim();
+            const jobDescription = document.getElementById('jobDesc').value.trim();
+
+            if (!resumeText || !jobDescription) {
+                alert("Please paste both Resume text and Job Description.");
+                return;
+            }
+
+            analyzeBtn.disabled = true;
+            analyzeBtn.innerText = "Analyzing with AI...";
+
+            try {
+                const response = await fetch('/api/analyze', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ resumeText, jobDescription })
+                });
+
+                const data = await response.json();
+
+                if (!response.ok) {
+                    throw new Error(data.error || "Failed to analyze resume.");
+                }
+
+                // Render Results
+                document.getElementById('scoreBadge').innerText = data.atsScore + "/100";
+                
+                const renderList = (elementId, items) => {
+                    const ul = document.getElementById(elementId);
+                    ul.innerHTML = "";
+                    (items || []).forEach(item => {
+                        const li = document.createElement('li');
+                        li.innerText = item;
+                        ul.appendChild(li);
+                    });
+                };
+
+                renderList('missingKeywordsList', data.missingKeywords);
+                renderList('matchingKeywordsList', data.matchingKeywords);
+                renderList('formattingFeedbackList', data.formattingFeedback);
+                renderList('suggestionsList', data.actionableSuggestions);
+
+                resultBox.style.display = "block";
+
+            } catch (err) {
+                alert("Error: " + err.message);
+            } finally {
+                analyzeBtn.disabled = false;
+                analyzeBtn.innerText = "Analyze Resume";
+            }
+        });
+    </script>
+</body>
+</html>
