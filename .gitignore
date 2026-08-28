@@ -7,3 +7,4 @@ backups/
 
 # Local backup files - keep out of production
 *.bak
+*.backup
