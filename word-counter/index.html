@@ -8,81 +8,113 @@
 
 <meta name="description" content="Free word counter and character counter — works in any language. Live word/character/sentence count, social media limit checker, keyword density, and case converter.">
 <meta name="keywords" content="word counter, character counter, word count tool, character count online, text counter, keyword density checker">
+<meta name="author" content="niDar Marketing And Services">
 
 <link rel="canonical" href="https://nidartools.com/word-counter/">
-<link rel="icon" type="image/x-icon" href="../assets/favicon/favicon.ico">
-<link rel="icon" type="image/png" sizes="16x16" href="../assets/favicon/favicon-16x16.png">
-<link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon/favicon-32x32.png">
-<link rel="apple-touch-icon" sizes="180x180" href="../assets/favicon/apple-touch-icon.png">
-<link rel="stylesheet" href="../assets/css/style.css">
+
+<!-- Absolute paths for Assets -->
+<link rel="icon" type="image/x-icon" href="/assets/favicon/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon/favicon-32x32.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/favicon/apple-touch-icon.png">
+<link rel="stylesheet" href="/assets/css/style.css">
 
 <style>
-/* "Viewfinder" focus frame for the text box */
-.wc-frame{
-position:relative;
-padding:14px;
+/* Focus frame for text area */
+.wc-frame {
+  position: relative;
+  padding: 8px;
 }
-.wc-frame textarea{
-width:100%;
-min-height:220px;
-border:2px solid var(--border);
-border-radius:10px;
-padding:14px;
-font-size:15px;
-resize:vertical;
-transition:border-color .25s ease, box-shadow .25s ease;
-background:var(--surface);
-color:var(--text);
+.wc-frame textarea {
+  width: 100%;
+  min-height: 220px;
+  border: 2px solid var(--border);
+  border-radius: 10px;
+  padding: 14px;
+  font-size: 15px;
+  resize: vertical;
+  transition: border-color .25s ease, box-shadow .25s ease;
+  background: var(--card);
+  color: var(--text);
+  box-sizing: border-box;
 }
-.wc-frame textarea:focus{
-outline:none;
-border-color:#22c55e;
-box-shadow:0 0 0 4px rgba(34,197,94,.18);
+.wc-frame textarea:focus {
+  outline: none;
+  border-color: #22c55e;
+  box-shadow: 0 0 0 4px rgba(34,197,94,.18);
 }
-.wc-corner{
-position:absolute;
-width:18px;
-height:18px;
-border:3px solid var(--border);
-opacity:.5;
-transition:border-color .25s ease, opacity .25s ease;
-pointer-events:none;
+.wc-corner {
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  border: 3px solid var(--border);
+  opacity: .5;
+  transition: border-color .25s ease, opacity .25s ease;
+  pointer-events: none;
 }
-.wc-corner.tl{top:2px;left:2px;border-right:none;border-bottom:none;border-radius:6px 0 0 0;}
-.wc-corner.tr{top:2px;right:2px;border-left:none;border-bottom:none;border-radius:0 6px 0 0;}
-.wc-corner.bl{bottom:2px;left:2px;border-right:none;border-top:none;border-radius:0 0 0 6px;}
-.wc-corner.br{bottom:2px;right:2px;border-left:none;border-top:none;border-radius:0 0 6px 0;}
-.wc-frame.active .wc-corner{border-color:#22c55e;opacity:1;}
-.wc-status{font-size:12px;margin-top:8px;color:var(--text-light);}
-.wc-status.typing{color:#22c55e;font-weight:600;}
+.wc-corner.tl { top: -2px; left: -2px; border-right: none; border-bottom: none; border-radius: 6px 0 0 0; }
+.wc-corner.tr { top: -2px; right: -2px; border-left: none; border-bottom: none; border-radius: 0 6px 0 0; }
+.wc-corner.bl { bottom: -2px; left: -2px; border-right: none; border-top: none; border-radius: 0 0 0 6px; }
+.wc-corner.br { bottom: -2px; right: -2px; border-left: none; border-top: none; border-radius: 0 0 6px 0; }
+.wc-frame.active .wc-corner { border-color: #22c55e; opacity: 1; }
+.wc-status { font-size: 12px; margin-top: 8px; color: var(--muted); }
+.wc-status.typing { color: #22c55e; font-weight: 600; }
+
+.stat-box {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 16px;
+  text-align: center;
+}
+.stat-box h2 {
+  font-size: 1.8rem;
+  margin: 0;
+  color: var(--primary);
+}
+.stat-box p {
+  margin: 4px 0 0;
+  font-size: 0.85rem;
+  color: var(--muted);
+}
 </style>
 </head>
 
 <body>
 
-<header>
-  <div class="container nav">
-    <h2>niDar Tools</h2>
+<header class="header">
+  <div class="container navbar">
+    <a href="/" class="logo">niDar<span>Tools</span></a>
     <nav>
-      <a href="../">Home</a>
+      <a href="/">Home</a>
       <a href="/about/">About</a>
       <a href="/contact/">Contact</a>
       <a href="/support/">Support</a>
     </nav>
+    <button class="btn btn-theme" id="themeToggle" aria-label="Toggle theme">🌙 Theme</button>
   </div>
 </header>
 
-<main class="container">
+<main class="container mt-40">
 
-<section class="hero">
-  <h1>Word &amp; Character Counter</h1><div class="mt-10"><a href="/content/word-counter/" class="guide-link"><span class="icon">📖</span><span>Read Word Counter SEO Writing Guide →</span></a></div>
-  <p>Type or paste any text — in English, Marathi, Hindi, or any language — to get instant counts.</p>
+<section class="hero-card text-center mb-30">
+  <h1>Word &amp; Character Counter</h1>
+  
+  <div class="mt-10">
+    <a href="/content/word-counter/" class="guide-link">
+      <span class="icon">📖</span><span>Read Word Counter SEO Writing Guide →</span>
+    </a>
+  </div>
+
+  <p class="mt-10">
+    Type or paste any text — in English, Marathi, Hindi, or any language — to get instant counts.
+  </p>
 </section>
 
-<section class="card">
+<section class="card mb-20">
   <h2>Your Text</h2>
 
-  <div class="wc-frame" id="wcFrame">
+  <div class="wc-frame mt-10" id="wcFrame">
     <div class="wc-corner tl"></div>
     <div class="wc-corner tr"></div>
     <div class="wc-corner bl"></div>
@@ -92,21 +124,21 @@ pointer-events:none;
   <p class="wc-status" id="wcStatus">Not typing</p>
 
   <div class="grid mt-20">
-    <button class="btn" onclick="setCase('upper')">UPPERCASE</button>
-    <button class="btn" onclick="setCase('lower')">lowercase</button>
-    <button class="btn" onclick="setCase('title')">Title Case</button>
-    <button class="btn" onclick="setCase('sentence')">Sentence case</button>
+    <button class="btn" style="background:var(--secondary);" onclick="setCase('upper')">UPPERCASE</button>
+    <button class="btn" style="background:var(--secondary);" onclick="setCase('lower')">lowercase</button>
+    <button class="btn" style="background:var(--secondary);" onclick="setCase('title')">Title Case</button>
+    <button class="btn" style="background:var(--secondary);" onclick="setCase('sentence')">Sentence case</button>
   </div>
-  <div class="grid mt-20">
-    <button class="btn" onclick="cleanText()">🧹 Clean Extra Spaces</button>
-    <button class="btn" onclick="copyText()">📋 Copy Text</button>
-    <button class="btn" onclick="clearText()">✕ Clear</button>
+  <div class="grid mt-10">
+    <button class="btn" style="background:var(--secondary);" onclick="cleanText()">🧹 Clean Extra Spaces</button>
+    <button class="btn btn-primary" onclick="copyText()">📋 Copy Text</button>
+    <button class="btn" style="background:var(--secondary);" onclick="clearText()">✕ Clear</button>
   </div>
 </section>
 
-<section class="card">
+<section class="card mb-20">
   <h2>Live Counts</h2>
-  <div class="grid">
+  <div class="grid mt-10">
     <div class="stat-box"><h2 id="wordCount">0</h2><p>Words</p></div>
     <div class="stat-box"><h2 id="charCountWith">0</h2><p>Characters (with spaces)</p></div>
     <div class="stat-box"><h2 id="charCountWithout">0</h2><p>Characters (no spaces)</p></div>
@@ -117,28 +149,34 @@ pointer-events:none;
   </div>
 </section>
 
-<section class="card">
+<section class="card mb-20">
   <h2>Social Media Limit Checker</h2>
-  <table id="limitTable">
-    <tr><th>Platform</th><th>Limit</th><th>Status</th></tr>
-  </table>
+  <div style="overflow-x:auto;" class="mt-10">
+    <table id="limitTable" style="width:100%; border-collapse:collapse;">
+      <tr><th style="border-bottom:1px solid var(--border); padding:8px; text-align:left;">Platform</th><th style="border-bottom:1px solid var(--border); padding:8px; text-align:left;">Limit</th><th style="border-bottom:1px solid var(--border); padding:8px; text-align:left;">Status</th></tr>
+    </table>
+  </div>
 </section>
 
-<section class="card">
+<section class="card mb-40">
   <h2>Keyword Density (Top Words)</h2>
-  <table id="densityTable">
-    <tr><th>Word</th><th>Count</th><th>Density</th></tr>
-  </table>
+  <div style="overflow-x:auto;" class="mt-10">
+    <table id="densityTable" style="width:100%; border-collapse:collapse;">
+      <tr><th style="border-bottom:1px solid var(--border); padding:8px; text-align:left;">Word</th><th style="border-bottom:1px solid var(--border); padding:8px; text-align:left;">Count</th><th style="border-bottom:1px solid var(--border); padding:8px; text-align:left;">Density</th></tr>
+    </table>
+  </div>
 </section>
 
 </main>
 
-<footer>
-<p>© 2026 niDar Tools</p>
-<p>Developed by <strong>niDar Marketing And Services</strong></p>
+<footer class="footer">
+  <div class="container text-center">
+    <p>© 2026 niDar Tools. All Rights Reserved.</p>
+    <p>Developed by <strong>niDar Marketing And Services</strong></p>
+  </div>
 </footer>
 
-<script src="../assets/js/script.js"></script>
+<script src="/assets/js/script.js"></script>
 <script>
 const textInput = document.getElementById('textInput');
 const wcFrame = document.getElementById('wcFrame');
@@ -175,10 +213,10 @@ function updateCounts() {
   document.getElementById('speakTime').textContent = speakSec < 60 ? speakSec + ' sec' : Math.round(speakSec / 60) + ' min';
 
   const limitTable = document.getElementById('limitTable');
-  limitTable.innerHTML = '<tr><th>Platform</th><th>Limit</th><th>Status</th></tr>' +
+  limitTable.innerHTML = '<tr><th style="border-bottom:1px solid var(--border); padding:8px; text-align:left;">Platform</th><th style="border-bottom:1px solid var(--border); padding:8px; text-align:left;">Limit</th><th style="border-bottom:1px solid var(--border); padding:8px; text-align:left;">Status</th></tr>' +
     LIMITS.map(([name, limit]) => {
       const ok = charWith <= limit;
-      return `<tr><td>${name}</td><td>${limit}</td><td>${charWith}/${limit} — ${ok ? '✅ OK' : '⚠️ Over limit'}</td></tr>`;
+      return `<tr><td style="padding:8px; border-bottom:1px solid var(--border);">${name}</td><td style="padding:8px; border-bottom:1px solid var(--border);">${limit}</td><td style="padding:8px; border-bottom:1px solid var(--border);">${charWith}/${limit} — ${ok ? '✅ OK' : '⚠️ Over limit'}</td></tr>`;
     }).join('');
 
   const freq = {};
@@ -188,8 +226,8 @@ function updateCounts() {
   });
   const top = Object.entries(freq).sort((a, b) => b[1] - a[1]).slice(0, 8);
   const densityTable = document.getElementById('densityTable');
-  densityTable.innerHTML = '<tr><th>Word</th><th>Count</th><th>Density</th></tr>' +
-    (top.length ? top.map(([w, c]) => `<tr><td>${w}</td><td>${c}</td><td>${((c / wordCount) * 100).toFixed(1)}%</td></tr>`).join('') : '<tr><td colspan="3">Start typing to see keyword density</td></tr>');
+  densityTable.innerHTML = '<tr><th style="border-bottom:1px solid var(--border); padding:8px; text-align:left;">Word</th><th style="border-bottom:1px solid var(--border); padding:8px; text-align:left;">Count</th><th style="border-bottom:1px solid var(--border); padding:8px; text-align:left;">Density</th></tr>' +
+    (top.length ? top.map(([w, c]) => `<tr><td style="padding:8px; border-bottom:1px solid var(--border);">${w}</td><td style="padding:8px; border-bottom:1px solid var(--border);">${c}</td><td style="padding:8px; border-bottom:1px solid var(--border);">${((c / wordCount) * 100).toFixed(1)}%</td></tr>`).join('') : '<tr><td colspan="3" style="padding:8px;">Start typing to see keyword density</td></tr>');
 }
 
 textInput.addEventListener('input', () => {
@@ -204,9 +242,14 @@ textInput.addEventListener('input', () => {
     wcStatus.classList.remove('typing');
   }, 1200);
 });
+
 textInput.addEventListener('focus', () => { wcFrame.classList.add('active'); });
 textInput.addEventListener('blur', () => {
-  if (!textInput.value) { wcFrame.classList.remove('active'); wcStatus.textContent = 'Not typing'; wcStatus.classList.remove('typing'); }
+  if (!textInput.value) { 
+    wcFrame.classList.remove('active'); 
+    wcStatus.textContent = 'Not typing'; 
+    wcStatus.classList.remove('typing'); 
+  }
 });
 
 function setCase(type) {
@@ -217,13 +260,16 @@ function setCase(type) {
   else if (type === 'sentence') textInput.value = t.toLowerCase().replace(/(^\s*\w|[.!?]\s*\w)/g, c => c.toUpperCase());
   updateCounts();
 }
+
 function cleanText() {
   textInput.value = textInput.value.replace(/[ \t]+/g, ' ').replace(/\n{3,}/g, '\n\n').trim();
   updateCounts();
 }
+
 function copyText() {
   navigator.clipboard.writeText(textInput.value);
 }
+
 function clearText() {
   textInput.value = '';
   updateCounts();
