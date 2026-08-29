@@ -8,116 +8,144 @@
 
 <meta name="description" content="Free percentage calculator — find X% of a number, what percent one number is of another, and percentage increase/decrease. Instant results.">
 <meta name="keywords" content="percentage calculator, percent calculator, percentage increase decrease calculator">
+<meta name="author" content="niDar Marketing And Services">
 
 <link rel="canonical" href="https://nidartools.com/percentage-calculator/">
-<link rel="icon" type="image/x-icon" href="../assets/favicon/favicon.ico">
-<link rel="icon" type="image/png" sizes="16x16" href="../assets/favicon/favicon-16x16.png">
-<link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon/favicon-32x32.png">
-<link rel="apple-touch-icon" sizes="180x180" href="../assets/favicon/apple-touch-icon.png">
-<link rel="stylesheet" href="../assets/css/style.css">
+
+<!-- Absolute paths for Assets -->
+<link rel="icon" type="image/x-icon" href="/assets/favicon/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon/favicon-32x32.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/favicon/apple-touch-icon.png">
+<link rel="stylesheet" href="/assets/css/style.css">
 </head>
 
 <body>
 
-<header>
-  <div class="container nav">
-    <h2>niDar Tools</h2>
-
+<header class="header">
+  <div class="container navbar">
+    <a href="/" class="logo">niDar<span>Tools</span></a>
     <nav>
-      <a href="../">Home</a>
+      <a href="/">Home</a>
       <a href="/about/">About</a>
       <a href="/contact/">Contact</a>
       <a href="/support/">Support</a>
     </nav>
+    <button class="btn btn-theme" id="themeToggle" aria-label="Toggle theme">🌙 Theme</button>
   </div>
 </header>
 
-<main class="container">
+<main class="container mt-40">
 
-<section class="hero">
-  <h1>Percentage Calculator</h1><div class="mt-10"><a href="/content/percentage-calculator/" class="guide-link"><span class="icon">📖</span><span>Read Percentage Calculation Guide →</span></a></div>
-  <p>Three common percentage calculations, all in one place.</p>
+<section class="hero-card text-center mb-30">
+  <h1>Percentage Calculator</h1>
+  
+  <div class="mt-10">
+    <a href="/content/percentage-calculator/" class="guide-link">
+      <span class="icon">📖</span><span>Read Percentage Calculation Guide →</span>
+    </a>
+  </div>
+
+  <p class="mt-10">
+    Three common percentage calculations, all in one place.
+  </p>
 </section>
 
-<section class="card">
+<section class="card mb-20">
   <h2>1. What is X% of Y?</h2>
-  <div class="grid">
+  <div class="grid mt-10">
     <div>
       <label>Percentage (%)</label>
-      <input type="number" id="p1_pct" placeholder="e.g. 20">
+      <input type="number" id="p1_pct" placeholder="e.g. 20" class="form-control mt-10">
     </div>
     <div>
-      <label>Of number</label>
-      <input type="number" id="p1_num" placeholder="e.g. 250">
+      <label>Of number (Y)</label>
+      <input type="number" id="p1_num" placeholder="e.g. 250" class="form-control mt-10">
     </div>
   </div>
-  <button class="btn mt-20" onclick="calc1()">Calculate</button>
-  <p id="p1_result" class="mt-20"></p>
+  <button class="btn btn-primary mt-20" onclick="calc1()">Calculate</button>
+  <div id="p1_result" class="mt-20"></div>
 </section>
 
-<section class="card">
+<section class="card mb-20">
   <h2>2. X is what percent of Y?</h2>
-  <div class="grid">
+  <div class="grid mt-10">
     <div>
-      <label>X</label>
-      <input type="number" id="p2_x" placeholder="e.g. 50">
+      <label>Value X</label>
+      <input type="number" id="p2_x" placeholder="e.g. 50" class="form-control mt-10">
     </div>
     <div>
-      <label>Y</label>
-      <input type="number" id="p2_y" placeholder="e.g. 200">
+      <label>Total Y</label>
+      <input type="number" id="p2_y" placeholder="e.g. 200" class="form-control mt-10">
     </div>
   </div>
-  <button class="btn mt-20" onclick="calc2()">Calculate</button>
-  <p id="p2_result" class="mt-20"></p>
+  <button class="btn btn-primary mt-20" onclick="calc2()">Calculate</button>
+  <div id="p2_result" class="mt-20"></div>
 </section>
 
-<section class="card">
-  <h2>3. Percentage increase / decrease</h2>
-  <div class="grid">
+<section class="card mb-40">
+  <h2>3. Percentage Increase / Decrease</h2>
+  <div class="grid mt-10">
     <div>
-      <label>From</label>
-      <input type="number" id="p3_from" placeholder="e.g. 100">
+      <label>Initial Value (From)</label>
+      <input type="number" id="p3_from" placeholder="e.g. 100" class="form-control mt-10">
     </div>
     <div>
-      <label>To</label>
-      <input type="number" id="p3_to" placeholder="e.g. 125">
+      <label>Final Value (To)</label>
+      <input type="number" id="p3_to" placeholder="e.g. 125" class="form-control mt-10">
     </div>
   </div>
-  <button class="btn mt-20" onclick="calc3()">Calculate</button>
-  <p id="p3_result" class="mt-20"></p>
+  <button class="btn btn-primary mt-20" onclick="calc3()">Calculate</button>
+  <div id="p3_result" class="mt-20"></div>
 </section>
 
 </main>
 
-<footer>
-<p>© 2026 niDar Tools</p>
-<p>Developed by <strong>niDar Marketing And Services</strong></p>
+<footer class="footer">
+  <div class="container text-center">
+    <p>© 2026 niDar Tools. All Rights Reserved.</p>
+    <p>Developed by <strong>niDar Marketing And Services</strong></p>
+  </div>
 </footer>
 
-<script src="../assets/js/script.js"></script>
+<script src="/assets/js/script.js"></script>
 <script>
 function calc1() {
   const pct = parseFloat(document.getElementById('p1_pct').value);
   const num = parseFloat(document.getElementById('p1_num').value);
   const out = document.getElementById('p1_result');
-  if (isNaN(pct) || isNaN(num)) { out.innerHTML = '<div class="alert alert-danger">Please fill in both fields.</div>'; return; }
-  out.innerHTML = `<div class="alert alert-success">${pct}% of ${num} is <strong>${(pct / 100 * num).toFixed(2)}</strong></div>`;
+  if (isNaN(pct) || isNaN(num)) { 
+    out.innerHTML = '<div class="alert alert-danger">Please fill in both fields.</div>'; 
+    return; 
+  }
+  const result = (pct / 100 * num);
+  out.innerHTML = `<div class="alert alert-success">${pct}% of ${num} is <strong>${Number.isInteger(result) ? result : result.toFixed(2)}</strong></div>`;
 }
+
 function calc2() {
   const x = parseFloat(document.getElementById('p2_x').value);
   const y = parseFloat(document.getElementById('p2_y').value);
   const out = document.getElementById('p2_result');
-  if (isNaN(x) || isNaN(y) || y === 0) { out.innerHTML = '<div class="alert alert-danger">Please fill in both fields (Y cannot be 0).</div>'; return; }
-  out.innerHTML = `<div class="alert alert-success">${x} is <strong>${(x / y * 100).toFixed(2)}%</strong> of ${y}</div>`;
+  if (isNaN(x) || isNaN(y) || y === 0) { 
+    out.innerHTML = '<div class="alert alert-danger">Please fill in both fields (Y cannot be 0).</div>'; 
+    return; 
+  }
+  const result = (x / y * 100);
+  out.innerHTML = `<div class="alert alert-success">${x} is <strong>${Number.isInteger(result) ? result : result.toFixed(2)}%</strong> of ${y}</div>`;
 }
+
 function calc3() {
   const from = parseFloat(document.getElementById('p3_from').value);
   const to = parseFloat(document.getElementById('p3_to').value);
   const out = document.getElementById('p3_result');
-  if (isNaN(from) || isNaN(to) || from === 0) { out.innerHTML = '<div class="alert alert-danger">Please fill in both fields ("From" cannot be 0).</div>'; return; }
+  if (isNaN(from) || isNaN(to) || from === 0) { 
+    out.innerHTML = '<div class="alert alert-danger">Please fill in both fields ("From" cannot be 0).</div>'; 
+    return; 
+  }
   const change = ((to - from) / from) * 100;
   const label = change >= 0 ? 'increase' : 'decrease';
-  out.innerHTML = `<div class="alert alert-success">That is a <strong>${Math.abs(change).toFixed(2)}% ${label}</strong></div>`;
+  const absChange = Math.abs(change);
+  out.innerHTML = `<div class="alert alert-success">That is a <strong>${Number.isInteger(absChange) ? absChange : absChange.toFixed(2)}% ${label}</strong></div>`;
 }
 </script>
 
