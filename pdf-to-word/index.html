@@ -3,137 +3,214 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>PDF to Word Converter - Free Online, No Upload | niDar Tools</title>
+
 <meta name="description" content="Convert PDF files to editable Word (.docx) documents instantly and free, right in your browser. Supports OCR mode for Marathi/Hindi documents.">
 <meta name="keywords" content="pdf to word, convert pdf to word, pdf to docx converter free, marathi pdf to word, hindi pdf to word">
+<meta name="author" content="niDar Marketing And Services">
+
 <link rel="canonical" href="https://nidartools.com/pdf-to-word/">
-<link rel="icon" type="image/x-icon" href="../assets/favicon/favicon.ico">
-<link rel="icon" type="image/png" sizes="16x16" href="../assets/favicon/favicon-16x16.png">
-<link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon/favicon-32x32.png">
-<link rel="apple-touch-icon" sizes="180x180" href="../assets/favicon/apple-touch-icon.png">
-<link rel="stylesheet" href="../assets/css/style.css">
-</head>
-<body>
-<header>
-<div class="container nav">
-<h2>niDar Tools</h2>
-<nav>
-<a href="../">Home</a>
-<a href="/about/">About</a>
-<a href="/contact/">Contact</a>
-<a href="/support/">Support</a>
-</nav>
-</div>
-</header>
-<main class="container">
-<section class="hero">
-<h1>PDF to Word Converter</h1>
-<div class="mt-10"><a href="/content/pdf-to-word/" class="guide-link"><span class="icon">📖</span><span>Read PDF to Word Guide →</span></a></div>
-<p>Convert a PDF file to an editable Word (.docx) document — 100% free, no watermark, processed entirely in your browser.</p>
-</section>
-<section class="card">
-<h2>1. Upload PDF File</h2>
-<label style="display:block;margin-bottom:10px;">
-<input type="checkbox" id="ocrMode"> Marathi / Hindi document (OCR mode — slower but more accurate for regional-language PDFs)
-</label>
-<input type="file" id="pdfInput" accept="application/pdf">
-<p id="statusMsg" class="mt-10"></p>
-</section>
-<section class="card hidden" id="previewCard">
-<h2>2. Preview Extracted Text</h2>
-<div id="textPreview" style="border:1px solid #ddd;padding:16px;max-height:300px;overflow:auto;background:#fff;color:#000;white-space:pre-wrap;font-size:0.9em;"></div>
-<button id="downloadBtn" class="btn mt-20">Download Word (.docx)</button>
-</section>
-</main>
-<footer>
-<p>© 2026 niDar Tools</p>
-<p>Developed by <strong>niDar Marketing And Services</strong></p>
-</footer>
-<script src="../assets/js/script.js"></script>
+
+<!-- Absolute paths for Assets -->
+<link rel="icon" type="image/x-icon" href="/assets/favicon/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon/favicon-32x32.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/favicon/apple-touch-icon.png">
+<link rel="stylesheet" href="/assets/css/style.css">
+
+<!-- External JS Libraries -->
 <script src="https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/build/pdf.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/docx@8.5.0/build/index.umd.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5.1.0/dist/tesseract.min.js"></script>
-<script>
-pdfjsLib.GlobalWorkerOptions.workerSrc = "https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/build/pdf.worker.min.js";
 
-const pdfInput = document.getElementById('pdfInput');
-const ocrMode = document.getElementById('ocrMode');
-const statusMsg = document.getElementById('statusMsg');
-const previewCard = document.getElementById('previewCard');
-const textPreview = document.getElementById('textPreview');
-const downloadBtn = document.getElementById('downloadBtn');
-let extractedParagraphs = [];
-
-pdfInput.addEventListener('change', async (e) => {
-  const file = e.target.files[0];
-  if (!file) return;
-  previewCard.classList.add('hidden');
-  extractedParagraphs = [];
-
-  try {
-    const arrayBuffer = await file.arrayBuffer();
-    const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
-    let fullText = '';
-
-    if (ocrMode.checked) {
-      statusMsg.textContent = 'Loading OCR engine (first time may take longer)...';
-      const worker = await Tesseract.createWorker('mar+eng');
-
-      for (let i = 1; i <= pdf.numPages; i++) {
-        statusMsg.textContent = 'Reading page ' + i + ' of ' + pdf.numPages + ' with OCR...';
-        const page = await pdf.getPage(i);
-        const viewport = page.getViewport({ scale: 2 });
-        const canvas = document.createElement('canvas');
-        canvas.width = viewport.width;
-        canvas.height = viewport.height;
-        const ctx = canvas.getContext('2d');
-        await page.render({ canvasContext: ctx, viewport: viewport }).promise;
-
-        const { data: { text } } = await worker.recognize(canvas);
-        extractedParagraphs.push(text);
-        fullText += text + '\\n\\n';
-      }
-      await worker.terminate();
-    } else {
-      statusMsg.textContent = 'Extracting text from PDF...';
-      for (let i = 1; i <= pdf.numPages; i++) {
-        const page = await pdf.getPage(i);
-        const content = await page.getTextContent();
-        const pageText = content.items.map(item => item.str).join(' ');
-        extractedParagraphs.push(pageText);
-        fullText += pageText + '\\n\\n';
-      }
-    }
-
-    textPreview.textContent = fullText;
-    previewCard.classList.remove('hidden');
-    statusMsg.textContent = 'Done! Review the extracted text, then download as Word.';
-  } catch (err) {
-    statusMsg.textContent = 'Error: ' + err.message;
-    console.error(err);
+<style>
+  .ocr-option {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: rgba(0,0,0,0.02);
+    padding: 12px 16px;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    margin-bottom: 16px;
+    cursor: pointer;
   }
-});
+  .ocr-option input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+  }
+  .preview-box {
+    border: 1px solid var(--border);
+    padding: 16px;
+    max-height: 350px;
+    overflow-y: auto;
+    background: var(--bg);
+    color: var(--text);
+    white-space: pre-wrap;
+    font-size: 0.9em;
+    border-radius: 8px;
+    font-family: inherit;
+    line-height: 1.6;
+  }
+</style>
+</head>
 
-downloadBtn.addEventListener('click', () => {
-  const { Document, Packer, Paragraph } = docx;
+<body>
 
-  const paragraphs = extractedParagraphs.map(text =>
-    new Paragraph({ text: text })
-  );
+<header class="header">
+  <div class="container navbar">
+    <a href="/" class="logo">niDar<span>Tools</span></a>
+    <nav>
+      <a href="/">Home</a>
+      <a href="/about/">About</a>
+      <a href="/contact/">Contact</a>
+      <a href="/support/">Support</a>
+    </nav>
+    <button class="btn btn-theme" id="themeToggle" aria-label="Toggle theme">🌙 Theme</button>
+  </div>
+</header>
 
-  const doc = new Document({
-    sections: [{ children: paragraphs }]
+<main class="container mt-40">
+
+<section class="hero-card text-center mb-30">
+  <h1>PDF to Word Converter</h1>
+  
+  <div class="mt-10">
+    <a href="/content/pdf-to-word/" class="guide-link">
+      <span class="icon">📖</span><span>Read PDF to Word Conversion Guide →</span>
+    </a>
+  </div>
+
+  <p class="mt-10">
+    Convert a PDF file to an editable Word (.docx) document — 100% free, no watermark, processed entirely in your browser.
+  </p>
+</section>
+
+<section class="card mb-20">
+  <h2>1. Upload PDF File</h2>
+  <label class="ocr-option mt-10">
+    <input type="checkbox" id="ocrMode">
+    <span><strong>OCR Mode:</strong> Marathi / Hindi / English (Better for scanned documents and regional text)</span>
+  </label>
+
+  <input type="file" id="pdfInput" accept="application/pdf" class="form-control">
+  <p id="statusMsg" class="mt-10 text-muted" style="font-weight: 600;"></p>
+</section>
+
+<section class="card hidden mb-40" id="previewCard">
+  <h2>2. Preview Extracted Text</h2>
+  <p class="text-muted mb-10" style="font-size: 0.85rem;">Review the extracted text below before generating your editable document.</p>
+  
+  <div id="textPreview" class="preview-box"></div>
+  
+  <button id="downloadBtn" class="btn btn-primary mt-20">📥 Download Word (.docx)</button>
+</section>
+
+</main>
+
+<footer class="footer">
+  <div class="container text-center">
+    <p>© 2026 niDar Tools. All Rights Reserved.</p>
+    <p>Developed by <strong>niDar Marketing And Services</strong></p>
+  </div>
+</footer>
+
+<script src="/assets/js/script.js"></script>
+<script>
+(function () {
+  pdfjsLib.GlobalWorkerOptions.workerSrc = "https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/build/pdf.worker.min.js";
+
+  const pdfInput = document.getElementById('pdfInput');
+  const ocrMode = document.getElementById('ocrMode');
+  const statusMsg = document.getElementById('statusMsg');
+  const previewCard = document.getElementById('previewCard');
+  const textPreview = document.getElementById('textPreview');
+  const downloadBtn = document.getElementById('downloadBtn');
+
+  let extractedParagraphs = [];
+
+  pdfInput.addEventListener('change', async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    previewCard.classList.add('hidden');
+    extractedParagraphs = [];
+    statusMsg.textContent = 'Reading PDF file...';
+
+    try {
+      const arrayBuffer = await file.arrayBuffer();
+      const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
+      let fullText = '';
+
+      if (ocrMode.checked) {
+        statusMsg.textContent = 'Initializing OCR engine... (first time may take a moment)';
+        const worker = await Tesseract.createWorker('mar+hin+eng');
+
+        for (let i = 1; i <= pdf.numPages; i++) {
+          statusMsg.textContent = `Processing page ${i} of ${pdf.numPages} using OCR...`;
+          const page = await pdf.getPage(i);
+          const viewport = page.getViewport({ scale: 2 });
+          
+          const canvas = document.createElement('canvas');
+          canvas.width = viewport.width;
+          canvas.height = viewport.height;
+          const ctx = canvas.getContext('2d');
+          
+          await page.render({ canvasContext: ctx, viewport: viewport }).promise;
+
+          const { data: { text } } = await worker.recognize(canvas);
+          extractedParagraphs.push(text);
+          fullText += text + '\n\n';
+        }
+        await worker.terminate();
+      } else {
+        statusMsg.textContent = 'Extracting text...';
+        for (let i = 1; i <= pdf.numPages; i++) {
+          const page = await pdf.getPage(i);
+          const content = await page.getTextContent();
+          const pageText = content.items.map(item => item.str).join(' ');
+          extractedParagraphs.push(pageText);
+          fullText += pageText + '\n\n';
+        }
+      }
+
+      textPreview.textContent = fullText;
+      previewCard.classList.remove('hidden');
+      statusMsg.textContent = '✅ Extraction complete! Review the preview and click download.';
+    } catch (err) {
+      statusMsg.textContent = '❌ Error processing file: ' + err.message;
+      console.error(err);
+    }
   });
 
-  Packer.toBlob(doc).then(blob => {
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = 'converted-document.docx';
-    a.click();
-    URL.revokeObjectURL(url);
+  downloadBtn.addEventListener('click', () => {
+    if (extractedParagraphs.length === 0) return;
+
+    const { Document, Packer, Paragraph } = docx;
+
+    const docParagraphs = extractedParagraphs.flatMap(pageText => {
+      return pageText.split('\n').map(line => new Paragraph({ text: line }));
+    });
+
+    const doc = new Document({
+      sections: [{ children: docParagraphs }]
+    });
+
+    Packer.toBlob(doc).then(blob => {
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'converted-document.docx';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    });
   });
-});
+})();
 </script>
+
 </body>
 </html>
