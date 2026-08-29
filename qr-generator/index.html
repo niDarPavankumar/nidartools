@@ -8,50 +8,78 @@
 
 <meta name="description" content="Create a free QR code for any link, text, or message. Customize size and color, then download as PNG. Everything runs in your browser.">
 <meta name="keywords" content="qr code generator, free qr code, create qr code online">
+<meta name="author" content="niDar Marketing And Services">
 
 <link rel="canonical" href="https://nidartools.com/qr-generator/">
-<link rel="icon" type="image/x-icon" href="../assets/favicon/favicon.ico">
-<link rel="icon" type="image/png" sizes="16x16" href="../assets/favicon/favicon-16x16.png">
-<link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon/favicon-32x32.png">
-<link rel="apple-touch-icon" sizes="180x180" href="../assets/favicon/apple-touch-icon.png">
-<link rel="stylesheet" href="../assets/css/style.css">
+
+<!-- Absolute paths for Assets -->
+<link rel="icon" type="image/x-icon" href="/assets/favicon/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon/favicon-32x32.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/favicon/apple-touch-icon.png">
+<link rel="stylesheet" href="/assets/css/style.css">
+
+<!-- External JS Library -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
+<style>
+  .color-picker-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .color-picker-wrapper input[type="color"] {
+    width: 48px;
+    height: 42px;
+    padding: 2px;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    cursor: pointer;
+    background: transparent;
+  }
+</style>
 </head>
 
 <body>
 
-<header>
-  <div class="container nav">
-    <h2>niDar Tools</h2>
-
+<header class="header">
+  <div class="container navbar">
+    <a href="/" class="logo">niDar<span>Tools</span></a>
     <nav>
-      <a href="../">Home</a>
+      <a href="/">Home</a>
       <a href="/about/">About</a>
       <a href="/contact/">Contact</a>
       <a href="/support/">Support</a>
     </nav>
+    <button class="btn btn-theme" id="themeToggle" aria-label="Toggle theme">🌙 Theme</button>
   </div>
 </header>
 
-<main class="container">
+<main class="container mt-40">
 
-<section class="hero">
-  <h1>QR Code Generator</h1><div class="mt-10"><a href="/content/qr-generator/" class="guide-link"><span class="icon">📖</span><span>Read Detailed Guide — Business Ideas →</span></a></div>
+<section class="hero-card text-center mb-30">
+  <h1>QR Code Generator</h1>
+  
+  <div class="mt-10">
+    <a href="/content/qr-generator/" class="guide-link">
+      <span class="icon">📖</span><span>Read Detailed Guide — Business Ideas →</span>
+    </a>
+  </div>
 
-  <p>
+  <p class="mt-10">
     Enter any link, text, or contact detail — get an instant QR code.
   </p>
 </section>
 
-<section class="card">
+<section class="card mb-20">
 
   <h2>Text or Link</h2>
-  <textarea id="qrText" rows="3" placeholder="e.g. https://nidartools.com"></textarea>
+  <textarea id="qrText" rows="3" placeholder="e.g. https://nidartools.com" class="form-control mt-10"></textarea>
 
   <div class="grid mt-20">
     <div>
       <label>Size</label>
-      <select id="qrSize">
+      <select id="qrSize" class="form-control mt-10">
         <option value="200">Small (200px)</option>
         <option value="300" selected>Medium (300px)</option>
         <option value="500">Large (500px)</option>
@@ -59,42 +87,39 @@
     </div>
     <div>
       <label>Color</label>
-      <input type="color" id="qrColor" value="#0d6efd">
+      <div class="color-picker-wrapper mt-10">
+        <input type="color" id="qrColor" value="#0d6efd">
+        <span class="text-muted" style="font-size: 0.85rem;">Select QR Code Color</span>
+      </div>
     </div>
   </div>
 
-  <button id="genBtn" class="btn mt-20">Generate QR Code</button>
+  <button id="genBtn" class="btn btn-primary mt-20">⚡ Generate QR Code</button>
 
   <p id="errorMsg" class="alert alert-danger hidden mt-20"></p>
 
 </section>
 
-<section class="card hidden text-center" id="resultCard">
+<section class="card hidden text-center mb-40" id="resultCard">
 
   <h2>Your QR Code</h2>
 
-  <div id="qrCanvas" class="flex-center mt-20"></div>
+  <div id="qrCanvas" class="flex-center mt-20 mb-20" style="justify-content:center; display:flex;"></div>
 
-  <button id="downloadBtn" class="btn mt-20">Download PNG</button>
+  <button id="downloadBtn" class="btn btn-primary">📥 Download High-Res PNG</button>
 
 </section>
 
 </main>
 
-<footer>
-
-<p>
-© 2026 niDar Tools
-</p>
-
-<p>
-Developed by
-<strong>niDar Marketing And Services</strong>
-</p>
-
+<footer class="footer">
+  <div class="container text-center">
+    <p>© 2026 niDar Tools. All Rights Reserved.</p>
+    <p>Developed by <strong>niDar Marketing And Services</strong></p>
+  </div>
 </footer>
 
-<script src="../assets/js/script.js"></script>
+<script src="/assets/js/script.js"></script>
 <script>
 (function () {
   const qrText = document.getElementById('qrText');
@@ -105,13 +130,6 @@ Developed by
   const qrCanvas = document.getElementById('qrCanvas');
   const downloadBtn = document.getElementById('downloadBtn');
   const errorMsg = document.getElementById('errorMsg');
-
-  function colorLuminance(hex) {
-    const r = parseInt(hex.substr(1, 2), 16);
-    const g = parseInt(hex.substr(3, 2), 16);
-    const b = parseInt(hex.substr(5, 2), 16);
-    return 0.299 * r + 0.587 * g + 0.114 * b;
-  }
 
   function ensureScannableColor(hex) {
     let r = parseInt(hex.substr(1, 2), 16);
@@ -139,7 +157,7 @@ Developed by
 
     const safe = ensureScannableColor(qrColor.value);
     if (safe.adjusted) {
-      errorMsg.textContent = 'Note: your chosen colour was too light to scan reliably, so it was automatically darkened for this QR code.';
+      errorMsg.textContent = 'Note: your chosen color was too light to scan reliably, so it was automatically darkened for this QR code.';
       errorMsg.classList.remove('hidden');
     }
 
@@ -159,7 +177,9 @@ Developed by
 
   downloadBtn.addEventListener('click', () => {
     const srcCanvas = qrCanvas.querySelector('canvas');
-    if (!srcCanvas) {
+    const srcImg = qrCanvas.querySelector('img');
+    
+    if (!srcCanvas && !srcImg) {
       errorMsg.textContent = 'Please generate a QR code first.';
       errorMsg.classList.remove('hidden');
       return;
@@ -175,13 +195,28 @@ Developed by
     ctx.fillRect(0, 0, size, size);
 
     const margin = Math.round(size * 0.08);
-    ctx.drawImage(srcCanvas, margin, margin, size - margin * 2, size - margin * 2);
 
+    if (srcCanvas) {
+      ctx.drawImage(srcCanvas, margin, margin, size - margin * 2, size - margin * 2);
+      triggerDownload(out);
+    } else if (srcImg) {
+      const img = new Image();
+      img.onload = () => {
+        ctx.drawImage(img, margin, margin, size - margin * 2, size - margin * 2);
+        triggerDownload(out);
+      };
+      img.src = srcImg.src;
+    }
+  });
+
+  function triggerDownload(canvasElement) {
     const link = document.createElement('a');
     link.download = 'nidar_qrcode.png';
-    link.href = out.toDataURL('image/png');
+    link.href = canvasElement.toDataURL('image/png');
+    document.body.appendChild(link);
     link.click();
-  });
+    document.body.removeChild(link);
+  }
 })();
 </script>
 
