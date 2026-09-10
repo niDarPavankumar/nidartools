@@ -1,213 +1,579 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>Background Remover — niDar Tools</title>
+    <title>niDar Tools | Free Online Tools for Images, PDF, Text & More</title>
+    <meta name="description" content="Free online tools by niDar Tools for image editing, PDF conversion, calculators, text utilities, developer tools and more.">
+    <meta name="robots" content="index, follow">
 
-  <meta name="description" content="Remove image backgrounds online with niDar Tools. Create transparent PNG images quickly and easily.">
-  <meta name="keywords" content="background remover, remove image background, transparent background, PNG background remover">
-
-  <link rel="stylesheet" href="style.css">
-
-  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/selfie_segmentation/selfie_segmentation.js"></script>
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-<!-- COMMON HEADER -->
-<div id="site-header"></div>
+    <!-- =====================================================
+         COMMON HEADER
+         ===================================================== -->
+    <div id="site-header"></div>
 
-<main class="background-remover-page">
 
-  <!-- HERO -->
-  <section class="tool-hero">
-    <div class="tool-badge">✨ AI Image Tool</div>
-    <h1>Background Remover</h1>
-    <p>Remove backgrounds from your images and create clean transparent PNGs in a few clicks.</p>
-  </section>
+    <!-- =====================================================
+         HERO
+         ===================================================== -->
+    <main>
 
-  <!-- UPLOAD -->
-  <section class="upload-section">
-    <div class="upload-zone" id="uploadZone" tabindex="0" role="button" aria-label="Upload image">
-      <div class="upload-icon">🖼️</div>
-      <h2>Upload Your Image</h2>
-      <p>Drag & drop an image here or select one from your device.</p>
+        <section class="nidar-home-hero">
+            <div class="nidar-home-hero-content">
 
-      <button type="button" id="selectImageBtn" class="primary-btn">Select Image</button>
+                <span class="nidar-hero-badge">⚡ Free Online Tools</span>
 
-      <span class="upload-hint">JPG, JPEG, PNG or WEBP • Max 20 MB</span>
+                <h1>
+                    Powerful tools.
+                    <span>Simple solutions.</span>
+                </h1>
 
-      <input type="file" id="imageInput" accept="image/jpeg,image/jpg,image/png,image/webp" hidden>
-    </div>
-  </section>
+                <p>
+                    Everything you need to resize images, convert files,
+                    create PDFs, calculate, format text and more —
+                    directly in your browser.
+                </p>
 
-  <!-- WORKSPACE -->
-  <section class="workspace" id="workspace" hidden>
+                <div class="nidar-hero-actions">
+                    <a href="#tools" class="nidar-primary-btn">
+                        Explore All Tools
+                    </a>
 
-    <div class="panel">
-      <div class="panel-heading">
-        <div class="step-number">01</div>
-        <div>
-          <h2>Original Image</h2>
-          <p>Your uploaded image</p>
-        </div>
-      </div>
+                    <a href="/user-guide/" class="nidar-secondary-btn">
+                        User Guide
+                    </a>
+                </div>
 
-      <div class="image-preview-box">
-        <img id="originalPreview" src="" alt="Original image preview">
-        <div class="preview-placeholder" id="originalPlaceholder">Original preview</div>
-      </div>
+            </div>
+        </section>
 
-      <div class="image-info">
-        <span id="originalName">Image</span>
-        <span id="originalDimensions">0 × 0 px</span>
-      </div>
-    </div>
 
-    <div class="panel">
-      <div class="panel-heading">
-        <div class="step-number">02</div>
-        <div>
-          <h2>Removed Background</h2>
-          <p>Transparent result preview</p>
-        </div>
-      </div>
+        <!-- =================================================
+             TOOLS INTRO
+             ================================================= -->
+        <section class="nidar-tools-section" id="tools">
 
-      <div class="image-preview-box checkerboard" id="resultPreviewBox">
-        <img id="resultPreview" src="" alt="Background removed image preview">
-        <div class="preview-placeholder" id="resultPlaceholder">Result will appear here</div>
-      </div>
+            <div class="nidar-section-heading">
+                <span class="nidar-section-label">niDar Tools</span>
 
-      <div class="image-info">
-        <span id="resultDimensions">—</span>
-        <span id="resultSize">—</span>
-      </div>
-    </div>
+                <h2>
+                    Everything you need in one place
+                </h2>
 
-  </section>
+                <p>
+                    Fast, simple and easy-to-use online tools
+                    designed for everyday work.
+                </p>
+            </div>
 
-  <!-- SETTINGS -->
-  <section class="settings-section" id="settingsSection" hidden>
 
-    <div class="section-heading">
-      <span class="section-kicker">CUSTOMIZE</span>
-      <h2>Result Settings</h2>
-      <p>Adjust the appearance of your background-removed image.</p>
-    </div>
+            <!-- Category Filters -->
+            <div class="nidar-tool-filters" aria-label="Tool categories">
 
-    <div class="settings-grid">
+                <button class="nidar-filter-btn active" data-filter="all">
+                    All
+                </button>
 
-      <div class="setting-card">
-        <label for="backgroundMode">Background</label>
-        <select id="backgroundMode">
-          <option value="transparent" selected>Transparent</option>
-          <option value="white">White</option>
-          <option value="black">Black</option>
-        </select>
-      </div>
+                <button class="nidar-filter-btn" data-filter="image">
+                    🖼️ Image
+                </button>
 
-      <div class="setting-card">
-        <label for="outputFormat">Output Format</label>
-        <select id="outputFormat">
-          <option value="png" selected>PNG</option>
-          <option value="webp">WEBP</option>
-        </select>
-      </div>
+                <button class="nidar-filter-btn" data-filter="pdf">
+                    📄 PDF
+                </button>
 
-      <div class="setting-card">
-        <label for="outputQuality">Quality</label>
-        <select id="outputQuality">
-          <option value="1">Maximum</option>
-          <option value="0.9" selected>High</option>
-          <option value="0.8">Medium</option>
-        </select>
-      </div>
+                <button class="nidar-filter-btn" data-filter="calculator">
+                    🧮 Calculators
+                </button>
 
-    </div>
-  </section>
+                <button class="nidar-filter-btn" data-filter="text">
+                    ✍️ Text
+                </button>
 
-  <!-- PROCESS ACTION -->
-  <section class="process-section" id="processSection" hidden>
+                <button class="nidar-filter-btn" data-filter="developer">
+                    💻 Developer
+                </button>
 
-    <div class="process-card">
-      <div class="process-icon">✨</div>
-      <div class="process-content">
-        <h2>Ready to Remove Background</h2>
-        <p id="processMessage">Your image is ready for processing.</p>
-      </div>
-      <button type="button" id="removeBackgroundBtn" class="primary-btn large-btn">Remove Background</button>
-    </div>
+                <button class="nidar-filter-btn" data-filter="utility">
+                    🛠️ Utility
+                </button>
 
-    <div class="progress-section" id="progressSection" hidden>
-      <div class="progress-header">
-        <span>Processing image...</span>
-        <strong id="progressPercent">0%</strong>
-      </div>
-      <div class="progress-track">
-        <div class="progress-bar" id="progressBar"></div>
-      </div>
-      <p id="progressMessage">Preparing image...</p>
-    </div>
+            </div>
 
-  </section>
 
-  <!-- RESULT ACTIONS -->
-  <section class="result-section" id="resultSection" hidden>
+            <!-- =================================================
+                 TOOL GRID
+                 ================================================= -->
+            <div class="nidar-tools-grid">
 
-    <div class="result-success">
-      <div class="success-icon">✓</div>
-      <div>
-        <h2>Background Removed Successfully</h2>
-        <p id="resultSummary">Your transparent image is ready.</p>
-      </div>
-    </div>
 
-    <div class="result-actions">
-      <a id="downloadBtn" class="primary-btn download-btn" href="#" download="nidar-background-removed.png">⬇ Download Image</a>
-      <button type="button" id="processAgainBtn" class="secondary-btn">↻ Process Again</button>
-      <button type="button" id="startOverBtn" class="secondary-btn">Start Over</button>
-    </div>
+                <!-- Image Resizer -->
+                <a href="/image-resizer/"
+                   class="nidar-tool-card"
+                   data-category="image">
 
-  </section>
+                    <div class="nidar-tool-icon">🖼️</div>
 
-  <!-- HOW TO USE -->
-  <section class="info-section">
-    <div class="info-heading">
-      <span>📖</span>
-      <div>
-        <h2>How to remove a background</h2>
-        <p>Three simple steps to get a clean result.</p>
-      </div>
-    </div>
+                    <div class="nidar-tool-card-content">
+                        <h3>Image Resizer</h3>
 
-    <div class="steps-grid">
-      <div class="info-step">
-        <span>01</span>
-        <h3>Upload</h3>
-        <p>Select or drag your image into the upload area.</p>
-      </div>
-      <div class="info-step">
-        <span>02</span>
-        <h3>Process</h3>
-        <p>Click Remove Background to run AI processing in your browser.</p>
-      </div>
-      <div class="info-step">
-        <span>03</span>
-        <h3>Download</h3>
-        <p>Preview your result and download the finished image.</p>
-      </div>
-    </div>
-  </section>
+                        <p>
+                            Resize images to your exact dimensions
+                            quickly and easily.
+                        </p>
+                    </div>
 
-</main>
+                    <span class="nidar-tool-arrow">↗</span>
+                </a>
 
-<!-- COMMON FOOTER -->
-<div id="site-footer"></div>
 
-<script src="../assets/js/common.js"></script>
-<script src="script.js"></script>
+                <!-- Image Converter -->
+                <a href="/image-converter/"
+                   class="nidar-tool-card"
+                   data-category="image">
+
+                    <div class="nidar-tool-icon">🔄</div>
+
+                    <div class="nidar-tool-card-content">
+                        <h3>Image Format Converter</h3>
+
+                        <p>
+                            Convert images between JPG, PNG
+                            and WebP formats.
+                        </p>
+                    </div>
+
+                    <span class="nidar-tool-arrow">↗</span>
+                </a>
+
+
+                <!-- Image to PDF -->
+                <a href="/image-to-pdf/"
+                   class="nidar-tool-card"
+                   data-category="pdf">
+
+                    <div class="nidar-tool-icon">📄</div>
+
+                    <div class="nidar-tool-card-content">
+                        <h3>Image to PDF</h3>
+
+                        <p>
+                            Combine one or more images
+                            into a single PDF.
+                        </p>
+                    </div>
+
+                    <span class="nidar-tool-arrow">↗</span>
+                </a>
+
+
+                <!-- Age Calculator -->
+                <a href="/age-calculator/"
+                   class="nidar-tool-card"
+                   data-category="calculator">
+
+                    <div class="nidar-tool-icon">🎂</div>
+
+                    <div class="nidar-tool-card-content">
+                        <h3>Age Calculator</h3>
+
+                        <p>
+                            Calculate your exact age in
+                            years, months and days.
+                        </p>
+                    </div>
+
+                    <span class="nidar-tool-arrow">↗</span>
+                </a>
+
+
+                <!-- QR Generator -->
+                <a href="/qr-generator/"
+                   class="nidar-tool-card"
+                   data-category="utility">
+
+                    <div class="nidar-tool-icon">🔳</div>
+
+                    <div class="nidar-tool-card-content">
+                        <h3>QR Code Generator</h3>
+
+                        <p>
+                            Create QR codes for text,
+                            links and useful information.
+                        </p>
+                    </div>
+
+                    <span class="nidar-tool-arrow">↗</span>
+                </a>
+
+
+                <!-- Image Compressor -->
+                <a href="/image-compressor/"
+                   class="nidar-tool-card"
+                   data-category="image">
+
+                    <div class="nidar-tool-icon">📦</div>
+
+                    <div class="nidar-tool-card-content">
+                        <h3>Image Compressor</h3>
+
+                        <p>
+                            Reduce image file size while
+                            maintaining useful quality.
+                        </p>
+                    </div>
+
+                    <span class="nidar-tool-arrow">↗</span>
+                </a>
+
+
+                <!-- Icon Kit -->
+                <a href="/icon-kit-generator/"
+                   class="nidar-tool-card"
+                   data-category="utility">
+
+                    <div class="nidar-tool-icon">🎨</div>
+
+                    <div class="nidar-tool-card-content">
+                        <h3>Favicon & Icon Kit</h3>
+
+                        <p>
+                            Generate website favicons
+                            and useful icon sizes.
+                        </p>
+                    </div>
+
+                    <span class="nidar-tool-arrow">↗</span>
+                </a>
+
+
+                <!-- Percentage -->
+                <a href="/percentage-calculator/"
+                   class="nidar-tool-card"
+                   data-category="calculator">
+
+                    <div class="nidar-tool-icon">%</div>
+
+                    <div class="nidar-tool-card-content">
+                        <h3>Percentage Calculator</h3>
+
+                        <p>
+                            Calculate percentages,
+                            increases, decreases and ratios.
+                        </p>
+                    </div>
+
+                    <span class="nidar-tool-arrow">↗</span>
+                </a>
+
+
+                <!-- Construction -->
+                <a href="/construction-cost-estimator/"
+                   class="nidar-tool-card"
+                   data-category="calculator">
+
+                    <div class="nidar-tool-icon">🏗️</div>
+
+                    <div class="nidar-tool-card-content">
+                        <h3>Construction Cost Estimator</h3>
+
+                        <p>
+                            Estimate construction and
+                            material costs easily.
+                        </p>
+                    </div>
+
+                    <span class="nidar-tool-arrow">↗</span>
+                </a>
+
+
+                <!-- Word Counter -->
+                <a href="/word-counter/"
+                   class="nidar-tool-card"
+                   data-category="text">
+
+                    <div class="nidar-tool-icon">📝</div>
+
+                    <div class="nidar-tool-card-content">
+                        <h3>Word & Character Counter</h3>
+
+                        <p>
+                            Count words, characters,
+                            sentences and paragraphs.
+                        </p>
+                    </div>
+
+                    <span class="nidar-tool-arrow">↗</span>
+                </a>
+
+
+                <!-- Base64 -->
+                <a href="/base64-encoder-decoder/"
+                   class="nidar-tool-card"
+                   data-category="developer">
+
+                    <div class="nidar-tool-icon">🔐</div>
+
+                    <div class="nidar-tool-card-content">
+                        <h3>Base64 Encoder & Decoder</h3>
+
+                        <p>
+                            Encode and decode text or
+                            supported files with Base64.
+                        </p>
+                    </div>
+
+                    <span class="nidar-tool-arrow">↗</span>
+                </a>
+
+
+                <!-- JSON -->
+                <a href="/json-formatter/"
+                   class="nidar-tool-card"
+                   data-category="developer">
+
+                    <div class="nidar-tool-icon">{ }</div>
+
+                    <div class="nidar-tool-card-content">
+                        <h3>JSON Formatter & Validator</h3>
+
+                        <p>
+                            Format, validate and minify
+                            JSON directly in your browser.
+                        </p>
+                    </div>
+
+                    <span class="nidar-tool-arrow">↗</span>
+                </a>
+
+
+                <!-- Background Remover -->
+                <a href="/background-remover/"
+                   class="nidar-tool-card"
+                   data-category="image">
+
+                    <div class="nidar-tool-icon">✂️</div>
+
+                    <div class="nidar-tool-card-content">
+                        <h3>Background Remover</h3>
+
+                        <p>
+                            Remove image backgrounds
+                            quickly and easily.
+                        </p>
+                    </div>
+
+                    <span class="nidar-tool-arrow">↗</span>
+                </a>
+
+
+                <!-- Word to PDF -->
+                <a href="/word-to-pdf/"
+                   class="nidar-tool-card"
+                   data-category="pdf">
+
+                    <div class="nidar-tool-icon">📃</div>
+
+                    <div class="nidar-tool-card-content">
+                        <h3>Word to PDF</h3>
+
+                        <p>
+                            Convert Word documents
+                            into PDF files.
+                        </p>
+                    </div>
+
+                    <span class="nidar-tool-arrow">↗</span>
+                </a>
+
+
+                <!-- PDF to Word -->
+                <a href="/pdf-to-word/"
+                   class="nidar-tool-card"
+                   data-category="pdf">
+
+                    <div class="nidar-tool-icon">📑</div>
+
+                    <div class="nidar-tool-card-content">
+                        <h3>PDF to Word</h3>
+
+                        <p>
+                            Convert PDF documents
+                            into editable Word files.
+                        </p>
+                    </div>
+
+                    <span class="nidar-tool-arrow">↗</span>
+                </a>
+
+
+                <!-- EMI -->
+                <a href="/emi-calculator/"
+                   class="nidar-tool-card"
+                   data-category="calculator">
+
+                    <div class="nidar-tool-icon">💰</div>
+
+                    <div class="nidar-tool-card-content">
+                        <h3>EMI Calculator</h3>
+
+                        <p>
+                            Calculate loan EMI,
+                            interest and repayment details.
+                        </p>
+                    </div>
+
+                    <span class="nidar-tool-arrow">↗</span>
+                </a>
+
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             WHY NIDAR
+             ================================================= -->
+        <section class="nidar-home-info">
+
+            <div class="nidar-section-heading">
+                <span class="nidar-section-label">Why niDar Tools?</span>
+
+                <h2>
+                    Simple tools. Better workflow.
+                </h2>
+
+                <p>
+                    niDar Tools is built to make common digital
+                    tasks faster and easier.
+                </p>
+            </div>
+
+
+            <div class="nidar-feature-grid">
+
+                <article class="nidar-feature-card">
+                    <div class="nidar-feature-icon">⚡</div>
+                    <h3>Fast & Simple</h3>
+                    <p>
+                        Clean interfaces designed to help
+                        you complete tasks without unnecessary steps.
+                    </p>
+                </article>
+
+
+                <article class="nidar-feature-card">
+                    <div class="nidar-feature-icon">🔒</div>
+                    <h3>Privacy Focused</h3>
+                    <p>
+                        Wherever possible, tools process your
+                        data directly in your browser.
+                    </p>
+                </article>
+
+
+                <article class="nidar-feature-card">
+                    <div class="nidar-feature-icon">📱</div>
+                    <h3>Works Everywhere</h3>
+                    <p>
+                        Responsive layouts designed for
+                        phones, tablets and desktop computers.
+                    </p>
+                </article>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             USER GUIDE CTA
+             ================================================= -->
+        <section class="nidar-home-cta">
+
+            <div>
+                <span class="nidar-section-label">Need help?</span>
+
+                <h2>
+                    Learn how to use every tool
+                </h2>
+
+                <p>
+                    Follow our step-by-step User Guide
+                    to get the most from niDar Tools.
+                </p>
+            </div>
+
+            <a href="/user-guide/" class="nidar-primary-btn">
+                Open User Guide
+            </a>
+
+        </section>
+
+    </main>
+
+
+    <!-- =====================================================
+         COMMON FOOTER
+         ===================================================== -->
+    <div id="site-footer"></div>
+
+
+    <!-- =====================================================
+         HOME FILTER LOGIC
+         ===================================================== -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+
+            const filterButtons =
+                document.querySelectorAll(".nidar-filter-btn");
+
+            const toolCards =
+                document.querySelectorAll(".nidar-tool-card");
+
+            filterButtons.forEach(function (button) {
+
+                button.addEventListener("click", function () {
+
+                    const filter =
+                        button.getAttribute("data-filter");
+
+                    filterButtons.forEach(function (btn) {
+                        btn.classList.remove("active");
+                    });
+
+                    button.classList.add("active");
+
+                    toolCards.forEach(function (card) {
+
+                        const category =
+                            card.getAttribute("data-category");
+
+                        if (filter === "all" || category === filter) {
+                            card.style.display = "";
+                        } else {
+                            card.style.display = "none";
+                        }
+
+                    });
+
+                });
+
+            });
+
+        });
+    </script>
+
+
+    <!-- Common System -->
+    <script src="assets/js/common.js"></script>
 
 </body>
 </html>
