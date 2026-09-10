@@ -1,174 +1,329 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Age Calculator - niDar Tools</title>
+  <title>Age Calculator — niDar Tools</title>
+  <meta name="description" content="Calculate your exact age in years, months and days with the free online Age Calculator from niDar Tools.">
 
-    <meta name="description" content="Calculate your exact age in years, months and days for free. Enter your date of birth and get instant results, including days to your next birthday.">
-    <meta name="keywords" content="age calculator, calculate age, date of birth calculator, exact age in years months days">
-
-    <link rel="canonical" href="https://nidartools.com/age-calculator/">
-    
-    <!-- Absolute paths for Assets -->
-    <link rel="icon" type="image/x-icon" href="/assets/favicon/favicon.ico">
-    <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon/favicon-16x16.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon/favicon-32x32.png">
-    <link rel="apple-touch-icon" sizes="180x180" href="/assets/favicon/apple-touch-icon.png">
-    <link rel="stylesheet" href="/assets/css/style.css">
+  <link rel="icon" href="/favicon.ico">
+  <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-<header class="header">
-  <div class="container navbar">
-    <a href="/" class="logo">niDar<span>Tools</span></a>
-    <nav>
-      <a href="/">Home</a>
-      <a href="/about/">About</a>
-      <a href="/contact/">Contact</a>
-      <a href="/support/">Support</a>
-    </nav>
-  </div>
-</header>
+  <div id="site-header"></div>
 
-<main class="container mt-40">
+  <main class="age-page">
 
-<section class="hero-card text-center mb-30">
-  <h1>Age Calculator</h1>
-  
-  <!-- Content Guide Interlinking -->
-  <div class="mt-10">
-    <a href="/content/age-calculator/" class="guide-link">
-      <span class="icon">📖</span> Read Detailed Age Calculator Guide →
-    </a>
-  </div>
+    <!-- HERO -->
+    <section class="tool-hero">
 
-  <p class="mt-10">
-    Enter your date of birth to get your exact age in years, months and days.
-  </p>
-</section>
+      <span class="tool-badge">⚡ Free Online Calculator</span>
 
-<section class="card mb-20">
+      <h1>Age Calculator</h1>
 
-  <h2>Date of Birth</h2>
-  <input type="date" id="dob" class="form-control">
+      <p>
+        Calculate your exact age in years, months and days.
+        Get a clear and accurate age result instantly.
+      </p>
 
-  <h2 class="mt-20">To Date (optional)</h2>
-  <input type="date" id="toDate" class="form-control">
+      <div class="hero-points">
+        <span>🔒 Private</span>
+        <span>⚡ Instant</span>
+        <span>🆓 Free</span>
+        <span>📱 Works on Mobile</span>
+      </div>
 
-  <button id="calcBtn" class="btn btn-primary mt-20">Calculate Age</button>
+    </section>
 
-  <p id="errorMsg" class="alert alert-danger hidden mt-20"></p>
 
-</section>
+    <!-- MAIN TOOL -->
+    <section class="tool-card">
 
-<section class="card hidden mb-40" id="resultCard">
+      <!-- DATE INPUT -->
+      <div class="step-heading">
 
-  <h2>Your Age</h2>
+        <span class="step-number">1</span>
 
-  <div class="grid">
-    <div class="stat-box">
-      <h2 id="resYears">0</h2>
-      <p>Years</p>
-    </div>
-    <div class="stat-box">
-      <h2 id="resMonths">0</h2>
-      <p>Months</p>
-    </div>
-    <div class="stat-box">
-      <h2 id="resDays">0</h2>
-      <p>Days</p>
-    </div>
-  </div>
+        <div>
+          <h2>Enter your dates</h2>
+          <p>Select your date of birth and the date you want to calculate your age on.</p>
+        </div>
 
-  <table class="table mt-20">
-    <tr><td>Total days</td><td id="totalDays">-</td></tr>
-    <tr><td>Total weeks</td><td id="totalWeeks">-</td></tr>
-    <tr><td>Total months</td><td id="totalMonths">-</td></tr>
-    <tr><td>Next birthday</td><td id="nextBday">-</td></tr>
-  </table>
+      </div>
 
-</section>
 
-</main>
+      <div class="date-input-grid">
 
-<footer class="footer">
-  <div class="container text-center">
-    <p>© 2026 niDar Tools. All Rights Reserved.</p>
-    <p>Developed by <strong>niDar Marketing And Services</strong></p>
-  </div>
-</footer>
+        <div class="input-group">
 
-<script src="/assets/js/script.js"></script>
-<script>
-(function () {
-  const dob = document.getElementById('dob');
-  const toDate = document.getElementById('toDate');
-  const calcBtn = document.getElementById('calcBtn');
-  const resultCard = document.getElementById('resultCard');
-  const errorMsg = document.getElementById('errorMsg');
+          <label for="birthDate">
+            Date of Birth
+          </label>
 
-  const today = new Date();
-  toDate.value = today.toISOString().split('T')[0];
+          <input
+            type="date"
+            id="birthDate"
+            autocomplete="bday"
+          >
 
-  calcBtn.addEventListener('click', () => {
-    errorMsg.classList.add('hidden');
-    resultCard.classList.add('hidden');
+        </div>
 
-    if (!dob.value) {
-      errorMsg.textContent = 'Please enter your date of birth.';
-      errorMsg.classList.remove('hidden');
-      return;
-    }
 
-    const start = new Date(dob.value);
-    const end = new Date(toDate.value || new Date());
+        <div class="input-group">
 
-    if (start > end) {
-      errorMsg.textContent = 'Date of birth cannot be later than the selected date.';
-      errorMsg.classList.remove('hidden');
-      return;
-    }
+          <label for="calculateDate">
+            Calculate Age On
+          </label>
 
-    let years = end.getFullYear() - start.getFullYear();
-    let months = end.getMonth() - start.getMonth();
-    let days = end.getDate() - start.getDate();
+          <input
+            type="date"
+            id="calculateDate"
+          >
 
-    if (days < 0) {
-      months -= 1;
-      const prevMonth = new Date(end.getFullYear(), end.getMonth(), 0);
-      days += prevMonth.getDate();
-    }
-    if (months < 0) {
-      years -= 1;
-      months += 12;
-    }
+        </div>
 
-    document.getElementById('resYears').textContent = years;
-    document.getElementById('resMonths').textContent = months;
-    document.getElementById('resDays').textContent = days;
+      </div>
 
-    const msPerDay = 1000 * 60 * 60 * 24;
-    const totalDaysNum = Math.floor((end - start) / msPerDay);
-    document.getElementById('totalDays').textContent = totalDaysNum.toLocaleString('en-IN') + ' days';
-    document.getElementById('totalWeeks').textContent = Math.floor(totalDaysNum / 7).toLocaleString('en-IN') + ' weeks';
-    document.getElementById('totalMonths').textContent = (years * 12 + months).toLocaleString('en-IN') + ' months';
 
-    let nextBday = new Date(end.getFullYear(), start.getMonth(), start.getDate());
-    if (nextBday < end) {
-      nextBday = new Date(end.getFullYear() + 1, start.getMonth(), start.getDate());
-    }
-    const daysToNext = Math.ceil((nextBday - end) / msPerDay);
-    const bdayStr = nextBday.toLocaleDateString('en-IN', { day: 'numeric', month: 'long', year: 'numeric' });
-    document.getElementById('nextBday').textContent = daysToNext === 0 ? 'Today! 🎉' : `${bdayStr} (in ${daysToNext} days)`;
+      <div class="action-row">
 
-    resultCard.classList.remove('hidden');
-    resultCard.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-  });
-})();
-</script>
+        <button
+          type="button"
+          class="primary-btn"
+          id="calculateBtn"
+        >
+          Calculate Age
+        </button>
+
+        <button
+          type="button"
+          class="secondary-btn"
+          id="todayBtn"
+        >
+          Use Today
+        </button>
+
+        <button
+          type="button"
+          class="secondary-btn"
+          id="resetBtn"
+        >
+          Start Over
+        </button>
+
+      </div>
+
+
+      <!-- RESULT -->
+      <div
+        class="result-section"
+        id="resultSection"
+        hidden
+      >
+
+        <div class="success-icon">✓</div>
+
+        <h2>Your Exact Age</h2>
+
+        <div class="age-result" id="ageResult">
+          <div class="age-value">
+            <strong id="yearsResult">0</strong>
+            <span>Years</span>
+          </div>
+
+          <div class="age-value">
+            <strong id="monthsResult">0</strong>
+            <span>Months</span>
+          </div>
+
+          <div class="age-value">
+            <strong id="daysResult">0</strong>
+            <span>Days</span>
+          </div>
+        </div>
+
+
+        <p
+          class="result-summary"
+          id="resultSummary"
+        >
+          Your age will appear here.
+        </p>
+
+
+        <div class="extra-results">
+
+          <div class="extra-card">
+            <span>📅</span>
+            <strong id="totalDays">0</strong>
+            <small>Total Days</small>
+          </div>
+
+          <div class="extra-card">
+            <span>🗓️</span>
+            <strong id="totalWeeks">0</strong>
+            <small>Total Weeks</small>
+          </div>
+
+          <div class="extra-card">
+            <span>⏱️</span>
+            <strong id="totalHours">0</strong>
+            <small>Total Hours</small>
+          </div>
+
+        </div>
+
+
+        <div
+          class="birthday-info"
+          id="birthdayInfo"
+        >
+          🎂 Birthday information will appear here.
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- HOW TO -->
+    <section class="how-to">
+
+      <div class="section-heading">
+
+        <span>📖</span>
+
+        <div>
+          <h2>How to calculate your age</h2>
+          <p>Three simple steps to find your exact age.</p>
+        </div>
+
+      </div>
+
+
+      <div class="steps-grid">
+
+        <article class="info-card">
+
+          <span>01</span>
+
+          <h3>Enter Birth Date</h3>
+
+          <p>
+            Select your date of birth from the calendar.
+          </p>
+
+        </article>
+
+
+        <article class="info-card">
+
+          <span>02</span>
+
+          <h3>Choose Date</h3>
+
+          <p>
+            Select today's date or any date you want to calculate your age on.
+          </p>
+
+        </article>
+
+
+        <article class="info-card">
+
+          <span>03</span>
+
+          <h3>Calculate</h3>
+
+          <p>
+            Click Calculate Age to instantly see your exact age.
+          </p>
+
+        </article>
+
+
+        <article class="info-card">
+
+          <span>04</span>
+
+          <h3>View Details</h3>
+
+          <p>
+            See your age in years, months, days and additional time units.
+          </p>
+
+        </article>
+
+      </div>
+
+    </section>
+
+
+    <!-- FEATURES -->
+    <section class="features-section">
+
+      <article class="feature-card">
+
+        <span>🎯</span>
+
+        <h3>Accurate calculation</h3>
+
+        <p>
+          Calculates age using calendar dates instead of simple year subtraction.
+        </p>
+
+      </article>
+
+
+      <article class="feature-card">
+
+        <span>⚡</span>
+
+        <h3>Instant results</h3>
+
+        <p>
+          Get your age result immediately without waiting.
+        </p>
+
+      </article>
+
+
+      <article class="feature-card">
+
+        <span>🔒</span>
+
+        <h3>Private by design</h3>
+
+        <p>
+          Your date information stays in your browser during calculation.
+        </p>
+
+      </article>
+
+
+      <article class="feature-card">
+
+        <span>📱</span>
+
+        <h3>Works anywhere</h3>
+
+        <p>
+          Designed for phones, tablets and desktop browsers.
+        </p>
+
+      </article>
+
+    </section>
+
+  </main>
+
+  <div id="site-footer"></div>
+
+  <script src="../assets/js/common.js"></script>
+  <script src="script.js"></script>
 
 </body>
 </html>

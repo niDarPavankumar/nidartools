@@ -1,232 +1,456 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>JSON Formatter &amp; Validator - Free Online Tool | niDar Tools</title>
+  <title>JSON Formatter & Validator — niDar Tools</title>
+  <meta name="description" content="Format, validate, minify and beautify JSON online with niDar Tools. Fast, private and easy to use.">
+  <meta name="keywords" content="JSON formatter, JSON validator, JSON beautifier, JSON minifier, online JSON tool">
 
-<meta name="description" content="Free online JSON Formatter and Validator. Beautify, minify and validate JSON instantly in your browser. 100% client-side and secure.">
-<meta name="keywords" content="JSON Formatter, JSON Validator, JSON Beautifier, JSON Minifier, niDar Tools">
-<meta name="author" content="niDar Marketing And Services">
-
-<link rel="canonical" href="https://nidartools.com/json-formatter/">
-
-<!-- Absolute paths for Assets -->
-<link rel="icon" type="image/x-icon" href="/assets/favicon/favicon.ico">
-<link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon/favicon-16x16.png">
-<link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon/favicon-32x32.png">
-<link rel="apple-touch-icon" sizes="180x180" href="/assets/favicon/apple-touch-icon.png">
-<link rel="stylesheet" href="/assets/css/style.css">
-
-<style>
-  .toolbar { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; }
-  .panel-head { padding: 10px 14px; border-bottom: 1px solid var(--border); font-weight: 600; font-size: .85rem; color: var(--muted); background: rgba(0,0,0,0.02); }
-  
-  textarea, pre.json-out {
-    width: 100%; height: 420px; border: none; resize: vertical; padding: 14px;
-    font-family: "SFMono-Regular", Consolas, Monaco, Menlo, monospace; font-size: .85rem;
-    background: transparent; color: var(--text); outline: none; margin: 0; white-space: pre-wrap; word-break: break-word; overflow: auto;
-  }
-  
-  .status { padding: 10px 14px; font-size: .85rem; border-top: 1px solid var(--border); }
-  .status.ok { color: #198754; font-weight: 600; }
-  .status.err { color: #dc3545; font-weight: 600; }
-  
-  .stats { display: flex; gap: 16px; flex-wrap: wrap; font-size: .85rem; color: var(--muted); }
-  .stats b { color: var(--text); }
-
-  /* Syntax Highlighting */
-  .string { color: #198754; } 
-  .number { color: #0d6efd; } 
-  .boolean { color: #e8590c; } 
-  .null { color: #adb5bd; } 
-  .key { color: #8c1cff; font-weight: 600; }
-
-  [data-theme="dark"] .string { color: #7ee2a8; } 
-  [data-theme="dark"] .number { color: #7cb8ff; }
-  [data-theme="dark"] .boolean { color: #ffa156; } 
-  [data-theme="dark"] .key { color: #c792ea; }
-</style>
+  <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
+<!-- COMMON HEADER -->
+<div id="site-header"></div>
 
-<header class="header">
-  <div class="container navbar">
-    <a href="/" class="logo">niDar<span>Tools</span></a>
-    <nav>
-      <a href="/">Home</a>
-      <a href="/about/">About</a>
-      <a href="/contact/">Contact</a>
-      <a href="/support/">Support</a>
-    </nav>
-    <button class="btn btn-theme" id="themeToggle" aria-label="Toggle theme">🌙 Theme</button>
-  </div>
-</header>
+  <main class="json-tool-page">
 
-<main class="container mt-40">
+    <!-- HERO -->
+    <section class="tool-hero">
+      <div class="tool-badge">🧩 Developer Tool</div>
 
-<section class="hero-card text-center mb-30">
-  <h1>JSON Formatter &amp; Validator</h1>
-  
-  <div class="mt-10">
-    <a href="/content/json-formatter/" class="guide-link">
-      <span class="icon">📖</span><span>Read JSON Formatter Guide →</span>
-    </a>
-  </div>
+      <h1>JSON Formatter & Validator</h1>
 
-  <p class="mt-10">
-    Beautify, minify and validate JSON instantly. 100% client-side — your data never leaves your browser.
-  </p>
-</section>
+      <p>
+        Format, validate, beautify and minify your JSON quickly.
+        Your data stays in your browser.
+      </p>
+    </section>
 
-<div class="toolbar">
-  <button class="btn btn-primary" id="formatBtn">⚡ Format / Beautify</button>
-  <button class="btn" id="minifyBtn" style="background:var(--secondary);">Minify</button>
-  <button class="btn" id="copyBtn" style="background:var(--secondary);">📋 Copy Output</button>
-  <button class="btn" id="clearBtn" style="background:var(--secondary);">↺ Clear</button>
-  <button class="btn" id="sampleBtn" style="background:var(--secondary);">💡 Load Sample</button>
-</div>
 
-<div class="grid mb-20">
-  <div class="card" style="padding:0; overflow:hidden;">
-    <div class="panel-head">Input JSON</div>
-    <textarea id="input" placeholder='Paste your JSON here, e.g. {"site":"niDar Tools","tools":12}'></textarea>
-  </div>
-  <div class="card" style="padding:0; overflow:hidden;">
-    <div class="panel-head">Output</div>
-    <pre id="output" class="json-out"></pre>
-    <div class="status" id="status">Waiting for input…</div>
-  </div>
-</div>
+    <!-- MAIN WORKSPACE -->
+    <section class="workspace">
 
-<div class="card mb-40">
-  <div class="stats" id="stats"></div>
-</div>
+      <!-- INPUT PANEL -->
+      <div class="panel input-panel">
 
-</main>
+        <div class="panel-header">
+          <div>
+            <span class="step-number">1</span>
+            <div class="panel-title-group">
+              <h2>JSON Input</h2>
+              <p>Paste or type your JSON data below.</p>
+            </div>
+          </div>
 
-<footer class="footer">
-  <div class="container text-center">
-    <p>© 2026 niDar Tools. All Rights Reserved.</p>
-    <p>Developed by <strong>niDar Marketing And Services</strong></p>
-  </div>
-</footer>
+          <button
+            type="button"
+            id="sampleBtn"
+            class="secondary-btn"
+          >
+            Load Sample
+          </button>
+        </div>
 
-<script src="/assets/js/script.js"></script>
-<script>
-(function() {
-  const input = document.getElementById('input');
-  const output = document.getElementById('output');
-  const status = document.getElementById('status');
-  const stats = document.getElementById('stats');
 
-  function syntaxHighlight(json) {
-    json = json.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-    return json.replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false)\b|\bnull\b|-?\d+(\.\d+)?([eE][+-]?\d+)?)/g, function (match) {
-      let cls = 'number';
-      if (/^"/.test(match)) {
-        cls = /:$/.test(match) ? 'key' : 'string';
-      } else if (/true|false/.test(match)) {
-        cls = 'boolean';
-      } else if (/null/.test(match)) {
-        cls = 'null';
-      }
-      return '<span class="' + cls + '">' + match + '</span>';
-    });
-  }
+        <div class="editor-wrapper">
 
-  function updateStats(obj, raw) {
-    try {
-      const keys = JSON.stringify(obj).match(/"[^"]+":/g) || [];
-      stats.innerHTML =
-        '<span><b>' + raw.length + '</b> characters</span>' +
-        '<span><b>' + (new Blob([raw]).size) + '</b> bytes</span>' +
-        '<span><b>' + keys.length + '</b> keys</span>';
-    } catch(e) { 
-      stats.innerHTML = ''; 
-    }
-  }
+          <div class="editor-toolbar">
+            <span id="inputStatus" class="status-text">
+              Ready
+            </span>
 
-  function format() {
-    const val = input.value.trim();
-    if (!val) { 
-      status.textContent = 'Waiting for input…'; 
-      status.className = 'status'; 
-      output.textContent = ''; 
-      stats.innerHTML = ''; 
-      return; 
-    }
-    try {
-      const obj = JSON.parse(val);
-      const pretty = JSON.stringify(obj, null, 2);
-      output.innerHTML = syntaxHighlight(pretty);
-      status.textContent = '✓ Valid JSON';
-      status.className = 'status ok';
-      updateStats(obj, pretty);
-    } catch(e) {
-      output.textContent = '';
-      status.textContent = '✗ Invalid JSON — ' + e.message;
-      status.className = 'status err';
-      stats.innerHTML = '';
-    }
-  }
+            <span id="inputSize" class="size-text">
+              0 characters
+            </span>
+          </div>
 
-  function minify() {
-    const val = input.value.trim();
-    if (!val) return;
-    try {
-      const obj = JSON.parse(val);
-      const min = JSON.stringify(obj);
-      output.innerHTML = syntaxHighlight(min);
-      status.textContent = '✓ Valid JSON (minified)';
-      status.className = 'status ok';
-      updateStats(obj, min);
-    } catch(e) {
-      status.textContent = '✗ Invalid JSON — ' + e.message;
-      status.className = 'status err';
-    }
-  }
+          <textarea
+            id="jsonInput"
+            spellcheck="false"
+            autocomplete="off"
+            autocorrect="off"
+            autocapitalize="off"
+            placeholder='Paste your JSON here...
 
-  document.getElementById('formatBtn').addEventListener('click', format);
-  document.getElementById('minifyBtn').addEventListener('click', minify);
-  
-  document.getElementById('clearBtn').addEventListener('click', () => {
-    input.value = ''; 
-    output.textContent = ''; 
-    status.textContent = 'Waiting for input…'; 
-    status.className = 'status'; 
-    stats.innerHTML = '';
-  });
+Example:
+{
+  "name": "niDar Tools",
+  "version": 1,
+  "active": true
+}'
+          ></textarea>
 
-  document.getElementById('copyBtn').addEventListener('click', () => {
-    const text = output.textContent || output.innerText;
-    if (!text) return;
-    navigator.clipboard.writeText(text).then(() => {
-      const orig = status.textContent;
-      status.textContent = 'Copied to clipboard!';
-      setTimeout(() => { status.textContent = orig; }, 1500);
-    });
-  });
+        </div>
 
-  document.getElementById('sampleBtn').addEventListener('click', () => {
-    input.value = JSON.stringify({
-      site: "niDar Tools",
-      tools: 12,
-      categories: ["Image", "PDF", "Calculator", "Developer"],
-      free: true,
-      contact: { email: "nidarmarketingandservices@gmail.com" }
-    }, null, 2);
-    format();
-  });
 
-  input.addEventListener('input', () => {
-    clearTimeout(window._t);
-    window._t = setTimeout(format, 250);
-  });
-})();
-</script>
+        <!-- INPUT ACTIONS -->
+        <div class="action-row">
+
+          <button
+            type="button"
+            id="formatBtn"
+            class="primary-btn"
+          >
+            ✨ Format JSON
+          </button>
+
+          <button
+            type="button"
+            id="validateBtn"
+            class="secondary-btn"
+          >
+            ✓ Validate
+          </button>
+
+          <button
+            type="button"
+            id="minifyBtn"
+            class="secondary-btn"
+          >
+            Minify
+          </button>
+
+          <button
+            type="button"
+            id="clearBtn"
+            class="danger-btn"
+          >
+            Clear
+          </button>
+
+        </div>
+
+      </div>
+
+
+      <!-- RESULT PANEL -->
+      <div class="panel result-panel">
+
+        <div class="panel-header">
+
+          <div>
+            <span class="step-number">2</span>
+
+            <div class="panel-title-group">
+              <h2>Formatted Result</h2>
+              <p>Your processed JSON will appear here.</p>
+            </div>
+          </div>
+
+
+          <div class="result-actions">
+
+            <button
+              type="button"
+              id="copyBtn"
+              class="icon-btn"
+              title="Copy JSON"
+            >
+              📋 Copy
+            </button>
+
+            <button
+              type="button"
+              id="downloadBtn"
+              class="icon-btn"
+              title="Download JSON"
+            >
+              ⬇ Download
+            </button>
+
+          </div>
+
+        </div>
+
+
+        <div class="editor-wrapper result-editor-wrapper">
+
+          <div class="editor-toolbar">
+
+            <span id="resultStatus" class="status-text">
+              Waiting for JSON
+            </span>
+
+            <span id="resultSize" class="size-text">
+              0 characters
+            </span>
+
+          </div>
+
+          <textarea
+            id="jsonOutput"
+            spellcheck="false"
+            readonly
+            placeholder="Formatted JSON will appear here..."
+          ></textarea>
+
+        </div>
+
+
+        <!-- VALIDATION RESULT -->
+        <div
+          id="validationResult"
+          class="validation-result"
+          hidden
+        >
+          <div class="validation-icon" id="validationIcon">
+            ✓
+          </div>
+
+          <div class="validation-content">
+            <strong id="validationTitle">
+              Valid JSON
+            </strong>
+
+            <p id="validationMessage">
+              Your JSON is valid.
+            </p>
+          </div>
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- OPTIONS -->
+    <section class="options-section">
+
+      <div class="section-heading">
+        <span class="section-kicker">CUSTOMIZE</span>
+        <h2>Formatting Options</h2>
+        <p>Choose how your JSON should be formatted.</p>
+      </div>
+
+
+      <div class="options-grid">
+
+        <div class="option-card">
+
+          <label for="indentSize">
+            Indentation
+          </label>
+
+          <select id="indentSize">
+            <option value="2">2 Spaces</option>
+            <option value="4" selected>4 Spaces</option>
+            <option value="8">8 Spaces</option>
+            <option value="tab">Tab</option>
+          </select>
+
+        </div>
+
+
+        <div class="option-card">
+
+          <label for="sortKeys">
+            Object Keys
+          </label>
+
+          <select id="sortKeys">
+            <option value="keep" selected>Keep Original Order</option>
+            <option value="sort">Sort Alphabetically</option>
+          </select>
+
+        </div>
+
+
+        <div class="option-card">
+
+          <label for="escapeUnicode">
+            Unicode
+          </label>
+
+          <select id="escapeUnicode">
+            <option value="keep" selected>Keep Unicode Characters</option>
+            <option value="escape">Escape Unicode</option>
+          </select>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- QUICK ACTIONS -->
+    <section class="quick-section">
+
+      <div class="section-heading">
+        <span class="section-kicker">QUICK TOOLS</span>
+        <h2>JSON Actions</h2>
+      </div>
+
+
+      <div class="quick-grid">
+
+        <button
+          type="button"
+          id="beautifyBtn"
+          class="quick-card"
+        >
+          <span class="quick-icon">✨</span>
+          <strong>Beautify JSON</strong>
+          <small>Make JSON easy to read</small>
+        </button>
+
+
+        <button
+          type="button"
+          id="compactBtn"
+          class="quick-card"
+        >
+          <span class="quick-icon">⚡</span>
+          <strong>Compact JSON</strong>
+          <small>Remove unnecessary spaces</small>
+        </button>
+
+
+        <button
+          type="button"
+          id="copyInputBtn"
+          class="quick-card"
+        >
+          <span class="quick-icon">📋</span>
+          <strong>Copy Input</strong>
+          <small>Copy original JSON</small>
+        </button>
+
+
+        <button
+          type="button"
+          id="swapBtn"
+          class="quick-card"
+        >
+          <span class="quick-icon">⇄</span>
+          <strong>Swap</strong>
+          <small>Move result to input</small>
+        </button>
+
+      </div>
+
+    </section>
+
+
+    <!-- HOW TO USE -->
+    <section class="info-section">
+
+      <div class="section-heading">
+        <span class="section-kicker">HOW IT WORKS</span>
+        <h2>How to Format JSON?</h2>
+      </div>
+
+
+      <div class="steps-grid">
+
+        <article class="info-card">
+          <span class="info-number">01</span>
+          <h3>Paste JSON</h3>
+          <p>
+            Paste your JSON data into the input editor.
+          </p>
+        </article>
+
+
+        <article class="info-card">
+          <span class="info-number">02</span>
+          <h3>Format or Validate</h3>
+          <p>
+            Format your JSON or check whether it contains syntax errors.
+          </p>
+        </article>
+
+
+        <article class="info-card">
+          <span class="info-number">03</span>
+          <h3>Copy or Download</h3>
+          <p>
+            Copy the result or download it as a JSON file.
+          </p>
+        </article>
+
+      </div>
+
+    </section>
+
+
+    <!-- FEATURES -->
+    <section class="features-section">
+
+      <div class="section-heading">
+        <span class="section-kicker">WHY NIDAR TOOLS</span>
+        <h2>Simple, Fast & Private</h2>
+      </div>
+
+
+      <div class="features-grid">
+
+        <div class="feature-card">
+          <span>⚡</span>
+          <h3>Fast Processing</h3>
+          <p>
+            JSON processing happens instantly in your browser.
+          </p>
+        </div>
+
+
+        <div class="feature-card">
+          <span>🔒</span>
+          <h3>Privacy Friendly</h3>
+          <p>
+            Your JSON is processed locally without requiring an upload.
+          </p>
+        </div>
+
+
+        <div class="feature-card">
+          <span>✓</span>
+          <h3>Validation</h3>
+          <p>
+            Quickly detect invalid JSON syntax.
+          </p>
+        </div>
+
+
+        <div class="feature-card">
+          <span>📱</span>
+          <h3>Works Anywhere</h3>
+          <p>
+            Use the tool on mobile, tablet or desktop.
+          </p>
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- PRIVACY NOTE -->
+    <section class="privacy-note">
+
+      <div class="privacy-icon">🔒</div>
+
+      <div>
+        <h3>Your JSON stays on your device</h3>
+        <p>
+          This tool is designed for client-side processing.
+          Your JSON data does not need to be uploaded to a server.
+        </p>
+      </div>
+
+    </section>
+
+  </main>
+
+
+  <script src="../assets/js/common.js"></script>
+<script src="script.js"></script>
+
+<!-- COMMON FOOTER -->
+<div id="site-footer"></div>
 
 </body>
 </html>

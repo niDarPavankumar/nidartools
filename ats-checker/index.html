@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+  <title>AI ATS Resume Checker — niDar Tools</title>
+
+  <meta name="description"
+        content="Free AI ATS Resume Checker by niDar Tools. Compare your resume with a job description, identify missing keywords, check formatting and get actionable recommendations.">
+
+  <meta name="keywords"
+        content="ATS resume checker, AI resume checker, resume ATS score, resume keyword checker, job description matcher">
+
+  <meta name="author"
+        content="niDar Tools">
+
+  <meta name="robots"
+        content="index, follow">
+
+  <link rel="canonical"
+        href="https://nidartools.com/ats-checker/">
+
+  <link rel="icon"
+        type="image/png"
+        href="/logo.png">
+
+  <!-- Shared niDar Tools CSS -->
+  <link rel="stylesheet"
+        href="/assets/css/style.css">
+
+  <!-- ATS Checker CSS -->
+  <link rel="stylesheet"
+        href="style.css">
+</head>
+
+<body>
+
+  <!-- Shared Header -->
+  <div id="site-header"></div>
+
+
+  <main class="ats-page">
+
+    <!-- =====================================================
+         HERO
+         ===================================================== -->
+
+    <section class="ats-hero">
+
+      <div class="ats-badge">
+        🤖 AI-Powered Career Tool
+      </div>
+
+      <h1>
+        AI ATS Resume Checker
+      </h1>
+
+      <p>
+        Check how well your resume matches a job description,
+        discover missing keywords and get practical suggestions
+        to improve your chances of passing Applicant Tracking
+        Systems.
+      </p>
+
+      <div class="ats-hero-points">
+        <span>✓ Resume Analysis</span>
+        <span>✓ Keyword Matching</span>
+        <span>✓ ATS Score</span>
+        <span>✓ Actionable Suggestions</span>
+      </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         MAIN WORKSPACE
+         ===================================================== -->
+
+    <section class="ats-workspace">
+
+      <!-- INPUT PANEL -->
+
+      <div class="ats-card ats-input-card">
+
+        <div class="ats-card-header">
+
+          <div>
+
+            <span class="ats-section-label">
+              Step 1 & 2
+            </span>
+
+            <h2>
+              Add Your Resume & Job Description
+            </h2>
+
+            <p>
+              Paste the text from your resume and the job
+              description you want to target.
+            </p>
+
+          </div>
+
+        </div>
+
+
+        <!-- RESUME -->
+
+        <div class="ats-form-group">
+
+          <div class="ats-label-row">
+
+            <label for="resumeText">
+              1. Resume Text
+            </label>
+
+            <span id="resumeCounter">
+              0 characters
+            </span>
+
+          </div>
+
+          <textarea
+            id="resumeText"
+            placeholder="Paste your complete resume text here..."
+            spellcheck="true"
+          ></textarea>
+
+          <small>
+            Include your skills, experience, education and
+            other relevant resume information.
+          </small>
+
+        </div>
+
+
+        <!-- JOB DESCRIPTION -->
+
+        <div class="ats-form-group">
+
+          <div class="ats-label-row">
+
+            <label for="jobDesc">
+              2. Job Description
+            </label>
+
+            <span id="jobCounter">
+              0 characters
+            </span>
+
+          </div>
+
+          <textarea
+            id="jobDesc"
+            placeholder="Paste the complete job description here..."
+            spellcheck="true"
+          ></textarea>
+
+          <small>
+            For better results, paste the complete job
+            description including requirements and skills.
+          </small>
+
+        </div>
+
+
+        <!-- PRIVACY / CONSENT -->
+
+        <div class="ats-consent-box">
+
+          <input
+            type="checkbox"
+            id="userConsent"
+          >
+
+          <div>
+
+            <label for="userConsent">
+              I agree to the
+              <a href="/terms/" target="_blank" rel="noopener">
+                Terms & Conditions
+              </a>
+              and
+              <a href="/privacy-policy/" target="_blank" rel="noopener">
+                Privacy Policy
+              </a>.
+            </label>
+
+            <p>
+              Your resume and job description are submitted
+              only when you start the analysis. Do not include
+              passwords, financial information or other
+              unnecessary sensitive information.
+            </p>
+
+          </div>
+
+        </div>
+
+
+        <!-- ANALYZE -->
+
+        <div class="ats-action-area">
+
+          <button
+            type="button"
+            id="analyzeBtn"
+            class="ats-primary-btn"
+            disabled
+          >
+            <span>✨</span>
+            Analyze Resume
+          </button>
+
+          <div
+            id="analysisStatus"
+            class="ats-status"
+            aria-live="polite"
+          ></div>
+
+        </div>
+
+      </div>
+
+
+      <!-- QUICK GUIDE -->
+
+      <aside class="ats-card ats-guide-card">
+
+        <div class="ats-guide-icon">
+          📄
+        </div>
+
+        <h2>
+          How It Works
+        </h2>
+
+        <div class="ats-guide-step">
+
+          <strong>01</strong>
+
+          <div>
+            <h3>Paste Resume</h3>
+            <p>
+              Add the text of your current resume.
+            </p>
+          </div>
+
+        </div>
+
+        <div class="ats-guide-step">
+
+          <strong>02</strong>
+
+          <div>
+            <h3>Add Job Description</h3>
+            <p>
+              Paste the job description you are applying for.
+            </p>
+          </div>
+
+        </div>
+
+        <div class="ats-guide-step">
+
+          <strong>03</strong>
+
+          <div>
+            <h3>Run AI Analysis</h3>
+            <p>
+              Let the checker compare your resume with the
+              target role.
+            </p>
+          </div>
+
+        </div>
+
+        <div class="ats-guide-step">
+
+          <strong>04</strong>
+
+          <div>
+            <h3>Improve Your Resume</h3>
+            <p>
+              Use the score, keywords and recommendations
+              to improve your application.
+            </p>
+          </div>
+
+        </div>
+
+        <div class="ats-tip-box">
+
+          <strong>💡 Tip</strong>
+
+          <p>
+            Use the exact skills and terminology that are
+            genuinely relevant to your experience.
+          </p>
+
+        </div>
+
+      </aside>
+
+    </section>
+
+
+    <!-- =====================================================
+         ANALYSIS RESULTS
+         ===================================================== -->
+
+    <section
+      id="resultBox"
+      class="ats-results"
+      hidden
+    >
+
+      <div class="ats-results-heading">
+
+        <div>
+
+          <span class="ats-section-label">
+            Analysis Complete
+          </span>
+
+          <h2>
+            Resume Analysis Results
+          </h2>
+
+          <p>
+            Review the findings below and use them to improve
+            your resume for the target position.
+          </p>
+
+        </div>
+
+        <button
+          type="button"
+          id="reanalyzeBtn"
+          class="ats-secondary-btn"
+        >
+          ↻ Analyze Again
+        </button>
+
+      </div>
+
+
+      <!-- SCORE -->
+
+      <div class="ats-score-card">
+
+        <div class="ats-score-content">
+
+          <div>
+
+            <span class="ats-score-label">
+              ATS Compatibility Score
+            </span>
+
+            <h3>
+              Your Resume Score
+            </h3>
+
+            <p id="scoreMessage">
+              Analysis based on your resume and job description.
+            </p>
+
+          </div>
+
+          <div class="ats-score-circle">
+
+            <strong id="scoreValue">
+              0
+            </strong>
+
+            <span>
+              /100
+            </span>
+
+          </div>
+
+        </div>
+
+        <div class="ats-score-bar">
+
+          <div
+            id="scoreProgress"
+            class="ats-score-progress"
+            style="width: 0%"
+          ></div>
+
+        </div>
+
+      </div>
+
+
+      <!-- RESULT GRID -->
+
+      <div class="ats-results-grid">
+
+
+        <!-- MISSING KEYWORDS -->
+
+        <article class="ats-result-card ats-missing-card">
+
+          <div class="ats-result-card-header">
+
+            <div class="ats-result-icon">
+              ⚠️
+            </div>
+
+            <div>
+
+              <h3>
+                Missing Keywords
+              </h3>
+
+              <span id="missingCount">
+                0 items
+              </span>
+
+            </div>
+
+          </div>
+
+          <ul id="missingKeywordsList"></ul>
+
+          <div
+            id="missingEmpty"
+            class="ats-empty-message"
+          >
+            No missing keywords were identified.
+          </div>
+
+        </article>
+
+
+        <!-- MATCHING KEYWORDS -->
+
+        <article class="ats-result-card ats-matching-card">
+
+          <div class="ats-result-card-header">
+
+            <div class="ats-result-icon">
+              ✓
+            </div>
+
+            <div>
+
+              <h3>
+                Matching Keywords
+              </h3>
+
+              <span id="matchingCount">
+                0 items
+              </span>
+
+            </div>
+
+          </div>
+
+          <ul id="matchingKeywordsList"></ul>
+
+          <div
+            id="matchingEmpty"
+            class="ats-empty-message"
+          >
+            No matching keywords were identified.
+          </div>
+
+        </article>
+
+
+        <!-- FORMATTING -->
+
+        <article class="ats-result-card ats-formatting-card">
+
+          <div class="ats-result-card-header">
+
+            <div class="ats-result-icon">
+              📝
+            </div>
+
+            <div>
+
+              <h3>
+                Formatting & Layout
+              </h3>
+
+              <span>
+                Resume presentation feedback
+              </span>
+
+            </div>
+
+          </div>
+
+          <ul id="formattingFeedbackList"></ul>
+
+          <div
+            id="formattingEmpty"
+            class="ats-empty-message"
+          >
+            No formatting feedback was returned.
+          </div>
+
+        </article>
+
+
+        <!-- SUGGESTIONS -->
+
+        <article class="ats-result-card ats-suggestions-card">
+
+          <div class="ats-result-card-header">
+
+            <div class="ats-result-icon">
+              🚀
+            </div>
+
+            <div>
+
+              <h3>
+                Actionable Recommendations
+              </h3>
+
+              <span>
+                Practical improvement suggestions
+              </span>
+
+            </div>
+
+          </div>
+
+          <ul id="suggestionsList"></ul>
+
+          <div
+            id="suggestionsEmpty"
+            class="ats-empty-message"
+          >
+            No recommendations were returned.
+          </div>
+
+        </article>
+
+      </div>
+
+
+      <!-- RESULT DISCLAIMER -->
+
+      <div class="ats-result-note">
+
+        <strong>
+          ℹ️ Remember
+        </strong>
+
+        <p>
+          An ATS score is an estimate and does not guarantee
+          an interview or job offer. Keep your resume truthful
+          and only add skills or keywords that accurately
+          represent your experience.
+        </p>
+
+      </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         FEATURES
+         ===================================================== -->
+
+    <section class="ats-features-section">
+
+      <div class="ats-section-heading">
+
+        <span class="ats-section-label">
+          Why Use niDar Tools?
+        </span>
+
+        <h2>
+          Make Your Resume More Job-Ready
+        </h2>
+
+        <p>
+          A simple workflow to understand how your resume
+          aligns with a specific job description.
+        </p>
+
+      </div>
+
+
+      <div class="ats-feature-grid">
+
+        <article class="ats-feature-card">
+
+          <div>🎯</div>
+
+          <h3>
+            ATS Score
+          </h3>
+
+          <p>
+            Get an easy-to-understand score representing
+            your resume's match with the target role.
+          </p>
+
+        </article>
+
+
+        <article class="ats-feature-card">
+
+          <div>🔎</div>
+
+          <h3>
+            Keyword Matching
+          </h3>
+
+          <p>
+            Identify important keywords present in the job
+            description and compare them with your resume.
+          </p>
+
+        </article>
+
+
+        <article class="ats-feature-card">
+
+          <div>📐</div>
+
+          <h3>
+            Formatting Feedback
+          </h3>
+
+          <p>
+            Review potential formatting and layout issues
+            that could affect resume readability.
+          </p>
+
+        </article>
+
+
+        <article class="ats-feature-card">
+
+          <div>💡</div>
+
+          <h3>
+            Actionable Advice
+          </h3>
+
+          <p>
+            Receive practical suggestions that can help
+            you improve your resume.
+          </p>
+
+        </article>
+
+      </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         PRIVACY
+         ===================================================== -->
+
+    <section class="ats-privacy-section">
+
+      <div class="ats-privacy-card">
+
+        <div class="ats-privacy-icon">
+          🔒
+        </div>
+
+        <div>
+
+          <h2>
+            Privacy & Responsible Use
+          </h2>
+
+          <p>
+            Only provide information necessary for resume
+            analysis. Avoid entering passwords, bank details,
+            government identification numbers or other highly
+            sensitive information.
+          </p>
+
+          <p>
+            By using this tool, you acknowledge that analysis
+            is subject to the
+            <a href="/privacy-policy/">
+              niDar Tools Privacy Policy
+            </a>
+            and
+            <a href="/terms/">
+              Terms & Conditions
+            </a>.
+          </p>
+
+        </div>
+
+      </div>
+
+    </section>
+
+  </main>
+
+
+  <!-- Shared Footer -->
+  <div id="site-footer"></div>
+
+
+  <!-- Shared Website Script -->
+  <script src="../assets/js/common.js"></script>
+  <script src="/assets/js/script.js"></script>
+
+  <!-- ATS Checker Script -->
+  <script src="script.js"></script>
+
+</body>
+</html>

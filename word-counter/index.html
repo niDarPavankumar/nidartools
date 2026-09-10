@@ -1,283 +1,815 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Word &amp; Character Counter - niDar Tools</title>
+  <title>Word & Character Counter - Free Online Text Counter | niDar Tools</title>
 
-<meta name="description" content="Free word counter and character counter — works in any language. Live word/character/sentence count, social media limit checker, keyword density, and case converter.">
-<meta name="keywords" content="word counter, character counter, word count tool, character count online, text counter, keyword density checker">
-<meta name="author" content="niDar Marketing And Services">
+  <meta
+    name="description"
+    content="Count words, characters, sentences, paragraphs and reading time instantly with niDar Tools Word & Character Counter."
+  >
 
-<link rel="canonical" href="https://nidartools.com/word-counter/">
+  <meta
+    name="keywords"
+    content="word counter, character counter, sentence counter, paragraph counter, reading time calculator, text counter"
+  >
 
-<!-- Absolute paths for Assets -->
-<link rel="icon" type="image/x-icon" href="/assets/favicon/favicon.ico">
-<link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon/favicon-16x16.png">
-<link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon/favicon-32x32.png">
-<link rel="apple-touch-icon" sizes="180x180" href="/assets/favicon/apple-touch-icon.png">
-<link rel="stylesheet" href="/assets/css/style.css">
+  <meta name="robots" content="index, follow">
+  <meta name="theme-color" content="#008f3c">
 
-<style>
-/* Focus frame for text area */
-.wc-frame {
-  position: relative;
-  padding: 8px;
-}
-.wc-frame textarea {
-  width: 100%;
-  min-height: 220px;
-  border: 2px solid var(--border);
-  border-radius: 10px;
-  padding: 14px;
-  font-size: 15px;
-  resize: vertical;
-  transition: border-color .25s ease, box-shadow .25s ease;
-  background: var(--card);
-  color: var(--text);
-  box-sizing: border-box;
-}
-.wc-frame textarea:focus {
-  outline: none;
-  border-color: #22c55e;
-  box-shadow: 0 0 0 4px rgba(34,197,94,.18);
-}
-.wc-corner {
-  position: absolute;
-  width: 18px;
-  height: 18px;
-  border: 3px solid var(--border);
-  opacity: .5;
-  transition: border-color .25s ease, opacity .25s ease;
-  pointer-events: none;
-}
-.wc-corner.tl { top: -2px; left: -2px; border-right: none; border-bottom: none; border-radius: 6px 0 0 0; }
-.wc-corner.tr { top: -2px; right: -2px; border-left: none; border-bottom: none; border-radius: 0 6px 0 0; }
-.wc-corner.bl { bottom: -2px; left: -2px; border-right: none; border-top: none; border-radius: 0 0 0 6px; }
-.wc-corner.br { bottom: -2px; right: -2px; border-left: none; border-top: none; border-radius: 0 0 6px 0; }
-.wc-frame.active .wc-corner { border-color: #22c55e; opacity: 1; }
-.wc-status { font-size: 12px; margin-top: 8px; color: var(--muted); }
-.wc-status.typing { color: #22c55e; font-weight: 600; }
-
-.stat-box {
-  background: var(--bg);
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  padding: 16px;
-  text-align: center;
-}
-.stat-box h2 {
-  font-size: 1.8rem;
-  margin: 0;
-  color: var(--primary);
-}
-.stat-box p {
-  margin: 4px 0 0;
-  font-size: 0.85rem;
-  color: var(--muted);
-}
-</style>
+  <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
+<!-- COMMON HEADER -->
+<div id="site-header"></div>
 
-<header class="header">
-  <div class="container navbar">
-    <a href="/" class="logo">niDar<span>Tools</span></a>
-    <nav>
-      <a href="/">Home</a>
-      <a href="/about/">About</a>
-      <a href="/contact/">Contact</a>
-      <a href="/support/">Support</a>
-    </nav>
-    <button class="btn btn-theme" id="themeToggle" aria-label="Toggle theme">🌙 Theme</button>
-  </div>
-</header>
+  <!-- =====================================================
+       TOOL PAGE
+       ===================================================== -->
 
-<main class="container mt-40">
+  <main class="word-counter-page">
 
-<section class="hero-card text-center mb-30">
-  <h1>Word &amp; Character Counter</h1>
-  
-  <div class="mt-10">
-    <a href="/content/word-counter/" class="guide-link">
-      <span class="icon">📖</span><span>Read Word Counter SEO Writing Guide →</span>
-    </a>
-  </div>
+    <!-- HERO -->
+    <section class="tool-hero">
 
-  <p class="mt-10">
-    Type or paste any text — in English, Marathi, Hindi, or any language — to get instant counts.
-  </p>
-</section>
+      <div class="tool-badge">
+        ✍️ Free Online Text Tool
+      </div>
 
-<section class="card mb-20">
-  <h2>Your Text</h2>
+      <h1>
+        Word & Character Counter
+      </h1>
 
-  <div class="wc-frame mt-10" id="wcFrame">
-    <div class="wc-corner tl"></div>
-    <div class="wc-corner tr"></div>
-    <div class="wc-corner bl"></div>
-    <div class="wc-corner br"></div>
-    <textarea id="textInput" placeholder="Type or paste your text here..."></textarea>
-  </div>
-  <p class="wc-status" id="wcStatus">Not typing</p>
+      <p>
+        Count words, characters, sentences, paragraphs and reading time
+        instantly and accurately.
+      </p>
 
-  <div class="grid mt-20">
-    <button class="btn" style="background:var(--secondary);" onclick="setCase('upper')">UPPERCASE</button>
-    <button class="btn" style="background:var(--secondary);" onclick="setCase('lower')">lowercase</button>
-    <button class="btn" style="background:var(--secondary);" onclick="setCase('title')">Title Case</button>
-    <button class="btn" style="background:var(--secondary);" onclick="setCase('sentence')">Sentence case</button>
-  </div>
-  <div class="grid mt-10">
-    <button class="btn" style="background:var(--secondary);" onclick="cleanText()">🧹 Clean Extra Spaces</button>
-    <button class="btn btn-primary" onclick="copyText()">📋 Copy Text</button>
-    <button class="btn" style="background:var(--secondary);" onclick="clearText()">✕ Clear</button>
-  </div>
-</section>
+      <div class="hero-features">
 
-<section class="card mb-20">
-  <h2>Live Counts</h2>
-  <div class="grid mt-10">
-    <div class="stat-box"><h2 id="wordCount">0</h2><p>Words</p></div>
-    <div class="stat-box"><h2 id="charCountWith">0</h2><p>Characters (with spaces)</p></div>
-    <div class="stat-box"><h2 id="charCountWithout">0</h2><p>Characters (no spaces)</p></div>
-    <div class="stat-box"><h2 id="sentenceCount">0</h2><p>Sentences</p></div>
-    <div class="stat-box"><h2 id="paraCount">0</h2><p>Paragraphs</p></div>
-    <div class="stat-box"><h2 id="readTime">0 sec</h2><p>Reading Time</p></div>
-    <div class="stat-box"><h2 id="speakTime">0 sec</h2><p>Speaking Time</p></div>
-  </div>
-</section>
+        <span>⚡ Instant Results</span>
+        <span>📱 Mobile Friendly</span>
+        <span>🔒 Private</span>
+        <span>💚 Free</span>
 
-<section class="card mb-20">
-  <h2>Social Media Limit Checker</h2>
-  <div style="overflow-x:auto;" class="mt-10">
-    <table id="limitTable" style="width:100%; border-collapse:collapse;">
-      <tr><th style="border-bottom:1px solid var(--border); padding:8px; text-align:left;">Platform</th><th style="border-bottom:1px solid var(--border); padding:8px; text-align:left;">Limit</th><th style="border-bottom:1px solid var(--border); padding:8px; text-align:left;">Status</th></tr>
-    </table>
-  </div>
-</section>
+      </div>
 
-<section class="card mb-40">
-  <h2>Keyword Density (Top Words)</h2>
-  <div style="overflow-x:auto;" class="mt-10">
-    <table id="densityTable" style="width:100%; border-collapse:collapse;">
-      <tr><th style="border-bottom:1px solid var(--border); padding:8px; text-align:left;">Word</th><th style="border-bottom:1px solid var(--border); padding:8px; text-align:left;">Count</th><th style="border-bottom:1px solid var(--border); padding:8px; text-align:left;">Density</th></tr>
-    </table>
-  </div>
-</section>
+    </section>
 
-</main>
 
-<footer class="footer">
-  <div class="container text-center">
-    <p>© 2026 niDar Tools. All Rights Reserved.</p>
-    <p>Developed by <strong>niDar Marketing And Services</strong></p>
-  </div>
-</footer>
+    <!-- ===================================================
+         MAIN COUNTER
+         =================================================== -->
 
-<script src="/assets/js/script.js"></script>
-<script>
-const textInput = document.getElementById('textInput');
-const wcFrame = document.getElementById('wcFrame');
-const wcStatus = document.getElementById('wcStatus');
-let typingTimer;
+    <section class="counter-workspace">
 
-const LIMITS = [
-  ['Twitter / X post', 280],
-  ['Instagram Caption', 2200],
-  ['SMS (single)', 160],
-  ['Meta Title (SEO)', 60],
-  ['Meta Description (SEO)', 160],
-];
+      <!-- TEXT INPUT -->
+      <div class="counter-card">
 
-function updateCounts() {
-  const text = textInput.value;
+        <div class="section-heading">
 
-  const words = text.trim().length ? text.trim().split(/\s+/) : [];
-  const wordCount = words.length;
-  const charWith = text.length;
-  const charWithout = text.replace(/\s/g, '').length;
-  const sentences = text.split(/[.!?]+/).filter(s => s.trim().length > 0).length;
-  const paragraphs = text.split(/\n+/).filter(p => p.trim().length > 0).length;
+          <div class="step-number">
+            1
+          </div>
 
-  document.getElementById('wordCount').textContent = wordCount.toLocaleString('en-IN');
-  document.getElementById('charCountWith').textContent = charWith.toLocaleString('en-IN');
-  document.getElementById('charCountWithout').textContent = charWithout.toLocaleString('en-IN');
-  document.getElementById('sentenceCount').textContent = sentences;
-  document.getElementById('paraCount').textContent = paragraphs;
+          <div>
+            <h2>
+              Enter your text
+            </h2>
 
-  const readSec = Math.round((wordCount / 200) * 60);
-  const speakSec = Math.round((wordCount / 130) * 60);
-  document.getElementById('readTime').textContent = readSec < 60 ? readSec + ' sec' : Math.round(readSec / 60) + ' min';
-  document.getElementById('speakTime').textContent = speakSec < 60 ? speakSec + ' sec' : Math.round(speakSec / 60) + ' min';
+            <p>
+              Type or paste your text below to see live statistics.
+            </p>
+          </div>
 
-  const limitTable = document.getElementById('limitTable');
-  limitTable.innerHTML = '<tr><th style="border-bottom:1px solid var(--border); padding:8px; text-align:left;">Platform</th><th style="border-bottom:1px solid var(--border); padding:8px; text-align:left;">Limit</th><th style="border-bottom:1px solid var(--border); padding:8px; text-align:left;">Status</th></tr>' +
-    LIMITS.map(([name, limit]) => {
-      const ok = charWith <= limit;
-      return `<tr><td style="padding:8px; border-bottom:1px solid var(--border);">${name}</td><td style="padding:8px; border-bottom:1px solid var(--border);">${limit}</td><td style="padding:8px; border-bottom:1px solid var(--border);">${charWith}/${limit} — ${ok ? '✅ OK' : '⚠️ Over limit'}</td></tr>`;
-    }).join('');
+        </div>
 
-  const freq = {};
-  words.forEach(w => {
-    const clean = w.toLowerCase().replace(/[^\p{L}\p{N}]/gu, '');
-    if (clean.length > 2) freq[clean] = (freq[clean] || 0) + 1;
-  });
-  const top = Object.entries(freq).sort((a, b) => b[1] - a[1]).slice(0, 8);
-  const densityTable = document.getElementById('densityTable');
-  densityTable.innerHTML = '<tr><th style="border-bottom:1px solid var(--border); padding:8px; text-align:left;">Word</th><th style="border-bottom:1px solid var(--border); padding:8px; text-align:left;">Count</th><th style="border-bottom:1px solid var(--border); padding:8px; text-align:left;">Density</th></tr>' +
-    (top.length ? top.map(([w, c]) => `<tr><td style="padding:8px; border-bottom:1px solid var(--border);">${w}</td><td style="padding:8px; border-bottom:1px solid var(--border);">${c}</td><td style="padding:8px; border-bottom:1px solid var(--border);">${((c / wordCount) * 100).toFixed(1)}%</td></tr>`).join('') : '<tr><td colspan="3" style="padding:8px;">Start typing to see keyword density</td></tr>');
-}
 
-textInput.addEventListener('input', () => {
-  updateCounts();
-  wcFrame.classList.add('active');
-  wcStatus.textContent = 'Typing...';
-  wcStatus.classList.add('typing');
-  clearTimeout(typingTimer);
-  typingTimer = setTimeout(() => {
-    wcFrame.classList.remove('active');
-    wcStatus.textContent = 'Not typing';
-    wcStatus.classList.remove('typing');
-  }, 1200);
-});
+        <div class="textarea-wrapper">
 
-textInput.addEventListener('focus', () => { wcFrame.classList.add('active'); });
-textInput.addEventListener('blur', () => {
-  if (!textInput.value) { 
-    wcFrame.classList.remove('active'); 
-    wcStatus.textContent = 'Not typing'; 
-    wcStatus.classList.remove('typing'); 
-  }
-});
+          <label for="textInput">
+            Your Text
+          </label>
 
-function setCase(type) {
-  const t = textInput.value;
-  if (type === 'upper') textInput.value = t.toUpperCase();
-  else if (type === 'lower') textInput.value = t.toLowerCase();
-  else if (type === 'title') textInput.value = t.replace(/\w\S*/g, w => w.charAt(0).toUpperCase() + w.substr(1).toLowerCase());
-  else if (type === 'sentence') textInput.value = t.toLowerCase().replace(/(^\s*\w|[.!?]\s*\w)/g, c => c.toUpperCase());
-  updateCounts();
-}
+          <textarea
+            id="textInput"
+            placeholder="Start typing or paste your text here..."
+            spellcheck="true"
+            autocomplete="off"
+            autocapitalize="sentences"
+          ></textarea>
 
-function cleanText() {
-  textInput.value = textInput.value.replace(/[ \t]+/g, ' ').replace(/\n{3,}/g, '\n\n').trim();
-  updateCounts();
-}
+          <div class="textarea-footer">
 
-function copyText() {
-  navigator.clipboard.writeText(textInput.value);
-}
+            <span id="inputStatus">
+              Ready
+            </span>
 
-function clearText() {
-  textInput.value = '';
-  updateCounts();
-  textInput.focus();
-}
+            <span>
+              <strong id="liveCharacters">0</strong>
+              characters
+            </span>
 
-updateCounts();
-</script>
+          </div>
+
+        </div>
+
+
+        <!-- ACTION BUTTONS -->
+        <div class="action-row">
+
+          <button
+            type="button"
+            class="primary-btn"
+            id="clearTextBtn"
+          >
+            Clear Text
+          </button>
+
+          <button
+            type="button"
+            class="secondary-btn"
+            id="sampleTextBtn"
+          >
+            Try Sample
+          </button>
+
+        </div>
+
+      </div>
+
+
+      <!-- =================================================
+           STATISTICS
+           ================================================= -->
+
+      <div class="statistics-card">
+
+        <div class="section-heading">
+
+          <div class="step-number">
+            2
+          </div>
+
+          <div>
+            <h2>
+              Text Statistics
+            </h2>
+
+            <p>
+              Your text statistics update automatically as you type.
+            </p>
+          </div>
+
+        </div>
+
+
+        <div class="stats-grid">
+
+          <!-- WORDS -->
+          <div class="stat-card">
+
+            <span class="stat-icon">
+              📝
+            </span>
+
+            <span class="stat-label">
+              Words
+            </span>
+
+            <strong
+              id="wordCount"
+              class="stat-value"
+            >
+              0
+            </strong>
+
+          </div>
+
+
+          <!-- CHARACTERS -->
+          <div class="stat-card">
+
+            <span class="stat-icon">
+              🔤
+            </span>
+
+            <span class="stat-label">
+              Characters
+            </span>
+
+            <strong
+              id="characterCount"
+              class="stat-value"
+            >
+              0
+            </strong>
+
+          </div>
+
+
+          <!-- CHARACTERS WITHOUT SPACES -->
+          <div class="stat-card">
+
+            <span class="stat-icon">
+              🔡
+            </span>
+
+            <span class="stat-label">
+              Characters without spaces
+            </span>
+
+            <strong
+              id="characterNoSpacesCount"
+              class="stat-value"
+            >
+              0
+            </strong>
+
+          </div>
+
+
+          <!-- SENTENCES -->
+          <div class="stat-card">
+
+            <span class="stat-icon">
+              📄
+            </span>
+
+            <span class="stat-label">
+              Sentences
+            </span>
+
+            <strong
+              id="sentenceCount"
+              class="stat-value"
+            >
+              0
+            </strong>
+
+          </div>
+
+
+          <!-- PARAGRAPHS -->
+          <div class="stat-card">
+
+            <span class="stat-icon">
+              📑
+            </span>
+
+            <span class="stat-label">
+              Paragraphs
+            </span>
+
+            <strong
+              id="paragraphCount"
+              class="stat-value"
+            >
+              0
+            </strong>
+
+          </div>
+
+
+          <!-- LINES -->
+          <div class="stat-card">
+
+            <span class="stat-icon">
+              📃
+            </span>
+
+            <span class="stat-label">
+              Lines
+            </span>
+
+            <strong
+              id="lineCount"
+              class="stat-value"
+            >
+              0
+            </strong>
+
+          </div>
+
+
+          <!-- READING TIME -->
+          <div class="stat-card">
+
+            <span class="stat-icon">
+              ⏱️
+            </span>
+
+            <span class="stat-label">
+              Reading Time
+            </span>
+
+            <strong
+              id="readingTime"
+              class="stat-value"
+            >
+              0 min
+            </strong>
+
+          </div>
+
+
+          <!-- SPEAKING TIME -->
+          <div class="stat-card">
+
+            <span class="stat-icon">
+              🎤
+            </span>
+
+            <span class="stat-label">
+              Speaking Time
+            </span>
+
+            <strong
+              id="speakingTime"
+              class="stat-value"
+            >
+              0 min
+            </strong>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <!-- =================================================
+           DETAILED ANALYSIS
+           ================================================= -->
+
+      <div class="analysis-card">
+
+        <div class="section-heading">
+
+          <div class="step-number">
+            3
+          </div>
+
+          <div>
+            <h2>
+              Text Analysis
+            </h2>
+
+            <p>
+              Additional information about your text.
+            </p>
+          </div>
+
+        </div>
+
+
+        <div class="analysis-grid">
+
+          <div class="analysis-item">
+
+            <span>
+              Average word length
+            </span>
+
+            <strong id="averageWordLength">
+              0 characters
+            </strong>
+
+          </div>
+
+
+          <div class="analysis-item">
+
+            <span>
+              Average sentence length
+            </span>
+
+            <strong id="averageSentenceLength">
+              0 words
+            </strong>
+
+          </div>
+
+
+          <div class="analysis-item">
+
+            <span>
+              Longest word
+            </span>
+
+            <strong id="longestWord">
+              —
+            </strong>
+
+          </div>
+
+
+          <div class="analysis-item">
+
+            <span>
+              Total spaces
+            </span>
+
+            <strong id="spaceCount">
+              0
+            </strong>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <!-- =================================================
+           TEXT OPTIONS
+           ================================================= -->
+
+      <div class="options-card">
+
+        <div class="section-heading">
+
+          <div class="step-number">
+            4
+          </div>
+
+          <div>
+            <h2>
+              Text Options
+            </h2>
+
+            <p>
+              Quickly transform your text when needed.
+            </p>
+          </div>
+
+        </div>
+
+
+        <div class="options-grid">
+
+          <button
+            type="button"
+            class="option-btn"
+            id="uppercaseBtn"
+          >
+            ABC Uppercase
+          </button>
+
+          <button
+            type="button"
+            class="option-btn"
+            id="lowercaseBtn"
+          >
+            abc Lowercase
+          </button>
+
+          <button
+            type="button"
+            class="option-btn"
+            id="capitalizeBtn"
+          >
+            Aa Capitalize
+          </button>
+
+          <button
+            type="button"
+            class="option-btn"
+            id="removeExtraSpacesBtn"
+          >
+            Remove Extra Spaces
+          </button>
+
+        </div>
+
+      </div>
+
+
+      <!-- =================================================
+           PRIVACY NOTICE
+           ================================================= -->
+
+      <div class="privacy-notice">
+
+        <div class="privacy-icon">
+          🔒
+        </div>
+
+        <div>
+
+          <h3>
+            Your text stays on your device
+          </h3>
+
+          <p>
+            niDar Tools processes your text directly in your browser.
+            Your content does not need to be uploaded to a server.
+          </p>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- ===================================================
+         HOW IT WORKS
+         =================================================== -->
+
+    <section class="how-it-works">
+
+      <div class="section-label">
+        How it works
+      </div>
+
+      <h2>
+        Count your text in seconds
+      </h2>
+
+      <p class="section-description">
+        Paste your content, review the live statistics and use the
+        text tools whenever you need them.
+      </p>
+
+
+      <div class="steps-grid">
+
+        <div class="how-step">
+
+          <div class="how-number">
+            1
+          </div>
+
+          <h3>
+            Enter Text
+          </h3>
+
+          <p>
+            Type or paste your content into the text box.
+          </p>
+
+        </div>
+
+
+        <div class="how-step">
+
+          <div class="how-number">
+            2
+          </div>
+
+          <h3>
+            View Statistics
+          </h3>
+
+          <p>
+            Words, characters, sentences and other statistics update
+            automatically.
+          </p>
+
+        </div>
+
+
+        <div class="how-step">
+
+          <div class="how-number">
+            3
+          </div>
+
+          <h3>
+            Analyze & Edit
+          </h3>
+
+          <p>
+            Check reading time and use the built-in text options.
+          </p>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- ===================================================
+         WHY NIDAR TOOLS
+         =================================================== -->
+
+    <section class="why-section">
+
+      <div class="section-label">
+        Why niDar Tools?
+      </div>
+
+      <h2>
+        Simple, fast and private
+      </h2>
+
+
+      <div class="benefits-grid">
+
+        <div class="benefit-card">
+
+          <div class="benefit-icon">
+            ⚡
+          </div>
+
+          <h3>
+            Instant Results
+          </h3>
+
+          <p>
+            Get live word and character counts without unnecessary
+            steps.
+          </p>
+
+        </div>
+
+
+        <div class="benefit-card">
+
+          <div class="benefit-icon">
+            📱
+          </div>
+
+          <h3>
+            Mobile Friendly
+          </h3>
+
+          <p>
+            Designed to work comfortably on phones, tablets and
+            desktops.
+          </p>
+
+        </div>
+
+
+        <div class="benefit-card">
+
+          <div class="benefit-icon">
+            🔒
+          </div>
+
+          <h3>
+            Private
+          </h3>
+
+          <p>
+            Your text is processed directly in your browser.
+          </p>
+
+        </div>
+
+
+        <div class="benefit-card">
+
+          <div class="benefit-icon">
+            💚
+          </div>
+
+          <h3>
+            Completely Free
+          </h3>
+
+          <p>
+            Use the Word & Character Counter without registration
+            or payment.
+          </p>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- ===================================================
+         QUICK REFERENCE
+         =================================================== -->
+
+    <section class="reference-section">
+
+      <div class="section-label">
+        Quick Reference
+      </div>
+
+      <h2>
+        What does each counter mean?
+      </h2>
+
+      <p class="section-description">
+        Understand the statistics shown by the niDar Tools text
+        counter.
+      </p>
+
+
+      <div class="reference-grid">
+
+        <div class="reference-card">
+
+          <h3>
+            Words
+          </h3>
+
+          <p>
+            Counts the words contained in your text.
+          </p>
+
+        </div>
+
+
+        <div class="reference-card">
+
+          <h3>
+            Characters
+          </h3>
+
+          <p>
+            Counts every character, including spaces.
+          </p>
+
+        </div>
+
+
+        <div class="reference-card">
+
+          <h3>
+            Sentences
+          </h3>
+
+          <p>
+            Estimates sentences using common sentence-ending
+            punctuation.
+          </p>
+
+        </div>
+
+
+        <div class="reference-card">
+
+          <h3>
+            Reading Time
+          </h3>
+
+          <p>
+            Estimates how long an average reader may take to read
+            your text.
+          </p>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- ===================================================
+         FINAL CTA
+         =================================================== -->
+
+    <section class="final-cta">
+
+      <div>
+
+        <div class="section-label">
+          niDar Tools
+        </div>
+
+        <h2>
+          Ready to count your text?
+        </h2>
+
+        <p>
+          Enter your text above and get instant statistics.
+        </p>
+
+      </div>
+
+      <button
+        type="button"
+        class="cta-btn"
+        id="startCountingBtn"
+      >
+        Start Counting
+      </button>
+
+    </section>
+
+  </main>
+
+
+  <!-- =====================================================
+       SCRIPT
+       ===================================================== -->
+
+  <script src="../assets/js/common.js"></script>
+<script src="script.js"></script>
+
+<!-- COMMON FOOTER -->
+<div id="site-footer"></div>
 
 </body>
 </html>

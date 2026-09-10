@@ -1,611 +1,623 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Image Resizer &amp; Compressor - niDar Tools</title>
+  <title>Image Resizer & Compressor - niDar Tools</title>
+  <meta name="description" content="Resize and compress images online with exact dimensions, file size, format, background and image adjustments. Free, fast and private.">
 
-<meta name="description" content="Resize and compress photos for free — set exact width/height (cm/mm/px/in) and target file size (KB/MB). Great for passport-size photos. Everything runs in your browser.">
-<meta name="keywords" content="image resizer, photo resizer, compress image, passport photo size, resize image online">
+  <link rel="canonical" href="https://nidartools.com/image-resizer/">
 
-<link rel="canonical" href="https://nidartools.com/image-resizer/">
+  <link rel="icon" type="image/x-icon" href="/assets/favicon/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon/favicon-32x32.png">
 
-<!-- Absolute paths for Assets -->
-<link rel="icon" type="image/x-icon" href="/assets/favicon/favicon.ico">
-<link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon/favicon-16x16.png">
-<link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon/favicon-32x32.png">
-<link rel="apple-touch-icon" sizes="180x180" href="/assets/favicon/apple-touch-icon.png">
-<link rel="stylesheet" href="/assets/css/style.css">
-<script src="https://cdn.jsdelivr.net/npm/@mediapipe/selfie_segmentation/selfie_segmentation.js"></script>
+  <link rel="stylesheet" href="style.css">
+
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/selfie_segmentation/selfie_segmentation.js"></script>
 </head>
 
 <body>
 
-<header class="header">
-  <div class="container navbar">
-    <a href="/" class="logo">niDar<span>Tools</span></a>
-    <nav>
-      <a href="/">Home</a>
-      <a href="/about/">About</a>
-      <a href="/contact/">Contact</a>
-      <a href="/support/">Support</a>
-    </nav>
-    <button class="btn btn-theme" id="themeToggle" aria-label="Toggle theme">🌙 Theme</button>
-  </div>
-</header>
-
-<main class="container mt-40">
-
-<section class="hero-card text-center mb-30">
-  <h1>Image Resizer &amp; Compressor</h1>
-  
-  <div class="mt-10">
-    <a href="/content/image-resizer/" class="guide-link">
-      <span class="icon">📖</span><span>Read Image Resizer Guide →</span>
-    </a>
-  </div>
-
-  <p class="mt-10">
-    Set exact width/height (cm/mm/px/in) and target file size
-    (KB/MB) at the same time — great for passport-size photos.
-  </p>
-</section>
-
-<section class="card mb-20">
-
-  <h2>1. Upload Your Photo</h2>
-
-  <input type="file" id="fileInput" accept="image/*" class="form-control mt-10">
-
-  <div id="previewWrap" class="hidden mt-20 text-center">
-    <p><strong>Preview:</strong></p>
-    <img id="previewImg" style="max-width:220px;border-radius:10px;border:1px solid var(--border);" class="mt-10">
-    <p class="mt-10">Original size: <strong id="infoOrigSize">-</strong> · Dimensions: <strong id="infoOrigDim">-</strong></p>
-  </div>
-
-</section>
-
-<section class="card hidden mb-20" id="settingsSection">
-
-  <h2>2. Dimensions</h2>
-
-  <label class="mt-10">Photo size preset</label>
-  <select id="sizePreset" class="form-control mt-10">
-    <option value="custom">Custom (set below)</option>
-    <option value="3.5x4.5">Passport / ID Photo — 3.5 × 4.5 cm</option>
-    <option value="2.5x3.5">PAN Card / Voter ID (SIR) — 2.5 × 3.5 cm</option>
-    <option value="2x2in">US Visa / Passport — 2 × 2 in</option>
-    <option value="35x45mm">UK/EU Passport — 35 × 45 mm</option>
-  </select>
-
-  <div class="grid mt-20">
-    <div>
-      <label>Unit</label>
-      <select id="unitSelect" class="form-control mt-10">
-        <option value="px">Pixels (PX)</option>
-        <option value="cm">Centimeters (CM)</option>
-        <option value="mm">Millimeters (MM)</option>
-        <option value="in">Inches (IN)</option>
-      </select>
-    </div>
-    <div>
-      <label>Width</label>
-      <input type="number" id="imgWidth" class="form-control mt-10">
-    </div>
-    <div>
-      <label>Height</label>
-      <input type="number" id="imgHeight" class="form-control mt-10">
-    </div>
-  </div>
-
-  <label class="mt-20 block">
-    <input type="checkbox" id="aspectRatio" checked>
-    Maintain aspect ratio
-  </label>
-
-  <h2 class="mt-30">3. File Size Limit</h2>
-
-  <div class="grid mt-10">
-    <div>
-      <label>Target size</label>
-      <input type="number" id="fileSizeVal" value="50" class="form-control mt-10">
-    </div>
-    <div>
-      <label>Unit</label>
-      <select id="fileSizeUnit" class="form-control mt-10">
-        <option value="kb">Kilobytes (KB)</option>
-        <option value="mb">Megabytes (MB)</option>
-      </select>
-    </div>
-    <div>
-      <label>Output format</label>
-      <select id="formatSelect" class="form-control mt-10">
-        <option value="jpeg">JPEG / JPG</option>
-        <option value="png">PNG</option>
-      </select>
-    </div>
-  </div>
-  <p id="sizeWarning" class="alert alert-warning hidden mt-20"></p>
-
-  <h2 class="mt-30">4. Background</h2>
-
-  <label class="mt-10">Fit mode</label>
-  <select id="fitMode" class="form-control mt-10">
-    <option value="fill">Fill frame exactly (crop, no border) — best for passport photos</option>
-    <option value="fit">Show full photo (may add a border on the shorter side)</option>
-  </select>
-
-  <label class="mt-20">Background type</label>
-  <select id="bgType" class="form-control mt-10">
-    <option value="none">Keep original / transparency as-is</option>
-    <option value="transparent">Transparent (PNG only)</option>
-    <option value="white">White</option>
-    <option value="lightblue">Light Blue (common official colour)</option>
-    <option value="lightgrey">Light Grey</option>
-    <option value="red">Red (some ID photo requirements)</option>
-    <option value="custom">Custom colour</option>
-  </select>
-
-  <div id="bgColorContainer" class="hidden mt-20">
-    <input type="color" id="bgColor" value="#ffffff" class="form-control">
-  </div>
-  <p class="text-muted mt-10" style="font-size:12px;">Note: "Fill frame exactly" removes any border by cropping instead of padding. Transparent background requires PNG output format.</p>
-
-  <div id="aiOption" class="hidden mt-20">
-    <label class="block">
-      <input type="checkbox" id="aiRemoveBg">
-      Smart Background Change (AI) — replaces the real background behind a person
-    </label>
-    <p id="aiStatus" class="alert hidden mt-20"></p>
-  </div>
-
-  <h2 class="mt-30">5. Adjustments</h2>
-
-  <div class="grid mt-10">
-    <button id="rotateLeftBtn" class="btn" type="button">⟲ Rotate Left</button>
-    <button id="rotateRightBtn" class="btn" type="button">⟳ Rotate Right</button>
-    <button id="flipBtn" class="btn" type="button">⇋ Flip Horizontal</button>
-  </div>
-
-  <div class="grid mt-20">
-    <div>
-      <label>Brightness (<span id="brightnessVal">100</span>%)</label>
-      <input type="range" id="brightness" min="50" max="150" value="100" class="form-control mt-10">
-    </div>
-    <div>
-      <label>Contrast (<span id="contrastVal">100</span>%)</label>
-      <input type="range" id="contrast" min="50" max="150" value="100" class="form-control mt-10">
-    </div>
-  </div>
-
-  <div class="flex mt-30" style="align-items:center;gap:12px;">
-    <button id="processBtn" class="btn btn-primary">⚡ Resize &amp; Compress</button>
-    <button id="resetBtn" class="btn" type="button" style="background:var(--secondary);">↺ Start Over</button>
-    <img id="loadingSpinner" src="/assets/favicon/favicon-32x32.png" class="hidden" style="width:28px;height:28px;animation:spin 1s linear infinite;">
-  </div>
-
-</section>
-
-<section class="card hidden mb-20 text-center" id="resultCard">
-  <h2>✅ Successfully Changed!</h2>
-  <p class="mt-10">New file size: <strong id="newFileSize">0 KB</strong></p>
-  <button id="downloadBtn" class="btn btn-primary mt-20">📥 Download File</button>
-</section>
-
-<section class="card mb-40">
-  <h2>Passport / ID photo tip</h2>
-  <p class="text-muted mt-10">
-    Standard passport/ID photo size is typically 3.5 × 4.5 cm on a
-    plain white or light background. Turn off "Maintain aspect ratio"
-    to set a custom size that differs from your original photo's shape.
-  </p>
-</section>
-
-</main>
-
-<footer class="footer">
-  <div class="container text-center">
-    <p>© 2026 niDar Tools. All Rights Reserved.</p>
-    <p>Developed by <strong>niDar Marketing And Services</strong></p>
-  </div>
-</footer>
-
-<script src="/assets/js/script.js"></script>
-<script>
-(function () {
-  const fileInput = document.getElementById('fileInput');
-  const previewWrap = document.getElementById('previewWrap');
-  const previewImg = document.getElementById('previewImg');
-  const infoOrigSize = document.getElementById('infoOrigSize');
-  const infoOrigDim = document.getElementById('infoOrigDim');
-  const settingsSection = document.getElementById('settingsSection');
-
-  const sizePreset = document.getElementById('sizePreset');
-  const unitSelect = document.getElementById('unitSelect');
-  const imgWidth = document.getElementById('imgWidth');
-  const imgHeight = document.getElementById('imgHeight');
-  const aspectRatio = document.getElementById('aspectRatio');
-  const fileSizeVal = document.getElementById('fileSizeVal');
-  const fileSizeUnit = document.getElementById('fileSizeUnit');
-  const fitMode = document.getElementById('fitMode');
-  const bgType = document.getElementById('bgType');
-  const bgColorContainer = document.getElementById('bgColorContainer');
-  const bgColor = document.getElementById('bgColor');
-  const formatSelect = document.getElementById('formatSelect');
-  const sizeWarning = document.getElementById('sizeWarning');
-  const aiOption = document.getElementById('aiOption');
-  const aiRemoveBg = document.getElementById('aiRemoveBg');
-  const aiStatus = document.getElementById('aiStatus');
-  const loadingSpinner = document.getElementById('loadingSpinner');
-
-  const processBtn = document.getElementById('processBtn');
-  const resultCard = document.getElementById('resultCard');
-  const newFileSize = document.getElementById('newFileSize');
-  const downloadBtn = document.getElementById('downloadBtn');
-  const rotateLeftBtn = document.getElementById('rotateLeftBtn');
-  const rotateRightBtn = document.getElementById('rotateRightBtn');
-  const flipBtn = document.getElementById('flipBtn');
-  const brightness = document.getElementById('brightness');
-  const contrast = document.getElementById('contrast');
-  const brightnessVal = document.getElementById('brightnessVal');
-  const contrastVal = document.getElementById('contrastVal');
-  const resetBtn = document.getElementById('resetBtn');
-
-  let rotation = 0;
-  let flipped = false;
-
-  let originalImg = new Image();
-  let loadedFile = null;
-  let finalBlob = null;
-  let basePxWidth = 0;
-  let basePxHeight = 0;
-  let cutoutImg = null;
-  let segmenter = null;
-
-  const DPI = 300;
-
-  rotateLeftBtn.addEventListener('click', () => {
-    rotation = (rotation - 90 + 360) % 360;
-    cutoutImg = null;
-  });
-  rotateRightBtn.addEventListener('click', () => {
-    rotation = (rotation + 90) % 360;
-    cutoutImg = null;
-  });
-  flipBtn.addEventListener('click', () => {
-    flipped = !flipped;
-    cutoutImg = null;
-  });
-  brightness.addEventListener('input', () => { brightnessVal.textContent = brightness.value; });
-  contrast.addEventListener('input', () => { contrastVal.textContent = contrast.value; });
-
-  resetBtn.addEventListener('click', () => {
-    fileInput.value = '';
-    loadedFile = null;
-    cutoutImg = null;
-    rotation = 0;
-    flipped = false;
-    brightness.value = 100; brightnessVal.textContent = '100';
-    contrast.value = 100; contrastVal.textContent = '100';
-    sizePreset.value = 'custom';
-    fitMode.value = 'fill';
-    bgType.value = 'none';
-    bgColorContainer.classList.add('hidden');
-    aiOption.classList.add('hidden');
-    aiRemoveBg.checked = false;
-    previewWrap.classList.add('hidden');
-    settingsSection.classList.add('hidden');
-    resultCard.classList.add('hidden');
-    sizeWarning.classList.add('hidden');
-  });
-
-  const PRESETS = {
-    '3.5x4.5': { unit: 'cm', w: 3.5, h: 4.5 },
-    '2.5x3.5': { unit: 'cm', w: 2.5, h: 3.5 },
-    '2x2in':   { unit: 'in', w: 2, h: 2 },
-    '35x45mm': { unit: 'mm', w: 35, h: 45 },
-  };
-
-  sizePreset.addEventListener('change', () => {
-    const p = PRESETS[sizePreset.value];
-    if (!p) return;
-    aspectRatio.checked = false;
-    unitSelect.value = p.unit;
-    unitSelect.dataset.prevUnit = p.unit;
-    imgWidth.value = p.w;
-    imgHeight.value = p.h;
-  });
-
-  function pxToUnit(px, unit) {
-    if (unit === 'px') return Math.round(px);
-    if (unit === 'in') return +(px / DPI).toFixed(2);
-    if (unit === 'cm') return +((px / DPI) * 2.54).toFixed(2);
-    if (unit === 'mm') return +((px / DPI) * 25.4).toFixed(2);
-    return px;
-  }
-  function unitToPx(val, unit) {
-    const num = parseFloat(val) || 0;
-    if (unit === 'px') return num;
-    if (unit === 'in') return num * DPI;
-    if (unit === 'cm') return (num / 2.54) * DPI;
-    if (unit === 'mm') return (num / 25.4) * DPI;
-    return num;
-  }
-
-  const BG_COLORS = {
-    white: '#ffffff',
-    lightblue: '#a9d3f5',
-    lightgrey: '#d9d9d9',
-    red: '#c0392b',
-  };
-
-  function currentBgColor() {
-    if (bgType.value === 'custom') return bgColor.value;
-    return BG_COLORS[bgType.value] || '#ffffff';
-  }
-
-  bgType.addEventListener('change', () => {
-    bgColorContainer.classList.toggle('hidden', bgType.value !== 'custom');
-    const needsBackgroundHandling = bgType.value !== 'none';
-    aiOption.classList.toggle('hidden', !needsBackgroundHandling);
-    if (bgType.value === 'transparent' && formatSelect.value !== 'png') {
-      formatSelect.value = 'png';
-    }
-  });
-
-  fileInput.addEventListener('change', (e) => {
-    if (e.target.files.length > 0) handleFile(e.target.files[0]);
-  });
-
-  function handleFile(file) {
-    if (!file.type.startsWith('image/')) {
-      alert('Please select a valid image file.');
-      return;
-    }
-    loadedFile = file;
-    cutoutImg = null;
-    rotation = 0;
-    flipped = false;
-    infoOrigSize.textContent = (file.size / 1024).toFixed(1) + ' KB';
-    const reader = new FileReader();
-    reader.onload = (e) => { originalImg.src = e.target.result; };
-    reader.readAsDataURL(file);
-  }
-
-  originalImg.onload = () => {
-    previewImg.src = originalImg.src;
-    previewWrap.classList.remove('hidden');
-    settingsSection.classList.remove('hidden');
-    infoOrigDim.textContent = `${originalImg.width} x ${originalImg.height} PX`;
-    basePxWidth = originalImg.width;
-    basePxHeight = originalImg.height;
-    unitSelect.value = 'px';
-    imgWidth.value = basePxWidth;
-    imgHeight.value = basePxHeight;
-  };
-
-  unitSelect.addEventListener('change', () => {
-    if (!originalImg.src) return;
-    const curPxW = unitToPx(imgWidth.value, unitSelect.dataset.prevUnit || 'px');
-    const curPxH = unitToPx(imgHeight.value, unitSelect.dataset.prevUnit || 'px');
-    imgWidth.value = pxToUnit(curPxW, unitSelect.value);
-    imgHeight.value = pxToUnit(curPxH, unitSelect.value);
-    unitSelect.dataset.prevUnit = unitSelect.value;
-  });
-  unitSelect.dataset.prevUnit = 'px';
-
-  imgWidth.addEventListener('input', () => {
-    if (aspectRatio.checked && originalImg.src) {
-      const r = basePxHeight / basePxWidth;
-      const wPx = unitToPx(imgWidth.value, unitSelect.value);
-      imgHeight.value = pxToUnit(wPx * r, unitSelect.value);
-    }
-  });
-  imgHeight.addEventListener('input', () => {
-    if (aspectRatio.checked && originalImg.src) {
-      const r = basePxWidth / basePxHeight;
-      const hPx = unitToPx(imgHeight.value, unitSelect.value);
-      imgWidth.value = pxToUnit(hPx * r, unitSelect.value);
-    }
-  });
-
-  function getSegmenter() {
-    if (!segmenter) {
-      segmenter = new SelfieSegmentation({
-        locateFile: (file) => `https://cdn.jsdelivr.net/npm/@mediapipe/selfie_segmentation/${file}`
-      });
-      segmenter.setOptions({ modelSelection: 0 });
-    }
-    return segmenter;
-  }
-
-  function computeCutout(img) {
-    return new Promise((resolve, reject) => {
-      const seg = getSegmenter();
-      seg.onResults((results) => {
-        const w = img.naturalWidth || img.width;
-        const h = img.naturalHeight || img.height;
-
-        const maskCanvas = document.createElement('canvas');
-        maskCanvas.width = w; maskCanvas.height = h;
-        const mctx = maskCanvas.getContext('2d');
-        mctx.filter = 'blur(1px)';
-        mctx.drawImage(results.segmentationMask, 0, 0, w, h);
-        mctx.filter = 'none';
-        const rawMask = mctx.getImageData(0, 0, w, h).data;
-
-        const LOW = 90, HIGH = 200;
-        const maskData = new Uint8ClampedArray(rawMask.length);
-        for (let i = 0; i < rawMask.length; i += 4) {
-          const v = rawMask[i];
-          let a;
-          if (v <= LOW) a = 0;
-          else if (v >= HIGH) a = 255;
-          else a = Math.round(((v - LOW) / (HIGH - LOW)) * 255);
-          maskData[i] = a;
-        }
-
-        const outCanvas = document.createElement('canvas');
-        outCanvas.width = w; outCanvas.height = h;
-        const octx = outCanvas.getContext('2d');
-        octx.drawImage(img, 0, 0, w, h);
-        const imgData = octx.getImageData(0, 0, w, h);
-        for (let i = 0; i < imgData.data.length; i += 4) {
-          imgData.data[i + 3] = maskData[i];
-        }
-        octx.putImageData(imgData, 0, 0);
-
-        const cutout = new Image();
-        cutout.onload = () => resolve(cutout);
-        cutout.onerror = reject;
-        cutout.src = outCanvas.toDataURL('image/png');
-      });
-      seg.send({ image: img });
-    });
-  }
-
-  function drawToCanvas(canvas, ctx, w, h, srcImg) {
-    srcImg = srcImg || originalImg;
-    canvas.width = w;
-    canvas.height = h;
-    ctx.clearRect(0, 0, w, h);
-
-    const rawW = srcImg.naturalWidth || srcImg.width;
-    const rawH = srcImg.naturalHeight || srcImg.height;
-    const rotated90 = (rotation === 90 || rotation === 270);
-    const srcW = rotated90 ? rawH : rawW;
-    const srcH = rotated90 ? rawW : rawH;
-    const srcRatio = srcW / srcH;
-    const dstRatio = w / h;
-
-    const wantsColorFill = bgType.value !== 'none' && bgType.value !== 'transparent';
-    const wantsTransparent = bgType.value === 'transparent';
-
-    if (wantsColorFill) {
-      ctx.fillStyle = currentBgColor();
-      ctx.fillRect(0, 0, w, h);
-    } else if (!wantsTransparent && formatSelect.value !== 'png') {
-      ctx.fillStyle = '#ffffff';
-      ctx.fillRect(0, 0, w, h);
-    }
-
-    let drawW, drawH;
-    if (fitMode.value === 'fill') {
-      if (srcRatio > dstRatio) { drawH = h; drawW = h * srcRatio; }
-      else { drawW = w; drawH = w / srcRatio; }
-    } else {
-      if (srcRatio > dstRatio) { drawW = w; drawH = w / srcRatio; }
-      else { drawH = h; drawW = h * srcRatio; }
-    }
-
-    ctx.save();
-    ctx.filter = `brightness(${brightness.value}%) contrast(${contrast.value}%)`;
-    ctx.translate(w / 2, h / 2);
-    ctx.rotate((rotation * Math.PI) / 180);
-    if (flipped) ctx.scale(-1, 1);
-    const paintW = rotated90 ? drawH : drawW;
-    const paintH = rotated90 ? drawW : drawH;
-    ctx.drawImage(srcImg, -paintW / 2, -paintH / 2, paintW, paintH);
-    ctx.restore();
-  }
-
-  processBtn.addEventListener('click', async () => {
-    if (!loadedFile) return;
-    processBtn.disabled = true;
-    processBtn.textContent = '⏳ Processing...';
-    loadingSpinner.classList.remove('hidden');
-    aiStatus.classList.add('hidden');
-
-    let sourceImg = originalImg;
-    const needsBackgroundHandling = bgType.value !== 'none';
-
-    if (needsBackgroundHandling && aiRemoveBg.checked) {
-      try {
-        if (!cutoutImg) {
-          aiStatus.textContent = 'AI is detecting the person... (first use downloads the model, may take a moment)';
-          aiStatus.classList.remove('hidden');
-          cutoutImg = await computeCutout(originalImg);
-        }
-        sourceImg = cutoutImg;
-        aiStatus.classList.add('hidden');
-      } catch (err) {
-        aiStatus.textContent = 'AI background removal failed (possible network issue) — continuing with the original photo.';
-        aiStatus.classList.remove('hidden');
-        sourceImg = originalImg;
-      }
-    }
-
-    const targetUnit = unitSelect.value;
-    const targetW = Math.max(1, Math.round(unitToPx(imgWidth.value, targetUnit)));
-    const targetH = Math.max(1, Math.round(unitToPx(imgHeight.value, targetUnit)));
-
-    let limitKB = parseFloat(fileSizeVal.value);
-    if (fileSizeUnit.value === 'mb') limitKB *= 1024;
-
-    if (bgType.value === 'transparent' && formatSelect.value !== 'png') {
-      formatSelect.value = 'png';
-    }
-
-    const outFormat = formatSelect.value;
-    const mimeType = outFormat === 'png' ? 'image/png' : 'image/jpeg';
-
-    const canvas = document.createElement('canvas');
-    const ctx = canvas.getContext('2d');
-    drawToCanvas(canvas, ctx, targetW, targetH, sourceImg);
-
-    let blob = null;
-
-    if (outFormat === 'png') {
-      blob = await new Promise(res => canvas.toBlob(res, mimeType));
-      let scale = 0.9;
-      while ((blob.size / 1024) > limitKB && scale > 0.2) {
-        drawToCanvas(canvas, ctx, Math.round(targetW * scale), Math.round(targetH * scale), sourceImg);
-        blob = await new Promise(res => canvas.toBlob(res, mimeType));
-        scale -= 0.1;
-      }
-    } else {
-      let minQ = 0.05, maxQ = 0.95, q = 0.8;
-      for (let i = 0; i < 7; i++) {
-        q = (minQ + maxQ) / 2;
-        blob = await new Promise(res => canvas.toBlob(res, mimeType, q));
-        if ((blob.size / 1024) > limitKB) {
-          maxQ = q;
-        } else {
-          minQ = q;
-        }
-      }
-      blob = await new Promise(res => canvas.toBlob(res, mimeType, minQ));
-    }
-
-    finalBlob = blob;
-    newFileSize.textContent = (blob.size / 1024).toFixed(1) + ' KB';
-
-    if ((blob.size / 1024) > limitKB) {
-      sizeWarning.textContent = `Warning: Could not compress under ${limitKB} KB without significantly degrading image dimensions further. Current file size: ${(blob.size / 1024).toFixed(1)} KB`;
-      sizeWarning.classList.remove('hidden');
-    } else {
-      sizeWarning.classList.add('hidden');
-    }
-
-    resultCard.classList.remove('hidden');
-    resultCard.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-
-    processBtn.disabled = false;
-    processBtn.textContent = '⚡ Resize & Compress';
-    loadingSpinner.classList.add('hidden');
-  });
-
-  downloadBtn.addEventListener('click', () => {
-    if (!finalBlob) return;
-    const ext = formatSelect.value === 'png' ? 'png' : 'jpg';
-    const a = document.createElement('a');
-    a.href = URL.createObjectURL(finalBlob);
-    a.download = `resized-photo.${ext}`;
-    a.click();
-  });
-})();
-</script>
+  <!-- Shared niDar Tools Header -->
+  <div id="site-header"></div>
+
+  <main class="resizer-page">
+
+    <!-- TOOL HERO -->
+    <section class="tool-hero">
+      <span class="tool-badge">⚡ Free Online Image Tool</span>
+
+      <h1>Image Resizer</h1>
+
+      <p>
+        Resize, compress and adjust your images with precise control over
+        dimensions, file size, format and background.
+      </p>
+
+      <div class="tool-benefits">
+        <span>🔒 Private</span>
+        <span>⚡ Fast</span>
+        <span>🆓 Free</span>
+        <span>📱 Works on Mobile</span>
+      </div>
+    </section>
+
+
+    <!-- MAIN TOOL -->
+    <section class="resizer-workspace">
+
+      <!-- LEFT: IMAGE / UPLOAD -->
+      <div class="workspace-card">
+
+        <div class="section-heading">
+          <div>
+            <span class="step-number">1</span>
+            <div>
+              <h2>Upload your image</h2>
+              <p>Select an image to begin resizing.</p>
+            </div>
+          </div>
+        </div>
+
+        <label for="fileInput" class="upload-zone" id="uploadZone">
+
+          <div class="upload-icon">📤</div>
+
+          <h3>Drop your image here</h3>
+
+          <p>or</p>
+
+          <span class="select-image-btn">
+            Select Image
+          </span>
+
+          <small>
+            JPG · JPEG · PNG · WEBP · GIF
+          </small>
+
+        </label>
+
+        <input
+          type="file"
+          id="fileInput"
+          accept="image/*"
+          hidden
+        >
+
+
+        <!-- PREVIEW -->
+        <div id="previewWrap" class="preview-area hidden">
+
+          <div class="preview-header">
+            <h3>Image Preview</h3>
+
+            <button
+              type="button"
+              id="resetBtn"
+              class="text-button"
+            >
+              ↺ Change
+            </button>
+          </div>
+
+          <div class="preview-frame">
+            <img id="previewImg" alt="Selected image preview">
+          </div>
+
+          <div class="image-meta">
+            <div>
+              <span>Original Size</span>
+              <strong id="infoOrigSize">-</strong>
+            </div>
+
+            <div>
+              <span>Dimensions</span>
+              <strong id="infoOrigDim">-</strong>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <!-- RIGHT: SETTINGS -->
+      <div
+        class="workspace-card settings-card hidden"
+        id="settingsSection"
+      >
+
+        <div class="section-heading">
+          <div>
+            <span class="step-number">2</span>
+            <div>
+              <h2>Resize settings</h2>
+              <p>Choose how you want your image processed.</p>
+            </div>
+          </div>
+        </div>
+
+
+        <!-- PRESET -->
+        <div class="setting-block">
+
+          <label for="sizePreset">Quick size preset</label>
+
+          <select id="sizePreset" class="input-control">
+            <option value="custom">Custom size</option>
+            <option value="3.5x4.5">
+              Passport / ID — 3.5 × 4.5 cm
+            </option>
+            <option value="2.5x3.5">
+              PAN / Voter ID — 2.5 × 3.5 cm
+            </option>
+            <option value="2x2in">
+              US Visa / Passport — 2 × 2 in
+            </option>
+            <option value="35x45mm">
+              UK / EU Passport — 35 × 45 mm
+            </option>
+          </select>
+
+        </div>
+
+
+        <!-- DIMENSIONS -->
+        <div class="setting-block">
+
+          <div class="setting-title">
+            <h3>📐 Dimensions</h3>
+          </div>
+
+          <div class="input-grid three">
+
+            <div>
+              <label for="unitSelect">Unit</label>
+
+              <select id="unitSelect" class="input-control">
+                <option value="px">Pixels</option>
+                <option value="cm">Centimeters</option>
+                <option value="mm">Millimeters</option>
+                <option value="in">Inches</option>
+              </select>
+            </div>
+
+            <div>
+              <label for="imgWidth">Width</label>
+
+              <input
+                type="number"
+                id="imgWidth"
+                class="input-control"
+                min="1"
+                placeholder="Width"
+              >
+            </div>
+
+            <div>
+              <label for="imgHeight">Height</label>
+
+              <input
+                type="number"
+                id="imgHeight"
+                class="input-control"
+                min="1"
+                placeholder="Height"
+              >
+            </div>
+
+          </div>
+
+          <label class="checkbox-row">
+            <input type="checkbox" id="aspectRatio" checked>
+            <span>
+              <strong>Maintain aspect ratio</strong>
+              <small>Keep the original image proportions.</small>
+            </span>
+          </label>
+
+        </div>
+
+
+        <!-- FILE SIZE -->
+        <div class="setting-block">
+
+          <div class="setting-title">
+            <h3>📦 File size & format</h3>
+          </div>
+
+          <div class="input-grid three">
+
+            <div>
+              <label for="fileSizeVal">Target size</label>
+
+              <input
+                type="number"
+                id="fileSizeVal"
+                value="50"
+                min="1"
+                class="input-control"
+              >
+            </div>
+
+            <div>
+              <label for="fileSizeUnit">Unit</label>
+
+              <select id="fileSizeUnit" class="input-control">
+                <option value="kb">KB</option>
+                <option value="mb">MB</option>
+              </select>
+            </div>
+
+            <div>
+              <label for="formatSelect">Format</label>
+
+              <select id="formatSelect" class="input-control">
+                <option value="jpeg">JPEG / JPG</option>
+                <option value="png">PNG</option>
+              </select>
+            </div>
+
+          </div>
+
+          <p id="sizeWarning" class="tool-warning hidden"></p>
+
+        </div>
+
+
+        <!-- BACKGROUND -->
+        <div class="setting-block">
+
+          <div class="setting-title">
+            <h3>🎨 Background</h3>
+          </div>
+
+          <label for="fitMode">Image fitting</label>
+
+          <select id="fitMode" class="input-control">
+            <option value="fill">
+              Fill frame — crop if necessary
+            </option>
+            <option value="fit">
+              Show full image — add border if necessary
+            </option>
+          </select>
+
+
+          <label for="bgType" class="sub-label">
+            Background type
+          </label>
+
+          <select id="bgType" class="input-control">
+
+            <option value="none">
+              Keep original
+            </option>
+
+            <option value="transparent">
+              Transparent — PNG only
+            </option>
+
+            <option value="white">
+              White
+            </option>
+
+            <option value="lightblue">
+              Light Blue
+            </option>
+
+            <option value="lightgrey">
+              Light Grey
+            </option>
+
+            <option value="red">
+              Red
+            </option>
+
+            <option value="custom">
+              Custom colour
+            </option>
+
+          </select>
+
+
+          <div id="bgColorContainer" class="color-picker hidden">
+
+            <label for="bgColor">Custom background</label>
+
+            <input
+              type="color"
+              id="bgColor"
+              value="#ffffff"
+            >
+
+          </div>
+
+
+          <p class="setting-note">
+            💡 Fill mode crops the image to remove unwanted borders.
+            Transparent backgrounds require PNG output.
+          </p>
+
+
+          <!-- AI -->
+          <div id="aiOption" class="ai-option hidden">
+
+            <label class="checkbox-row">
+
+              <input type="checkbox" id="aiRemoveBg">
+
+              <span>
+                <strong>✨ Smart Background Change</strong>
+                <small>
+                  Automatically remove the background behind a person.
+                </small>
+              </span>
+
+            </label>
+
+            <p id="aiStatus" class="tool-status hidden"></p>
+
+          </div>
+
+        </div>
+
+
+        <!-- ADJUSTMENTS -->
+        <div class="setting-block">
+
+          <div class="setting-title">
+            <h3>✨ Adjustments</h3>
+          </div>
+
+          <div class="adjustment-buttons">
+
+            <button
+              id="rotateLeftBtn"
+              type="button"
+              class="secondary-button"
+            >
+              ⟲ Rotate Left
+            </button>
+
+            <button
+              id="rotateRightBtn"
+              type="button"
+              class="secondary-button"
+            >
+              ⟳ Rotate Right
+            </button>
+
+            <button
+              id="flipBtn"
+              type="button"
+              class="secondary-button"
+            >
+              ⇋ Flip
+            </button>
+
+          </div>
+
+
+          <div class="slider-grid">
+
+            <div class="slider-control">
+
+              <div class="slider-label">
+                <label for="brightness">
+                  Brightness
+                </label>
+
+                <strong>
+                  <span id="brightnessVal">100</span>%
+                </strong>
+              </div>
+
+              <input
+                type="range"
+                id="brightness"
+                min="50"
+                max="150"
+                value="100"
+              >
+
+            </div>
+
+
+            <div class="slider-control">
+
+              <div class="slider-label">
+                <label for="contrast">
+                  Contrast
+                </label>
+
+                <strong>
+                  <span id="contrastVal">100</span>%
+                </strong>
+              </div>
+
+              <input
+                type="range"
+                id="contrast"
+                min="50"
+                max="150"
+                value="100"
+              >
+
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <!-- ACTION -->
+        <div class="process-area">
+
+          <button
+            id="processBtn"
+            type="button"
+            class="primary-button"
+          >
+            ✨ Resize & Compress
+          </button>
+
+          <div class="processing-indicator">
+
+            <img
+              id="loadingSpinner"
+              src="/assets/favicon/favicon-32x32.png"
+              alt=""
+              class="hidden"
+            >
+
+            <span>
+              Your image is processed in your browser.
+            </span>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- RESULT -->
+    <section
+      id="resultCard"
+      class="result-card hidden"
+    >
+
+      <div class="result-icon">✅</div>
+
+      <h2>Your image is ready</h2>
+
+      <p>
+        The image has been resized and processed successfully.
+      </p>
+
+      <div class="result-size">
+        New file size:
+        <strong id="newFileSize">0 KB</strong>
+      </div>
+
+      <div class="result-actions">
+
+        <button
+          id="downloadBtn"
+          type="button"
+          class="primary-button"
+        >
+          ⬇ Download Image
+        </button>
+
+        <button
+          id="newImageBtn"
+          type="button"
+          class="secondary-button"
+        >
+          ↻ Resize Another
+        </button>
+
+      </div>
+
+    </section>
+
+
+    <!-- HOW TO USE -->
+    <section class="info-section">
+
+      <div class="info-heading">
+        <span>📖</span>
+
+        <div>
+          <h2>How to resize an image</h2>
+          <p>Four simple steps to get the result you need.</p>
+        </div>
+      </div>
+
+
+      <div class="steps-grid">
+
+        <div class="info-step">
+          <span>01</span>
+          <h3>Upload</h3>
+          <p>Select or drag your image into the upload area.</p>
+        </div>
+
+        <div class="info-step">
+          <span>02</span>
+          <h3>Customize</h3>
+          <p>Set dimensions, format, file size and adjustments.</p>
+        </div>
+
+        <div class="info-step">
+          <span>03</span>
+          <h3>Process</h3>
+          <p>Click Resize & Compress to process your image.</p>
+        </div>
+
+        <div class="info-step">
+          <span>04</span>
+          <h3>Download</h3>
+          <p>Preview your result and download the finished image.</p>
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- FEATURES -->
+    <section class="features-section">
+
+      <div class="feature-card">
+        <span>🔒</span>
+        <h3>Private by design</h3>
+        <p>
+          Your image processing happens directly in your browser.
+        </p>
+      </div>
+
+      <div class="feature-card">
+        <span>⚡</span>
+        <h3>Fast processing</h3>
+        <p>
+          Resize and compress without unnecessary uploads or waiting.
+        </p>
+      </div>
+
+      <div class="feature-card">
+        <span>🎯</span>
+        <h3>Precise control</h3>
+        <p>
+          Choose exact dimensions, format, quality and target size.
+        </p>
+      </div>
+
+      <div class="feature-card">
+        <span>📱</span>
+        <h3>Works anywhere</h3>
+        <p>
+          Designed for phones, tablets and desktop browsers.
+        </p>
+      </div>
+
+    </section>
+
+  </main>
+
+
+  <!-- Shared niDar Tools Footer -->
+  <div id="site-footer"></div>
+
+
+  <script src="../assets/js/common.js"></script>
+  <script src="/assets/js/script.js"></script>
+  <script src="script.js"></script>
 
 </body>
 </html>

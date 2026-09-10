@@ -1,153 +1,962 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
 
-<title>Percentage Calculator - niDar Tools</title>
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
 
-<meta name="description" content="Free percentage calculator — find X% of a number, what percent one number is of another, and percentage increase/decrease. Instant results.">
-<meta name="keywords" content="percentage calculator, percent calculator, percentage increase decrease calculator">
-<meta name="author" content="niDar Marketing And Services">
+  <meta
+    name="description"
+    content="Free online Percentage Calculator by niDar Tools. Calculate percentages, percentage changes, increases, decreases and more instantly."
+  >
 
-<link rel="canonical" href="https://nidartools.com/percentage-calculator/">
+  <meta
+    name="keywords"
+    content="percentage calculator, percentage change calculator, percent calculator, percentage increase, percentage decrease, niDar Tools"
+  >
 
-<!-- Absolute paths for Assets -->
-<link rel="icon" type="image/x-icon" href="/assets/favicon/favicon.ico">
-<link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon/favicon-16x16.png">
-<link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon/favicon-32x32.png">
-<link rel="apple-touch-icon" sizes="180x180" href="/assets/favicon/apple-touch-icon.png">
-<link rel="stylesheet" href="/assets/css/style.css">
+  <meta name="theme-color" content="#2e7d32">
+
+  <title>Percentage Calculator | niDar Tools</title>
+
+  <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
+<!-- COMMON HEADER -->
+<div id="site-header"></div>
 
-<header class="header">
-  <div class="container navbar">
-    <a href="/" class="logo">niDar<span>Tools</span></a>
-    <nav>
-      <a href="/">Home</a>
-      <a href="/about/">About</a>
-      <a href="/contact/">Contact</a>
-      <a href="/support/">Support</a>
-    </nav>
-    <button class="btn btn-theme" id="themeToggle" aria-label="Toggle theme">🌙 Theme</button>
-  </div>
-</header>
+  <!-- =====================================================
+       niDar Tools — Percentage Calculator
+       ===================================================== -->
 
-<main class="container mt-40">
+  <main class="tool-page">
 
-<section class="hero-card text-center mb-30">
-  <h1>Percentage Calculator</h1>
-  
-  <div class="mt-10">
-    <a href="/content/percentage-calculator/" class="guide-link">
-      <span class="icon">📖</span><span>Read Percentage Calculation Guide →</span>
-    </a>
-  </div>
+    <!-- HERO -->
+    <section class="tool-hero">
 
-  <p class="mt-10">
-    Three common percentage calculations, all in one place.
-  </p>
-</section>
+      <div class="tool-badge">
+        🧮 Free Online Calculator
+      </div>
 
-<section class="card mb-20">
-  <h2>1. What is X% of Y?</h2>
-  <div class="grid mt-10">
-    <div>
-      <label>Percentage (%)</label>
-      <input type="number" id="p1_pct" placeholder="e.g. 20" class="form-control mt-10">
-    </div>
-    <div>
-      <label>Of number (Y)</label>
-      <input type="number" id="p1_num" placeholder="e.g. 250" class="form-control mt-10">
-    </div>
-  </div>
-  <button class="btn btn-primary mt-20" onclick="calc1()">Calculate</button>
-  <div id="p1_result" class="mt-20"></div>
-</section>
+      <h1>
+        Percentage Calculator
+      </h1>
 
-<section class="card mb-20">
-  <h2>2. X is what percent of Y?</h2>
-  <div class="grid mt-10">
-    <div>
-      <label>Value X</label>
-      <input type="number" id="p2_x" placeholder="e.g. 50" class="form-control mt-10">
-    </div>
-    <div>
-      <label>Total Y</label>
-      <input type="number" id="p2_y" placeholder="e.g. 200" class="form-control mt-10">
-    </div>
-  </div>
-  <button class="btn btn-primary mt-20" onclick="calc2()">Calculate</button>
-  <div id="p2_result" class="mt-20"></div>
-</section>
+      <p>
+        Calculate percentages, percentage changes,
+        increases and decreases quickly and accurately.
+      </p>
 
-<section class="card mb-40">
-  <h2>3. Percentage Increase / Decrease</h2>
-  <div class="grid mt-10">
-    <div>
-      <label>Initial Value (From)</label>
-      <input type="number" id="p3_from" placeholder="e.g. 100" class="form-control mt-10">
-    </div>
-    <div>
-      <label>Final Value (To)</label>
-      <input type="number" id="p3_to" placeholder="e.g. 125" class="form-control mt-10">
-    </div>
-  </div>
-  <button class="btn btn-primary mt-20" onclick="calc3()">Calculate</button>
-  <div id="p3_result" class="mt-20"></div>
-</section>
+      <div class="hero-features">
 
-</main>
+        <span>⚡ Instant Results</span>
+        <span>📱 Mobile Friendly</span>
+        <span>🔒 Private</span>
+        <span>💚 Free</span>
 
-<footer class="footer">
-  <div class="container text-center">
-    <p>© 2026 niDar Tools. All Rights Reserved.</p>
-    <p>Developed by <strong>niDar Marketing And Services</strong></p>
-  </div>
-</footer>
+      </div>
 
-<script src="/assets/js/script.js"></script>
-<script>
-function calc1() {
-  const pct = parseFloat(document.getElementById('p1_pct').value);
-  const num = parseFloat(document.getElementById('p1_num').value);
-  const out = document.getElementById('p1_result');
-  if (isNaN(pct) || isNaN(num)) { 
-    out.innerHTML = '<div class="alert alert-danger">Please fill in both fields.</div>'; 
-    return; 
-  }
-  const result = (pct / 100 * num);
-  out.innerHTML = `<div class="alert alert-success">${pct}% of ${num} is <strong>${Number.isInteger(result) ? result : result.toFixed(2)}</strong></div>`;
-}
+    </section>
 
-function calc2() {
-  const x = parseFloat(document.getElementById('p2_x').value);
-  const y = parseFloat(document.getElementById('p2_y').value);
-  const out = document.getElementById('p2_result');
-  if (isNaN(x) || isNaN(y) || y === 0) { 
-    out.innerHTML = '<div class="alert alert-danger">Please fill in both fields (Y cannot be 0).</div>'; 
-    return; 
-  }
-  const result = (x / y * 100);
-  out.innerHTML = `<div class="alert alert-success">${x} is <strong>${Number.isInteger(result) ? result : result.toFixed(2)}%</strong> of ${y}</div>`;
-}
 
-function calc3() {
-  const from = parseFloat(document.getElementById('p3_from').value);
-  const to = parseFloat(document.getElementById('p3_to').value);
-  const out = document.getElementById('p3_result');
-  if (isNaN(from) || isNaN(to) || from === 0) { 
-    out.innerHTML = '<div class="alert alert-danger">Please fill in both fields ("From" cannot be 0).</div>'; 
-    return; 
-  }
-  const change = ((to - from) / from) * 100;
-  const label = change >= 0 ? 'increase' : 'decrease';
-  const absChange = Math.abs(change);
-  out.innerHTML = `<div class="alert alert-success">That is a <strong>${Number.isInteger(absChange) ? absChange : absChange.toFixed(2)}% ${label}</strong></div>`;
-}
-</script>
+    <!-- =====================================================
+         CALCULATOR WORKSPACE
+         ===================================================== -->
+
+    <section class="calculator-workspace">
+
+
+      <!-- ===================================================
+           CALCULATOR 1
+           WHAT IS X% OF Y?
+           =================================================== -->
+
+      <div class="calculator-card">
+
+        <div class="calculator-heading">
+
+          <span class="calculator-number">
+            1
+          </span>
+
+          <div>
+
+            <h2>
+              What is X% of Y?
+            </h2>
+
+            <p>
+              Find a percentage of a number.
+            </p>
+
+          </div>
+
+        </div>
+
+
+        <div class="input-row">
+
+          <div class="input-group">
+
+            <label for="percentOfPercent">
+              Percentage
+            </label>
+
+            <div class="input-with-symbol">
+
+              <input
+                type="number"
+                id="percentOfPercent"
+                placeholder="e.g. 20"
+                inputmode="decimal"
+              >
+
+              <span>%</span>
+
+            </div>
+
+          </div>
+
+
+          <div class="formula-symbol">
+            ×
+          </div>
+
+
+          <div class="input-group">
+
+            <label for="percentOfNumber">
+              Number
+            </label>
+
+            <input
+              type="number"
+              id="percentOfNumber"
+              placeholder="e.g. 500"
+              inputmode="decimal"
+            >
+
+          </div>
+
+        </div>
+
+
+        <button
+          type="button"
+          class="primary-btn"
+          id="calculatePercentOfBtn"
+        >
+          Calculate
+        </button>
+
+
+        <div
+          class="calculator-result"
+          id="percentOfResult"
+          hidden
+        >
+
+          <span>
+            Result
+          </span>
+
+          <strong id="percentOfResultValue">
+            0
+          </strong>
+
+          <p id="percentOfExplanation">
+            —
+          </p>
+
+        </div>
+
+      </div>
+
+
+      <!-- ===================================================
+           CALCULATOR 2
+           X IS WHAT % OF Y?
+           =================================================== -->
+
+      <div class="calculator-card">
+
+        <div class="calculator-heading">
+
+          <span class="calculator-number">
+            2
+          </span>
+
+          <div>
+
+            <h2>
+              X is what percentage of Y?
+            </h2>
+
+            <p>
+              Find what percentage one number is of another.
+            </p>
+
+          </div>
+
+        </div>
+
+
+        <div class="input-row">
+
+          <div class="input-group">
+
+            <label for="whatPercentX">
+              X — Part
+            </label>
+
+            <input
+              type="number"
+              id="whatPercentX"
+              placeholder="e.g. 25"
+              inputmode="decimal"
+            >
+
+          </div>
+
+
+          <div class="formula-symbol">
+            ÷
+          </div>
+
+
+          <div class="input-group">
+
+            <label for="whatPercentY">
+              Y — Total
+            </label>
+
+            <input
+              type="number"
+              id="whatPercentY"
+              placeholder="e.g. 100"
+              inputmode="decimal"
+            >
+
+          </div>
+
+        </div>
+
+
+        <button
+          type="button"
+          class="primary-btn"
+          id="calculateWhatPercentBtn"
+        >
+          Calculate
+        </button>
+
+
+        <div
+          class="calculator-result"
+          id="whatPercentResult"
+          hidden
+        >
+
+          <span>
+            Result
+          </span>
+
+          <strong id="whatPercentResultValue">
+            0%
+          </strong>
+
+          <p id="whatPercentExplanation">
+            —
+          </p>
+
+        </div>
+
+      </div>
+
+
+      <!-- ===================================================
+           CALCULATOR 3
+           X IS Y% OF WHAT?
+           =================================================== -->
+
+      <div class="calculator-card">
+
+        <div class="calculator-heading">
+
+          <span class="calculator-number">
+            3
+          </span>
+
+          <div>
+
+            <h2>
+              X is Y% of what number?
+            </h2>
+
+            <p>
+              Find the original number when a percentage is known.
+            </p>
+
+          </div>
+
+        </div>
+
+
+        <div class="input-row">
+
+          <div class="input-group">
+
+            <label for="isPercentX">
+              X — Value
+            </label>
+
+            <input
+              type="number"
+              id="isPercentX"
+              placeholder="e.g. 50"
+              inputmode="decimal"
+            >
+
+          </div>
+
+
+          <div class="formula-symbol">
+            =
+          </div>
+
+
+          <div class="input-group">
+
+            <label for="isPercentY">
+              Y — Percentage
+            </label>
+
+            <div class="input-with-symbol">
+
+              <input
+                type="number"
+                id="isPercentY"
+                placeholder="e.g. 25"
+                inputmode="decimal"
+              >
+
+              <span>%</span>
+
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <button
+          type="button"
+          class="primary-btn"
+          id="calculateIsPercentBtn"
+        >
+          Calculate
+        </button>
+
+
+        <div
+          class="calculator-result"
+          id="isPercentResult"
+          hidden
+        >
+
+          <span>
+            Original Number
+          </span>
+
+          <strong id="isPercentResultValue">
+            0
+          </strong>
+
+          <p id="isPercentExplanation">
+            —
+          </p>
+
+        </div>
+
+      </div>
+
+
+      <!-- ===================================================
+           CALCULATOR 4
+           PERCENTAGE CHANGE
+           =================================================== -->
+
+      <div class="calculator-card">
+
+        <div class="calculator-heading">
+
+          <span class="calculator-number">
+            4
+          </span>
+
+          <div>
+
+            <h2>
+              Percentage Change
+            </h2>
+
+            <p>
+              Calculate the percentage increase or decrease
+              between two values.
+            </p>
+
+          </div>
+
+        </div>
+
+
+        <div class="input-row">
+
+          <div class="input-group">
+
+            <label for="changeOldValue">
+              Original Value
+            </label>
+
+            <input
+              type="number"
+              id="changeOldValue"
+              placeholder="e.g. 100"
+              inputmode="decimal"
+            >
+
+          </div>
+
+
+          <div class="formula-symbol">
+            →
+          </div>
+
+
+          <div class="input-group">
+
+            <label for="changeNewValue">
+              New Value
+            </label>
+
+            <input
+              type="number"
+              id="changeNewValue"
+              placeholder="e.g. 125"
+              inputmode="decimal"
+            >
+
+          </div>
+
+        </div>
+
+
+        <button
+          type="button"
+          class="primary-btn"
+          id="calculateChangeBtn"
+        >
+          Calculate Change
+        </button>
+
+
+        <div
+          class="calculator-result"
+          id="changeResult"
+          hidden
+        >
+
+          <span>
+            Percentage Change
+          </span>
+
+          <strong id="changeResultValue">
+            0%
+          </strong>
+
+          <p id="changeExplanation">
+            —
+          </p>
+
+        </div>
+
+      </div>
+
+
+      <!-- ===================================================
+           CALCULATOR 5
+           PERCENTAGE INCREASE / DECREASE
+           =================================================== -->
+
+      <div class="calculator-card">
+
+        <div class="calculator-heading">
+
+          <span class="calculator-number">
+            5
+          </span>
+
+          <div>
+
+            <h2>
+              Percentage Increase or Decrease
+            </h2>
+
+            <p>
+              Find the final value after increasing or decreasing
+              a number by a percentage.
+            </p>
+
+          </div>
+
+        </div>
+
+
+        <div class="input-row">
+
+          <div class="input-group">
+
+            <label for="increaseBase">
+              Original Value
+            </label>
+
+            <input
+              type="number"
+              id="increaseBase"
+              placeholder="e.g. 1000"
+              inputmode="decimal"
+            >
+
+          </div>
+
+
+          <div class="input-group">
+
+            <label for="increasePercent">
+              Percentage
+            </label>
+
+            <div class="input-with-symbol">
+
+              <input
+                type="number"
+                id="increasePercent"
+                placeholder="e.g. 10"
+                inputmode="decimal"
+              >
+
+              <span>%</span>
+
+            </div>
+
+          </div>
+
+
+          <div class="input-group">
+
+            <label for="increaseType">
+              Operation
+            </label>
+
+            <select id="increaseType">
+
+              <option value="increase">
+                Increase
+              </option>
+
+              <option value="decrease">
+                Decrease
+              </option>
+
+            </select>
+
+          </div>
+
+        </div>
+
+
+        <button
+          type="button"
+          class="primary-btn"
+          id="calculateIncreaseBtn"
+        >
+          Calculate Final Value
+        </button>
+
+
+        <div
+          class="calculator-result"
+          id="increaseResult"
+          hidden
+        >
+
+          <span>
+            Final Value
+          </span>
+
+          <strong id="increaseResultValue">
+            0
+          </strong>
+
+          <p id="increaseExplanation">
+            —
+          </p>
+
+        </div>
+
+      </div>
+
+
+      <!-- ===================================================
+           CLEAR ALL
+           =================================================== -->
+
+      <div class="calculator-actions">
+
+        <button
+          type="button"
+          class="secondary-btn"
+          id="clearAllBtn"
+        >
+          Clear All
+        </button>
+
+      </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         QUICK REFERENCE
+         ===================================================== -->
+
+    <section class="reference-section">
+
+      <div class="info-heading">
+
+        <span class="info-badge">
+          Quick Reference
+        </span>
+
+        <h2>
+          Percentage formulas
+        </h2>
+
+        <p>
+          Simple formulas for common percentage calculations.
+        </p>
+
+      </div>
+
+
+      <div class="formula-grid">
+
+        <article class="formula-card">
+
+          <h3>
+            Percentage of a Number
+          </h3>
+
+          <div class="formula">
+            X% × Y
+          </div>
+
+          <p>
+            Example: 20% of 500 = 100
+          </p>
+
+        </article>
+
+
+        <article class="formula-card">
+
+          <h3>
+            What Percentage?
+          </h3>
+
+          <div class="formula">
+            (X ÷ Y) × 100
+          </div>
+
+          <p>
+            Example: 25 is 25% of 100
+          </p>
+
+        </article>
+
+
+        <article class="formula-card">
+
+          <h3>
+            Percentage Change
+          </h3>
+
+          <div class="formula">
+            ((New − Old) ÷ Old) × 100
+          </div>
+
+          <p>
+            Positive means increase; negative means decrease.
+          </p>
+
+        </article>
+
+
+        <article class="formula-card">
+
+          <h3>
+            Increase / Decrease
+          </h3>
+
+          <div class="formula">
+            Original × (1 ± Percentage ÷ 100)
+          </div>
+
+          <p>
+            Add for increase and subtract for decrease.
+          </p>
+
+        </article>
+
+      </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         HOW TO USE
+         ===================================================== -->
+
+    <section class="info-section">
+
+      <div class="info-heading">
+
+        <span class="info-badge">
+          How it works
+        </span>
+
+        <h2>
+          Calculate percentages in seconds
+        </h2>
+
+        <p>
+          Choose the calculation you need, enter your numbers,
+          and get an instant result.
+        </p>
+
+      </div>
+
+
+      <div class="info-grid">
+
+        <article class="info-card">
+
+          <div class="info-icon">
+            1
+          </div>
+
+          <h3>
+            Choose a calculation
+          </h3>
+
+          <p>
+            Select the percentage formula that matches
+            what you want to calculate.
+          </p>
+
+        </article>
+
+
+        <article class="info-card">
+
+          <div class="info-icon">
+            2
+          </div>
+
+          <h3>
+            Enter your values
+          </h3>
+
+          <p>
+            Enter the numbers into the clearly labelled
+            input fields.
+          </p>
+
+        </article>
+
+
+        <article class="info-card">
+
+          <div class="info-icon">
+            3
+          </div>
+
+          <h3>
+            Calculate
+          </h3>
+
+          <p>
+            Press the calculate button to instantly process
+            your percentage.
+          </p>
+
+        </article>
+
+
+        <article class="info-card">
+
+          <div class="info-icon">
+            4
+          </div>
+
+          <h3>
+            Read your result
+          </h3>
+
+          <p>
+            The answer and calculation explanation appear
+            immediately below the calculator.
+          </p>
+
+        </article>
+
+      </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         FEATURES
+         ===================================================== -->
+
+    <section class="features-section">
+
+      <div class="info-heading">
+
+        <span class="info-badge">
+          Why niDar Tools?
+        </span>
+
+        <h2>
+          Simple, fast and private
+        </h2>
+
+      </div>
+
+
+      <div class="feature-grid">
+
+        <article class="feature-card">
+
+          <div class="feature-icon">
+            ⚡
+          </div>
+
+          <h3>
+            Instant Calculation
+          </h3>
+
+          <p>
+            Get percentage results immediately without
+            unnecessary steps.
+          </p>
+
+        </article>
+
+
+        <article class="feature-card">
+
+          <div class="feature-icon">
+            📱
+          </div>
+
+          <h3>
+            Mobile Friendly
+          </h3>
+
+          <p>
+            Designed to work comfortably on phones,
+            tablets and desktops.
+          </p>
+
+        </article>
+
+
+        <article class="feature-card">
+
+          <div class="feature-icon">
+            🔒
+          </div>
+
+          <h3>
+            Private
+          </h3>
+
+          <p>
+            Calculations happen directly in your browser.
+          </p>
+
+        </article>
+
+
+        <article class="feature-card">
+
+          <div class="feature-icon">
+            💚
+          </div>
+
+          <h3>
+            Completely Free
+          </h3>
+
+          <p>
+            Use the percentage calculator without
+            registration or payment.
+          </p>
+
+        </article>
+
+      </div>
+
+    </section>
+
+
+    <!-- PRIVACY -->
+
+    <section class="privacy-note">
+
+      <div class="privacy-icon">
+        🔐
+      </div>
+
+      <div>
+
+        <h3>
+          Your calculations stay on your device
+        </h3>
+
+        <p>
+          niDar Tools performs percentage calculations
+          directly in your browser. No calculator data
+          needs to be uploaded to a server.
+        </p>
+
+      </div>
+
+    </section>
+
+  </main>
+
+
+  <script src="../assets/js/common.js"></script>
+<script src="script.js"></script>
+
+<!-- COMMON FOOTER -->
+<div id="site-footer"></div>
 
 </body>
 </html>

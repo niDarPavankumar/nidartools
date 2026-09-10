@@ -1,311 +1,884 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
 
-<title>Favicon &amp; Icon Kit Generator - niDar Tools</title>
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
 
-<meta name="description" content="Upload one image/logo and instantly generate a complete website icon kit — favicon.ico, favicon-16x16, favicon-32x32, apple-touch-icon, android icons (192/512) — all packed in one ZIP. Free, and everything runs in your browser.">
-<meta name="keywords" content="favicon generator, icon kit generator, website icon generator, logo to favicon, apple touch icon generator, android icon generator">
+  <meta
+    name="description"
+    content="Create professional favicons and website icon kits from one image. Generate ICO, PNG and SVG-ready icons with niDar Tools."
+  >
 
-<link rel="canonical" href="https://nidartools.com/icon-kit-generator/">
+  <meta
+    name="keywords"
+    content="favicon generator, favicon maker, icon generator, favicon ICO, website icons, PNG icons, SVG icon, niDar Tools"
+  >
 
-<!-- Absolute paths for Assets -->
-<link rel="icon" type="image/x-icon" href="/assets/favicon/favicon.ico">
-<link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon/favicon-16x16.png">
-<link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon/favicon-32x32.png">
-<link rel="apple-touch-icon" sizes="180x180" href="/assets/favicon/apple-touch-icon.png">
-<link rel="stylesheet" href="/assets/css/style.css">
+  <meta name="theme-color" content="#2e7d32">
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+  <title>Favicon & Icon Kit Generator | niDar Tools</title>
+
+  <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
+<!-- COMMON HEADER -->
+<div id="site-header"></div>
 
-<header class="header">
-  <div class="container navbar">
-    <a href="/" class="logo">niDar<span>Tools</span></a>
-    <nav>
-      <a href="/">Home</a>
-      <a href="/about/">About</a>
-      <a href="/contact/">Contact</a>
-      <a href="/support/">Support</a>
-    </nav>
-    <button class="btn btn-theme" id="themeToggle" aria-label="Toggle theme">🌙 Theme</button>
-  </div>
-</header>
+  <!-- =====================================================
+       TOOL PAGE
+       niDar Tools — Favicon & Icon Kit Generator
+       ===================================================== -->
 
-<main class="container mt-40">
+  <main class="tool-page">
 
-<section class="hero-card text-center mb-30">
-  <h1>Favicon &amp; Icon Kit Generator</h1>
-  
-  <!-- Content Guide Interlinking -->
-  <div class="mt-10">
-    <a href="/content/icon-kit-generator/" class="guide-link">
-      <span class="icon">📖</span><span>Read Icon Kit Favicon Guide →</span>
-    </a>
-  </div>
+    <!-- HERO -->
+    <section class="tool-hero">
 
-  <p class="mt-10">
-    Upload one logo or image — get every icon size and format
-    your website needs, packed in a single ZIP. Nothing is
-    uploaded anywhere; everything is generated on your own device.
-  </p>
-</section>
+      <div class="tool-badge">
+        ✨ Free Online Tool
+      </div>
 
-<section class="card mb-20">
+      <h1>
+        Favicon & Icon Kit Generator
+      </h1>
 
-  <h2>1. Upload Your Image</h2>
+      <p>
+        Turn one image into a complete set of professional
+        website favicons and app-ready icons.
+      </p>
 
-  <input type="file" id="fileInput" accept="image/*" class="form-control mt-20">
+      <div class="hero-features">
 
-  <div id="previewWrap" class="hidden mt-20">
-    <p><strong>Preview:</strong></p>
-    <img id="previewImg" style="max-width:200px;border-radius:10px;border:1px solid var(--border);" class="mt-10">
-  </div>
+        <span>🔒 Private</span>
+        <span>⚡ Fast</span>
+        <span>🌐 Browser Based</span>
+        <span>💚 Free</span>
 
-  <div class="mt-20">
-    <label>
-      <input type="checkbox" id="removeBgCheckbox">
-      Remove background (best for logos with a solid-color background)
-    </label>
-  </div>
+      </div>
 
-</section>
+    </section>
 
-<section class="card mb-20">
 
-  <h2>2. Generate Icon Kit</h2>
+    <!-- MAIN WORKSPACE -->
+    <section class="tool-workspace">
 
-  <p class="text-muted mt-10">
-    This will create the following files:
-    favicon.ico, favicon-16x16.png, favicon-32x32.png,
-    apple-touch-icon.png (180×180), icon-192.png, icon-512.png.
-  </p>
+      <!-- =================================================
+           STEP 1 — UPLOAD
+           ================================================= -->
 
-  <button id="genBtn" class="btn btn-primary mt-20">⚙️ Generate Icon Kit</button>
+      <div class="step-section">
 
-</section>
+        <div class="step-heading">
 
-<section class="card hidden mb-20" id="resultCard">
+          <span class="step-number">1</span>
 
-  <h2>✅ Your Icon Kit is Ready</h2>
+          <div>
+            <h2>Upload your image</h2>
 
-  <p id="resultInfo" class="mt-10 text-muted"></p>
+            <p>
+              Choose a logo, photo, icon or other image
+              to create your favicon kit.
+            </p>
+          </div>
 
-  <button id="downloadBtn" class="btn btn-primary mt-20">📥 Download ZIP</button>
+        </div>
 
-</section>
 
-<section class="card hidden alert alert-danger mb-20" id="errorCard">
-  <p id="errorMsg"></p>
-</section>
+        <div
+          class="upload-zone"
+          id="uploadZone"
+          tabindex="0"
+          role="button"
+          aria-label="Select image"
+        >
 
-</main>
+          <div class="upload-icon">
+            🖼️
+          </div>
 
-<footer class="footer">
-  <div class="container text-center">
-    <p>© 2026 niDar Tools. All Rights Reserved.</p>
-    <p>Developed by <strong>niDar Marketing And Services</strong></p>
-  </div>
-</footer>
+          <h3>
+            Drop your image here
+          </h3>
 
-<script src="/assets/js/script.js"></script>
-<script>
-(function () {
-  const fileInput = document.getElementById('fileInput');
-  const previewWrap = document.getElementById('previewWrap');
-  const previewImg = document.getElementById('previewImg');
-  const genBtn = document.getElementById('genBtn');
-  const resultCard = document.getElementById('resultCard');
-  const resultInfo = document.getElementById('resultInfo');
-  const downloadBtn = document.getElementById('downloadBtn');
-  const errorCard = document.getElementById('errorCard');
-  const errorMsg = document.getElementById('errorMsg');
+          <p>
+            or
+          </p>
 
-  let sourceImg = new Image();
-  let processedImg = null; // background-removed version, cached per upload
-  let zipBlob = null;
-  const removeBgCheckbox = document.getElementById('removeBgCheckbox');
+          <button
+            type="button"
+            class="primary-btn"
+            id="selectImageBtn"
+          >
+            Select Image
+          </button>
 
-  fileInput.addEventListener('change', (e) => {
-    const file = e.target.files[0];
-    if (!file) return;
-    const reader = new FileReader();
-    reader.onload = (ev) => {
-      sourceImg = new Image();
-      processedImg = null;
-      sourceImg.onload = () => {
-        previewImg.src = sourceImg.src;
-        previewWrap.classList.remove('hidden');
-      };
-      sourceImg.src = ev.target.result;
-    };
-    reader.readAsDataURL(file);
-  });
+          <small>
+            JPG · JPEG · PNG · WEBP
+          </small>
 
-  removeBgCheckbox.addEventListener('change', () => {
-    processedImg = null;
-  });
+          <input
+            type="file"
+            id="imageInput"
+            accept="image/jpeg,image/png,image/webp"
+            hidden
+          >
 
-  function removeSolidBackground(img) {
-    return new Promise((resolve) => {
-      const w = img.naturalWidth || img.width;
-      const h = img.naturalHeight || img.height;
-      const canvas = document.createElement('canvas');
-      canvas.width = w;
-      canvas.height = h;
-      const ctx = canvas.getContext('2d');
-      ctx.drawImage(img, 0, 0, w, h);
-      const imgData = ctx.getImageData(0, 0, w, h);
-      const d = imgData.data;
+        </div>
 
-      function pixelAt(x, y) {
-        const i = (y * w + x) * 4;
-        return [d[i], d[i + 1], d[i + 2]];
-      }
-      const corners = [pixelAt(0, 0), pixelAt(w - 1, 0), pixelAt(0, h - 1), pixelAt(w - 1, h - 1)];
-      const bg = [0, 1, 2].map(k => Math.round(corners.reduce((s, c) => s + c[k], 0) / 4));
+      </div>
 
-      const threshold = 40;
-      const softRange = 30;
 
-      for (let i = 0; i < d.length; i += 4) {
-        const dist = Math.sqrt(
-          Math.pow(d[i] - bg[0], 2) +
-          Math.pow(d[i + 1] - bg[1], 2) +
-          Math.pow(d[i + 2] - bg[2], 2)
-        );
-        if (dist < threshold) {
-          d[i + 3] = 0;
-        } else if (dist < threshold + softRange) {
-          d[i + 3] = Math.round(255 * (dist - threshold) / softRange);
-        }
-      }
+      <!-- =================================================
+           WORKSPACE
+           ================================================= -->
 
-      ctx.putImageData(imgData, 0, 0);
-      const out = new Image();
-      out.onload = () => resolve(out);
-      out.src = canvas.toDataURL('image/png');
-    });
-  }
+      <div
+        class="workspace"
+        id="workspace"
+        hidden
+      >
 
-  function resizeToBlob(size) {
-    const img = processedImg || sourceImg;
-    return new Promise((resolve) => {
-      const canvas = document.createElement('canvas');
-      canvas.width = size;
-      canvas.height = size;
-      const ctx = canvas.getContext('2d');
-      const ratio = Math.min(size / img.width, size / img.height);
-      const w = img.width * ratio;
-      const h = img.height * ratio;
-      const x = (size - w) / 2;
-      const y = (size - h) / 2;
-      ctx.clearRect(0, 0, size, size);
-      ctx.drawImage(img, x, y, w, h);
-      canvas.toBlob((blob) => resolve(blob), 'image/png');
-    });
-  }
+        <!-- =================================================
+             STEP 2 — PREVIEW
+             ================================================= -->
 
-  async function buildIco(pngBlob) {
-    const pngBuf = await pngBlob.arrayBuffer();
-    const pngBytes = new Uint8Array(pngBuf);
+        <div class="step-section">
 
-    const headerSize = 6;
-    const entrySize = 16;
-    const offset = headerSize + entrySize;
-    const icoBuf = new ArrayBuffer(offset + pngBytes.length);
-    const view = new DataView(icoBuf);
+          <div class="step-heading">
 
-    view.setUint16(0, 0, true);
-    view.setUint16(2, 1, true);
-    view.setUint16(4, 1, true);
+            <span class="step-number">2</span>
 
-    view.setUint8(6, 32);
-    view.setUint8(7, 32);
-    view.setUint8(8, 0);
-    view.setUint8(9, 0);
-    view.setUint16(10, 1, true);
-    view.setUint16(12, 32, true);
-    view.setUint32(14, pngBytes.length, true);
-    view.setUint32(18, offset, true);
+            <div>
+              <h2>Preview your image</h2>
 
-    const bytes = new Uint8Array(icoBuf);
-    bytes.set(pngBytes, offset);
+              <p>
+                Check your image before generating the icon kit.
+              </p>
+            </div>
 
-    return new Blob([bytes], { type: 'image/x-icon' });
-  }
+          </div>
 
-  genBtn.addEventListener('click', async () => {
-    errorCard.classList.add('hidden');
 
-    if (!sourceImg.src) {
-      errorMsg.textContent = 'Please upload an image first.';
-      errorCard.classList.remove('hidden');
-      return;
-    }
+          <div class="preview-layout">
 
-    genBtn.disabled = true;
-    genBtn.textContent = '⏳ Generating...';
+            <div class="preview-card">
 
-    try {
-      if (removeBgCheckbox.checked && !processedImg) {
-        genBtn.textContent = '⏳ Removing background...';
-        processedImg = await removeSolidBackground(sourceImg);
-      } else if (!removeBgCheckbox.checked) {
-        processedImg = null;
-      }
-      genBtn.textContent = '⏳ Generating...';
+              <div class="preview-label">
+                Original Image
+              </div>
 
-      const zip = new JSZip();
+              <div class="image-preview-box">
 
-      const sizes = [
-        { name: 'favicon-16x16.png', size: 16 },
-        { name: 'favicon-32x32.png', size: 32 },
-        { name: 'apple-touch-icon.png', size: 180 },
-        { name: 'icon-192.png', size: 192 },
-        { name: 'icon-512.png', size: 512 },
-      ];
+                <img
+                  id="originalPreview"
+                  src=""
+                  alt="Original image preview"
+                >
 
-      for (const item of sizes) {
-        const blob = await resizeToBlob(item.size);
-        zip.file(item.name, blob);
-      }
+              </div>
 
-      const icoSourceBlob = await resizeToBlob(32);
-      const icoBlob = await buildIco(icoSourceBlob);
-      zip.file('favicon.ico', icoBlob);
+              <div class="file-details">
 
-      zipBlob = await zip.generateAsync({ type: 'blob' });
+                <span id="originalName">
+                  Image
+                </span>
 
-      resultInfo.textContent = 'Includes favicon.ico, favicon-16x16.png, favicon-32x32.png, apple-touch-icon.png, icon-192.png, icon-512.png — (' + (zipBlob.size / 1024).toFixed(1) + ' KB)';
-      resultCard.classList.remove('hidden');
-      resultCard.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-    } catch (err) {
-      errorMsg.textContent = 'Something went wrong while generating the icon kit. Please try a different image.';
-      errorCard.classList.remove('hidden');
-    }
+                <span id="originalSize">
+                  0 KB
+                </span>
 
-    genBtn.disabled = false;
-    genBtn.textContent = '⚙️ Generate Icon Kit';
-  });
+              </div>
 
-  downloadBtn.addEventListener('click', () => {
-    if (!zipBlob) return;
-    const url = URL.createObjectURL(zipBlob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = 'nidar-icon-kit.zip';
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    URL.revokeObjectURL(url);
-  });
-})();
-</script>
+              <div class="image-dimensions">
+
+                <span id="originalDimensions">
+                  0 × 0 px
+                </span>
+
+              </div>
+
+            </div>
+
+
+            <div class="preview-card">
+
+              <div class="preview-label">
+                Favicon Preview
+              </div>
+
+              <div class="favicon-preview-stage">
+
+                <div
+                  class="favicon-preview"
+                  id="faviconPreview"
+                >
+                  <span id="faviconPlaceholder">
+                    ★
+                  </span>
+
+                  <img
+                    id="faviconPreviewImage"
+                    src=""
+                    alt="Favicon preview"
+                    hidden
+                  >
+                </div>
+
+              </div>
+
+              <p class="preview-note">
+                Your image will be adapted for favicon sizes.
+              </p>
+
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <div class="section-divider"></div>
+
+
+        <!-- =================================================
+             STEP 3 — ICON SETTINGS
+             ================================================= -->
+
+        <div class="step-section">
+
+          <div class="step-heading">
+
+            <span class="step-number">3</span>
+
+            <div>
+              <h2>Icon settings</h2>
+
+              <p>
+                Customize the generated icons for your website.
+              </p>
+            </div>
+
+          </div>
+
+
+          <div class="settings-grid">
+
+            <!-- Background -->
+            <div class="setting-group">
+
+              <label for="backgroundMode">
+                Background
+              </label>
+
+              <select id="backgroundMode">
+
+                <option value="transparent" selected>
+                  Transparent
+                </option>
+
+                <option value="white">
+                  White
+                </option>
+
+                <option value="black">
+                  Black
+                </option>
+
+              </select>
+
+            </div>
+
+
+            <!-- Background Color -->
+            <div
+              class="setting-group"
+              id="customBackgroundGroup"
+              hidden
+            >
+
+              <label for="backgroundColor">
+                Background Color
+              </label>
+
+              <div class="color-control">
+
+                <input
+                  type="color"
+                  id="backgroundColor"
+                  value="#ffffff"
+                >
+
+                <span id="backgroundColorValue">
+                  #FFFFFF
+                </span>
+
+              </div>
+
+            </div>
+
+
+            <!-- Fit -->
+            <div class="setting-group">
+
+              <label for="imageFit">
+                Image Fit
+              </label>
+
+              <select id="imageFit">
+
+                <option value="contain" selected>
+                  Fit — Keep Entire Image
+                </option>
+
+                <option value="cover">
+                  Fill — Crop to Square
+                </option>
+
+              </select>
+
+            </div>
+
+
+            <!-- Corner -->
+            <div class="setting-group">
+
+              <label for="cornerStyle">
+                Corner Style
+              </label>
+
+              <select id="cornerStyle">
+
+                <option value="square" selected>
+                  Square
+                </option>
+
+                <option value="rounded">
+                  Rounded
+                </option>
+
+                <option value="circle">
+                  Circle
+                </option>
+
+              </select>
+
+            </div>
+
+
+            <!-- Icon Name -->
+            <div class="setting-group">
+
+              <label for="iconName">
+                File Name
+              </label>
+
+              <input
+                type="text"
+                id="iconName"
+                value="nidar-favicon"
+                maxlength="80"
+                autocomplete="off"
+              >
+
+            </div>
+
+
+            <!-- Quality -->
+            <div class="setting-group">
+
+              <label for="iconQuality">
+
+                Image Quality
+
+                <strong>
+                  <span id="iconQualityValue">90</span>%
+                </strong>
+
+              </label>
+
+              <input
+                type="range"
+                id="iconQuality"
+                min="50"
+                max="100"
+                value="90"
+                step="1"
+              >
+
+              <div class="range-labels">
+
+                <span>Smaller</span>
+
+                <span>Better</span>
+
+              </div>
+
+            </div>
+
+          </div>
+
+
+          <!-- ADVANCED SETTINGS -->
+
+          <details class="advanced-settings">
+
+            <summary>
+              ⚙️ Advanced icon settings
+            </summary>
+
+            <div class="advanced-content">
+
+              <label class="check-row">
+
+                <input
+                  type="checkbox"
+                  id="generateAppleTouchIcon"
+                  checked
+                >
+
+                <span>
+                  Generate Apple Touch Icon
+                </span>
+
+              </label>
+
+
+              <label class="check-row">
+
+                <input
+                  type="checkbox"
+                  id="generateAndroidIcons"
+                >
+
+                <span>
+                  Generate Android / PWA icons
+                </span>
+
+              </label>
+
+
+              <label class="check-row">
+
+                <input
+                  type="checkbox"
+                  id="generateLargeIcons"
+                  checked
+                >
+
+                <span>
+                  Generate large desktop icons
+                </span>
+
+              </label>
+
+
+              <label class="check-row">
+
+                <input
+                  type="checkbox"
+                  id="generateSvg"
+                  checked
+                >
+
+                <span>
+                  Generate SVG-ready icon
+                </span>
+
+              </label>
+
+            </div>
+
+          </details>
+
+        </div>
+
+
+        <div class="section-divider"></div>
+
+
+        <!-- =================================================
+             STEP 4 — GENERATE
+             ================================================= -->
+
+        <div class="step-section">
+
+          <div class="step-heading">
+
+            <span class="step-number">4</span>
+
+            <div>
+              <h2>Generate your icon kit</h2>
+
+              <p>
+                Create all selected favicon and icon sizes
+                directly in your browser.
+              </p>
+            </div>
+
+          </div>
+
+
+          <div class="action-row">
+
+            <button
+              type="button"
+              class="primary-btn"
+              id="generateBtn"
+            >
+              Generate Icon Kit
+            </button>
+
+            <button
+              type="button"
+              class="secondary-btn"
+              id="startOverBtn"
+            >
+              Start Over
+            </button>
+
+          </div>
+
+        </div>
+
+
+        <!-- =================================================
+             PROGRESS
+             ================================================= -->
+
+        <div
+          class="progress-section"
+          id="progressSection"
+          hidden
+        >
+
+          <div class="progress-header">
+
+            <span>
+              Generating icons...
+            </span>
+
+            <span id="progressPercent">
+              0%
+            </span>
+
+          </div>
+
+          <div class="progress-track">
+
+            <div
+              class="progress-bar"
+              id="progressBar"
+            ></div>
+
+          </div>
+
+        </div>
+
+
+        <!-- =================================================
+             STEP 5 — GENERATED KIT
+             ================================================= -->
+
+        <div
+          class="result-section"
+          id="resultSection"
+          hidden
+        >
+
+          <div class="result-header">
+
+            <div class="success-icon">
+              ✓
+            </div>
+
+            <div>
+
+              <h2>
+                Icon Kit Generated Successfully
+              </h2>
+
+              <p id="resultSummary">
+                Your favicon and website icons are ready.
+              </p>
+
+            </div>
+
+          </div>
+
+
+          <!-- GENERATED ICON GRID -->
+
+          <div class="generated-grid" id="generatedGrid">
+
+            <!-- JavaScript generated icons appear here -->
+
+          </div>
+
+
+          <!-- DOWNLOAD ACTIONS -->
+
+          <div class="download-actions">
+
+            <button
+              type="button"
+              class="primary-btn"
+              id="downloadAllBtn"
+            >
+              Download Icon Kit
+            </button>
+
+            <button
+              type="button"
+              class="secondary-btn"
+              id="generateAgainBtn"
+            >
+              Generate Again
+            </button>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         HOW TO USE
+         ===================================================== -->
+
+    <section class="info-section">
+
+      <div class="info-heading">
+
+        <span class="info-badge">
+          How it works
+        </span>
+
+        <h2>
+          Create a favicon in a few simple steps
+        </h2>
+
+        <p>
+          No software installation is required.
+          Everything happens directly in your browser.
+        </p>
+
+      </div>
+
+
+      <div class="info-grid">
+
+        <article class="info-card">
+
+          <div class="info-icon">
+            1
+          </div>
+
+          <h3>
+            Upload your image
+          </h3>
+
+          <p>
+            Select your logo, brand image or any supported
+            image file from your device.
+          </p>
+
+        </article>
+
+
+        <article class="info-card">
+
+          <div class="info-icon">
+            2
+          </div>
+
+          <h3>
+            Customize
+          </h3>
+
+          <p>
+            Choose the background, fitting style, corner
+            style and icon formats you need.
+          </p>
+
+        </article>
+
+
+        <article class="info-card">
+
+          <div class="info-icon">
+            3
+          </div>
+
+          <h3>
+            Generate
+          </h3>
+
+          <p>
+            Create multiple favicon and website icon sizes
+            with one click.
+          </p>
+
+        </article>
+
+
+        <article class="info-card">
+
+          <div class="info-icon">
+            4
+          </div>
+
+          <h3>
+            Download
+          </h3>
+
+          <p>
+            Download your generated icons and use them
+            in your website or web app.
+          </p>
+
+        </article>
+
+      </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         FEATURES
+         ===================================================== -->
+
+    <section class="features-section">
+
+      <div class="info-heading">
+
+        <span class="info-badge">
+          Why niDar Tools?
+        </span>
+
+        <h2>
+          Simple, private and useful
+        </h2>
+
+      </div>
+
+
+      <div class="feature-grid">
+
+        <article class="feature-card">
+
+          <div class="feature-icon">
+            🔒
+          </div>
+
+          <h3>
+            Privacy First
+          </h3>
+
+          <p>
+            Your image is processed locally in your browser.
+          </p>
+
+        </article>
+
+
+        <article class="feature-card">
+
+          <div class="feature-icon">
+            ⚡
+          </div>
+
+          <h3>
+            Fast Processing
+          </h3>
+
+          <p>
+            Generate your icons without waiting for a server.
+          </p>
+
+        </article>
+
+
+        <article class="feature-card">
+
+          <div class="feature-icon">
+            📱
+          </div>
+
+          <h3>
+            Mobile Friendly
+          </h3>
+
+          <p>
+            Works comfortably on phones, tablets and desktops.
+          </p>
+
+        </article>
+
+
+        <article class="feature-card">
+
+          <div class="feature-icon">
+            💚
+          </div>
+
+          <h3>
+            Completely Free
+          </h3>
+
+          <p>
+            Create website icons without registration or fees.
+          </p>
+
+        </article>
+
+      </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         PRIVACY NOTE
+         ===================================================== -->
+
+    <section class="privacy-note">
+
+      <div class="privacy-icon">
+        🔐
+      </div>
+
+      <div>
+
+        <h3>
+          Your image stays on your device
+        </h3>
+
+        <p>
+          niDar Tools is designed to process your image
+          directly in your browser. Your image does not
+          need to be uploaded to a server for normal
+          icon generation.
+        </p>
+
+      </div>
+
+    </section>
+
+  </main>
+
+<!-- COMMON FOOTER -->
+<div id="site-footer"></div>
+
+
+  <script src="../assets/js/common.js"></script>
+<script src="script.js"></script>
 
 </body>
 </html>

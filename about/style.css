@@ -1,0 +1,972 @@
+/* =========================================================
+   niDar Tools — About Us Page
+   Original Website Page Design
+   ========================================================= */
+
+.about-page {
+  --about-primary: #2e7d32;
+  --about-primary-dark: #1b5e20;
+  --about-primary-light: #e8f5e9;
+  --about-accent: #66bb6a;
+  --about-heading: #142018;
+  --about-text: #526158;
+  --about-muted: #718078;
+  --about-surface: #ffffff;
+  --about-soft: #f5f8f5;
+  --about-border: rgba(46, 125, 50, 0.12);
+  --about-shadow: 0 18px 50px rgba(27, 94, 32, 0.08);
+  --about-radius: 24px;
+  color: var(--about-text);
+  background: var(--about-soft);
+  line-height: 1.7;
+}
+
+.about-page *,
+.about-page *::before,
+.about-page *::after {
+  box-sizing: border-box;
+}
+
+.about-container {
+  width: min(1180px, calc(100% - 40px));
+  margin: 0 auto;
+}
+
+/* =========================================================
+   HERO
+   ========================================================= */
+
+.about-hero {
+  position: relative;
+  overflow: hidden;
+  padding: 92px 0 88px;
+  background:
+    radial-gradient(circle at 15% 20%, rgba(102,187,106,.18), transparent 30%),
+    radial-gradient(circle at 85% 70%, rgba(46,125,50,.12), transparent 32%),
+    linear-gradient(135deg, #f7fbf7 0%, #edf7ef 50%, #f9fcf9 100%);
+  border-bottom: 1px solid var(--about-border);
+}
+
+.about-hero::before,
+.about-hero::after {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.about-hero::before {
+  width: 300px;
+  height: 300px;
+  right: -120px;
+  top: -120px;
+  border: 1px solid rgba(46,125,50,.1);
+}
+
+.about-hero::after {
+  width: 220px;
+  height: 220px;
+  left: -110px;
+  bottom: -110px;
+  border: 1px solid rgba(102,187,106,.12);
+}
+
+.about-hero .about-container {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+}
+
+.about-hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 15px;
+  margin-bottom: 22px;
+  border: 1px solid rgba(46,125,50,.18);
+  border-radius: 999px;
+  background: rgba(255,255,255,.78);
+  color: var(--about-primary-dark);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: .04em;
+  box-shadow: 0 8px 24px rgba(46,125,50,.06);
+}
+
+.about-hero h1 {
+  max-width: 850px;
+  margin: 0 auto;
+  color: var(--about-heading);
+  font-size: clamp(40px, 6vw, 64px);
+  line-height: 1.08;
+  letter-spacing: -0.045em;
+  font-weight: 800;
+}
+
+.about-hero h1 span,
+.about-section h2 span,
+.about-company-content h2 span,
+.about-global-content h2 span,
+.about-trust h2 span,
+.about-cta-card h2 span {
+  color: var(--about-primary);
+}
+
+.about-hero-text {
+  max-width: 760px;
+  margin: 24px auto 0;
+  color: var(--about-text);
+  font-size: clamp(16px, 2vw, 19px);
+  line-height: 1.8;
+}
+
+.about-hero-actions,
+.about-cta-actions {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 32px;
+}
+
+/* =========================================================
+   BUTTONS
+   ========================================================= */
+
+.about-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 50px;
+  padding: 13px 23px;
+  border-radius: 14px;
+  font-size: 15px;
+  font-weight: 700;
+  text-decoration: none;
+  transition:
+    transform .2s ease,
+    box-shadow .2s ease,
+    background .2s ease,
+    border-color .2s ease;
+}
+
+.about-btn:hover {
+  transform: translateY(-2px);
+}
+
+.about-btn-primary {
+  color: #fff;
+  background: linear-gradient(135deg, var(--about-primary), var(--about-primary-dark));
+  box-shadow: 0 10px 24px rgba(46,125,50,.22);
+}
+
+.about-btn-primary:hover {
+  box-shadow: 0 14px 30px rgba(46,125,50,.28);
+}
+
+.about-btn-secondary {
+  color: var(--about-primary-dark);
+  background: rgba(255,255,255,.8);
+  border: 1px solid rgba(46,125,50,.2);
+}
+
+.about-btn-secondary:hover {
+  background: #fff;
+  border-color: rgba(46,125,50,.38);
+}
+
+/* =========================================================
+   COMMON SECTIONS
+   ========================================================= */
+
+.about-section {
+  padding: 82px 0;
+}
+
+.about-section-heading h2,
+.about-centered-heading h2,
+.about-global-content h2,
+.about-company-content h2,
+.about-trust h2,
+.about-cta-card h2 {
+  margin: 10px 0 18px;
+  color: var(--about-heading);
+  font-size: clamp(30px, 4vw, 43px);
+  line-height: 1.18;
+  letter-spacing: -0.035em;
+  font-weight: 800;
+}
+
+.about-eyebrow {
+  display: inline-block;
+  color: var(--about-primary);
+  font-size: 12px;
+  line-height: 1.3;
+  font-weight: 800;
+  letter-spacing: .13em;
+  text-transform: uppercase;
+}
+
+.about-centered-heading {
+  max-width: 760px;
+  margin: 0 auto 42px;
+  text-align: center;
+}
+
+.about-centered-heading p {
+  max-width: 680px;
+  margin: 0 auto;
+  color: var(--about-text);
+  font-size: 17px;
+}
+
+/* =========================================================
+   INTRO
+   ========================================================= */
+
+.about-intro {
+  background: var(--about-surface);
+}
+
+.about-two-column {
+  display: grid;
+  grid-template-columns: .8fr 1.2fr;
+  gap: 70px;
+  align-items: start;
+}
+
+.about-section-content {
+  font-size: 16px;
+}
+
+.about-section-content p {
+  margin: 0 0 18px;
+}
+
+.about-section-content p:last-child {
+  margin-bottom: 0;
+}
+
+/* =========================================================
+   MISSION / VALUES
+   ========================================================= */
+
+.about-mission {
+  background:
+    linear-gradient(180deg, #f5faf5 0%, #edf6ee 100%);
+}
+
+.about-values-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 18px;
+}
+
+.about-value-card {
+  padding: 28px 24px;
+  background: rgba(255,255,255,.9);
+  border: 1px solid var(--about-border);
+  border-radius: var(--about-radius);
+  box-shadow: var(--about-shadow);
+  transition: transform .2s ease, box-shadow .2s ease;
+}
+
+.about-value-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 24px 55px rgba(27,94,32,.12);
+}
+
+.about-card-icon {
+  display: grid;
+  width: 52px;
+  height: 52px;
+  margin-bottom: 18px;
+  place-items: center;
+  border-radius: 15px;
+  background: var(--about-primary-light);
+  font-size: 24px;
+}
+
+.about-value-card h3 {
+  margin: 0 0 8px;
+  color: var(--about-heading);
+  font-size: 20px;
+  line-height: 1.3;
+}
+
+.about-value-card p {
+  margin: 0;
+  color: var(--about-text);
+  font-size: 14px;
+  line-height: 1.65;
+}
+
+/* =========================================================
+   TOOLS
+   ========================================================= */
+
+.about-offer {
+  background: var(--about-surface);
+}
+
+.about-tools-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 18px;
+}
+
+.about-tool-card {
+  position: relative;
+  display: grid;
+  grid-template-columns: 58px 1fr 25px;
+  gap: 18px;
+  align-items: center;
+  min-height: 145px;
+  padding: 25px;
+  color: inherit;
+  text-decoration: none;
+  background: #fff;
+  border: 1px solid var(--about-border);
+  border-radius: var(--about-radius);
+  box-shadow: 0 12px 35px rgba(20,32,24,.055);
+  transition:
+    transform .2s ease,
+    border-color .2s ease,
+    box-shadow .2s ease;
+}
+
+.about-tool-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(46,125,50,.3);
+  box-shadow: 0 20px 45px rgba(46,125,50,.11);
+}
+
+.about-tool-icon {
+  display: grid;
+  width: 58px;
+  height: 58px;
+  place-items: center;
+  border-radius: 17px;
+  background: linear-gradient(135deg, #e8f5e9, #f4fbf4);
+  font-size: 27px;
+}
+
+.about-tool-card h3 {
+  margin: 0 0 5px;
+  color: var(--about-heading);
+  font-size: 19px;
+}
+
+.about-tool-card p {
+  margin: 0;
+  color: var(--about-muted);
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.about-card-arrow {
+  color: var(--about-primary);
+  font-size: 24px;
+  font-weight: 700;
+  transition: transform .2s ease;
+}
+
+.about-tool-card:hover .about-card-arrow {
+  transform: translateX(4px);
+}
+
+/* =========================================================
+   GLOBAL AUDIENCE
+   ========================================================= */
+
+.about-global {
+  background: #f5f8f5;
+}
+
+.about-global-card {
+  display: grid;
+  grid-template-columns: 1.15fr .85fr;
+  gap: 45px;
+  align-items: center;
+  padding: 55px;
+  overflow: hidden;
+  border-radius: 32px;
+  background:
+    radial-gradient(circle at 100% 0%, rgba(102,187,106,.16), transparent 34%),
+    linear-gradient(135deg, #ffffff, #f1f8f2);
+  border: 1px solid var(--about-border);
+  box-shadow: var(--about-shadow);
+}
+
+.about-global-content p {
+  max-width: 680px;
+  margin: 0 0 16px;
+}
+
+.about-global-stat-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px;
+}
+
+.about-stat-card {
+  min-height: 135px;
+  padding: 22px;
+  border-radius: 20px;
+  background: rgba(255,255,255,.82);
+  border: 1px solid rgba(46,125,50,.1);
+}
+
+.about-stat-card strong {
+  display: block;
+  margin-bottom: 13px;
+  color: var(--about-primary);
+  font-size: 27px;
+  line-height: 1;
+}
+
+.about-stat-card span {
+  color: var(--about-heading);
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.45;
+}
+
+/* =========================================================
+   WHY NIDAR
+   ========================================================= */
+
+.about-why {
+  background: #fff;
+}
+
+.about-feature-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 18px;
+}
+
+.about-feature-card {
+  padding: 28px 24px;
+  border-radius: 22px;
+  background: var(--about-soft);
+  border: 1px solid var(--about-border);
+}
+
+.about-feature-card > span {
+  display: inline-block;
+  margin-bottom: 25px;
+  color: var(--about-primary);
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: .08em;
+}
+
+.about-feature-card h3 {
+  margin: 0 0 10px;
+  color: var(--about-heading);
+  font-size: 19px;
+}
+
+.about-feature-card p {
+  margin: 0;
+  color: var(--about-text);
+  font-size: 14px;
+  line-height: 1.65;
+}
+
+/* =========================================================
+   COMPANY
+   ========================================================= */
+
+.about-company {
+  background:
+    linear-gradient(180deg, #f4f9f4, #edf6ee);
+}
+
+.about-company-card {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  gap: 55px;
+  align-items: center;
+  padding: 55px;
+  border-radius: 32px;
+  background: #fff;
+  border: 1px solid var(--about-border);
+  box-shadow: var(--about-shadow);
+}
+
+.about-company-mark {
+  display: grid;
+  width: 190px;
+  height: 190px;
+  margin: auto;
+  place-items: center;
+  border-radius: 42px;
+  background:
+    linear-gradient(145deg, var(--about-primary), var(--about-primary-dark));
+  color: #fff;
+  font-size: 42px;
+  font-weight: 800;
+  letter-spacing: -.05em;
+  box-shadow: 0 22px 45px rgba(46,125,50,.24);
+}
+
+.about-company-content h2 {
+  margin-top: 9px;
+}
+
+.about-company-content p {
+  margin: 0 0 15px;
+}
+
+.about-inline-link {
+  display: inline-flex;
+  align-items: center;
+  margin-top: 8px;
+  color: var(--about-primary-dark);
+  font-size: 15px;
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.about-inline-link:hover {
+  text-decoration: underline;
+}
+
+/* =========================================================
+   TRUST / PRIVACY
+   ========================================================= */
+
+.about-trust {
+  background: #fff;
+}
+
+.about-trust-grid {
+  display: grid;
+  grid-template-columns: .8fr 1.2fr;
+  gap: 70px;
+  align-items: start;
+}
+
+.about-trust-grid p {
+  margin: 0 0 17px;
+}
+
+/* =========================================================
+   PRINCIPLES
+   ========================================================= */
+
+.about-principles {
+  background: var(--about-soft);
+}
+
+.about-principles-list {
+  max-width: 900px;
+  margin: 0 auto;
+  border-top: 1px solid var(--about-border);
+}
+
+.about-principle {
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  gap: 25px;
+  padding: 23px 5px;
+  border-bottom: 1px solid var(--about-border);
+}
+
+.about-principle strong {
+  color: var(--about-heading);
+  font-size: 17px;
+}
+
+.about-principle span {
+  color: var(--about-text);
+  font-size: 15px;
+}
+
+/* =========================================================
+   CTA
+   ========================================================= */
+
+.about-cta {
+  padding: 80px 0 95px;
+  background: #fff;
+}
+
+.about-cta-card {
+  position: relative;
+  overflow: hidden;
+  padding: 65px 35px;
+  text-align: center;
+  border-radius: 32px;
+  background:
+    radial-gradient(circle at 10% 0%, rgba(102,187,106,.24), transparent 30%),
+    radial-gradient(circle at 90% 100%, rgba(27,94,32,.18), transparent 35%),
+    linear-gradient(135deg, #edf7ee, #f7fbf7);
+  border: 1px solid rgba(46,125,50,.14);
+}
+
+.about-cta-icon {
+  display: grid;
+  width: 54px;
+  height: 54px;
+  margin: 0 auto 17px;
+  place-items: center;
+  border-radius: 16px;
+  background: #fff;
+  color: var(--about-primary);
+  font-size: 25px;
+  box-shadow: 0 10px 25px rgba(46,125,50,.1);
+}
+
+.about-cta-card h2 {
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.about-cta-card p {
+  max-width: 650px;
+  margin: 0 auto;
+  color: var(--about-text);
+  font-size: 17px;
+}
+
+/* =========================================================
+   DARK THEME
+   Works with niDar shared theme system
+   ========================================================= */
+
+html[data-theme="dark"] .about-page,
+body.dark-mode .about-page {
+  --about-heading: #edf7ee;
+  --about-text: #c4d0c7;
+  --about-muted: #9eaaa1;
+  --about-surface: #101712;
+  --about-soft: #0c120e;
+  --about-border: rgba(129,199,132,.14);
+  --about-primary-light: rgba(76,175,80,.14);
+  --about-shadow: 0 18px 50px rgba(0,0,0,.22);
+
+  background: #0c120e;
+}
+
+html[data-theme="dark"] .about-hero,
+body.dark-mode .about-hero {
+  background:
+    radial-gradient(circle at 15% 20%, rgba(76,175,80,.13), transparent 30%),
+    radial-gradient(circle at 85% 70%, rgba(46,125,50,.1), transparent 32%),
+    linear-gradient(135deg, #101812, #0d140f);
+}
+
+html[data-theme="dark"] .about-hero-badge,
+body.dark-mode .about-hero-badge,
+html[data-theme="dark"] .about-btn-secondary,
+body.dark-mode .about-btn-secondary,
+html[data-theme="dark"] .about-tool-card,
+body.dark-mode .about-tool-card,
+html[data-theme="dark"] .about-value-card,
+body.dark-mode .about-value-card,
+html[data-theme="dark"] .about-company-card,
+body.dark-mode .about-company-card,
+html[data-theme="dark"] .about-stat-card,
+body.dark-mode .about-stat-card {
+  background: #151d17;
+}
+
+html[data-theme="dark"] .about-intro,
+body.dark-mode .about-intro,
+html[data-theme="dark"] .about-offer,
+body.dark-mode .about-offer,
+html[data-theme="dark"] .about-why,
+body.dark-mode .about-why,
+html[data-theme="dark"] .about-trust,
+body.dark-mode .about-trust,
+html[data-theme="dark"] .about-cta,
+body.dark-mode .about-cta {
+  background: #0f1611;
+}
+
+html[data-theme="dark"] .about-mission,
+body.dark-mode .about-mission,
+html[data-theme="dark"] .about-company,
+body.dark-mode .about-company,
+html[data-theme="dark"] .about-global,
+body.dark-mode .about-global,
+html[data-theme="dark"] .about-principles,
+body.dark-mode .about-principles {
+  background: #0b110d;
+}
+
+html[data-theme="dark"] .about-feature-card,
+body.dark-mode .about-feature-card {
+  background: #141c16;
+}
+
+html[data-theme="dark"] .about-global-card,
+body.dark-mode .about-global-card,
+html[data-theme="dark"] .about-cta-card,
+body.dark-mode .about-cta-card {
+  background:
+    radial-gradient(circle at 100% 0%, rgba(76,175,80,.11), transparent 34%),
+    #121a14;
+}
+
+html[data-theme="dark"] .about-card-icon,
+body.dark-mode .about-card-icon,
+html[data-theme="dark"] .about-tool-icon,
+body.dark-mode .about-tool-icon {
+  background: rgba(76,175,80,.12);
+}
+
+html[data-theme="dark"] .about-stat-card,
+body.dark-mode .about-stat-card {
+  border-color: rgba(129,199,132,.12);
+}
+
+/* =========================================================
+   SENIOR MODE
+   ========================================================= */
+
+html[data-theme="senior"] .about-page,
+body.senior-mode .about-page {
+  --about-heading: #111;
+  --about-text: #222;
+  --about-muted: #333;
+  --about-primary: #17651c;
+  --about-primary-dark: #0c4810;
+  --about-border: #222;
+  background: #fff;
+  font-size: 18px;
+}
+
+html[data-theme="senior"] .about-hero,
+body.senior-mode .about-hero {
+  background: #fff;
+}
+
+html[data-theme="senior"] .about-section {
+  border-bottom: 2px solid #222;
+}
+
+html[data-theme="senior"] .about-hero h1 {
+  font-size: clamp(44px, 7vw, 68px);
+}
+
+html[data-theme="senior"] .about-section h2,
+html[data-theme="senior"] .about-centered-heading h2,
+html[data-theme="senior"] .about-global-content h2,
+html[data-theme="senior"] .about-company-content h2,
+html[data-theme="senior"] .about-trust h2,
+html[data-theme="senior"] .about-cta-card h2 {
+  font-size: clamp(34px, 5vw, 46px);
+}
+
+html[data-theme="senior"] .about-hero-text,
+html[data-theme="senior"] .about-centered-heading p,
+html[data-theme="senior"] .about-cta-card p {
+  font-size: 20px;
+}
+
+html[data-theme="senior"] .about-value-card p,
+html[data-theme="senior"] .about-feature-card p,
+html[data-theme="senior"] .about-tool-card p {
+  font-size: 17px;
+}
+
+html[data-theme="senior"] .about-value-card h3,
+html[data-theme="senior"] .about-feature-card h3,
+html[data-theme="senior"] .about-tool-card h3 {
+  font-size: 22px;
+}
+
+html[data-theme="senior"] .about-btn {
+  min-height: 56px;
+  padding: 14px 25px;
+  font-size: 17px;
+  border: 2px solid #222;
+}
+
+html[data-theme="senior"] .about-inline-link {
+  font-size: 18px;
+  text-decoration: underline;
+}
+
+html[data-theme="senior"] .about-principle strong,
+html[data-theme="senior"] .about-principle span {
+  font-size: 18px;
+}
+
+html[data-theme="senior"] .about-hero-badge {
+  border: 2px solid #222;
+  color: #111;
+}
+
+/* =========================================================
+   RESPONSIVE — TABLET
+   ========================================================= */
+
+@media (max-width: 1050px) {
+  .about-values-grid,
+  .about-feature-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .about-two-column,
+  .about-trust-grid {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+
+  .about-global-card,
+  .about-company-card {
+    grid-template-columns: 1fr;
+  }
+
+  .about-company-mark {
+    margin: 0;
+  }
+}
+
+/* =========================================================
+   RESPONSIVE — MOBILE
+   ========================================================= */
+
+@media (max-width: 760px) {
+  .about-container {
+    width: min(100% - 28px, 1180px);
+  }
+
+  .about-hero {
+    padding: 65px 0 62px;
+  }
+
+  .about-section {
+    padding: 62px 0;
+  }
+
+  .about-hero-text {
+    font-size: 16px;
+  }
+
+  .about-values-grid,
+  .about-feature-grid,
+  .about-tools-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .about-global-card,
+  .about-company-card {
+    padding: 30px 22px;
+    border-radius: 24px;
+  }
+
+  .about-global-stat-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .about-company-mark {
+    width: 135px;
+    height: 135px;
+    border-radius: 30px;
+    font-size: 32px;
+  }
+
+  .about-principle {
+    grid-template-columns: 1fr;
+    gap: 5px;
+    padding: 20px 2px;
+  }
+
+  .about-cta {
+    padding: 62px 0 75px;
+  }
+
+  .about-cta-card {
+    padding: 48px 20px;
+    border-radius: 25px;
+  }
+
+  .about-tool-card {
+    grid-template-columns: 52px 1fr 20px;
+    gap: 13px;
+    padding: 20px;
+  }
+
+  .about-tool-icon {
+    width: 52px;
+    height: 52px;
+  }
+
+  .about-hero-actions,
+  .about-cta-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .about-btn {
+    width: 100%;
+  }
+}
+
+/* =========================================================
+   SMALL MOBILE
+   ========================================================= */
+
+@media (max-width: 430px) {
+  .about-container {
+    width: min(100% - 22px, 1180px);
+  }
+
+  .about-hero h1 {
+    font-size: 38px;
+  }
+
+  .about-section h2,
+  .about-centered-heading h2,
+  .about-global-content h2,
+  .about-company-content h2,
+  .about-trust h2,
+  .about-cta-card h2 {
+    font-size: 29px;
+  }
+
+  .about-section {
+    padding: 52px 0;
+  }
+
+  .about-value-card,
+  .about-feature-card {
+    padding: 23px 19px;
+  }
+
+  .about-global-stat-grid {
+    gap: 10px;
+  }
+
+  .about-stat-card {
+    min-height: 115px;
+    padding: 17px;
+  }
+}
+
+/* =========================================================
+   ACCESSIBILITY
+   ========================================================= */
+
+.about-page a:focus-visible,
+.about-page button:focus-visible {
+  outline: 3px solid rgba(46,125,50,.5);
+  outline-offset: 4px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .about-page *,
+  .about-page *::before,
+  .about-page *::after {
+    scroll-behavior: auto !important;
+    transition: none !important;
+    animation: none !important;
+  }
+}

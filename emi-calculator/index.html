@@ -1,250 +1,602 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
 
-<title>EMI Calculator - niDar Tools</title>
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0">
 
-<meta name="description" content="Free EMI calculator with full month-by-month amortization schedule and prepayment/foreclosure settlement calculator for home, car, or personal loans.">
-<meta name="keywords" content="emi calculator, loan emi calculator, amortization schedule, loan prepayment calculator, foreclosure calculator">
+  <meta name="description"
+        content="Free EMI Calculator by niDar Tools. Calculate monthly EMI, total interest, total payment and view your complete loan amortization schedule.">
 
-<link rel="canonical" href="https://nidartools.com/emi-calculator/">
+  <meta name="keywords"
+        content="EMI calculator, loan EMI calculator, monthly EMI, interest calculator, loan calculator">
 
-<!-- Absolute paths for Assets -->
-<link rel="icon" type="image/x-icon" href="/assets/favicon/favicon.ico">
-<link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon/favicon-16x16.png">
-<link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon/favicon-32x32.png">
-<link rel="apple-touch-icon" sizes="180x180" href="/assets/favicon/apple-touch-icon.png">
-<link rel="stylesheet" href="/assets/css/style.css">
+  <meta name="author"
+        content="niDar Tools">
+
+  <meta name="robots"
+        content="index, follow">
+
+  <title>EMI Calculator — niDar Tools</title>
+
+  <link rel="icon" type="image/png" href="/logo.png">
+  <link rel="stylesheet" href="/assets/css/style.css">
+  <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-<header class="header">
-  <div class="container navbar">
-    <a href="/" class="logo">niDar<span>Tools</span></a>
-    <nav>
-      <a href="/">Home</a>
-      <a href="/about/">About</a>
-      <a href="/contact/">Contact</a>
-      <a href="/support/">Support</a>
-    </nav>
-    <button class="btn btn-theme" id="themeToggle" aria-label="Toggle theme">🌙 Theme</button>
-  </div>
-</header>
+  <!-- Shared niDar Tools Header -->
+  <div id="site-header"></div>
 
-<main class="container mt-40">
+  <main class="emi-page">
 
-<section class="hero-card text-center mb-30">
-  <h1>EMI Calculator</h1>
-  
-  <!-- Content Guide Interlinking -->
-  <div class="mt-10">
-    <a href="/content/emi-calculator/" class="guide-link">
-      <span class="icon">📖</span><span>Read EMI Loan Planning Guide →</span>
-    </a>
-  </div>
-  
-  <p class="mt-10">Monthly EMI, full amortization schedule, and prepayment/foreclosure settlement — for short, medium, or long-term loans.</p>
-</section>
+    <!-- HERO -->
+    <section class="emi-hero">
 
-<section class="card mb-20">
-  <h2>1. Loan Details</h2>
+      <div class="emi-badge">
+        🧮 Free Financial Tool
+      </div>
 
-  <div class="grid mt-20">
-    <div>
-      <label>Loan Amount (₹)</label>
-      <input type="number" id="principal" placeholder="e.g. 500000" class="form-control">
-    </div>
-    <div>
-      <label>Interest Rate (% per year)</label>
-      <input type="number" id="rate" placeholder="e.g. 9.5" step="0.01" class="form-control">
-    </div>
-    <div>
-      <label>Tenure Unit</label>
-      <select id="tenureUnit" class="form-control">
-        <option value="months">Months</option>
-        <option value="years" selected>Years</option>
-      </select>
-    </div>
-    <div>
-      <label>Duration</label>
-      <input type="number" id="tenure" placeholder="e.g. 5" class="form-control">
-    </div>
-  </div>
-</section>
+      <h1>EMI Calculator</h1>
 
-<section class="card mb-20">
-  <h2>2. Prepayment / Foreclosure (optional)</h2>
-  <p class="text-muted mb-20">Planning to pay off the loan early? Fill this in to see your settlement amount.</p>
+      <p>
+        Calculate your monthly loan EMI, total interest,
+        total payment and repayment schedule instantly.
+      </p>
 
-  <div class="grid">
-    <div>
-      <label>Paying off after month #</label>
-      <input type="number" id="prepayMonth" placeholder="e.g. 12" class="form-control">
-    </div>
-    <div>
-      <label>Prepayment penalty (%)</label>
-      <input type="number" id="penaltyPct" placeholder="e.g. 2" step="0.01" class="form-control">
-    </div>
-    <div>
-      <label>Settlement discount (%)</label>
-      <input type="number" id="settlementPct" placeholder="e.g. 0" step="0.01" class="form-control">
-    </div>
-  </div>
-  <p class="text-muted mt-10" style="font-size:12px;">Settlement discount = if the lender agrees to waive a percentage off the outstanding amount as part of a negotiated settlement. Leave at 0 if not applicable.</p>
-</section>
+    </section>
 
-<button class="btn btn-primary" onclick="calcEMI()">Calculate</button>
-<p id="errorMsg" class="alert alert-danger hidden mt-20"></p>
 
-<section class="card hidden mt-40 mb-20" id="resultCard">
-  <h2>Full Tenure Summary</h2>
-  <div class="grid mt-20">
-    <div class="stat-box">
-      <h2 id="emiVal">-</h2>
-      <p>Monthly EMI (₹)</p>
-    </div>
-    <div class="stat-box">
-      <h2 id="interestVal">-</h2>
-      <p>Total Interest (₹)</p>
-    </div>
-    <div class="stat-box">
-      <h2 id="totalVal">-</h2>
-      <p>Total Payment (₹)</p>
-    </div>
-  </div>
-</section>
+    <!-- MAIN CALCULATOR -->
+    <section class="emi-workspace">
 
-<section class="card hidden mb-20" id="prepayCard">
-  <h2>Foreclosure / Settlement Summary</h2>
-  <div class="grid mt-20">
-    <div class="stat-box">
-      <h2 id="outstandingVal">-</h2>
-      <p>Outstanding Principal (₹)</p>
-    </div>
-    <div class="stat-box">
-      <h2 id="penaltyVal">-</h2>
-      <p>Prepayment Penalty (₹)</p>
-    </div>
-    <div class="stat-box">
-      <h2 id="discountVal">-</h2>
-      <p>Settlement Discount (₹)</p>
-    </div>
-    <div class="stat-box">
-      <h2 id="finalPayoffVal">-</h2>
-      <p>Final Payoff Amount (₹)</p>
-    </div>
-    <div class="stat-box">
-      <h2 id="interestSavedVal">-</h2>
-      <p>Interest Saved (₹)</p>
-    </div>
-  </div>
-</section>
+      <!-- INPUT PANEL -->
+      <div class="emi-card emi-input-card">
 
-<section class="card hidden mb-40" id="scheduleCard">
-  <h2>Month-by-Month Schedule</h2>
-  <div class="mt-20" style="max-height:400px; overflow-y:auto;">
-    <table class="table">
-      <thead>
-        <tr><th>Month</th><th>EMI (₹)</th><th>Principal (₹)</th><th>Interest (₹)</th><th>Balance (₹)</th></tr>
-      </thead>
-      <tbody id="scheduleBody"></tbody>
-    </table>
-  </div>
-</section>
+        <div class="emi-card-header">
+          <div>
+            <span class="emi-section-label">Loan Details</span>
+            <h2>Enter Your Loan Information</h2>
+          </div>
+        </div>
 
-</main>
 
-<footer class="footer">
-  <div class="container text-center">
-    <p>© 2026 niDar Tools. All Rights Reserved.</p>
-    <p>Developed by <strong>niDar Marketing And Services</strong></p>
-  </div>
-</footer>
+        <!-- LOAN AMOUNT -->
+        <div class="emi-field">
 
+          <label for="loanAmount">
+            Loan Amount
+          </label>
+
+          <div class="emi-input-wrap">
+            <span class="emi-prefix">₹</span>
+
+            <input
+              type="number"
+              id="loanAmount"
+              min="1"
+              step="1000"
+              value="500000"
+              placeholder="Enter loan amount"
+              inputmode="decimal"
+            >
+          </div>
+
+          <small>
+            Example: ₹5,00,000
+          </small>
+
+        </div>
+
+
+        <!-- INTEREST RATE -->
+        <div class="emi-field">
+
+          <label for="interestRate">
+            Annual Interest Rate
+          </label>
+
+          <div class="emi-input-wrap">
+            <input
+              type="number"
+              id="interestRate"
+              min="0"
+              step="0.01"
+              value="8.5"
+              placeholder="Enter interest rate"
+              inputmode="decimal"
+            >
+
+            <span class="emi-suffix">%</span>
+          </div>
+
+          <small>
+            Enter annual interest rate.
+          </small>
+
+        </div>
+
+
+        <!-- TENURE -->
+        <div class="emi-field">
+
+          <label for="loanTenure">
+            Loan Tenure
+          </label>
+
+          <div class="emi-tenure-row">
+
+            <input
+              type="number"
+              id="loanTenure"
+              min="1"
+              step="1"
+              value="5"
+              placeholder="Tenure"
+              inputmode="numeric"
+            >
+
+            <select id="tenureUnit">
+              <option value="years" selected>Years</option>
+              <option value="months">Months</option>
+            </select>
+
+          </div>
+
+          <small>
+            Choose your repayment period.
+          </small>
+
+        </div>
+
+
+        <!-- EXTRA PAYMENT -->
+        <div class="emi-field">
+
+          <label for="extraPayment">
+            Extra Monthly Payment
+            <span class="emi-optional">(Optional)</span>
+          </label>
+
+          <div class="emi-input-wrap">
+            <span class="emi-prefix">₹</span>
+
+            <input
+              type="number"
+              id="extraPayment"
+              min="0"
+              step="500"
+              value="0"
+              placeholder="0"
+              inputmode="decimal"
+            >
+          </div>
+
+          <small>
+            Optional additional amount paid every month.
+          </small>
+
+        </div>
+
+
+        <!-- ACTIONS -->
+        <div class="emi-actions">
+
+          <button
+            type="button"
+            id="calculateBtn"
+            class="emi-primary-btn"
+          >
+            Calculate EMI
+          </button>
+
+          <button
+            type="button"
+            id="resetBtn"
+            class="emi-secondary-btn"
+          >
+            Reset
+          </button>
+
+        </div>
+
+        <div
+          id="inputError"
+          class="emi-error"
+          role="alert"
+          aria-live="polite"
+        ></div>
+
+      </div>
+
+
+      <!-- RESULT PANEL -->
+      <div class="emi-card emi-result-card">
+
+        <div class="emi-card-header">
+
+          <div>
+            <span class="emi-section-label">
+              Calculation Result
+            </span>
+
+            <h2>Your Loan Summary</h2>
+          </div>
+
+        </div>
+
+
+        <!-- MAIN EMI -->
+        <div class="emi-main-result">
+
+          <span>Monthly EMI</span>
+
+          <strong id="monthlyEmi">
+            ₹0
+          </strong>
+
+          <small id="emiResultNote">
+            Calculate your loan to see results.
+          </small>
+
+        </div>
+
+
+        <!-- SUMMARY GRID -->
+        <div class="emi-summary-grid">
+
+          <div class="emi-summary-item">
+            <span>Principal Amount</span>
+            <strong id="principalAmount">
+              ₹0
+            </strong>
+          </div>
+
+          <div class="emi-summary-item">
+            <span>Total Interest</span>
+            <strong id="totalInterest">
+              ₹0
+            </strong>
+          </div>
+
+          <div class="emi-summary-item">
+            <span>Total Payment</span>
+            <strong id="totalPayment">
+              ₹0
+            </strong>
+          </div>
+
+          <div class="emi-summary-item">
+            <span>Total Months</span>
+            <strong id="totalMonths">
+              0
+            </strong>
+          </div>
+
+        </div>
+
+
+        <!-- LOAN BREAKDOWN -->
+        <div class="emi-breakdown">
+
+          <div class="emi-breakdown-heading">
+            <h3>Payment Breakdown</h3>
+          </div>
+
+          <div class="emi-breakdown-bar">
+
+            <div
+              id="principalBar"
+              class="emi-principal-bar"
+              style="width: 0%"
+            ></div>
+
+            <div
+              id="interestBar"
+              class="emi-interest-bar"
+              style="width: 0%"
+            ></div>
+
+          </div>
+
+          <div class="emi-breakdown-legend">
+
+            <span>
+              <i class="emi-dot emi-dot-principal"></i>
+              Principal
+              <strong id="principalPercent">0%</strong>
+            </span>
+
+            <span>
+              <i class="emi-dot emi-dot-interest"></i>
+              Interest
+              <strong id="interestPercent">0%</strong>
+            </span>
+
+          </div>
+
+        </div>
+
+
+        <!-- EXTRA PAYMENT RESULT -->
+        <div
+          id="extraPaymentResult"
+          class="emi-extra-result"
+          hidden
+        >
+
+          <h3>With Extra Monthly Payment</h3>
+
+          <div class="emi-extra-grid">
+
+            <div>
+              <span>New Monthly Payment</span>
+              <strong id="newMonthlyPayment">
+                ₹0
+              </strong>
+            </div>
+
+            <div>
+              <span>Interest Saved</span>
+              <strong id="interestSaved">
+                ₹0
+              </strong>
+            </div>
+
+            <div>
+              <span>Time Saved</span>
+              <strong id="timeSaved">
+                0 months
+              </strong>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- AMORTIZATION -->
+    <section class="emi-schedule-section">
+
+      <div class="emi-section-heading">
+
+        <span class="emi-section-label">
+          Repayment Plan
+        </span>
+
+        <h2>Amortization Schedule</h2>
+
+        <p>
+          See how your principal and interest payments change
+          throughout the loan period.
+        </p>
+
+      </div>
+
+
+      <div class="emi-card emi-table-card">
+
+        <div class="emi-table-toolbar">
+
+          <div>
+            <strong id="scheduleTitle">
+              Repayment Schedule
+            </strong>
+
+            <span id="scheduleInfo">
+              Calculate EMI to generate the schedule.
+            </span>
+          </div>
+
+          <button
+            type="button"
+            id="showScheduleBtn"
+            class="emi-small-btn"
+          >
+            View Schedule
+          </button>
+
+        </div>
+
+
+        <div
+          id="scheduleContainer"
+          class="emi-table-container"
+          hidden
+        >
+
+          <table>
+
+            <thead>
+              <tr>
+                <th>Month</th>
+                <th>Opening Balance</th>
+                <th>EMI</th>
+                <th>Principal</th>
+                <th>Interest</th>
+                <th>Closing Balance</th>
+              </tr>
+            </thead>
+
+            <tbody id="scheduleBody"></tbody>
+
+          </table>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- HOW TO USE -->
+    <section class="emi-info-section">
+
+      <div class="emi-section-heading">
+
+        <span class="emi-section-label">
+          Simple & Easy
+        </span>
+
+        <h2>How to Use the EMI Calculator?</h2>
+
+      </div>
+
+
+      <div class="emi-info-grid">
+
+        <article class="emi-info-card">
+
+          <div class="emi-info-number">1</div>
+
+          <h3>Enter Loan Amount</h3>
+
+          <p>
+            Enter the total amount you want to borrow.
+          </p>
+
+        </article>
+
+
+        <article class="emi-info-card">
+
+          <div class="emi-info-number">2</div>
+
+          <h3>Enter Interest Rate</h3>
+
+          <p>
+            Enter the annual interest rate offered by
+            your lender.
+          </p>
+
+        </article>
+
+
+        <article class="emi-info-card">
+
+          <div class="emi-info-number">3</div>
+
+          <h3>Select Tenure</h3>
+
+          <p>
+            Choose the number of years or months
+            for repayment.
+          </p>
+
+        </article>
+
+
+        <article class="emi-info-card">
+
+          <div class="emi-info-number">4</div>
+
+          <h3>Calculate</h3>
+
+          <p>
+            Get your EMI, interest, total payment and
+            repayment schedule instantly.
+          </p>
+
+        </article>
+
+      </div>
+
+    </section>
+
+
+    <!-- FEATURES -->
+    <section class="emi-features-section">
+
+      <div class="emi-section-heading">
+
+        <span class="emi-section-label">
+          Why niDar Tools?
+        </span>
+
+        <h2>Built for Simple Financial Planning</h2>
+
+      </div>
+
+
+      <div class="emi-feature-grid">
+
+        <article class="emi-feature-card">
+          <span>⚡</span>
+          <h3>Instant Calculation</h3>
+          <p>
+            Calculate your loan EMI quickly without
+            complicated steps.
+          </p>
+        </article>
+
+
+        <article class="emi-feature-card">
+          <span>📊</span>
+          <h3>Detailed Breakdown</h3>
+          <p>
+            Understand principal, interest and total
+            repayment amounts.
+          </p>
+        </article>
+
+
+        <article class="emi-feature-card">
+          <span>📅</span>
+          <h3>Repayment Schedule</h3>
+          <p>
+            View the month-by-month amortization schedule
+            for your loan.
+          </p>
+        </article>
+
+
+        <article class="emi-feature-card">
+          <span>🔒</span>
+          <h3>Privacy Friendly</h3>
+          <p>
+            Calculations happen directly in your browser.
+            No loan information needs to be uploaded.
+          </p>
+        </article>
+
+      </div>
+
+    </section>
+
+
+    <!-- DISCLAIMER -->
+    <section class="emi-disclaimer">
+
+      <h2>Important Note</h2>
+
+      <p>
+        This calculator provides an estimate for planning
+        purposes. Actual EMI, interest and repayment amounts
+        may vary depending on your lender's terms, fees,
+        taxes, insurance and other applicable charges.
+      </p>
+
+    </section>
+
+  </main>
+
+
+  <!-- Shared niDar Tools Footer -->
+  <div id="site-footer"></div>
+
+
+  <!-- Shared Website Script -->
+  <script src="../assets/js/common.js"></script>
 <script src="/assets/js/script.js"></script>
-<script>
-function formatINR(num) {
-  return Math.round(num).toLocaleString('en-IN');
-}
 
-function calcEMI() {
-  const P = parseFloat(document.getElementById('principal').value);
-  const annualRate = parseFloat(document.getElementById('rate').value);
-  const tenureVal = parseFloat(document.getElementById('tenure').value);
-  const tenureUnit = document.getElementById('tenureUnit').value;
-  const prepayMonth = parseInt(document.getElementById('prepayMonth').value);
-  const penaltyPct = parseFloat(document.getElementById('penaltyPct').value) || 0;
-  const settlementPct = parseFloat(document.getElementById('settlementPct').value) || 0;
-
-  const errorMsg = document.getElementById('errorMsg');
-  const resultCard = document.getElementById('resultCard');
-  const prepayCard = document.getElementById('prepayCard');
-  const scheduleCard = document.getElementById('scheduleCard');
-
-  errorMsg.classList.add('hidden');
-  resultCard.classList.add('hidden');
-  prepayCard.classList.add('hidden');
-  scheduleCard.classList.add('hidden');
-
-  if (isNaN(P) || isNaN(annualRate) || isNaN(tenureVal) || P <= 0 || annualRate <= 0 || tenureVal <= 0) {
-    errorMsg.textContent = 'Please fill in Loan Amount, Interest Rate, and Duration with valid positive numbers.';
-    errorMsg.classList.remove('hidden');
-    return;
-  }
-
-  const n = tenureUnit === 'years' ? Math.round(tenureVal * 12) : Math.round(tenureVal);
-  const r = annualRate / 12 / 100;
-  const emi = (P * r * Math.pow(1 + r, n)) / (Math.pow(1 + r, n) - 1);
-
-  let balance = P;
-  let totalInterestPaid = 0;
-  const schedule = [];
-  for (let m = 1; m <= n; m++) {
-    const interestPart = balance * r;
-    let principalPart = emi - interestPart;
-    if (m === n) principalPart = balance;
-    balance = Math.max(0, balance - principalPart);
-    totalInterestPaid += interestPart;
-    schedule.push({ month: m, emi: (m === n ? principalPart + interestPart : emi), principal: principalPart, interest: interestPart, balance });
-  }
-
-  const totalPayment = emi * (n - 1) + schedule[n - 1].emi;
-
-  document.getElementById('emiVal').textContent = '₹' + formatINR(emi);
-  document.getElementById('interestVal').textContent = '₹' + formatINR(totalInterestPaid);
-  document.getElementById('totalVal').textContent = '₹' + formatINR(totalPayment);
-  resultCard.classList.remove('hidden');
-
-  if (!isNaN(prepayMonth) && prepayMonth > 0 && prepayMonth < n) {
-    const outstanding = schedule[prepayMonth - 1].balance;
-    const penaltyAmt = outstanding * (penaltyPct / 100);
-    const beforeDiscount = outstanding + penaltyAmt;
-    const discountAmt = beforeDiscount * (settlementPct / 100);
-    const finalPayoff = beforeDiscount - discountAmt;
-
-    const interestPaidTillPrepay = schedule.slice(0, prepayMonth).reduce((s, row) => s + row.interest, 0);
-    const interestSaved = totalInterestPaid - interestPaidTillPrepay;
-
-    document.getElementById('outstandingVal').textContent = '₹' + formatINR(outstanding);
-    document.getElementById('penaltyVal').textContent = '₹' + formatINR(penaltyAmt);
-    document.getElementById('discountVal').textContent = '₹' + formatINR(discountAmt);
-    document.getElementById('finalPayoffVal').textContent = '₹' + formatINR(finalPayoff);
-    document.getElementById('interestSavedVal').textContent = '₹' + formatINR(interestSaved);
-    prepayCard.classList.remove('hidden');
-  }
-
-  const tbody = document.getElementById('scheduleBody');
-  tbody.innerHTML = schedule.map(row =>
-    `<tr><td>${row.month}</td><td>${formatINR(row.emi)}</td><td>${formatINR(row.principal)}</td><td>${formatINR(row.interest)}</td><td>${formatINR(row.balance)}</td></tr>`
-  ).join('');
-  scheduleCard.classList.remove('hidden');
-
-  resultCard.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-}
-</script>
+  <!-- EMI Calculator Script -->
+  <script src="script.js"></script>
 
 </body>
 </html>

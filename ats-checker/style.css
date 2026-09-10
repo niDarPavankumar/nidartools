@@ -1,0 +1,1097 @@
+/* =========================================================
+   niDar Tools — AI ATS Resume Checker
+   Original Professional Tool UI
+   ========================================================= */
+
+:root {
+  --ats-primary: #2e7d32;
+  --ats-primary-dark: #1b5e20;
+  --ats-primary-light: #e8f5e9;
+  --ats-accent: #66bb6a;
+
+  --ats-bg: #f5f8f6;
+  --ats-card: #ffffff;
+  --ats-text: #17211b;
+  --ats-muted: #68756d;
+  --ats-border: #dfe7e1;
+  --ats-input: #ffffff;
+
+  --ats-danger: #c62828;
+  --ats-danger-bg: #ffebee;
+
+  --ats-success: #2e7d32;
+  --ats-success-bg: #e8f5e9;
+
+  --ats-warning: #b26a00;
+  --ats-warning-bg: #fff4df;
+
+  --ats-info: #1565c0;
+  --ats-info-bg: #e8f1fb;
+
+  --ats-shadow:
+    0 12px 35px rgba(24, 50, 31, 0.08);
+
+  --ats-radius: 20px;
+}
+
+
+/* =========================================================
+   PAGE
+   ========================================================= */
+
+.ats-page {
+  width: min(1180px, calc(100% - 32px));
+  margin: 0 auto;
+  padding: 42px 0 75px;
+  color: var(--ats-text);
+}
+
+
+/* =========================================================
+   HERO
+   ========================================================= */
+
+.ats-hero {
+  max-width: 850px;
+  margin: 0 auto 38px;
+  text-align: center;
+}
+
+.ats-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 16px;
+  border: 1px solid rgba(46, 125, 50, 0.18);
+  border-radius: 999px;
+  background: var(--ats-primary-light);
+  color: var(--ats-primary-dark);
+  font-size: 0.82rem;
+  font-weight: 800;
+}
+
+.ats-hero h1 {
+  margin: 16px 0 11px;
+  font-size: clamp(2rem, 5vw, 3.25rem);
+  line-height: 1.08;
+  letter-spacing: -0.04em;
+}
+
+.ats-hero > p {
+  max-width: 730px;
+  margin: 0 auto;
+  color: var(--ats-muted);
+  font-size: 1.02rem;
+  line-height: 1.7;
+}
+
+.ats-hero-points {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 9px;
+  margin-top: 20px;
+}
+
+.ats-hero-points span {
+  padding: 7px 11px;
+  border: 1px solid var(--ats-border);
+  border-radius: 999px;
+  background: var(--ats-card);
+  color: var(--ats-muted);
+  font-size: 0.76rem;
+  font-weight: 700;
+}
+
+
+/* =========================================================
+   WORKSPACE
+   ========================================================= */
+
+.ats-workspace {
+  display: grid;
+  grid-template-columns: minmax(0, 1.35fr) minmax(290px, 0.65fr);
+  gap: 24px;
+  align-items: start;
+}
+
+
+/* =========================================================
+   CARDS
+   ========================================================= */
+
+.ats-card {
+  background: var(--ats-card);
+  border: 1px solid var(--ats-border);
+  border-radius: var(--ats-radius);
+  box-shadow: var(--ats-shadow);
+}
+
+.ats-input-card {
+  padding: 27px;
+}
+
+.ats-guide-card {
+  padding: 25px;
+  position: sticky;
+  top: 20px;
+}
+
+.ats-card-header {
+  margin-bottom: 25px;
+}
+
+.ats-card-header h2 {
+  margin: 5px 0 7px;
+  font-size: 1.38rem;
+  line-height: 1.25;
+}
+
+.ats-card-header p {
+  margin: 0;
+  color: var(--ats-muted);
+  font-size: 0.84rem;
+  line-height: 1.6;
+}
+
+.ats-section-label {
+  display: inline-block;
+  color: var(--ats-primary);
+  font-size: 0.74rem;
+  font-weight: 850;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+
+/* =========================================================
+   FORM
+   ========================================================= */
+
+.ats-form-group {
+  margin-bottom: 23px;
+}
+
+.ats-label-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+
+.ats-label-row label {
+  color: var(--ats-text);
+  font-size: 0.92rem;
+  font-weight: 800;
+}
+
+.ats-label-row span {
+  color: var(--ats-muted);
+  font-size: 0.72rem;
+  white-space: nowrap;
+}
+
+.ats-form-group textarea {
+  display: block;
+  width: 100%;
+  min-height: 190px;
+  resize: vertical;
+  padding: 15px;
+  border: 1px solid var(--ats-border);
+  border-radius: 14px;
+  outline: none;
+  background: var(--ats-input);
+  color: var(--ats-text);
+  font: inherit;
+  font-size: 0.9rem;
+  line-height: 1.65;
+  box-sizing: border-box;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.ats-form-group textarea::placeholder {
+  color: var(--ats-muted);
+  opacity: 0.75;
+}
+
+.ats-form-group textarea:focus {
+  border-color: var(--ats-primary);
+  box-shadow:
+    0 0 0 4px rgba(46, 125, 50, 0.1);
+}
+
+.ats-form-group small {
+  display: block;
+  margin-top: 7px;
+  color: var(--ats-muted);
+  font-size: 0.74rem;
+  line-height: 1.5;
+}
+
+
+/* =========================================================
+   CONSENT
+   ========================================================= */
+
+.ats-consent-box {
+  display: flex;
+  align-items: flex-start;
+  gap: 11px;
+  margin: 25px 0 20px;
+  padding: 15px;
+  border: 1px solid var(--ats-border);
+  border-radius: 14px;
+  background: rgba(46, 125, 50, 0.025);
+}
+
+.ats-consent-box input {
+  flex: 0 0 auto;
+  width: 18px;
+  height: 18px;
+  margin: 2px 0 0;
+  accent-color: var(--ats-primary);
+  cursor: pointer;
+}
+
+.ats-consent-box label {
+  color: var(--ats-text);
+  font-size: 0.79rem;
+  font-weight: 650;
+  line-height: 1.55;
+  cursor: pointer;
+}
+
+.ats-consent-box a {
+  color: var(--ats-primary);
+  font-weight: 750;
+  text-decoration: underline;
+}
+
+.ats-consent-box p {
+  margin: 5px 0 0;
+  color: var(--ats-muted);
+  font-size: 0.72rem;
+  line-height: 1.5;
+}
+
+
+/* =========================================================
+   ACTION
+   ========================================================= */
+
+.ats-action-area {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.ats-primary-btn,
+.ats-secondary-btn {
+  min-height: 49px;
+  padding: 0 21px;
+  border-radius: 12px;
+  font: inherit;
+  font-weight: 800;
+  cursor: pointer;
+  transition:
+    transform 0.18s ease,
+    background 0.18s ease,
+    box-shadow 0.18s ease,
+    border-color 0.18s ease;
+}
+
+.ats-primary-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border: 1px solid var(--ats-primary);
+  background: var(--ats-primary);
+  color: #ffffff;
+  box-shadow:
+    0 8px 18px rgba(46, 125, 50, 0.18);
+}
+
+.ats-primary-btn:hover:not(:disabled) {
+  background: var(--ats-primary-dark);
+  transform: translateY(-1px);
+}
+
+.ats-primary-btn:disabled {
+  opacity: 0.48;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+.ats-secondary-btn {
+  border: 1px solid var(--ats-border);
+  background: transparent;
+  color: var(--ats-text);
+}
+
+.ats-secondary-btn:hover {
+  border-color: var(--ats-primary);
+  color: var(--ats-primary);
+}
+
+.ats-status {
+  min-height: 20px;
+  color: var(--ats-muted);
+  font-size: 0.76rem;
+  line-height: 1.4;
+}
+
+
+/* =========================================================
+   GUIDE
+   ========================================================= */
+
+.ats-guide-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 52px;
+  height: 52px;
+  margin-bottom: 16px;
+  border-radius: 15px;
+  background: var(--ats-primary-light);
+  font-size: 1.45rem;
+}
+
+.ats-guide-card h2 {
+  margin: 0 0 21px;
+  font-size: 1.2rem;
+}
+
+.ats-guide-step {
+  display: grid;
+  grid-template-columns: 34px minmax(0, 1fr);
+  gap: 11px;
+  margin-bottom: 19px;
+}
+
+.ats-guide-step > strong {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 31px;
+  height: 31px;
+  border-radius: 9px;
+  background: var(--ats-primary-light);
+  color: var(--ats-primary-dark);
+  font-size: 0.7rem;
+}
+
+.ats-guide-step h3 {
+  margin: 1px 0 4px;
+  font-size: 0.88rem;
+}
+
+.ats-guide-step p {
+  margin: 0;
+  color: var(--ats-muted);
+  font-size: 0.74rem;
+  line-height: 1.5;
+}
+
+.ats-tip-box {
+  margin-top: 22px;
+  padding: 14px;
+  border: 1px solid rgba(46, 125, 50, 0.15);
+  border-radius: 13px;
+  background: var(--ats-primary-light);
+}
+
+.ats-tip-box strong {
+  display: block;
+  margin-bottom: 5px;
+  color: var(--ats-primary-dark);
+  font-size: 0.8rem;
+}
+
+.ats-tip-box p {
+  margin: 0;
+  color: var(--ats-muted);
+  font-size: 0.73rem;
+  line-height: 1.5;
+}
+
+
+/* =========================================================
+   RESULTS
+   ========================================================= */
+
+.ats-results {
+  margin-top: 32px;
+}
+
+.ats-results[hidden] {
+  display: none;
+}
+
+.ats-results-heading {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+.ats-results-heading h2 {
+  margin: 5px 0 7px;
+  font-size: 1.7rem;
+}
+
+.ats-results-heading p {
+  margin: 0;
+  color: var(--ats-muted);
+  font-size: 0.82rem;
+  line-height: 1.6;
+}
+
+
+/* =========================================================
+   SCORE CARD
+   ========================================================= */
+
+.ats-score-card {
+  margin-bottom: 18px;
+  padding: 25px;
+  border: 1px solid rgba(46, 125, 50, 0.15);
+  border-radius: 20px;
+  background:
+    linear-gradient(
+      135deg,
+      var(--ats-primary-light),
+      var(--ats-card)
+    );
+  box-shadow: var(--ats-shadow);
+}
+
+.ats-score-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 25px;
+}
+
+.ats-score-label {
+  display: block;
+  margin-bottom: 5px;
+  color: var(--ats-primary);
+  font-size: 0.74rem;
+  font-weight: 850;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.ats-score-content h3 {
+  margin: 0 0 7px;
+  font-size: 1.35rem;
+}
+
+.ats-score-content p {
+  margin: 0;
+  color: var(--ats-muted);
+  font-size: 0.78rem;
+  line-height: 1.5;
+}
+
+.ats-score-circle {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  width: 125px;
+  height: 125px;
+  border: 8px solid rgba(46, 125, 50, 0.14);
+  border-radius: 50%;
+  background: var(--ats-card);
+  box-sizing: border-box;
+}
+
+.ats-score-circle strong {
+  color: var(--ats-primary-dark);
+  font-size: 2.25rem;
+  line-height: 1;
+}
+
+.ats-score-circle span {
+  margin-top: 3px;
+  color: var(--ats-muted);
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+
+.ats-score-bar {
+  width: 100%;
+  height: 10px;
+  margin-top: 22px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: rgba(46, 125, 50, 0.12);
+}
+
+.ats-score-progress {
+  height: 100%;
+  min-width: 0;
+  border-radius: inherit;
+  background: var(--ats-primary);
+  transition: width 0.7s ease;
+}
+
+
+/* =========================================================
+   RESULT GRID
+   ========================================================= */
+
+.ats-results-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 17px;
+}
+
+.ats-result-card {
+  min-width: 0;
+  padding: 22px;
+  border: 1px solid var(--ats-border);
+  border-radius: 17px;
+  background: var(--ats-card);
+  box-shadow: 0 8px 25px rgba(24, 50, 31, 0.045);
+}
+
+.ats-result-card-header {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  margin-bottom: 16px;
+}
+
+.ats-result-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  width: 40px;
+  height: 40px;
+  border-radius: 11px;
+  background: var(--ats-primary-light);
+  font-size: 1rem;
+}
+
+.ats-result-card-header h3 {
+  margin: 0 0 3px;
+  font-size: 0.97rem;
+}
+
+.ats-result-card-header span {
+  color: var(--ats-muted);
+  font-size: 0.7rem;
+}
+
+.ats-result-card ul {
+  margin: 0;
+  padding-left: 19px;
+}
+
+.ats-result-card li {
+  margin-bottom: 8px;
+  color: var(--ats-text);
+  font-size: 0.79rem;
+  line-height: 1.55;
+}
+
+.ats-result-card li:last-child {
+  margin-bottom: 0;
+}
+
+.ats-result-card li::marker {
+  color: var(--ats-primary);
+}
+
+.ats-empty-message {
+  display: none;
+  padding: 11px 12px;
+  border-radius: 10px;
+  background: var(--ats-primary-light);
+  color: var(--ats-muted);
+  font-size: 0.75rem;
+  line-height: 1.5;
+}
+
+.ats-result-card ul:empty + .ats-empty-message {
+  display: block;
+}
+
+
+/* =========================================================
+   RESULT CARD VARIANTS
+   ========================================================= */
+
+.ats-missing-card {
+  border-top: 3px solid #d68a00;
+}
+
+.ats-missing-card .ats-result-icon {
+  background: var(--ats-warning-bg);
+}
+
+.ats-matching-card {
+  border-top: 3px solid var(--ats-primary);
+}
+
+.ats-formatting-card {
+  border-top: 3px solid var(--ats-info);
+}
+
+.ats-formatting-card .ats-result-icon {
+  background: var(--ats-info-bg);
+}
+
+.ats-suggestions-card {
+  border-top: 3px solid var(--ats-primary);
+}
+
+
+/* =========================================================
+   RESULT NOTE
+   ========================================================= */
+
+.ats-result-note {
+  display: flex;
+  align-items: flex-start;
+  gap: 11px;
+  margin-top: 17px;
+  padding: 17px;
+  border: 1px solid var(--ats-border);
+  border-radius: 14px;
+  background: var(--ats-card);
+}
+
+.ats-result-note strong {
+  flex: 0 0 auto;
+  color: var(--ats-primary-dark);
+  font-size: 0.78rem;
+}
+
+.ats-result-note p {
+  margin: 0;
+  color: var(--ats-muted);
+  font-size: 0.75rem;
+  line-height: 1.55;
+}
+
+
+/* =========================================================
+   FEATURES
+   ========================================================= */
+
+.ats-features-section {
+  margin-top: 68px;
+}
+
+.ats-section-heading {
+  max-width: 760px;
+  margin: 0 auto 26px;
+  text-align: center;
+}
+
+.ats-section-heading h2 {
+  margin: 6px 0 8px;
+  font-size: clamp(1.55rem, 3vw, 2.15rem);
+  line-height: 1.2;
+}
+
+.ats-section-heading p {
+  margin: 0;
+  color: var(--ats-muted);
+  font-size: 0.86rem;
+  line-height: 1.65;
+}
+
+.ats-feature-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.ats-feature-card {
+  padding: 22px;
+  border: 1px solid var(--ats-border);
+  border-radius: 17px;
+  background: var(--ats-card);
+  box-shadow: 0 8px 25px rgba(24, 50, 31, 0.045);
+}
+
+.ats-feature-card > div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 43px;
+  height: 43px;
+  margin-bottom: 15px;
+  border-radius: 12px;
+  background: var(--ats-primary-light);
+  font-size: 1.2rem;
+}
+
+.ats-feature-card h3 {
+  margin: 0 0 8px;
+  font-size: 0.96rem;
+}
+
+.ats-feature-card p {
+  margin: 0;
+  color: var(--ats-muted);
+  font-size: 0.77rem;
+  line-height: 1.6;
+}
+
+
+/* =========================================================
+   PRIVACY
+   ========================================================= */
+
+.ats-privacy-section {
+  margin-top: 55px;
+}
+
+.ats-privacy-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 17px;
+  padding: 21px;
+  border: 1px solid var(--ats-border);
+  border-radius: 17px;
+  background: var(--ats-card);
+}
+
+.ats-privacy-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  width: 45px;
+  height: 45px;
+  border-radius: 12px;
+  background: var(--ats-primary-light);
+  font-size: 1.2rem;
+}
+
+.ats-privacy-card h2 {
+  margin: 0 0 8px;
+  font-size: 1rem;
+}
+
+.ats-privacy-card p {
+  margin: 0 0 7px;
+  color: var(--ats-muted);
+  font-size: 0.76rem;
+  line-height: 1.6;
+}
+
+.ats-privacy-card p:last-child {
+  margin-bottom: 0;
+}
+
+.ats-privacy-card a {
+  color: var(--ats-primary);
+  font-weight: 750;
+}
+
+
+/* =========================================================
+   DARK THEME
+   ========================================================= */
+
+html[data-theme="dark"] {
+  --ats-bg: #101511;
+  --ats-card: #171d18;
+  --ats-text: #edf4ee;
+  --ats-muted: #aeb9b1;
+  --ats-border: #2b352d;
+  --ats-input: #121712;
+
+  --ats-primary-light: rgba(76, 175, 80, 0.12);
+  --ats-danger-bg: rgba(198, 40, 40, 0.14);
+  --ats-success-bg: rgba(46, 125, 50, 0.14);
+  --ats-warning-bg: rgba(178, 106, 0, 0.14);
+  --ats-info-bg: rgba(21, 101, 192, 0.14);
+
+  --ats-shadow:
+    0 14px 38px rgba(0, 0, 0, 0.25);
+}
+
+html[data-theme="dark"] .ats-score-card {
+  background:
+    linear-gradient(
+      135deg,
+      rgba(46, 125, 50, 0.15),
+      rgba(23, 29, 24, 0.9)
+    );
+}
+
+html[data-theme="dark"] .ats-hero-points span {
+  background: rgba(255, 255, 255, 0.015);
+}
+
+html[data-theme="dark"] .ats-consent-box {
+  background: rgba(255, 255, 255, 0.015);
+}
+
+
+/* =========================================================
+   SENIOR THEME
+   ========================================================= */
+
+html[data-theme="senior"] {
+  --ats-primary: #0b6b28;
+  --ats-primary-dark: #064d1c;
+  --ats-primary-light: #e3f4e7;
+
+  --ats-text: #111111;
+  --ats-muted: #333333;
+  --ats-border: #9ca79f;
+  --ats-input: #ffffff;
+  --ats-card: #ffffff;
+}
+
+html[data-theme="senior"] .ats-page {
+  font-size: 1.07rem;
+}
+
+html[data-theme="senior"] .ats-hero h1 {
+  font-size: clamp(2.3rem, 6vw, 3.7rem);
+}
+
+html[data-theme="senior"] .ats-hero > p {
+  font-size: 1rem;
+}
+
+html[data-theme="senior"] .ats-form-group textarea {
+  font-size: 1rem;
+  line-height: 1.7;
+}
+
+html[data-theme="senior"] .ats-form-group small,
+html[data-theme="senior"] .ats-card-header p,
+html[data-theme="senior"] .ats-guide-step p,
+html[data-theme="senior"] .ats-feature-card p,
+html[data-theme="senior"] .ats-privacy-card p {
+  font-size: 0.9rem;
+}
+
+html[data-theme="senior"] .ats-label-row label {
+  font-size: 1rem;
+}
+
+html[data-theme="senior"] .ats-primary-btn,
+html[data-theme="senior"] .ats-secondary-btn {
+  min-height: 56px;
+  font-size: 1rem;
+}
+
+
+/* =========================================================
+   TABLET
+   ========================================================= */
+
+@media (max-width: 1000px) {
+
+  .ats-workspace {
+    grid-template-columns: 1fr;
+  }
+
+  .ats-guide-card {
+    position: static;
+  }
+
+  .ats-feature-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 700px) {
+
+  .ats-page {
+    width: min(100% - 22px, 1180px);
+    padding-top: 28px;
+    padding-bottom: 55px;
+  }
+
+  .ats-hero {
+    margin-bottom: 27px;
+  }
+
+  .ats-hero h1 {
+    font-size: 2rem;
+  }
+
+  .ats-hero > p {
+    font-size: 0.9rem;
+  }
+
+  .ats-hero-points {
+    gap: 6px;
+  }
+
+  .ats-hero-points span {
+    font-size: 0.68rem;
+    padding: 6px 8px;
+  }
+
+  .ats-input-card,
+  .ats-guide-card {
+    padding: 18px;
+  }
+
+  .ats-card-header {
+    margin-bottom: 20px;
+  }
+
+  .ats-card-header h2 {
+    font-size: 1.15rem;
+  }
+
+  .ats-form-group textarea {
+    min-height: 175px;
+  }
+
+  .ats-action-area {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .ats-primary-btn {
+    width: 100%;
+  }
+
+  .ats-results-heading {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .ats-results-heading h2 {
+    font-size: 1.4rem;
+  }
+
+  .ats-secondary-btn {
+    width: 100%;
+  }
+
+  .ats-score-card {
+    padding: 19px;
+  }
+
+  .ats-score-content {
+    align-items: flex-start;
+  }
+
+  .ats-score-circle {
+    width: 100px;
+    height: 100px;
+    border-width: 6px;
+  }
+
+  .ats-score-circle strong {
+    font-size: 1.8rem;
+  }
+
+  .ats-results-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .ats-feature-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .ats-privacy-card {
+    flex-direction: column;
+    padding: 18px;
+  }
+
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+   ========================================================= */
+
+@media (max-width: 430px) {
+
+  .ats-page {
+    width: calc(100% - 16px);
+  }
+
+  .ats-input-card,
+  .ats-guide-card {
+    padding: 15px;
+  }
+
+  .ats-label-row {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .ats-form-group textarea {
+    min-height: 165px;
+    padding: 12px;
+  }
+
+  .ats-score-content {
+    flex-direction: column-reverse;
+    align-items: center;
+    text-align: center;
+  }
+
+  .ats-score-circle {
+    width: 105px;
+    height: 105px;
+  }
+
+  .ats-result-card,
+  .ats-feature-card {
+    padding: 18px;
+  }
+
+}
+
+
+/* =========================================================
+   ACCESSIBILITY
+   ========================================================= */
+
+.ats-primary-btn:focus-visible,
+.ats-secondary-btn:focus-visible,
+.ats-form-group textarea:focus-visible,
+.ats-consent-box input:focus-visible {
+  outline: 3px solid rgba(46, 125, 50, 0.22);
+  outline-offset: 2px;
+}
+
+
+/* =========================================================
+   REDUCED MOTION
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+  .ats-primary-btn,
+  .ats-secondary-btn,
+  .ats-form-group textarea,
+  .ats-score-progress {
+    transition: none;
+  }
+
+}

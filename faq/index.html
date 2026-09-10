@@ -1,130 +1,568 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>FAQ - niDar Tools</title>
+  <title>FAQ - niDar Tools | Frequently Asked Questions</title>
 
-<meta name="description" content="Frequently Asked Questions about niDar Tools.">
-<link rel="canonical" href="https://nidartools.com/faq/">
+  <meta name="description" content="Find answers to frequently asked questions about niDar Tools, free online tools, privacy, supported devices, business use, contacting support and more.">
 
-<link rel="icon" type="image/x-icon" href="../assets/favicon/favicon.ico">
-<link rel="icon" type="image/png" sizes="16x16" href="../assets/favicon/favicon-16x16.png">
-<link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon/favicon-32x32.png">
-<link rel="apple-touch-icon" sizes="180x180" href="../assets/favicon/apple-touch-icon.png">
-<link rel="stylesheet" href="../assets/css/style.css">
+  <meta name="keywords" content="niDar Tools FAQ, frequently asked questions, online tools FAQ, niDar Tools support, niDar Tools privacy">
+
+  <meta name="author" content="niDar Marketing And Services">
+  <meta name="robots" content="index, follow">
+
+  <link rel="canonical" href="https://nidartools.com/faq/">
+
+  <link rel="icon" type="image/x-icon" href="../assets/favicon/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="../assets/favicon/favicon-16x16.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon/favicon-32x32.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="../assets/favicon/apple-touch-icon.png">
+
+  <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
+<div id="site-header"></div>
 
-<header>
-  <div class="container nav">
-    <h2>niDar Tools</h2>
+<main class="faq-page">
 
-    <nav>
-      <a href="../">Home</a>
-      <a href="/about/">About</a>
-      <a href="/contact/">Contact</a>
-      <a href="/faq/">FAQ</a>
-    </nav>
-  </div>
-</header>
+  <!-- HERO -->
+  <section class="faq-hero">
 
-<main class="container">
+    <span class="faq-badge">❓ niDar Tools FAQ</span>
 
-<section class="hero">
-<h1>Frequently Asked Questions</h1>
+    <h1>Frequently Asked Questions</h1>
 
-<p>
-Find answers to common questions about niDar Tools.
-</p>
-</section>
+    <p>
+      Find clear answers to common questions about niDar Tools,
+      our online utilities, privacy, supported devices and general usage.
+    </p>
 
-<section class="card">
-<h2>1. Is niDar Tools free to use?</h2>
+    <div class="hero-features">
+      <span>⚡ Quick Answers</span>
+      <span>🔒 Privacy Focused</span>
+      <span>📱 Mobile Friendly</span>
+      <span>🆓 Free Tools</span>
+    </div>
 
-<p>
-Yes. Most tools on niDar Tools are completely free to use.
-</p>
-</section>
+  </section>
 
-<section class="card">
-<h2>2. Do I need to create an account?</h2>
 
-<p>
-No. Most tools can be used without creating an account.
-</p>
-</section>
+  <!-- FAQ WORKSPACE -->
+  <section class="faq-workspace">
 
-<section class="card">
-<h2>3. Are my files stored on your servers?</h2>
+    <div class="section-intro">
 
-<p>
-Whenever possible, files are processed directly in your browser.
-Some tools may temporarily process files on a server depending on
-their functionality.
-</p>
-</section>
+      <span class="section-badge">Find Your Answer</span>
 
-<section class="card">
-<h2>4. Is my data secure?</h2>
+      <h2>How Can We Help?</h2>
 
-<p>
-We take reasonable steps to protect your privacy and data.
-Please read our Privacy Policy for more information.
-</p>
-</section>
+      <p>
+        Browse the questions below or search for a topic to find
+        the information you need.
+      </p>
 
-<section class="card">
-<h2>5. Which devices are supported?</h2>
+    </div>
 
-<p>
-niDar Tools works on Android, iPhone, Windows, Linux, macOS,
-and most modern web browsers.
-</p>
-</section>
 
-<section class="card">
-<h2>6. Can I use these tools for business?</h2>
+    <!-- SEARCH -->
+    <div class="faq-search">
 
-<p>
-Yes. Our tools can be used for personal, educational,
-and business purposes, subject to our Terms and Conditions.
-</p>
-</section>
+      <label for="faqSearch">Search Frequently Asked Questions</label>
 
-<section class="card">
-<h2>7. How can I contact you?</h2>
+      <div class="search-box">
 
-<p>
-Please visit our <a href="/contact/">Contact Page</a> if you
-have questions, suggestions, or business inquiries.
-</p>
-</section>
+        <span class="search-icon">🔎</span>
 
-<section class="card">
-<h2>8. Will more tools be added?</h2>
+        <input
+          type="search"
+          id="faqSearch"
+          placeholder="Search questions..."
+          autocomplete="off"
+          aria-label="Search frequently asked questions">
 
-<p>
-Yes. We regularly improve niDar Tools by adding new online tools,
-features, and performance enhancements.
-</p>
-</section>
+        <button
+          type="button"
+          id="clearSearch"
+          class="clear-search"
+          aria-label="Clear FAQ search"
+          hidden>
+          ✕
+        </button>
+
+      </div>
+
+      <p id="searchStatus" class="search-status" aria-live="polite"></p>
+
+    </div>
+
+
+    <!-- FAQ LIST -->
+    <div class="faq-list" id="faqList">
+
+
+      <!-- FAQ 1 -->
+      <article class="faq-item">
+
+        <button
+          type="button"
+          class="faq-question"
+          aria-expanded="false"
+          aria-controls="faq-answer-1">
+
+          <span class="question-number">1</span>
+
+          <span class="question-text">
+            Is niDar Tools free to use?
+          </span>
+
+          <span class="faq-toggle" aria-hidden="true">+</span>
+
+        </button>
+
+        <div
+          class="faq-answer"
+          id="faq-answer-1"
+          hidden>
+
+          <p>
+            Yes. Most tools on niDar Tools are completely free to use.
+          </p>
+
+        </div>
+
+      </article>
+
+
+      <!-- FAQ 2 -->
+      <article class="faq-item">
+
+        <button
+          type="button"
+          class="faq-question"
+          aria-expanded="false"
+          aria-controls="faq-answer-2">
+
+          <span class="question-number">2</span>
+
+          <span class="question-text">
+            Do I need to create an account?
+          </span>
+
+          <span class="faq-toggle" aria-hidden="true">+</span>
+
+        </button>
+
+        <div
+          class="faq-answer"
+          id="faq-answer-2"
+          hidden>
+
+          <p>
+            No. Most tools can be used without creating an account.
+          </p>
+
+        </div>
+
+      </article>
+
+
+      <!-- FAQ 3 -->
+      <article class="faq-item">
+
+        <button
+          type="button"
+          class="faq-question"
+          aria-expanded="false"
+          aria-controls="faq-answer-3">
+
+          <span class="question-number">3</span>
+
+          <span class="question-text">
+            Are my files stored on your servers?
+          </span>
+
+          <span class="faq-toggle" aria-hidden="true">+</span>
+
+        </button>
+
+        <div
+          class="faq-answer"
+          id="faq-answer-3"
+          hidden>
+
+          <p>
+            Whenever possible, files are processed directly in your
+            browser. Some tools may temporarily process files on a
+            server depending on their functionality.
+          </p>
+
+        </div>
+
+      </article>
+
+
+      <!-- FAQ 4 -->
+      <article class="faq-item">
+
+        <button
+          type="button"
+          class="faq-question"
+          aria-expanded="false"
+          aria-controls="faq-answer-4">
+
+          <span class="question-number">4</span>
+
+          <span class="question-text">
+            Is my data secure?
+          </span>
+
+          <span class="faq-toggle" aria-hidden="true">+</span>
+
+        </button>
+
+        <div
+          class="faq-answer"
+          id="faq-answer-4"
+          hidden>
+
+          <p>
+            We take reasonable steps to protect your privacy and data.
+            Please read our
+            <a href="/privacy-policy/">Privacy Policy</a>
+            for more information.
+          </p>
+
+        </div>
+
+      </article>
+
+
+      <!-- FAQ 5 -->
+      <article class="faq-item">
+
+        <button
+          type="button"
+          class="faq-question"
+          aria-expanded="false"
+          aria-controls="faq-answer-5">
+
+          <span class="question-number">5</span>
+
+          <span class="question-text">
+            Which devices are supported?
+          </span>
+
+          <span class="faq-toggle" aria-hidden="true">+</span>
+
+        </button>
+
+        <div
+          class="faq-answer"
+          id="faq-answer-5"
+          hidden>
+
+          <p>
+            niDar Tools works on Android, iPhone, Windows, Linux,
+            macOS, and most modern web browsers.
+          </p>
+
+        </div>
+
+      </article>
+
+
+      <!-- FAQ 6 -->
+      <article class="faq-item">
+
+        <button
+          type="button"
+          class="faq-question"
+          aria-expanded="false"
+          aria-controls="faq-answer-6">
+
+          <span class="question-number">6</span>
+
+          <span class="question-text">
+            Can I use these tools for business?
+          </span>
+
+          <span class="faq-toggle" aria-hidden="true">+</span>
+
+        </button>
+
+        <div
+          class="faq-answer"
+          id="faq-answer-6"
+          hidden>
+
+          <p>
+            Yes. Our tools can be used for personal, educational,
+            and business purposes, subject to our
+            <a href="/terms/">Terms and Conditions</a>.
+          </p>
+
+        </div>
+
+      </article>
+
+
+      <!-- FAQ 7 -->
+      <article class="faq-item">
+
+        <button
+          type="button"
+          class="faq-question"
+          aria-expanded="false"
+          aria-controls="faq-answer-7">
+
+          <span class="question-number">7</span>
+
+          <span class="question-text">
+            How can I contact you?
+          </span>
+
+          <span class="faq-toggle" aria-hidden="true">+</span>
+
+        </button>
+
+        <div
+          class="faq-answer"
+          id="faq-answer-7"
+          hidden>
+
+          <p>
+            Please visit our
+            <a href="/contact/">Contact Page</a>
+            if you have questions, suggestions, or business inquiries.
+          </p>
+
+        </div>
+
+      </article>
+
+
+      <!-- FAQ 8 -->
+      <article class="faq-item">
+
+        <button
+          type="button"
+          class="faq-question"
+          aria-expanded="false"
+          aria-controls="faq-answer-8">
+
+          <span class="question-number">8</span>
+
+          <span class="question-text">
+            Will more tools be added?
+          </span>
+
+          <span class="faq-toggle" aria-hidden="true">+</span>
+
+        </button>
+
+        <div
+          class="faq-answer"
+          id="faq-answer-8"
+          hidden>
+
+          <p>
+            Yes. We regularly improve niDar Tools by adding new online
+            tools, features, and performance enhancements.
+          </p>
+
+        </div>
+
+      </article>
+
+
+    </div>
+
+
+    <!-- NO RESULTS -->
+    <div
+      id="noResults"
+      class="no-results"
+      hidden>
+
+      <div class="no-results-icon">🔎</div>
+
+      <h3>No matching question found</h3>
+
+      <p>
+        Try another search term or browse all frequently asked questions.
+      </p>
+
+      <button
+        type="button"
+        id="showAllBtn"
+        class="secondary-button">
+        Show All Questions
+      </button>
+
+    </div>
+
+
+    <!-- FAQ CONTROLS -->
+    <div class="faq-controls">
+
+      <button
+        type="button"
+        id="expandAllBtn"
+        class="secondary-button">
+        ＋ Expand All
+      </button>
+
+      <button
+        type="button"
+        id="collapseAllBtn"
+        class="secondary-button">
+        − Collapse All
+      </button>
+
+    </div>
+
+  </section>
+
+
+  <!-- HELP SECTION -->
+  <section class="content-section">
+
+    <div class="section-heading">
+
+      <span class="section-badge">Still Need Help?</span>
+
+      <h2>Couldn't Find Your Answer?</h2>
+
+      <p>
+        If your question is not covered here, our Support Center
+        and Contact page can help you find the next step.
+      </p>
+
+    </div>
+
+
+    <div class="help-grid">
+
+      <a href="/support/" class="help-card">
+
+        <div class="help-icon">🛟</div>
+
+        <div>
+          <h3>Visit Support Center</h3>
+
+          <p>
+            Find troubleshooting tips, tool-specific help and
+            useful information about using niDar Tools.
+          </p>
+
+          <strong>Open Support →</strong>
+        </div>
+
+      </a>
+
+
+      <a href="/contact/" class="help-card">
+
+        <div class="help-icon">📧</div>
+
+        <div>
+          <h3>Contact Us</h3>
+
+          <p>
+            Send us questions, suggestions, feedback, bug reports
+            or business inquiries.
+          </p>
+
+          <strong>Contact niDar Tools →</strong>
+        </div>
+
+      </a>
+
+    </div>
+
+  </section>
+
+
+  <!-- PRIVACY -->
+  <section class="privacy-card">
+
+    <div class="privacy-icon">🔒</div>
+
+    <div>
+
+      <span class="section-badge">Privacy & Security</span>
+
+      <h2>Your Privacy Matters</h2>
+
+      <p>
+        Many niDar Tools are designed to perform processing directly
+        in your browser. Depending on the tool and feature, files or
+        information may be processed locally rather than uploaded to
+        a server. Always check the individual tool's information and
+        privacy details before using sensitive files.
+      </p>
+
+      <a href="/privacy-policy/" class="privacy-link">
+        Read Privacy Policy →
+      </a>
+
+    </div>
+
+  </section>
+
+
+  <!-- CTA -->
+  <section class="faq-cta">
+
+    <span class="section-badge">Explore niDar Tools</span>
+
+    <h2>Ready to Use Our Tools?</h2>
+
+    <p>
+      Explore our free browser-based tools for images, PDFs,
+      calculators, QR codes and data-format tasks.
+    </p>
+
+    <div class="cta-actions">
+
+      <a href="/" class="primary-button">
+        🛠️ Explore Tools
+      </a>
+
+      <a href="/contact/" class="secondary-button">
+        📧 Contact Us
+      </a>
+
+    </div>
+
+  </section>
+
+
+  <!-- FAQ NOTE -->
+  <section class="faq-note">
+
+    <strong>FAQ information</strong>
+
+    <p>
+      We regularly review and improve our tools and help information.
+      If you notice outdated information or have a useful suggestion,
+      please let us know.
+    </p>
+
+  </section>
 
 </main>
 
-<footer>
 
-<p>&copy; 2026 niDar Tools. All Rights Reserved.</p>
+<!-- COMMON FOOTER -->
+<div id="site-footer"></div>
 
-<p>
-Developed by <strong>niDar Marketing And Services</strong>
-</p>
 
-</footer>
-
-<script src="../assets/js/script.js"></script>
+<script src="../assets/js/common.js"></script>
+<script src="script.js"></script>
 
 </body>
 </html>

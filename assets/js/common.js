@@ -1,0 +1,362 @@
+(function () {
+
+    const base = '/';
+
+    function loadComponent(id, file, callback) {
+        const element = document.getElementById(id);
+
+        if (!element) return;
+
+        fetch(base + file)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Failed to load ' + file);
+                }
+
+                return response.text();
+            })
+            .then(html => {
+                element.innerHTML = html;
+
+                if (typeof callback === 'function') {
+                    callback(element);
+                }
+            })
+            .catch(error => {
+                console.error(error);
+            });
+    }
+
+    function loadCommonCSS() {
+        if (document.querySelector('link[data-nidar-common-css]')) {
+            return;
+        }
+
+        const link = document.createElement('link');
+
+        link.rel = 'stylesheet';
+        link.href = '/assets/css/common.css';
+        link.dataset.nidarCommonCss = 'true';
+
+        document.head.appendChild(link);
+    }
+
+    /* ---------- Theme System ---------- */
+
+    function initTheme() {
+
+        const themeButton = document.getElementById('themeToggle');
+
+        if (!themeButton) return;
+
+        const savedTheme =
+            localStorage.getItem('nidar_theme') ||
+            localStorage.getItem('theme') ||
+            'light';
+
+        function applyTheme(theme) {
+
+            document.documentElement.setAttribute(
+                'data-theme',
+                theme
+            );
+
+            document.body.classList.remove(
+                'dark',
+                'senior-theme'
+            );
+
+            if (theme === 'dark') {
+                document.body.classList.add('dark');
+                themeButton.textContent = '☀️';
+                themeButton.title = 'Switch to Senior Theme';
+
+            } else if (theme === 'senior') {
+                document.body.classList.add('senior-theme');
+                themeButton.textContent = '👓';
+                themeButton.title = 'Switch to Light Theme';
+
+            } else {
+                themeButton.textContent = '🌙';
+                themeButton.title = 'Switch to Dark Theme';
+            }
+
+            localStorage.setItem('nidar_theme', theme);
+            localStorage.setItem('theme', theme);
+        }
+
+        applyTheme(savedTheme);
+
+        themeButton.addEventListener('click', function () {
+
+            const current =
+                localStorage.getItem('nidar_theme') || 'light';
+
+            let next;
+
+            if (current === 'light') {
+                next = 'dark';
+            } else if (current === 'dark') {
+                next = 'senior';
+            } else {
+                next = 'light';
+            }
+
+            applyTheme(next);
+        });
+    }
+
+    /* ---------- Mobile Menu ---------- */
+
+    function initMobileMenu() {
+
+        const menuButton =
+            document.getElementById('nidarMenuToggle');
+
+        const nav =
+            document.getElementById('nidarNav');
+
+        if (!menuButton || !nav) return;
+
+        menuButton.addEventListener('click', function () {
+
+            const isOpen =
+                nav.classList.toggle('is-open');
+
+            menuButton.setAttribute(
+                'aria-expanded',
+                String(isOpen)
+            );
+
+            menuButton.setAttribute(
+                'aria-label',
+                isOpen
+                    ? 'Close navigation menu'
+                    : 'Open navigation menu'
+            );
+        });
+
+        nav.querySelectorAll('a').forEach(function (link) {
+
+            link.addEventListener('click', function () {
+
+                nav.classList.remove('is-open');
+
+                menuButton.setAttribute(
+                    'aria-expanded',
+                    'false'
+                );
+            });
+        });
+    }
+
+    /* ---------- Tool Search ---------- */
+
+    function initSearch() {
+
+        const searchButton =
+            document.getElementById('nidarSearchBtn');
+
+        const searchPanel =
+            document.getElementById('nidarSearchPanel');
+
+        const searchInput =
+            document.getElementById('nidarSearchInput');
+
+        const results =
+            document.getElementById('nidarSearchResults');
+
+        if (
+            !searchButton ||
+            !searchPanel ||
+            !searchInput ||
+            !results
+        ) {
+            return;
+        }
+
+        const tools = [
+            ['Image Resizer', '/image-resizer/'],
+            ['Image Compressor', '/image-compressor/'],
+            ['Image Converter', '/image-converter/'],
+            ['Background Remover', '/background-remover/'],
+            ['Icon/Favicon Tools', '/icon-kit-generator/'],
+            ['Image to PDF', '/image-to-pdf/'],
+            ['Word to PDF', '/word-to-pdf/'],
+            ['PDF to Word', '/pdf-to-word/'],
+            ['QR Generator', '/qr-generator/'],
+            ['Word Counter', '/word-counter/'],
+            ['Age Calculator', '/age-calculator/'],
+            ['Percentage Calculator', '/percentage-calculator/'],
+            ['EMI Calculator', '/emi-calculator/'],
+            ['Construction Cost Estimator', '/construction-cost-estimator/'],
+            ['JSON Formatter', '/json-formatter/'],
+            ['Base64 Encoder/Decoder', '/base64-encoder-decoder/']
+        ];
+
+        function showResults(query) {
+
+            results.innerHTML = '';
+
+            const text = query.trim().toLowerCase();
+
+            if (!text) {
+                return;
+            }
+
+            const matches = tools.filter(function (tool) {
+
+                return tool[0]
+                    .toLowerCase()
+                    .includes(text);
+            });
+
+            if (matches.length === 0) {
+
+                results.innerHTML =
+                    '<div class="nidar-search-empty">No tools found.</div>';
+
+                return;
+            }
+
+            matches.forEach(function (tool) {
+
+                const link =
+                    document.createElement('a');
+
+                link.href = tool[1];
+                link.textContent = tool[0];
+                link.className = 'nidar-search-result';
+
+                results.appendChild(link);
+            });
+        }
+
+        searchButton.addEventListener('click', function () {
+
+            const isHidden =
+                searchPanel.hasAttribute('hidden');
+
+            if (isHidden) {
+
+                searchPanel.removeAttribute('hidden');
+
+                setTimeout(function () {
+                    searchInput.focus();
+                }, 50);
+
+            } else {
+
+                searchPanel.setAttribute('hidden', '');
+
+                searchInput.value = '';
+                results.innerHTML = '';
+            }
+        });
+
+        searchInput.addEventListener(
+            'input',
+            function () {
+                showResults(searchInput.value);
+            }
+        );
+
+        searchInput.addEventListener(
+            'keydown',
+            function (event) {
+
+                if (event.key === 'Escape') {
+
+                    searchPanel.setAttribute(
+                        'hidden',
+                        ''
+                    );
+
+                    searchInput.value = '';
+                    results.innerHTML = '';
+                }
+            }
+        );
+    }
+
+    /* ---------- Scroll To Top ---------- */
+
+    function createScrollTopButton() {
+
+        if (document.querySelector('.nidar-scroll-top')) {
+            return;
+        }
+
+        const button =
+            document.createElement('button');
+
+        button.className = 'nidar-scroll-top';
+        button.type = 'button';
+
+        button.setAttribute(
+            'aria-label',
+            'Scroll to top'
+        );
+
+        button.title = 'Back to top';
+        button.innerHTML = '↑';
+
+        document.body.appendChild(button);
+
+        window.addEventListener(
+            'scroll',
+            function () {
+
+                if (window.scrollY > 300) {
+                    button.classList.add('is-visible');
+                } else {
+                    button.classList.remove('is-visible');
+                }
+
+            },
+            { passive: true }
+        );
+
+        button.addEventListener(
+            'click',
+            function () {
+
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+
+            }
+        );
+    }
+
+    /* ---------- Start Common System ---------- */
+
+    document.addEventListener(
+        'DOMContentLoaded',
+        function () {
+
+            loadCommonCSS();
+
+            loadComponent(
+                'site-header',
+                'header.html',
+                function () {
+
+                    initTheme();
+                    initMobileMenu();
+                    initSearch();
+
+                }
+            );
+
+            loadComponent(
+                'site-footer',
+                'footer.html'
+            );
+
+            createScrollTopButton();
+        }
+    );
+
+})();

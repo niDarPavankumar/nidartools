@@ -1,0 +1,991 @@
+/* =========================================================
+   niDar Tools — EMI Calculator
+   Original Professional Tool UI
+   ========================================================= */
+
+:root {
+  --emi-primary: #2e7d32;
+  --emi-primary-dark: #1b5e20;
+  --emi-primary-light: #e8f5e9;
+  --emi-accent: #66bb6a;
+
+  --emi-bg: #f5f8f6;
+  --emi-card: #ffffff;
+  --emi-text: #17211b;
+  --emi-muted: #68756d;
+  --emi-border: #dfe7e1;
+  --emi-input: #ffffff;
+
+  --emi-danger: #c62828;
+  --emi-danger-bg: #ffebee;
+
+  --emi-shadow:
+    0 12px 35px rgba(24, 50, 31, 0.08);
+
+  --emi-radius: 20px;
+}
+
+
+/* =========================================================
+   PAGE
+   ========================================================= */
+
+.emi-page {
+  width: min(1180px, calc(100% - 32px));
+  margin: 0 auto;
+  padding: 42px 0 70px;
+  color: var(--emi-text);
+}
+
+
+/* =========================================================
+   HERO
+   ========================================================= */
+
+.emi-hero {
+  max-width: 820px;
+  margin: 0 auto 38px;
+  text-align: center;
+}
+
+.emi-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 15px;
+  border: 1px solid rgba(46, 125, 50, 0.18);
+  border-radius: 999px;
+  background: var(--emi-primary-light);
+  color: var(--emi-primary-dark);
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.emi-hero h1 {
+  margin: 16px 0 10px;
+  font-size: clamp(2rem, 5vw, 3.3rem);
+  line-height: 1.08;
+  letter-spacing: -0.035em;
+}
+
+.emi-hero p {
+  max-width: 680px;
+  margin: 0 auto;
+  color: var(--emi-muted);
+  font-size: 1.05rem;
+  line-height: 1.7;
+}
+
+
+/* =========================================================
+   MAIN WORKSPACE
+   ========================================================= */
+
+.emi-workspace {
+  display: grid;
+  grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.08fr);
+  gap: 24px;
+  align-items: start;
+}
+
+
+/* =========================================================
+   CARD
+   ========================================================= */
+
+.emi-card {
+  background: var(--emi-card);
+  border: 1px solid var(--emi-border);
+  border-radius: var(--emi-radius);
+  box-shadow: var(--emi-shadow);
+}
+
+.emi-input-card,
+.emi-result-card {
+  padding: 26px;
+}
+
+.emi-card-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.emi-card-header h2 {
+  margin: 5px 0 0;
+  font-size: 1.35rem;
+  line-height: 1.25;
+}
+
+.emi-section-label {
+  display: inline-block;
+  color: var(--emi-primary);
+  font-size: 0.76rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+
+/* =========================================================
+   INPUTS
+   ========================================================= */
+
+.emi-field {
+  margin-bottom: 20px;
+}
+
+.emi-field label {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 0.92rem;
+  font-weight: 750;
+}
+
+.emi-field small {
+  display: block;
+  margin-top: 6px;
+  color: var(--emi-muted);
+  font-size: 0.76rem;
+  line-height: 1.45;
+}
+
+.emi-optional {
+  color: var(--emi-muted);
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+.emi-input-wrap {
+  display: flex;
+  align-items: center;
+  min-height: 52px;
+  overflow: hidden;
+  background: var(--emi-input);
+  border: 1px solid var(--emi-border);
+  border-radius: 13px;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.emi-input-wrap:focus-within {
+  border-color: var(--emi-primary);
+  box-shadow: 0 0 0 4px rgba(46, 125, 50, 0.1);
+}
+
+.emi-prefix,
+.emi-suffix {
+  flex: 0 0 auto;
+  padding: 0 15px;
+  color: var(--emi-primary-dark);
+  font-weight: 800;
+}
+
+.emi-input-wrap input {
+  width: 100%;
+  min-width: 0;
+  height: 50px;
+  padding: 0 14px;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: var(--emi-text);
+  font: inherit;
+  font-size: 1rem;
+  font-weight: 650;
+}
+
+.emi-input-wrap .emi-prefix + input {
+  padding-left: 0;
+}
+
+.emi-input-wrap input::-webkit-outer-spin-button,
+.emi-input-wrap input::-webkit-inner-spin-button {
+  margin: 0;
+  -webkit-appearance: none;
+}
+
+.emi-input-wrap input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+.emi-tenure-row {
+  display: grid;
+  grid-template-columns: 1fr 145px;
+  gap: 10px;
+}
+
+.emi-tenure-row input,
+.emi-tenure-row select {
+  width: 100%;
+  height: 52px;
+  min-width: 0;
+  padding: 0 14px;
+  border: 1px solid var(--emi-border);
+  border-radius: 13px;
+  outline: 0;
+  background: var(--emi-input);
+  color: var(--emi-text);
+  font: inherit;
+  font-weight: 650;
+}
+
+.emi-tenure-row input:focus,
+.emi-tenure-row select:focus {
+  border-color: var(--emi-primary);
+  box-shadow: 0 0 0 4px rgba(46, 125, 50, 0.1);
+}
+
+
+/* =========================================================
+   BUTTONS
+   ========================================================= */
+
+.emi-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 26px;
+}
+
+.emi-primary-btn,
+.emi-secondary-btn,
+.emi-small-btn {
+  min-height: 48px;
+  padding: 0 20px;
+  border-radius: 12px;
+  font: inherit;
+  font-weight: 750;
+  cursor: pointer;
+  transition:
+    transform 0.18s ease,
+    box-shadow 0.18s ease,
+    background 0.18s ease;
+}
+
+.emi-primary-btn {
+  flex: 1;
+  border: 1px solid var(--emi-primary);
+  background: var(--emi-primary);
+  color: #ffffff;
+  box-shadow: 0 8px 18px rgba(46, 125, 50, 0.18);
+}
+
+.emi-primary-btn:hover {
+  background: var(--emi-primary-dark);
+  transform: translateY(-1px);
+}
+
+.emi-secondary-btn {
+  border: 1px solid var(--emi-border);
+  background: transparent;
+  color: var(--emi-text);
+}
+
+.emi-secondary-btn:hover {
+  border-color: var(--emi-primary);
+  color: var(--emi-primary);
+}
+
+.emi-primary-btn:active,
+.emi-secondary-btn:active,
+.emi-small-btn:active {
+  transform: translateY(0);
+}
+
+.emi-small-btn {
+  min-height: 40px;
+  padding: 0 14px;
+  border: 1px solid rgba(46, 125, 50, 0.2);
+  background: var(--emi-primary-light);
+  color: var(--emi-primary-dark);
+  font-size: 0.82rem;
+}
+
+
+/* =========================================================
+   ERROR
+   ========================================================= */
+
+.emi-error {
+  min-height: 20px;
+  margin-top: 12px;
+  padding: 0;
+  color: var(--emi-danger);
+  font-size: 0.82rem;
+  line-height: 1.45;
+}
+
+.emi-error:not(:empty) {
+  padding: 10px 12px;
+  border-radius: 10px;
+  background: var(--emi-danger-bg);
+}
+
+
+/* =========================================================
+   MAIN EMI RESULT
+   ========================================================= */
+
+.emi-main-result {
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 22px;
+  padding: 25px;
+  border-radius: 17px;
+  background:
+    linear-gradient(
+      135deg,
+      var(--emi-primary-light),
+      rgba(255, 255, 255, 0.7)
+    );
+  border: 1px solid rgba(46, 125, 50, 0.13);
+}
+
+.emi-main-result::after {
+  content: "₹";
+  position: absolute;
+  right: 18px;
+  bottom: -28px;
+  color: rgba(46, 125, 50, 0.06);
+  font-size: 8rem;
+  font-weight: 900;
+  pointer-events: none;
+}
+
+.emi-main-result span {
+  display: block;
+  color: var(--emi-muted);
+  font-size: 0.84rem;
+  font-weight: 700;
+}
+
+.emi-main-result strong {
+  position: relative;
+  z-index: 1;
+  display: block;
+  margin: 5px 0;
+  color: var(--emi-primary-dark);
+  font-size: clamp(2rem, 5vw, 2.7rem);
+  line-height: 1.15;
+  letter-spacing: -0.035em;
+}
+
+.emi-main-result small {
+  position: relative;
+  z-index: 1;
+  color: var(--emi-muted);
+  font-size: 0.76rem;
+}
+
+
+/* =========================================================
+   SUMMARY
+   ========================================================= */
+
+.emi-summary-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.emi-summary-item {
+  padding: 16px;
+  border: 1px solid var(--emi-border);
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.45);
+}
+
+.emi-summary-item span {
+  display: block;
+  margin-bottom: 6px;
+  color: var(--emi-muted);
+  font-size: 0.75rem;
+}
+
+.emi-summary-item strong {
+  display: block;
+  color: var(--emi-text);
+  font-size: 1rem;
+}
+
+
+/* =========================================================
+   PAYMENT BREAKDOWN
+   ========================================================= */
+
+.emi-breakdown {
+  padding-top: 4px;
+}
+
+.emi-breakdown-heading h3 {
+  margin: 0 0 12px;
+  font-size: 0.98rem;
+}
+
+.emi-breakdown-bar {
+  display: flex;
+  width: 100%;
+  height: 13px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: var(--emi-border);
+}
+
+.emi-principal-bar {
+  height: 100%;
+  background: var(--emi-primary);
+  transition: width 0.5s ease;
+}
+
+.emi-interest-bar {
+  height: 100%;
+  background: #a5b5aa;
+  transition: width 0.5s ease;
+}
+
+.emi-breakdown-legend {
+  display: flex;
+  justify-content: space-between;
+  gap: 15px;
+  margin-top: 10px;
+  color: var(--emi-muted);
+  font-size: 0.76rem;
+}
+
+.emi-breakdown-legend span {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.emi-breakdown-legend strong {
+  color: var(--emi-text);
+}
+
+.emi-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+.emi-dot-principal {
+  background: var(--emi-primary);
+}
+
+.emi-dot-interest {
+  background: #a5b5aa;
+}
+
+
+/* =========================================================
+   EXTRA PAYMENT
+   ========================================================= */
+
+.emi-extra-result {
+  margin-top: 22px;
+  padding: 18px;
+  border: 1px solid rgba(46, 125, 50, 0.15);
+  border-radius: 15px;
+  background: var(--emi-primary-light);
+}
+
+.emi-extra-result h3 {
+  margin: 0 0 14px;
+  color: var(--emi-primary-dark);
+  font-size: 0.95rem;
+}
+
+.emi-extra-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+.emi-extra-grid span {
+  display: block;
+  margin-bottom: 5px;
+  color: var(--emi-muted);
+  font-size: 0.7rem;
+}
+
+.emi-extra-grid strong {
+  color: var(--emi-text);
+  font-size: 0.88rem;
+}
+
+
+/* =========================================================
+   SCHEDULE SECTION
+   ========================================================= */
+
+.emi-schedule-section {
+  margin-top: 58px;
+}
+
+.emi-section-heading {
+  max-width: 760px;
+  margin: 0 auto 25px;
+  text-align: center;
+}
+
+.emi-section-heading h2 {
+  margin: 6px 0 8px;
+  font-size: clamp(1.55rem, 3vw, 2.15rem);
+  line-height: 1.2;
+}
+
+.emi-section-heading p {
+  margin: 0;
+  color: var(--emi-muted);
+  line-height: 1.65;
+}
+
+.emi-table-card {
+  overflow: hidden;
+}
+
+.emi-table-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  padding: 20px 22px;
+  border-bottom: 1px solid var(--emi-border);
+}
+
+.emi-table-toolbar strong {
+  display: block;
+  margin-bottom: 4px;
+}
+
+.emi-table-toolbar span {
+  display: block;
+  color: var(--emi-muted);
+  font-size: 0.76rem;
+}
+
+.emi-table-container {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.emi-table-container table {
+  width: 100%;
+  min-width: 780px;
+  border-collapse: collapse;
+}
+
+.emi-table-container th,
+.emi-table-container td {
+  padding: 13px 15px;
+  border-bottom: 1px solid var(--emi-border);
+  text-align: right;
+  white-space: nowrap;
+  font-size: 0.78rem;
+}
+
+.emi-table-container th:first-child,
+.emi-table-container td:first-child {
+  text-align: center;
+}
+
+.emi-table-container th {
+  background: var(--emi-primary-light);
+  color: var(--emi-primary-dark);
+  font-weight: 800;
+}
+
+.emi-table-container td {
+  color: var(--emi-text);
+}
+
+.emi-table-container tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+.emi-table-container tbody tr:hover {
+  background: rgba(46, 125, 50, 0.035);
+}
+
+
+/* =========================================================
+   INFORMATION CARDS
+   ========================================================= */
+
+.emi-info-section,
+.emi-features-section {
+  margin-top: 65px;
+}
+
+.emi-info-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+
+.emi-info-card {
+  padding: 22px;
+  background: var(--emi-card);
+  border: 1px solid var(--emi-border);
+  border-radius: 17px;
+  box-shadow: 0 8px 25px rgba(24, 50, 31, 0.045);
+}
+
+.emi-info-number {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  margin-bottom: 17px;
+  border-radius: 10px;
+  background: var(--emi-primary-light);
+  color: var(--emi-primary-dark);
+  font-weight: 850;
+}
+
+.emi-info-card h3 {
+  margin: 0 0 8px;
+  font-size: 0.98rem;
+}
+
+.emi-info-card p {
+  margin: 0;
+  color: var(--emi-muted);
+  font-size: 0.82rem;
+  line-height: 1.6;
+}
+
+
+/* =========================================================
+   FEATURES
+   ========================================================= */
+
+.emi-feature-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+
+.emi-feature-card {
+  padding: 23px;
+  border: 1px solid var(--emi-border);
+  border-radius: 17px;
+  background: var(--emi-card);
+  box-shadow: 0 8px 25px rgba(24, 50, 31, 0.045);
+}
+
+.emi-feature-card > span {
+  display: block;
+  margin-bottom: 14px;
+  font-size: 1.65rem;
+}
+
+.emi-feature-card h3 {
+  margin: 0 0 8px;
+  font-size: 0.98rem;
+}
+
+.emi-feature-card p {
+  margin: 0;
+  color: var(--emi-muted);
+  font-size: 0.82rem;
+  line-height: 1.6;
+}
+
+
+/* =========================================================
+   DISCLAIMER
+   ========================================================= */
+
+.emi-disclaimer {
+  max-width: 900px;
+  margin: 58px auto 0;
+  padding: 20px 22px;
+  border: 1px solid var(--emi-border);
+  border-radius: 15px;
+  background: var(--emi-card);
+}
+
+.emi-disclaimer h2 {
+  margin: 0 0 7px;
+  font-size: 0.95rem;
+}
+
+.emi-disclaimer p {
+  margin: 0;
+  color: var(--emi-muted);
+  font-size: 0.78rem;
+  line-height: 1.65;
+}
+
+
+/* =========================================================
+   DARK THEME
+   ========================================================= */
+
+html[data-theme="dark"] {
+  --emi-bg: #101511;
+  --emi-card: #171d18;
+  --emi-text: #edf4ee;
+  --emi-muted: #aeb9b1;
+  --emi-border: #2b352d;
+  --emi-input: #121712;
+  --emi-primary-light: rgba(76, 175, 80, 0.12);
+  --emi-danger-bg: rgba(198, 40, 40, 0.14);
+  --emi-shadow:
+    0 14px 38px rgba(0, 0, 0, 0.25);
+}
+
+html[data-theme="dark"] .emi-main-result {
+  background:
+    linear-gradient(
+      135deg,
+      rgba(46, 125, 50, 0.16),
+      rgba(23, 29, 24, 0.8)
+    );
+}
+
+html[data-theme="dark"] .emi-summary-item {
+  background: rgba(255, 255, 255, 0.015);
+}
+
+html[data-theme="dark"] .emi-interest-bar,
+html[data-theme="dark"] .emi-dot-interest {
+  background: #718078;
+}
+
+
+/* =========================================================
+   SENIOR THEME
+   ========================================================= */
+
+html[data-theme="senior"] {
+  --emi-primary: #0b6b28;
+  --emi-primary-dark: #064d1c;
+  --emi-primary-light: #e3f4e7;
+  --emi-text: #111111;
+  --emi-muted: #333333;
+  --emi-border: #9ca79f;
+  --emi-input: #ffffff;
+  --emi-card: #ffffff;
+}
+
+html[data-theme="senior"] .emi-page {
+  font-size: 1.08rem;
+}
+
+html[data-theme="senior"] .emi-hero h1 {
+  font-size: clamp(2.3rem, 6vw, 3.7rem);
+}
+
+html[data-theme="senior"] .emi-hero p,
+html[data-theme="senior"] .emi-field small,
+html[data-theme="senior"] .emi-info-card p,
+html[data-theme="senior"] .emi-feature-card p,
+html[data-theme="senior"] .emi-disclaimer p {
+  font-size: 0.95rem;
+}
+
+html[data-theme="senior"] .emi-field label,
+html[data-theme="senior"] .emi-summary-item strong {
+  font-size: 1rem;
+}
+
+html[data-theme="senior"] .emi-input-wrap,
+html[data-theme="senior"] .emi-tenure-row input,
+html[data-theme="senior"] .emi-tenure-row select {
+  min-height: 58px;
+}
+
+html[data-theme="senior"] .emi-input-wrap input {
+  height: 56px;
+  font-size: 1.08rem;
+}
+
+html[data-theme="senior"] .emi-primary-btn,
+html[data-theme="senior"] .emi-secondary-btn {
+  min-height: 56px;
+  font-size: 1rem;
+}
+
+
+/* =========================================================
+   RESPONSIVE — TABLET
+   ========================================================= */
+
+@media (max-width: 980px) {
+
+  .emi-workspace {
+    grid-template-columns: 1fr;
+  }
+
+  .emi-info-grid,
+  .emi-feature-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+}
+
+
+/* =========================================================
+   RESPONSIVE — MOBILE
+   ========================================================= */
+
+@media (max-width: 640px) {
+
+  .emi-page {
+    width: min(100% - 22px, 1180px);
+    padding-top: 28px;
+    padding-bottom: 50px;
+  }
+
+  .emi-hero {
+    margin-bottom: 28px;
+  }
+
+  .emi-hero h1 {
+    font-size: 2rem;
+  }
+
+  .emi-hero p {
+    font-size: 0.9rem;
+  }
+
+  .emi-input-card,
+  .emi-result-card {
+    padding: 18px;
+  }
+
+  .emi-card-header {
+    margin-bottom: 19px;
+  }
+
+  .emi-card-header h2 {
+    font-size: 1.15rem;
+  }
+
+  .emi-tenure-row {
+    grid-template-columns: 1fr 125px;
+  }
+
+  .emi-actions {
+    flex-direction: column;
+  }
+
+  .emi-secondary-btn {
+    width: 100%;
+  }
+
+  .emi-summary-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 9px;
+  }
+
+  .emi-summary-item {
+    padding: 13px;
+  }
+
+  .emi-breakdown-legend {
+    flex-direction: column;
+    gap: 7px;
+  }
+
+  .emi-extra-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .emi-schedule-section,
+  .emi-info-section,
+  .emi-features-section {
+    margin-top: 48px;
+  }
+
+  .emi-table-toolbar {
+    align-items: flex-start;
+    flex-direction: column;
+    padding: 17px;
+  }
+
+  .emi-small-btn {
+    width: 100%;
+  }
+
+  .emi-info-grid,
+  .emi-feature-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .emi-info-card,
+  .emi-feature-card {
+    padding: 19px;
+  }
+
+}
+
+
+/* =========================================================
+   VERY SMALL SCREENS
+   ========================================================= */
+
+@media (max-width: 390px) {
+
+  .emi-page {
+    width: calc(100% - 16px);
+  }
+
+  .emi-input-card,
+  .emi-result-card {
+    padding: 15px;
+  }
+
+  .emi-tenure-row {
+    grid-template-columns: 1fr;
+  }
+
+  .emi-summary-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .emi-main-result {
+    padding: 20px;
+  }
+
+}
+
+
+/* =========================================================
+   ACCESSIBILITY
+   ========================================================= */
+
+.emi-primary-btn:focus-visible,
+.emi-secondary-btn:focus-visible,
+.emi-small-btn:focus-visible,
+.emi-input-wrap:focus-within,
+.emi-tenure-row input:focus-visible,
+.emi-tenure-row select:focus-visible {
+  outline: 3px solid rgba(46, 125, 50, 0.22);
+  outline-offset: 2px;
+}
+
+
+/* =========================================================
+   REDUCED MOTION
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+  .emi-primary-btn,
+  .emi-secondary-btn,
+  .emi-small-btn,
+  .emi-principal-bar,
+  .emi-interest-bar {
+    transition: none;
+  }
+
+}

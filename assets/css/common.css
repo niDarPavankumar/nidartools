@@ -1,0 +1,1263 @@
+/* niDar Tools - Common UI Styles */
+
+:root {
+    --primary: #2e7d32;
+    --text: #f1f5f9;
+    --muted: #94a3b8;
+    --bg: #0b0f19;
+    --card: #172235;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+}
+
+a {
+    color: var(--primary);
+}
+
+.nidar-scroll-top {
+    position: fixed;
+    right: 18px;
+    bottom: 22px;
+    width: 46px;
+    height: 46px;
+    border: 0;
+    border-radius: 50%;
+    background: #2e7d32;
+    color: white;
+    font-size: 22px;
+    font-weight: bold;
+    cursor: pointer;
+    display: none;
+    z-index: 9999;
+    box-shadow: 0 4px 14px rgba(0,0,0,.35);
+}
+
+.nidar-scroll-top.is-visible {
+    display: block;
+}
+
+@media (max-width: 768px) {
+    .nidar-scroll-top {
+        right: 14px;
+        bottom: 18px;
+    }
+}
+
+/* =========================================================
+   niDar Tools - Global Header
+   ========================================================= */
+
+.nidar-header {
+    position: sticky;
+    top: 0;
+    z-index: 9999;
+    width: 100%;
+    background: var(--card, #172235);
+    border-bottom: 1px solid rgba(255,255,255,0.10);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+}
+
+.nidar-navbar {
+    width: 100%;
+    max-width: 1400px;
+    min-height: 68px;
+    margin: 0 auto;
+    padding: 10px 20px;
+    display: flex;
+    align-items: center;
+    gap: 18px;
+}
+
+.nidar-logo {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    flex-shrink: 0;
+    text-decoration: none;
+    color: var(--text, #f1f5f9);
+    font-size: 1.15rem;
+    font-weight: 700;
+}
+
+.nidar-logo:hover {
+    color: var(--primary, #2e7d32);
+}
+
+.header-logo-icon {
+    width: 42px;
+    height: 42px;
+    object-fit: contain;
+    border-radius: 8px;
+}
+
+.nidar-nav {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    flex: 1;
+    flex-wrap: wrap;
+}
+
+.nidar-nav a {
+    padding: 8px 10px;
+    border-radius: 7px;
+    text-decoration: none;
+    color: var(--text, #f1f5f9);
+    font-size: 0.9rem;
+    white-space: nowrap;
+    transition: background 0.2s ease, color 0.2s ease;
+}
+
+.nidar-nav a:hover {
+    color: var(--primary, #2e7d32);
+    background: rgba(46,125,50,0.10);
+}
+
+.nidar-header-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+}
+
+.nidar-search-btn,
+.nidar-theme-btn,
+.nidar-menu-toggle {
+    width: 42px;
+    height: 42px;
+    border: 1px solid rgba(255,255,255,0.14);
+    border-radius: 9px;
+    background: transparent;
+    color: var(--text, #f1f5f9);
+    cursor: pointer;
+    font-size: 1.1rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+}
+
+.nidar-search-btn:hover,
+.nidar-theme-btn:hover,
+.nidar-menu-toggle:hover {
+    background: rgba(46,125,50,0.12);
+    border-color: var(--primary, #2e7d32);
+    transform: translateY(-1px);
+}
+
+.nidar-menu-toggle {
+    display: none;
+}
+
+/* Search Panel */
+
+.nidar-search-panel {
+    width: min(900px, calc(100% - 30px));
+    margin: 0 auto 12px;
+    padding: 14px;
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 12px;
+    background: var(--card, #172235);
+}
+
+.nidar-search-panel[hidden] {
+    display: none;
+}
+
+.nidar-search-panel label {
+    display: block;
+    margin-bottom: 7px;
+    font-size: 0.85rem;
+    color: var(--muted, #94a3b8);
+}
+
+.nidar-search-panel input {
+    width: 100%;
+    padding: 11px 13px;
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 8px;
+    outline: none;
+    background: var(--bg, #0b0f19);
+    color: var(--text, #f1f5f9);
+    font-size: 1rem;
+}
+
+.nidar-search-panel input:focus {
+    border-color: var(--primary, #2e7d32);
+}
+
+/* =========================================================
+   Mobile Header
+   ========================================================= */
+
+@media (max-width: 900px) {
+
+    .nidar-navbar {
+        min-height: 62px;
+        padding: 9px 14px;
+        flex-wrap: wrap;
+    }
+
+    .nidar-menu-toggle {
+        display: inline-flex;
+        margin-left: auto;
+    }
+
+    .nidar-header-actions {
+        order: 3;
+    }
+
+    .nidar-nav {
+        order: 4;
+        display: none;
+        width: 100%;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 3px;
+        padding-top: 8px;
+        border-top: 1px solid rgba(255,255,255,0.10);
+    }
+
+    .nidar-nav.is-open {
+        display: flex;
+    }
+
+    .nidar-nav a {
+        width: 100%;
+        padding: 11px 12px;
+    }
+}
+
+@media (max-width: 480px) {
+
+    .nidar-logo span {
+        display: none;
+    }
+
+    .header-logo-icon {
+        width: 40px;
+        height: 40px;
+    }
+
+    .nidar-search-btn,
+    .nidar-theme-btn,
+    .nidar-menu-toggle {
+        width: 39px;
+        height: 39px;
+    }
+
+    .nidar-navbar {
+        gap: 8px;
+    }
+}
+
+
+/* =========================================================
+   niDar Tools - Global Theme System
+   Light / Dark / High Contrast
+   ========================================================= */
+
+/* ---------- Light Theme ---------- */
+
+html[data-theme="light"] {
+    --bg: #f8fafc;
+    --text: #172033;
+    --muted: #64748b;
+    --card: #ffffff;
+    --primary: #2e7d32;
+    --border: #e2e8f0;
+}
+
+
+/* ---------- Dark Theme ---------- */
+
+html[data-theme="dark"] {
+    --bg: #0b0f19;
+    --text: #f1f5f9;
+    --muted: #94a3b8;
+    --card: #172235;
+    --primary: #4caf50;
+    --border: #334155;
+}
+
+
+/* ---------- High Contrast / Senior Theme ---------- */
+
+html[data-theme="senior"] {
+    --bg: #000000;
+    --text: #ffffff;
+    --muted: #ffffff;
+    --card: #111111;
+    --primary: #ffff00;
+    --border: #ffffff;
+}
+
+
+/* ---------- Global Theme Transition ---------- */
+
+html,
+body,
+.nidar-header,
+.nidar-search-panel,
+.nidar-search-btn,
+.nidar-theme-btn,
+.nidar-menu-toggle,
+.nidar-nav a,
+.card,
+footer {
+    transition:
+        background-color 0.25s ease,
+        color 0.25s ease,
+        border-color 0.25s ease,
+        box-shadow 0.25s ease;
+}
+
+
+/* ---------- High Contrast Improvements ---------- */
+
+html[data-theme="senior"] body {
+    font-size: 17px;
+    line-height: 1.6;
+}
+
+html[data-theme="senior"] .nidar-header {
+    border-bottom: 2px solid #ffffff;
+}
+
+html[data-theme="senior"] .nidar-nav a,
+html[data-theme="senior"] .nidar-logo,
+html[data-theme="senior"] .nidar-search-btn,
+html[data-theme="senior"] .nidar-theme-btn,
+html[data-theme="senior"] .nidar-menu-toggle {
+    color: #ffffff;
+}
+
+html[data-theme="senior"] .nidar-nav a:hover,
+html[data-theme="senior"] .nidar-logo:hover {
+    color: #ffff00;
+}
+
+html[data-theme="senior"] .nidar-search-btn,
+html[data-theme="senior"] .nidar-theme-btn,
+html[data-theme="senior"] .nidar-menu-toggle {
+    border-color: #ffffff;
+}
+
+html[data-theme="senior"] .nidar-search-btn:hover,
+html[data-theme="senior"] .nidar-theme-btn:hover,
+html[data-theme="senior"] .nidar-menu-toggle:hover {
+    background: #ffff00;
+    color: #000000;
+}
+
+html[data-theme="senior"] .nidar-search-panel {
+    border: 2px solid #ffffff;
+}
+
+html[data-theme="senior"] .nidar-search-panel input {
+    border: 2px solid #ffffff;
+    background: #000000;
+    color: #ffffff;
+}
+
+html[data-theme="senior"] .nidar-search-panel input::placeholder {
+    color: #ffffff;
+}
+
+html[data-theme="senior"] .nidar-scroll-top {
+    background: #ffff00;
+    color: #000000;
+    border: 2px solid #ffffff;
+}
+
+
+/* ---------- Accessibility ---------- */
+
+html[data-theme="senior"] a {
+    color: #ffff00;
+}
+
+html[data-theme="senior"] button,
+html[data-theme="senior"] input {
+    font-size: 1rem;
+}
+
+
+/* ---------- Senior Theme Footer Text ---------- */
+
+html[data-theme="senior"] footer p,
+html[data-theme="senior"] footer strong {
+    color: #ffffff;
+    font-weight: 700;
+}
+
+html[data-theme="senior"] footer a {
+    color: #ffffff;
+    font-weight: 700;
+    text-decoration: underline;
+}
+
+html[data-theme="senior"] footer a:hover {
+    color: #ffff00;
+}
+
+/* =========================================================
+   niDar Tools - Professional Navigation Dropdown
+   ========================================================= */
+
+.nidar-nav-dropdown {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+}
+
+.nidar-dropdown-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 8px 10px;
+    border: 0;
+    border-radius: 7px;
+    background: transparent;
+    color: var(--text, #f1f5f9);
+    font: inherit;
+    font-size: 0.9rem;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background 0.2s ease, color 0.2s ease;
+}
+
+.nidar-dropdown-btn:hover,
+.nidar-nav-dropdown:hover > .nidar-dropdown-btn {
+    color: var(--primary, #2e7d32);
+    background: rgba(46,125,50,0.10);
+}
+
+.nidar-dropdown-menu {
+    position: absolute;
+    top: calc(100% + 8px);
+    left: 50%;
+    transform: translateX(-50%);
+    width: 720px;
+    max-width: calc(100vw - 30px);
+    padding: 18px;
+    display: none;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 18px;
+    background: var(--card, #172235);
+    border: 1px solid var(--border, rgba(255,255,255,0.12));
+    border-radius: 14px;
+    box-shadow: 0 18px 45px rgba(0,0,0,0.25);
+    z-index: 10000;
+}
+
+.nidar-nav-dropdown:hover .nidar-dropdown-menu,
+.nidar-nav-dropdown:focus-within .nidar-dropdown-menu {
+    display: grid;
+}
+
+.nidar-dropdown-section {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+.nidar-dropdown-section strong {
+    margin-bottom: 6px;
+    color: var(--primary, #2e7d32);
+    font-size: 0.85rem;
+}
+
+.nidar-dropdown-menu a {
+    display: block;
+    padding: 7px 8px;
+    border-radius: 6px;
+    color: var(--text, #f1f5f9);
+    text-decoration: none;
+    font-size: 0.85rem;
+    transition: background 0.2s ease, color 0.2s ease;
+}
+
+.nidar-dropdown-menu a:hover {
+    color: var(--primary, #2e7d32);
+    background: rgba(46,125,50,0.10);
+}
+
+/* ---------- More Menu ---------- */
+
+.nidar-more-dropdown .nidar-dropdown-menu {
+    width: 230px;
+    grid-template-columns: 1fr;
+    gap: 4px;
+}
+
+/* ---------- Senior Theme ---------- */
+
+html[data-theme="senior"] .nidar-dropdown-btn,
+html[data-theme="senior"] .nidar-dropdown-menu a {
+    color: #ffffff;
+}
+
+html[data-theme="senior"] .nidar-dropdown-btn:hover,
+html[data-theme="senior"] .nidar-nav-dropdown:hover > .nidar-dropdown-btn {
+    color: #ffff00;
+    background: #000000;
+}
+
+html[data-theme="senior"] .nidar-dropdown-menu {
+    background: #000000;
+    border: 2px solid #ffffff;
+    box-shadow: none;
+}
+
+html[data-theme="senior"] .nidar-dropdown-section strong {
+    color: #ffff00;
+}
+
+html[data-theme="senior"] .nidar-dropdown-menu a:hover {
+    color: #ffff00;
+    background: #000000;
+}
+
+/* ---------- Mobile Dropdown ---------- */
+
+@media (max-width: 900px) {
+
+    .nidar-nav-dropdown {
+        width: 100%;
+        display: block;
+    }
+
+    .nidar-dropdown-btn {
+        width: 100%;
+        justify-content: space-between;
+        padding: 11px 12px;
+    }
+
+    .nidar-dropdown-menu,
+    .nidar-more-dropdown .nidar-dropdown-menu {
+        position: static;
+        transform: none;
+        width: 100%;
+        max-width: none;
+        display: none;
+        grid-template-columns: 1fr;
+        gap: 8px;
+        margin-top: 4px;
+        padding: 10px;
+        border-radius: 10px;
+        box-shadow: none;
+    }
+
+    .nidar-nav-dropdown:hover .nidar-dropdown-menu {
+        display: none;
+    }
+
+    .nidar-nav-dropdown:focus-within .nidar-dropdown-menu {
+        display: grid;
+    }
+
+    .nidar-dropdown-section {
+        padding-bottom: 6px;
+    }
+
+    .nidar-dropdown-section strong {
+        display: block;
+        padding: 5px 8px;
+    }
+
+    .nidar-dropdown-menu a {
+        padding: 9px 10px;
+    }
+}
+
+/* =========================================================
+   niDar Tools - Professional Common Footer
+   ========================================================= */
+
+.nidar-footer {
+    width: 100%;
+    margin-top: 60px;
+    padding: 50px 20px 25px;
+    background: var(--card, #172235);
+    border-top: 1px solid var(--border, rgba(255,255,255,0.10));
+}
+
+.nidar-footer-container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.nidar-footer-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 35px;
+}
+
+.nidar-footer-column {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 9px;
+}
+
+.nidar-footer-column h3 {
+    margin: 0 0 8px;
+    color: var(--text, #f1f5f9);
+    font-size: 1rem;
+    font-weight: 700;
+}
+
+.nidar-footer-column a {
+    color: var(--muted, #94a3b8);
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.nidar-footer-column a:hover {
+    color: var(--primary, #2e7d32);
+    transform: translateX(3px);
+}
+
+/* ---------- Social Icons ---------- */
+
+.nidar-social-icons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    margin-top: 4px;
+}
+
+.nidar-social-icon {
+    width: 40px;
+    height: 40px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--border, rgba(255,255,255,0.14));
+    border-radius: 10px;
+    color: var(--text, #f1f5f9);
+    background: transparent;
+    font-size: 1rem;
+    font-weight: 700;
+    transition:
+        background 0.2s ease,
+        color 0.2s ease,
+        border-color 0.2s ease,
+        transform 0.2s ease;
+}
+
+.nidar-social-icon:hover {
+    color: var(--primary, #2e7d32);
+    border-color: var(--primary, #2e7d32);
+    background: rgba(46,125,50,0.10);
+    transform: translateY(-2px);
+}
+
+/* ---------- Footer Divider ---------- */
+
+.nidar-footer-divider {
+    width: 100%;
+    height: 1px;
+    margin: 35px 0 25px;
+    background: var(--border, rgba(255,255,255,0.10));
+}
+
+/* ---------- Footer Brand ---------- */
+
+.nidar-footer-brand {
+    text-align: center;
+}
+
+.nidar-developed-label {
+    margin: 0;
+    color: var(--muted, #94a3b8);
+    font-size: 0.85rem;
+}
+
+.nidar-developed-name {
+    margin: 5px 0;
+    color: var(--primary, #2e7d32);
+    font-size: 1rem;
+    font-weight: 700;
+}
+
+.nidar-copyright {
+    margin: 8px 0 0;
+    color: var(--muted, #94a3b8);
+    font-size: 0.8rem;
+}
+
+/* ---------- Senior Theme Footer ---------- */
+
+html[data-theme="senior"] .nidar-footer {
+    background: #000000;
+    border-top: 2px solid #ffffff;
+}
+
+html[data-theme="senior"] .nidar-footer-column h3,
+html[data-theme="senior"] .nidar-footer-column a,
+html[data-theme="senior"] .nidar-developed-label,
+html[data-theme="senior"] .nidar-developed-name,
+html[data-theme="senior"] .nidar-copyright {
+    color: #ffffff;
+    font-weight: 700;
+}
+
+html[data-theme="senior"] .nidar-footer-column a {
+    text-decoration: underline;
+}
+
+html[data-theme="senior"] .nidar-footer-column a:hover {
+    color: #ffff00;
+}
+
+html[data-theme="senior"] .nidar-footer-divider {
+    background: #ffffff;
+}
+
+html[data-theme="senior"] .nidar-social-icon {
+    color: #ffffff;
+    border: 2px solid #ffffff;
+}
+
+html[data-theme="senior"] .nidar-social-icon:hover {
+    color: #ffff00;
+    background: #000000;
+    border-color: #ffff00;
+}
+
+/* ---------- Mobile Footer ---------- */
+
+@media (max-width: 800px) {
+
+    .nidar-footer {
+        margin-top: 45px;
+        padding: 40px 18px 22px;
+    }
+
+    .nidar-footer-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 30px 22px;
+    }
+}
+
+@media (max-width: 480px) {
+
+    .nidar-footer-grid {
+        grid-template-columns: 1fr;
+        gap: 25px;
+    }
+
+    .nidar-footer-column {
+        align-items: center;
+        text-align: center;
+    }
+
+    .nidar-social-icons {
+        justify-content: center;
+    }
+}
+
+/* =========================================================
+   niDar Tools — Professional Tool Page Design System
+   ========================================================= */
+
+.nidar-tool-page {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 36px 20px 60px;
+}
+
+.nidar-tool-hero {
+    text-align: center;
+    padding: 44px 28px;
+    margin-bottom: 28px;
+    border: 1px solid var(--border-color, #e2e8f0);
+    border-radius: 24px;
+    background: linear-gradient(135deg, rgba(219,234,254,.75), rgba(255,255,255,.96));
+    box-shadow: 0 12px 35px rgba(15,23,42,.07);
+}
+
+.nidar-tool-icon-large {
+    width: 76px;
+    height: 76px;
+    margin: 0 auto 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 20px;
+    background: rgba(46,125,50,.10);
+    font-size: 40px;
+}
+
+.nidar-tool-hero h1 {
+    margin: 0;
+    font-size: clamp(28px, 4vw, 44px);
+    line-height: 1.15;
+}
+
+.nidar-tool-hero p {
+    max-width: 760px;
+    margin: 14px auto 0;
+    font-size: 16px;
+    line-height: 1.7;
+    opacity: .72;
+}
+
+.nidar-tool-guide {
+    display: inline-flex;
+    margin-top: 18px;
+    padding: 10px 16px;
+    border-radius: 999px;
+    text-decoration: none;
+    background: rgba(46,125,50,.09);
+    font-weight: 600;
+}
+
+.nidar-tool-workspace {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 22px;
+}
+
+.nidar-tool-section {
+    padding: 26px;
+    border: 1px solid var(--border-color, #e2e8f0);
+    border-radius: 20px;
+    background: var(--card-bg, #fff);
+    box-shadow: 0 8px 25px rgba(15,23,42,.06);
+}
+
+.nidar-tool-section h2 {
+    margin: 0 0 18px;
+    font-size: 21px;
+}
+
+.nidar-tool-section + .nidar-tool-section {
+    margin-top: 0;
+}
+
+.nidar-tool-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px;
+}
+
+.nidar-tool-field {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.nidar-tool-field label {
+    font-weight: 600;
+    font-size: 14px;
+}
+
+.nidar-tool-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 22px;
+}
+
+.nidar-tool-primary {
+    min-height: 48px;
+    padding: 12px 22px;
+    border: 0;
+    border-radius: 12px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.nidar-tool-result {
+    border: 2px solid rgba(46,125,50,.25);
+    background: rgba(46,125,50,.045);
+}
+
+.nidar-tool-upload {
+    padding: 34px 22px;
+    text-align: center;
+    border: 2px dashed rgba(46,125,50,.35);
+    border-radius: 18px;
+    background: rgba(46,125,50,.035);
+}
+
+.nidar-tool-upload input[type="file"] {
+    max-width: 100%;
+}
+
+.nidar-tool-preview {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.nidar-tool-preview img {
+    max-width: min(100%, 420px);
+    max-height: 420px;
+    object-fit: contain;
+    border-radius: 14px;
+    border: 1px solid var(--border-color, #e2e8f0);
+}
+
+.nidar-tool-help {
+    margin-top: 22px;
+    padding: 22px;
+    border-radius: 18px;
+    background: rgba(148,163,184,.08);
+    border: 1px solid var(--border-color, #e2e8f0);
+}
+
+@media (max-width: 760px) {
+    .nidar-tool-page {
+        padding: 24px 14px 44px;
+    }
+
+    .nidar-tool-hero {
+        padding: 32px 18px;
+        border-radius: 20px;
+    }
+
+    .nidar-tool-section {
+        padding: 20px;
+        border-radius: 18px;
+    }
+
+    .nidar-tool-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .nidar-tool-actions {
+        flex-direction: column;
+    }
+
+    .nidar-tool-actions > * {
+        width: 100%;
+    }
+}
+
+html[data-theme="dark"] .nidar-tool-hero {
+    background: linear-gradient(135deg, rgba(30,58,138,.28), rgba(15,23,42,.96));
+}
+
+html[data-theme="dark"] .nidar-tool-section {
+    background: var(--card-bg, #111827);
+}
+
+html[data-theme="senior"] .nidar-tool-hero,
+html[data-theme="senior"] .nidar-tool-section,
+html[data-theme="senior"] .nidar-tool-help {
+    border: 2px solid #000;
+    box-shadow: none;
+}
+
+html[data-theme="senior"] .nidar-tool-hero,
+html[data-theme="senior"] .nidar-tool-section {
+    background: #fff;
+    color: #000;
+}
+
+
+/* =========================================================
+   niDar Tools — Rainbow Brand Header
+   ========================================================= */
+
+.nidar-header {
+    position: relative;
+    background: var(--header-bg, #ffffff);
+    border-bottom: 1px solid rgba(120, 120, 140, 0.16);
+    box-shadow: 0 4px 22px rgba(0, 0, 0, 0.06);
+}
+
+.nidar-navbar {
+    min-height: 76px;
+    padding: 10px 28px;
+    gap: 22px;
+}
+
+/* Brand: niDar logo + Tools */
+.nidar-logo {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    flex-shrink: 0;
+    text-decoration: none;
+}
+
+.nidar-logo .header-logo-icon {
+    width: 104px;
+    height: 52px;
+    object-fit: contain;
+    border-radius: 0;
+    display: block;
+}
+
+.nidar-logo-text {
+    font-size: 30px;
+    font-weight: 800;
+    line-height: 1;
+    letter-spacing: -1px;
+
+    background: linear-gradient(
+        90deg,
+        #ff2db2 0%,
+        #8a2be2 18%,
+        #1479ff 36%,
+        #00cfff 52%,
+        #00d875 68%,
+        #ffe600 82%,
+        #ff3b30 100%
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+/* Navigation */
+.nidar-nav {
+    gap: 4px;
+}
+
+.nidar-nav > a,
+.nidar-dropdown-btn {
+    position: relative;
+    color: var(--text-color, #172033);
+    font-weight: 600;
+    padding: 10px 12px;
+    transition:
+        color 0.25s ease,
+        transform 0.25s ease;
+}
+
+/* Rainbow hover / active underline */
+.nidar-nav > a::after,
+.nidar-dropdown-btn::after {
+    content: "";
+    position: absolute;
+    left: 12px;
+    right: 12px;
+    bottom: 3px;
+    height: 3px;
+    border-radius: 999px;
+    background: linear-gradient(
+        90deg,
+        #ff2db2,
+        #8a2be2,
+        #1479ff,
+        #00dfff,
+        #00d875,
+        #ffe600,
+        #ff3b30
+    );
+    transform: scaleX(0);
+    transform-origin: center;
+    transition: transform 0.25s ease;
+}
+
+.nidar-nav > a:hover,
+.nidar-dropdown-btn:hover {
+    color: #2e7d32;
+    transform: translateY(-1px);
+}
+
+.nidar-nav > a:hover::after,
+.nidar-dropdown-btn:hover::after {
+    transform: scaleX(1);
+}
+
+/* Header action buttons */
+.nidar-header-actions button {
+    border: 1px solid rgba(100, 110, 130, 0.25);
+    background: transparent;
+    transition:
+        border-color 0.25s ease,
+        box-shadow 0.25s ease,
+        transform 0.25s ease;
+}
+
+.nidar-header-actions button:hover {
+    border-color: transparent;
+    box-shadow:
+        0 0 0 2px rgba(255, 45, 178, 0.18),
+        0 0 18px rgba(20, 121, 255, 0.18);
+    transform: translateY(-1px);
+}
+
+/* Full-width rainbow separator */
+.nidar-header::after {
+    content: "";
+    display: block;
+    height: 4px;
+    margin: 0 28px;
+    border-radius: 999px 999px 0 0;
+    background: linear-gradient(
+        90deg,
+        #ff4fd8 0%,
+        #8a2be2 16%,
+        #1769ff 32%,
+        #00d9ff 48%,
+        #00df75 64%,
+        #dfff00 76%,
+        #ffb300 88%,
+        #ff3030 100%
+    );
+    box-shadow: 0 0 14px rgba(138, 43, 226, 0.28);
+}
+
+/* Dark theme */
+html[data-theme="dark"] .nidar-header,
+body.dark-mode .nidar-header {
+    background: #080b12;
+    border-bottom-color: rgba(255, 255, 255, 0.10);
+    box-shadow: 0 4px 28px rgba(0, 0, 0, 0.35);
+}
+
+html[data-theme="dark"] .nidar-nav > a,
+html[data-theme="dark"] .nidar-dropdown-btn,
+body.dark-mode .nidar-nav > a,
+body.dark-mode .nidar-dropdown-btn {
+    color: #f3f6ff;
+}
+
+html[data-theme="dark"] .nidar-nav > a:hover,
+html[data-theme="dark"] .nidar-dropdown-btn:hover,
+body.dark-mode .nidar-nav > a:hover,
+body.dark-mode .nidar-dropdown-btn:hover {
+    color: #ffffff;
+}
+
+/* Senior theme — keep rainbow identity but improve readability */
+html[data-theme="senior"] .nidar-logo-text {
+    font-size: 32px;
+    font-weight: 900;
+}
+
+html[data-theme="senior"] .nidar-nav > a,
+html[data-theme="senior"] .nidar-dropdown-btn {
+    font-weight: 800;
+}
+
+/* Mobile */
+@media (max-width: 900px) {
+    .nidar-navbar {
+        padding: 9px 18px;
+        min-height: 70px;
+    }
+
+    .nidar-logo {
+        gap: 7px;
+    }
+
+    .nidar-logo .header-logo-icon {
+        width: 88px;
+        height: 44px;
+    }
+
+    .nidar-logo-text {
+        font-size: 25px;
+    }
+
+    .nidar-header::after {
+        margin: 0 18px;
+    }
+}
+
+@media (max-width: 560px) {
+    .nidar-navbar {
+        padding: 8px 12px;
+        gap: 8px;
+    }
+
+    .nidar-logo .header-logo-icon {
+        width: 76px;
+        height: 38px;
+    }
+
+    .nidar-logo-text {
+        font-size: 22px;
+        letter-spacing: -0.7px;
+    }
+
+    .nidar-header::after {
+        height: 3px;
+        margin: 0 12px;
+    }
+}
+
+
+/* =========================================================
+   niDar Tools — Header Layout Fix
+   ========================================================= */
+
+.nidar-navbar {
+    flex-wrap: nowrap;
+}
+
+.nidar-logo {
+    flex-shrink: 0;
+}
+
+.nidar-logo-text {
+    flex-shrink: 0;
+    white-space: nowrap;
+}
+
+.nidar-nav {
+    flex-wrap: nowrap;
+    min-width: 0;
+}
+
+.nidar-nav > a,
+.nidar-dropdown-btn {
+    white-space: nowrap;
+}
+
+/* Tablet / Mobile — navigation stays inside hamburger menu */
+@media (max-width: 900px) {
+    .nidar-navbar {
+        flex-wrap: wrap;
+    }
+
+    .nidar-nav {
+        flex-wrap: nowrap;
+    }
+
+    .nidar-nav:not(.is-open) {
+        display: none;
+    }
+
+    .nidar-nav.is-open {
+        display: flex;
+    }
+}
+
+/* Small mobile — keep brand visible */
+@media (max-width: 480px) {
+    .nidar-logo span.nidar-logo-text {
+        display: inline;
+        font-size: 21px;
+    }
+
+    .nidar-logo .header-logo-icon {
+        width: 76px;
+        height: 38px;
+    }
+}

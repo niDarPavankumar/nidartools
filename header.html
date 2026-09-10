@@ -1,24 +1,114 @@
-<!-- Header -->
-<header>
-  <div class="navbar">
-    <div class="logo">
-      <a href="index.html">
-        <img src="logo.png" alt="niDar Tools" class="header-logo-icon">
-      </a>
+<header class="nidar-header">
+    <div class="nidar-navbar">
+
+        <a href="/" class="nidar-logo" aria-label="niDar Tools Home">
+            <img src="/assets/images/nidar-logo.png" alt="niDar Tools" class="header-logo-icon">
+            <span class="nidar-logo-text">Tools</span>
+        </a>
+
+        <nav class="nidar-nav" id="nidarNav" aria-label="Main navigation">
+
+            <a href="/">Home</a>
+
+            <div class="nidar-nav-dropdown">
+                <button type="button" class="nidar-dropdown-btn">
+                    Tools <span aria-hidden="true">▾</span>
+                </button>
+
+                <div class="nidar-dropdown-menu">
+
+                    <div class="nidar-dropdown-section">
+                        <strong>Image Tools</strong>
+                        <a href="/image-resizer/">Image Resizer</a>
+                        <a href="/image-compressor/">Image Compressor</a>
+                        <a href="/image-converter/">Image Converter</a>
+                        <a href="/background-remover/">Background Remover</a>
+                        <a href="/icon-kit-generator/">Icon & Favicon Kit</a>
+                        <a href="/image-to-pdf/">Image to PDF</a>
+                    </div>
+
+                    <div class="nidar-dropdown-section">
+                        <strong>PDF & Document</strong>
+                        <a href="/word-to-pdf/">Word to PDF</a>
+                        <a href="/pdf-to-word/">PDF to Word</a>
+                    </div>
+
+                    <div class="nidar-dropdown-section">
+                        <strong>Calculators</strong>
+                        <a href="/age-calculator/">Age Calculator</a>
+                        <a href="/percentage-calculator/">Percentage Calculator</a>
+                        <a href="/emi-calculator/">EMI Calculator</a>
+                        <a href="/construction-cost-estimator/">Construction Cost</a>
+                    </div>
+
+                    <div class="nidar-dropdown-section">
+                        <strong>Developer Tools</strong>
+                        <a href="/json-formatter/">JSON Formatter</a>
+                        <a href="/base64-encoder-decoder/">Base64 Encoder / Decoder</a>
+                    </div>
+
+                    <div class="nidar-dropdown-section">
+                        <strong>Other Tools</strong>
+                        <a href="/qr-generator/">QR Generator</a>
+                        <a href="/word-counter/">Word & Character Counter</a>
+                    </div>
+
+                </div>
+            </div>
+
+            <a href="/user-guide/">User Guide</a>
+            <a href="/faq/">FAQ</a>
+            <a href="/support/">Support</a>
+            <a href="/about/">About Us</a>
+            <a href="/contact/">Contact Us</a>
+
+            <div class="nidar-nav-dropdown nidar-more-dropdown">
+                <button type="button" class="nidar-dropdown-btn">
+                    More <span aria-hidden="true">▾</span>
+                </button>
+
+                <div class="nidar-dropdown-menu nidar-more-menu">
+                    <a href="/privacy-policy/">Privacy Policy</a>
+                    <a href="/terms/">Terms & Conditions</a>
+                    <a href="/calculators/">All Calculators</a>
+                </div>
+            </div>
+
+        </nav>
+
+        <div class="nidar-header-actions">
+
+            <button class="nidar-search-btn"
+                    id="nidarSearchBtn"
+                    type="button"
+                    aria-label="Search tools"
+                    title="Search Tools">🔍</button>
+
+            <button class="nidar-theme-btn"
+                    id="themeToggle"
+                    type="button"
+                    aria-label="Change theme"
+                    title="Change Theme">🌙</button>
+
+            <button class="nidar-menu-toggle"
+                    id="nidarMenuToggle"
+                    type="button"
+                    aria-label="Open navigation menu"
+                    aria-expanded="false">☰</button>
+
+        </div>
+
     </div>
-    <ul class="nav-links">
-      <li><a href="index.html">Home</a></li>
-      <li><a href="about.html">About Us</a></li>
-      <li><a href="user-guide.html">User Guide</a></li>
-      <li><a href="faq.html">FAQ</a></li>
-      <li><a href="support.html">Support</a></li>
-      <li><a href="privacy.html">Privacy Policy</a></li>
-      <li><a href="terms.html">Terms & Conditions</a></li>
-      <li><a href="contact.html">Contact Us</a></li>
-    </ul>
-    <div class="translate-wrapper">
-      <!-- Google Translate widget -->
-      <div id="google_translate_element"></div>
+
+    <div class="nidar-search-panel" id="nidarSearchPanel" hidden>
+        <label for="nidarSearchInput">Search niDar Tools</label>
+
+        <input type="search"
+               id="nidarSearchInput"
+               placeholder="Search tools..."
+               autocomplete="off">
+
+        <div id="nidarSearchResults" class="nidar-search-results"></div>
     </div>
-  </div>
+
 </header>

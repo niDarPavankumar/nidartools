@@ -8,3 +8,13 @@ backups/
 # Local backup files - keep out of production
 *.bak
 *.backup
+
+# Testing environment - never deploy
+testing/
+testing-backup-20260903/
+
+# Temporary backup files - never deploy
+*.backup-*
+
+# Local archive - never deploy or track
+archive/

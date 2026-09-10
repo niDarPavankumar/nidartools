@@ -1,311 +1,492 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Image to PDF Converter - niDar Tools</title>
+  <title>Image to PDF Converter — niDar Tools</title>
+  <meta name="description" content="Convert images to PDF quickly and securely with niDar Tools. Combine images, choose page size and orientation, then download your PDF.">
 
-<meta name="description" content="Convert JPG and PNG images into a PDF for free. Combine multiple photos into one PDF, reorder them, and choose page size, orientation and margin. Everything runs in your browser.">
-<meta name="keywords" content="image to pdf, jpg to pdf, png to pdf, photo to pdf, convert image to pdf online">
-
-<link rel="canonical" href="https://nidartools.com/image-to-pdf/">
-
-<!-- Absolute paths for Assets -->
-<link rel="icon" type="image/x-icon" href="/assets/favicon/favicon.ico">
-<link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon/favicon-16x16.png">
-<link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon/favicon-32x32.png">
-<link rel="apple-touch-icon" sizes="180x180" href="/assets/favicon/apple-touch-icon.png">
-<link rel="stylesheet" href="/assets/css/style.css">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <link rel="icon" href="/favicon.ico">
+  <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
+<!-- COMMON HEADER -->
+<div id="site-header"></div>
 
-<header class="header">
-  <div class="container navbar">
-    <a href="/" class="logo">niDar<span>Tools</span></a>
-    <nav>
-      <a href="/">Home</a>
-      <a href="/about/">About</a>
-      <a href="/contact/">Contact</a>
-      <a href="/support/">Support</a>
-    </nav>
-    <button class="btn btn-theme" id="themeToggle" aria-label="Toggle theme">🌙 Theme</button>
-  </div>
-</header>
+  <main class="image-pdf-page">
 
-<main class="container mt-40">
+    <!-- HERO -->
+    <section class="tool-hero">
 
-<section class="hero-card text-center mb-30">
-  <h1>Image to PDF Converter</h1>
-  
-  <div class="mt-10">
-    <a href="/content/image-to-pdf/" class="guide-link">
-      <span class="icon">📖</span><span>Read Image to PDF Conversion Guide →</span>
-    </a>
-  </div>
+      <span class="tool-badge">⚡ Free Online PDF Tool</span>
 
-  <p class="mt-10">
-    Select one or more photos — reorder them, set your
-    preferences, and generate one PDF.
-  </p>
-</section>
+      <h1>Image to PDF</h1>
 
-<section class="card mb-20">
+      <p>
+        Convert your images into a professional PDF document.
+        Add multiple images, arrange them and customize your PDF before downloading.
+      </p>
 
-  <h2>1. Upload Photos</h2>
+      <div class="hero-points">
+        <span>🔒 Private</span>
+        <span>⚡ Fast</span>
+        <span>🆓 Free</span>
+        <span>📱 Works on Mobile</span>
+      </div>
 
-  <input type="file" id="fileInput" accept="image/*" multiple class="form-control mt-10">
+    </section>
 
-  <div id="listSection" class="hidden mt-20">
-    <div class="flex space-between" style="align-items:center;">
-      <h3>Selected Photos (<span id="imgCount">0</span>)</h3>
-      <button id="clearAllBtn" class="btn" style="background:var(--secondary);">Clear All</button>
-    </div>
-    <p class="text-muted mt-10" style="font-size:13px;">Use ▲ ▼ to reorder — this is the order used in the PDF.</p>
-    <div id="imgList" class="mt-10"></div>
-  </div>
 
-</section>
+    <!-- MAIN TOOL -->
+    <section class="tool-card">
 
-<section class="card hidden mb-20" id="settingsSection">
+      <!-- UPLOAD -->
+      <div class="step-heading">
 
-  <h2>2. PDF Settings</h2>
+        <span class="step-number">1</span>
 
-  <div class="grid mt-10">
-    <div>
-      <label>Page Size</label>
-      <select id="pageSize" class="form-control mt-10">
-        <option value="a4">A4</option>
-        <option value="letter">Letter</option>
-        <option value="fit">Fit to Image</option>
-      </select>
-    </div>
-    <div>
-      <label>Orientation</label>
-      <select id="orientation" class="form-control mt-10">
-        <option value="auto">Auto (per photo)</option>
-        <option value="portrait">Portrait</option>
-        <option value="landscape">Landscape</option>
-      </select>
-    </div>
-    <div>
-      <label>Margin</label>
-      <select id="marginSize" class="form-control mt-10">
-        <option value="0">No margin</option>
-        <option value="10" selected>Small (10mm)</option>
-        <option value="20">Large (20mm)</option>
-      </select>
-    </div>
-  </div>
-
-  <button id="makePdfBtn" class="btn btn-primary mt-20">⚡ Generate PDF</button>
-
-  <p id="errorMsg" class="alert alert-danger hidden mt-20"></p>
-
-</section>
-
-<section class="card hidden mb-20 text-center" id="resultCard">
-  <h2>✅ Your PDF is Ready</h2>
-  <p id="resultInfo" class="mt-10"></p>
-  <button id="downloadBtn" class="btn btn-primary mt-20">📥 Download PDF</button>
-</section>
-
-<section class="card mb-40">
-  <h2>How does this work?</h2>
-  <p class="text-muted mt-10">
-    Your photos are processed and converted directly in your
-    browser — no image or PDF is uploaded to our servers.
-  </p>
-</section>
-
-</main>
-
-<footer class="footer">
-  <div class="container text-center">
-    <p>© 2026 niDar Tools. All Rights Reserved.</p>
-    <p>Developed by <strong>niDar Marketing And Services</strong></p>
-  </div>
-</footer>
-
-<script src="/assets/js/script.js"></script>
-<script>
-(function () {
-  const { jsPDF } = window.jspdf;
-
-  const fileInput = document.getElementById('fileInput');
-  const listSection = document.getElementById('listSection');
-  const imgList = document.getElementById('imgList');
-  const imgCount = document.getElementById('imgCount');
-  const clearAllBtn = document.getElementById('clearAllBtn');
-  const settingsSection = document.getElementById('settingsSection');
-  const pageSize = document.getElementById('pageSize');
-  const orientation = document.getElementById('orientation');
-  const marginSize = document.getElementById('marginSize');
-  const makePdfBtn = document.getElementById('makePdfBtn');
-  const resultCard = document.getElementById('resultCard');
-  const resultInfo = document.getElementById('resultInfo');
-  const downloadBtn = document.getElementById('downloadBtn');
-  const errorMsg = document.getElementById('errorMsg');
-
-  let images = [];
-  let finalPdfBlob = null;
-
-  fileInput.addEventListener('change', (e) => addFiles(e.target.files));
-
-  function addFiles(fileListRaw) {
-    errorMsg.classList.add('hidden');
-    const fileList = Array.from(fileListRaw).filter(f => f.type.startsWith('image/'));
-    if (fileList.length === 0) return;
-
-    let pending = fileList.length;
-    fileList.forEach(file => {
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        const img = new Image();
-        img.onload = () => {
-          images.push({ file, dataUrl: e.target.result, width: img.width, height: img.height });
-          pending--;
-          if (pending === 0) renderList();
-        };
-        img.src = e.target.result;
-      };
-      reader.readAsDataURL(file);
-    });
-  }
-
-  function renderList() {
-    imgList.innerHTML = '';
-    images.forEach((item, idx) => {
-      const row = document.createElement('div');
-      row.className = 'flex space-between mt-10';
-      row.style.alignItems = 'center';
-      row.style.padding = '8px';
-      row.style.border = '1px solid var(--border)';
-      row.style.borderRadius = '8px';
-      row.innerHTML = `
-        <img src="${item.dataUrl}" style="width:56px;height:56px;object-fit:cover;border-radius:6px;border:1px solid var(--border);">
-        <div style="flex-grow:1;padding:0 12px;overflow:hidden;">
-          <p style="margin:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;"><strong>${idx + 1}. ${item.file.name}</strong></p>
-          <p class="text-muted" style="margin:0;font-size:12px;">${item.width} × ${item.height} px · ${(item.file.size / 1024).toFixed(0)} KB</p>
+        <div>
+          <h2>Add your images</h2>
+          <p>Select one or multiple images to create your PDF.</p>
         </div>
-        <div style="display:flex;gap:6px;">
-          <button data-idx="${idx}" data-dir="-1" class="moveBtn btn" ${idx === 0 ? 'disabled' : ''}>▲</button>
-          <button data-idx="${idx}" data-dir="1" class="moveBtn btn" ${idx === images.length - 1 ? 'disabled' : ''}>▼</button>
-          <button data-idx="${idx}" class="removeBtn btn" style="background:var(--secondary);">✕</button>
+
+      </div>
+
+
+      <div class="upload-zone" id="uploadZone">
+
+        <div class="upload-icon">📄</div>
+
+        <h3>Drop your images here</h3>
+
+        <span class="upload-or">or</span>
+
+        <button
+          type="button"
+          class="primary-btn"
+          id="selectImagesBtn"
+        >
+          Select Images
+        </button>
+
+        <p class="supported-formats">
+          JPG · JPEG · PNG · WEBP · GIF
+        </p>
+
+        <input
+          type="file"
+          id="imageInput"
+          accept="image/*"
+          multiple
+          hidden
+        >
+
+      </div>
+
+
+      <!-- IMAGE LIST -->
+      <div
+        class="image-list-section"
+        id="imageListSection"
+        hidden
+      >
+
+        <div class="section-title">
+
+          <span class="step-number">2</span>
+
+          <div>
+            <h2>Your images</h2>
+            <p>Review and arrange the images before creating the PDF.</p>
+          </div>
+
         </div>
-      `;
-      imgList.appendChild(row);
-    });
 
-    imgList.querySelectorAll('.moveBtn').forEach(btn => {
-      btn.addEventListener('click', () => {
-        const i = parseInt(btn.dataset.idx);
-        const dir = parseInt(btn.dataset.dir);
-        const j = i + dir;
-        if (j < 0 || j >= images.length) return;
-        [images[i], images[j]] = [images[j], images[i]];
-        renderList();
-      });
-    });
-    imgList.querySelectorAll('.removeBtn').forEach(btn => {
-      btn.addEventListener('click', () => {
-        images.splice(parseInt(btn.dataset.idx), 1);
-        renderList();
-      });
-    });
 
-    imgCount.textContent = images.length;
-    const hasImages = images.length > 0;
-    listSection.classList.toggle('hidden', !hasImages);
-    settingsSection.classList.toggle('hidden', !hasImages);
-    resultCard.classList.add('hidden');
-  }
+        <div
+          class="image-grid"
+          id="imageGrid"
+        ></div>
 
-  clearAllBtn.addEventListener('click', () => {
-    images = [];
-    fileInput.value = '';
-    renderList();
-  });
 
-  makePdfBtn.addEventListener('click', async () => {
-    if (images.length === 0) return;
-    errorMsg.classList.add('hidden');
-    makePdfBtn.disabled = true;
-    makePdfBtn.textContent = '⏳ Generating...';
+        <div class="image-list-actions">
 
-    try {
-      const margin = parseInt(marginSize.value);
-      const sizeChoice = pageSize.value;
-      let doc = null;
+          <button
+            type="button"
+            class="secondary-btn"
+            id="addMoreBtn"
+          >
+            + Add More
+          </button>
 
-      for (let i = 0; i < images.length; i++) {
-        const item = images[i];
-        const imgIsLandscape = item.width > item.height;
-        let pageOrientation = orientation.value;
-        if (pageOrientation === 'auto') {
-          pageOrientation = imgIsLandscape ? 'landscape' : 'portrait';
-        }
+          <button
+            type="button"
+            class="secondary-btn danger-btn"
+            id="clearImagesBtn"
+          >
+            Clear All
+          </button>
 
-        let format = sizeChoice === 'fit' ? [item.width, item.height] : sizeChoice;
-        let unit = sizeChoice === 'fit' ? 'px' : 'mm';
+        </div>
 
-        if (i === 0) {
-          doc = new jsPDF({ orientation: pageOrientation, unit, format });
-        } else {
-          doc.addPage(format, pageOrientation);
-        }
+      </div>
 
-        const pageW = doc.internal.pageSize.getWidth();
-        const pageH = doc.internal.pageSize.getHeight();
-        const usableW = pageW - margin * 2;
-        const usableH = pageH - margin * 2;
 
-        const imgRatio = item.width / item.height;
-        const boxRatio = usableW / usableH;
-        let drawW, drawH;
-        if (imgRatio > boxRatio) {
-          drawW = usableW;
-          drawH = usableW / imgRatio;
-        } else {
-          drawH = usableH;
-          drawW = usableH * imgRatio;
-        }
-        const x = (pageW - drawW) / 2;
-        const y = (pageH - drawH) / 2;
+      <!-- PDF SETTINGS -->
+      <div
+        class="pdf-settings"
+        id="pdfSettings"
+        hidden
+      >
 
-        const imgType = item.file.type.includes('png') ? 'PNG' : 'JPEG';
-        doc.addImage(item.dataUrl, imgType, x, y, drawW, drawH, undefined, 'MEDIUM');
-      }
+        <div class="section-title">
 
-      const pdfBlob = doc.output('blob');
-      finalPdfBlob = pdfBlob;
-      resultInfo.textContent = images.length + ' page(s) · ' + (pdfBlob.size / 1024).toFixed(1) + ' KB';
-      resultCard.classList.remove('hidden');
-      resultCard.scrollIntoView({ behavior: 'smooth' });
-    } catch (err) {
-      errorMsg.textContent = 'Something went wrong while creating the PDF. Please try again with fewer/smaller images.';
-      errorMsg.classList.remove('hidden');
-    }
+          <span class="step-number">3</span>
 
-    makePdfBtn.disabled = false;
-    makePdfBtn.textContent = '⚡ Generate PDF';
-  });
+          <div>
+            <h2>PDF Settings</h2>
+            <p>Choose how your PDF document should look.</p>
+          </div>
 
-  downloadBtn.addEventListener('click', () => {
-    if (!finalPdfBlob) return;
-    const url = URL.createObjectURL(finalPdfBlob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = 'nidar_document.pdf';
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    URL.revokeObjectURL(url);
-  });
-})();
-</script>
+        </div>
+
+
+        <div class="settings-grid">
+
+          <div class="setting-group">
+
+            <label for="pageSize">
+              Page Size
+            </label>
+
+            <select id="pageSize">
+
+              <option value="a4">
+                A4
+              </option>
+
+              <option value="a3">
+                A3
+              </option>
+
+              <option value="letter">
+                Letter
+              </option>
+
+              <option value="legal">
+                Legal
+              </option>
+
+              <option value="fit">
+                Fit to Image
+              </option>
+
+            </select>
+
+          </div>
+
+
+          <div class="setting-group">
+
+            <label for="orientation">
+              Orientation
+            </label>
+
+            <select id="orientation">
+
+              <option value="auto">
+                Auto
+              </option>
+
+              <option value="portrait">
+                Portrait
+              </option>
+
+              <option value="landscape">
+                Landscape
+              </option>
+
+            </select>
+
+          </div>
+
+
+          <div class="setting-group">
+
+            <label for="margin">
+              Page Margin
+            </label>
+
+            <select id="margin">
+
+              <option value="0">
+                No Margin
+              </option>
+
+              <option value="5">
+                Small
+              </option>
+
+              <option value="10" selected>
+                Medium
+              </option>
+
+              <option value="20">
+                Large
+              </option>
+
+            </select>
+
+          </div>
+
+
+          <div class="setting-group">
+
+            <label for="imageQuality">
+              Image Quality
+              <span id="qualityValue">90%</span>
+            </label>
+
+            <input
+              type="range"
+              id="imageQuality"
+              min="40"
+              max="100"
+              value="90"
+            >
+
+          </div>
+
+
+          <div class="setting-group full-width">
+
+            <label for="pdfFileName">
+              PDF File Name
+            </label>
+
+            <input
+              type="text"
+              id="pdfFileName"
+              value="nidar-images"
+              maxlength="80"
+              placeholder="Enter PDF file name"
+            >
+
+          </div>
+
+
+          <div class="setting-group full-width">
+
+            <label class="checkbox-row">
+
+              <input
+                type="checkbox"
+                id="oneImagePerPage"
+                checked
+              >
+
+              <span>
+                Put each image on a separate PDF page
+              </span>
+
+            </label>
+
+          </div>
+
+        </div>
+
+
+        <div class="action-row">
+
+          <button
+            type="button"
+            class="primary-btn generate-btn"
+            id="generatePdfBtn"
+          >
+            Create PDF
+          </button>
+
+          <button
+            type="button"
+            class="secondary-btn"
+            id="resetBtn"
+          >
+            Start Over
+          </button>
+
+        </div>
+
+      </div>
+
+
+      <!-- RESULT -->
+      <div
+        class="result-section"
+        id="resultSection"
+        hidden
+      >
+
+        <div class="success-icon">✓</div>
+
+        <h2>PDF Created Successfully</h2>
+
+        <p id="resultSummary">
+          Your PDF document is ready.
+        </p>
+
+        <a
+          id="downloadBtn"
+          class="primary-btn download-btn"
+          download="nidar-images.pdf"
+        >
+          Download PDF
+        </a>
+
+      </div>
+
+    </section>
+
+
+    <!-- HOW TO -->
+    <section class="how-to">
+
+      <div class="section-heading">
+
+        <span>📖</span>
+
+        <div>
+          <h2>How to convert images to PDF</h2>
+          <p>Four simple steps to create your PDF document.</p>
+        </div>
+
+      </div>
+
+
+      <div class="steps-grid">
+
+        <article class="info-card">
+
+          <span>01</span>
+
+          <h3>Upload</h3>
+
+          <p>
+            Select one or multiple images from your device.
+          </p>
+
+        </article>
+
+
+        <article class="info-card">
+
+          <span>02</span>
+
+          <h3>Arrange</h3>
+
+          <p>
+            Review your images and arrange them in the desired order.
+          </p>
+
+        </article>
+
+
+        <article class="info-card">
+
+          <span>03</span>
+
+          <h3>Customize</h3>
+
+          <p>
+            Choose page size, orientation, margins and image quality.
+          </p>
+
+        </article>
+
+
+        <article class="info-card">
+
+          <span>04</span>
+
+          <h3>Download</h3>
+
+          <p>
+            Create your PDF and download it instantly.
+          </p>
+
+        </article>
+
+      </div>
+
+    </section>
+
+
+    <!-- FEATURES -->
+    <section class="features-section">
+
+      <article class="feature-card">
+
+        <span>🔒</span>
+
+        <h3>Private by design</h3>
+
+        <p>
+          Your images can be processed directly in your browser.
+        </p>
+
+      </article>
+
+
+      <article class="feature-card">
+
+        <span>📚</span>
+
+        <h3>Multiple images</h3>
+
+        <p>
+          Combine multiple images into one convenient PDF document.
+        </p>
+
+      </article>
+
+
+      <article class="feature-card">
+
+        <span>🎯</span>
+
+        <h3>Flexible settings</h3>
+
+        <p>
+          Control page size, orientation, margins and quality.
+        </p>
+
+      </article>
+
+
+      <article class="feature-card">
+
+        <span>📱</span>
+
+        <h3>Works anywhere</h3>
+
+        <p>
+          Designed for phones, tablets and desktop browsers.
+        </p>
+
+      </article>
+
+    </section>
+
+  </main>
+
+<!-- COMMON FOOTER -->
+<div id="site-footer"></div>
+
+
+  <script src="../assets/js/common.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="script.js"></script>
 
 </body>
 </html>

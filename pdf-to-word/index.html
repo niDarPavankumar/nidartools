@@ -1,216 +1,764 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>PDF to Word Converter - Free Online, No Upload | niDar Tools</title>
+  <title>PDF to Word Converter — niDar Tools</title>
 
-<meta name="description" content="Convert PDF files to editable Word (.docx) documents instantly and free, right in your browser. Supports OCR mode for Marathi/Hindi documents.">
-<meta name="keywords" content="pdf to word, convert pdf to word, pdf to docx converter free, marathi pdf to word, hindi pdf to word">
-<meta name="author" content="niDar Marketing And Services">
+  <meta
+    name="description"
+    content="Convert PDF documents to editable Word files with niDar Tools. Upload a PDF, extract its text and download a DOC file."
+  >
 
-<link rel="canonical" href="https://nidartools.com/pdf-to-word/">
+  <meta
+    name="keywords"
+    content="PDF to Word, PDF converter, PDF to DOC, PDF text extractor, online PDF to Word"
+  >
 
-<!-- Absolute paths for Assets -->
-<link rel="icon" type="image/x-icon" href="/assets/favicon/favicon.ico">
-<link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon/favicon-16x16.png">
-<link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon/favicon-32x32.png">
-<link rel="apple-touch-icon" sizes="180x180" href="/assets/favicon/apple-touch-icon.png">
-<link rel="stylesheet" href="/assets/css/style.css">
-
-<!-- External JS Libraries -->
-<script src="https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/build/pdf.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/docx@8.5.0/build/index.umd.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/tesseract.js@5.1.0/dist/tesseract.min.js"></script>
-
-<style>
-  .ocr-option {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    background: rgba(0,0,0,0.02);
-    padding: 12px 16px;
-    border-radius: 8px;
-    border: 1px solid var(--border);
-    margin-bottom: 16px;
-    cursor: pointer;
-  }
-  .ocr-option input[type="checkbox"] {
-    width: 18px;
-    height: 18px;
-    cursor: pointer;
-  }
-  .preview-box {
-    border: 1px solid var(--border);
-    padding: 16px;
-    max-height: 350px;
-    overflow-y: auto;
-    background: var(--bg);
-    color: var(--text);
-    white-space: pre-wrap;
-    font-size: 0.9em;
-    border-radius: 8px;
-    font-family: inherit;
-    line-height: 1.6;
-  }
-</style>
+  <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
+<!-- COMMON HEADER -->
+<div id="site-header"></div>
 
-<header class="header">
-  <div class="container navbar">
-    <a href="/" class="logo">niDar<span>Tools</span></a>
-    <nav>
-      <a href="/">Home</a>
-      <a href="/about/">About</a>
-      <a href="/contact/">Contact</a>
-      <a href="/support/">Support</a>
-    </nav>
-    <button class="btn btn-theme" id="themeToggle" aria-label="Toggle theme">🌙 Theme</button>
-  </div>
-</header>
+  <main class="pdf-to-word-page">
 
-<main class="container mt-40">
+    <!-- =====================================================
+         HERO
+         ===================================================== -->
 
-<section class="hero-card text-center mb-30">
-  <h1>PDF to Word Converter</h1>
-  
-  <div class="mt-10">
-    <a href="/content/pdf-to-word/" class="guide-link">
-      <span class="icon">📖</span><span>Read PDF to Word Conversion Guide →</span>
-    </a>
-  </div>
+    <section class="tool-hero">
 
-  <p class="mt-10">
-    Convert a PDF file to an editable Word (.docx) document — 100% free, no watermark, processed entirely in your browser.
-  </p>
-</section>
+      <div class="tool-badge">
+        📑 PDF & Document Tool
+      </div>
 
-<section class="card mb-20">
-  <h2>1. Upload PDF File</h2>
-  <label class="ocr-option mt-10">
-    <input type="checkbox" id="ocrMode">
-    <span><strong>OCR Mode:</strong> Marathi / Hindi / English (Better for scanned documents and regional text)</span>
-  </label>
+      <h1>
+        PDF to Word Converter
+      </h1>
 
-  <input type="file" id="pdfInput" accept="application/pdf" class="form-control">
-  <p id="statusMsg" class="mt-10 text-muted" style="font-weight: 600;"></p>
-</section>
+      <p>
+        Convert PDF text into an editable Word document.
+        Upload your PDF, review the extracted content and download it.
+      </p>
 
-<section class="card hidden mb-40" id="previewCard">
-  <h2>2. Preview Extracted Text</h2>
-  <p class="text-muted mb-10" style="font-size: 0.85rem;">Review the extracted text below before generating your editable document.</p>
-  
-  <div id="textPreview" class="preview-box"></div>
-  
-  <button id="downloadBtn" class="btn btn-primary mt-20">📥 Download Word (.docx)</button>
-</section>
+    </section>
 
-</main>
 
-<footer class="footer">
-  <div class="container text-center">
-    <p>© 2026 niDar Tools. All Rights Reserved.</p>
-    <p>Developed by <strong>niDar Marketing And Services</strong></p>
-  </div>
-</footer>
+    <!-- =====================================================
+         UPLOAD
+         ===================================================== -->
 
-<script src="/assets/js/script.js"></script>
-<script>
-(function () {
-  pdfjsLib.GlobalWorkerOptions.workerSrc = "https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/build/pdf.worker.min.js";
+    <section class="upload-section">
 
-  const pdfInput = document.getElementById('pdfInput');
-  const ocrMode = document.getElementById('ocrMode');
-  const statusMsg = document.getElementById('statusMsg');
-  const previewCard = document.getElementById('previewCard');
-  const textPreview = document.getElementById('textPreview');
-  const downloadBtn = document.getElementById('downloadBtn');
+      <div
+        class="upload-zone"
+        id="uploadZone"
+        tabindex="0"
+        role="button"
+        aria-label="Upload PDF"
+      >
 
-  let extractedParagraphs = [];
+        <div class="upload-icon">
+          📄
+        </div>
 
-  pdfInput.addEventListener('change', async (e) => {
-    const file = e.target.files[0];
-    if (!file) return;
+        <h2>
+          Upload Your PDF
+        </h2>
 
-    previewCard.classList.add('hidden');
-    extractedParagraphs = [];
-    statusMsg.textContent = 'Reading PDF file...';
+        <p>
+          Drag & drop your PDF here or select it from your device.
+        </p>
 
-    try {
-      const arrayBuffer = await file.arrayBuffer();
-      const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
-      let fullText = '';
+        <button
+          type="button"
+          id="selectPdfBtn"
+          class="primary-btn"
+        >
+          Select PDF
+        </button>
 
-      if (ocrMode.checked) {
-        statusMsg.textContent = 'Initializing OCR engine... (first time may take a moment)';
-        const worker = await Tesseract.createWorker('mar+hin+eng');
+        <span class="upload-hint">
+          PDF files only • Max 25 MB
+        </span>
 
-        for (let i = 1; i <= pdf.numPages; i++) {
-          statusMsg.textContent = `Processing page ${i} of ${pdf.numPages} using OCR...`;
-          const page = await pdf.getPage(i);
-          const viewport = page.getViewport({ scale: 2 });
-          
-          const canvas = document.createElement('canvas');
-          canvas.width = viewport.width;
-          canvas.height = viewport.height;
-          const ctx = canvas.getContext('2d');
-          
-          await page.render({ canvasContext: ctx, viewport: viewport }).promise;
+        <input
+          type="file"
+          id="pdfInput"
+          accept="application/pdf,.pdf"
+          hidden
+        >
 
-          const { data: { text } } = await worker.recognize(canvas);
-          extractedParagraphs.push(text);
-          fullText += text + '\n\n';
-        }
-        await worker.terminate();
-      } else {
-        statusMsg.textContent = 'Extracting text...';
-        for (let i = 1; i <= pdf.numPages; i++) {
-          const page = await pdf.getPage(i);
-          const content = await page.getTextContent();
-          const pageText = content.items.map(item => item.str).join(' ');
-          extractedParagraphs.push(pageText);
-          fullText += pageText + '\n\n';
-        }
-      }
+      </div>
 
-      textPreview.textContent = fullText;
-      previewCard.classList.remove('hidden');
-      statusMsg.textContent = '✅ Extraction complete! Review the preview and click download.';
-    } catch (err) {
-      statusMsg.textContent = '❌ Error processing file: ' + err.message;
-      console.error(err);
-    }
-  });
+    </section>
 
-  downloadBtn.addEventListener('click', () => {
-    if (extractedParagraphs.length === 0) return;
 
-    const { Document, Packer, Paragraph } = docx;
+    <!-- =====================================================
+         WORKSPACE
+         ===================================================== -->
 
-    const docParagraphs = extractedParagraphs.flatMap(pageText => {
-      return pageText.split('\n').map(line => new Paragraph({ text: line }));
-    });
+    <section
+      id="workspace"
+      class="workspace"
+      hidden
+    >
 
-    const doc = new Document({
-      sections: [{ children: docParagraphs }]
-    });
+      <!-- ===================================================
+           PDF INFORMATION
+           =================================================== -->
 
-    Packer.toBlob(doc).then(blob => {
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = 'converted-document.docx';
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-      URL.revokeObjectURL(url);
-    });
-  });
-})();
-</script>
+      <div class="panel file-panel">
+
+        <div class="panel-heading">
+
+          <div class="step-number">
+            01
+          </div>
+
+          <div>
+            <h2>
+              PDF Document
+            </h2>
+
+            <p>
+              Selected PDF information
+            </p>
+          </div>
+
+        </div>
+
+
+        <div class="file-card">
+
+          <div class="file-icon">
+            PDF
+          </div>
+
+          <div class="file-details">
+
+            <strong id="pdfFileName">
+              document.pdf
+            </strong>
+
+            <span id="pdfFileSize">
+              0 KB
+            </span>
+
+            <span id="pdfPageCount">
+              0 pages
+            </span>
+
+          </div>
+
+        </div>
+
+
+        <div class="file-stats">
+
+          <div class="stat-card">
+
+            <span>
+              Pages
+            </span>
+
+            <strong id="pageCountValue">
+              0
+            </strong>
+
+          </div>
+
+
+          <div class="stat-card">
+
+            <span>
+              Size
+            </span>
+
+            <strong id="sizeValue">
+              0 KB
+            </strong>
+
+          </div>
+
+
+          <div class="stat-card">
+
+            <span>
+              Type
+            </span>
+
+            <strong>
+              PDF
+            </strong>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <!-- ===================================================
+           CONVERSION SETTINGS
+           =================================================== -->
+
+      <div class="panel settings-panel">
+
+        <div class="panel-heading">
+
+          <div class="step-number">
+            02
+          </div>
+
+          <div>
+            <h2>
+              Conversion Settings
+            </h2>
+
+            <p>
+              Choose how the Word document should be created.
+            </p>
+          </div>
+
+        </div>
+
+
+        <div class="field-group">
+
+          <label for="outputFormat">
+            Output Format
+          </label>
+
+          <select id="outputFormat">
+
+            <option value="doc" selected>
+              Word Document (.doc)
+            </option>
+
+            <option value="txt">
+              Plain Text (.txt)
+            </option>
+
+          </select>
+
+        </div>
+
+
+        <div class="field-group">
+
+          <label for="documentName">
+            Document Name
+          </label>
+
+          <input
+            type="text"
+            id="documentName"
+            value="nidar-converted-document"
+            maxlength="120"
+            placeholder="Enter document name"
+          >
+
+        </div>
+
+
+        <label class="check-row">
+
+          <input
+            type="checkbox"
+            id="includePageBreaks"
+            checked
+          >
+
+          <span>
+            Keep page breaks
+          </span>
+
+        </label>
+
+
+        <label class="check-row">
+
+          <input
+            type="checkbox"
+            id="includePageNumbers"
+            checked
+          >
+
+          <span>
+            Include page numbers
+          </span>
+
+        </label>
+
+
+        <label class="check-row">
+
+          <input
+            type="checkbox"
+            id="cleanText"
+            checked
+          >
+
+          <span>
+            Clean extracted text
+          </span>
+
+        </label>
+
+      </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         EXTRACTION / PREVIEW
+         ===================================================== -->
+
+    <section
+      id="previewSection"
+      class="preview-section"
+      hidden
+    >
+
+      <div class="section-heading">
+
+        <span class="section-kicker">
+          DOCUMENT PREVIEW
+        </span>
+
+        <h2>
+          Extracted Content
+        </h2>
+
+        <p>
+          Review and edit the extracted text before creating your Word file.
+        </p>
+
+      </div>
+
+
+      <div class="preview-panel">
+
+        <div class="preview-toolbar">
+
+          <span id="previewStatus">
+            Waiting for PDF
+          </span>
+
+          <span id="textStats">
+            0 characters
+          </span>
+
+        </div>
+
+
+        <textarea
+          id="extractedText"
+          class="document-preview"
+          spellcheck="true"
+          placeholder="Extracted PDF text will appear here..."
+        ></textarea>
+
+      </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         CONVERSION ACTION
+         ===================================================== -->
+
+    <section
+      id="convertSection"
+      class="convert-section"
+      hidden
+    >
+
+      <div class="convert-card">
+
+        <div class="convert-icon">
+          📄
+        </div>
+
+        <div class="convert-content">
+
+          <h2>
+            Ready to Convert?
+          </h2>
+
+          <p id="convertMessage">
+            Your PDF is ready to be converted.
+          </p>
+
+        </div>
+
+        <button
+          type="button"
+          id="convertBtn"
+          class="primary-btn large-btn"
+        >
+          Convert to Word
+        </button>
+
+      </div>
+
+
+      <!-- PROGRESS -->
+
+      <div
+        id="progressSection"
+        class="progress-section"
+        hidden
+      >
+
+        <div class="progress-header">
+
+          <span>
+            Converting document...
+          </span>
+
+          <strong id="progressPercent">
+            0%
+          </strong>
+
+        </div>
+
+        <div class="progress-track">
+
+          <div
+            id="progressBar"
+            class="progress-bar"
+          ></div>
+
+        </div>
+
+        <p id="progressMessage">
+          Preparing PDF...
+        </p>
+
+      </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         RESULT
+         ===================================================== -->
+
+    <section
+      id="resultSection"
+      class="result-section"
+      hidden
+    >
+
+      <div class="result-success">
+
+        <div class="success-icon">
+          ✓
+        </div>
+
+        <div>
+
+          <h2>
+            Conversion Completed
+          </h2>
+
+          <p id="resultSummary">
+            Your editable document is ready.
+          </p>
+
+        </div>
+
+      </div>
+
+
+      <div class="result-details">
+
+        <div class="result-stat">
+
+          <span>
+            Original
+          </span>
+
+          <strong id="resultOriginal">
+            PDF
+          </strong>
+
+        </div>
+
+
+        <div class="result-stat">
+
+          <span>
+            Output
+          </span>
+
+          <strong id="resultOutput">
+            DOC
+          </strong>
+
+        </div>
+
+
+        <div class="result-stat">
+
+          <span>
+            Pages
+          </span>
+
+          <strong id="resultPages">
+            0
+          </strong>
+
+        </div>
+
+      </div>
+
+
+      <div class="result-actions">
+
+        <a
+          id="downloadBtn"
+          class="primary-btn download-btn"
+          href="#"
+          download="nidar-converted-document.doc"
+        >
+          ⬇ Download Word File
+        </a>
+
+        <button
+          type="button"
+          id="convertAgainBtn"
+          class="secondary-btn"
+        >
+          ↻ Convert Again
+        </button>
+
+        <button
+          type="button"
+          id="startOverBtn"
+          class="secondary-btn"
+        >
+          Start Over
+        </button>
+
+      </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         HOW TO USE
+         ===================================================== -->
+
+    <section class="info-section">
+
+      <div class="section-heading">
+
+        <span class="section-kicker">
+          HOW IT WORKS
+        </span>
+
+        <h2>
+          How to Convert PDF to Word?
+        </h2>
+
+        <p>
+          Convert your PDF into an editable document in three steps.
+        </p>
+
+      </div>
+
+
+      <div class="steps-grid">
+
+        <article class="info-card">
+
+          <span class="info-number">
+            01
+          </span>
+
+          <h3>
+            Upload PDF
+          </h3>
+
+          <p>
+            Select a PDF document from your phone, tablet or computer.
+          </p>
+
+        </article>
+
+
+        <article class="info-card">
+
+          <span class="info-number">
+            02
+          </span>
+
+          <h3>
+            Review Content
+          </h3>
+
+          <p>
+            Review the extracted text and make any necessary changes.
+          </p>
+
+        </article>
+
+
+        <article class="info-card">
+
+          <span class="info-number">
+            03
+          </span>
+
+          <h3>
+            Download Word
+          </h3>
+
+          <p>
+            Convert the content and download your editable document.
+          </p>
+
+        </article>
+
+      </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         FEATURES
+         ===================================================== -->
+
+    <section class="features-section">
+
+      <div class="section-heading">
+
+        <span class="section-kicker">
+          WHY NIDAR TOOLS
+        </span>
+
+        <h2>
+          Simple, Useful & Privacy Friendly
+        </h2>
+
+      </div>
+
+
+      <div class="features-grid">
+
+        <div class="feature-card">
+
+          <span>
+            ⚡
+          </span>
+
+          <h3>
+            Fast Workflow
+          </h3>
+
+          <p>
+            Upload, review and convert without complicated steps.
+          </p>
+
+        </div>
+
+
+        <div class="feature-card">
+
+          <span>
+            ✏️
+          </span>
+
+          <h3>
+            Editable Text
+          </h3>
+
+          <p>
+            Review and edit extracted content before downloading.
+          </p>
+
+        </div>
+
+
+        <div class="feature-card">
+
+          <span>
+            🔒
+          </span>
+
+          <h3>
+            Privacy Friendly
+          </h3>
+
+          <p>
+            The tool is designed to process supported content in your browser.
+          </p>
+
+        </div>
+
+
+        <div class="feature-card">
+
+          <span>
+            📱
+          </span>
+
+          <h3>
+            Works Anywhere
+          </h3>
+
+          <p>
+            Use the converter on mobile, tablet or desktop.
+          </p>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         PRIVACY NOTE
+         ===================================================== -->
+
+    <section class="privacy-note">
+
+      <div class="privacy-icon">
+        🔒
+      </div>
+
+      <div>
+
+        <h3>
+          Your documents stay under your control
+        </h3>
+
+        <p>
+          niDar Tools is designed with a privacy-friendly workflow.
+          No account is required to use this converter.
+        </p>
+
+      </div>
+
+    </section>
+
+  </main>
+
+
+  <!-- PDF.js -->
+
+  <script src="../assets/js/common.js"></script>
+<script src="script.js" type="module"></script>
+
+<!-- COMMON FOOTER -->
+<div id="site-footer"></div>
 
 </body>
 </html>

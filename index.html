@@ -1,73 +1,213 @@
 <!DOCTYPE html>
-<html lang="mr">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>niDar Tools - Coming Soon</title>
-    <meta name="robots" content="noindex, nofollow">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-        body {
-            background: linear-gradient(135deg, #0f172a, #1e293b);
-            color: #ffffff;
-            height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            padding: 20px;
-        }
-        .maintenance-container {
-            max-width: 600px;
-            background: rgba(255, 255, 255, 0.05);
-            padding: 40px;
-            border-radius: 20px;
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-        }
-        .logo-img {
-            max-height: 60px;
-            width: auto;
-            margin-bottom: 20px;
-        }
-        h1 {
-            font-size: 2rem;
-            margin-bottom: 15px;
-            color: #38bdf8;
-        }
-        p {
-            color: #94a3b8;
-            font-size: 1.05rem;
-            line-height: 1.6;
-            margin-bottom: 25px;
-        }
-        .spinner {
-            width: 40px;
-            height: 40px;
-            border: 4px solid rgba(56, 189, 248, 0.2);
-            border-top: 4px solid #38bdf8;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-            margin: 0 auto;
-        }
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Background Remover — niDar Tools</title>
+
+  <meta name="description" content="Remove image backgrounds online with niDar Tools. Create transparent PNG images quickly and easily.">
+  <meta name="keywords" content="background remover, remove image background, transparent background, PNG background remover">
+
+  <link rel="stylesheet" href="style.css">
+
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/selfie_segmentation/selfie_segmentation.js"></script>
 </head>
+
 <body>
-    <div class="maintenance-container">
-        <img src="logo.png" alt="niDar Tools" class="logo-img">
-        <h1>Website Under Maintenance</h1>
-        <p>आमच्या niDar Tools वेबसाईटवर नवीन आणि आकर्षक सुधारणांचे काम सुरू आहे. लवकरच आम्ही एका नव्या रूपात तुमच्यासमोर येत आहोत. कृपया थोडी प्रतीक्षा करा!</p>
-        <div class="spinner"></div>
+
+<!-- COMMON HEADER -->
+<div id="site-header"></div>
+
+<main class="background-remover-page">
+
+  <!-- HERO -->
+  <section class="tool-hero">
+    <div class="tool-badge">✨ AI Image Tool</div>
+    <h1>Background Remover</h1>
+    <p>Remove backgrounds from your images and create clean transparent PNGs in a few clicks.</p>
+  </section>
+
+  <!-- UPLOAD -->
+  <section class="upload-section">
+    <div class="upload-zone" id="uploadZone" tabindex="0" role="button" aria-label="Upload image">
+      <div class="upload-icon">🖼️</div>
+      <h2>Upload Your Image</h2>
+      <p>Drag & drop an image here or select one from your device.</p>
+
+      <button type="button" id="selectImageBtn" class="primary-btn">Select Image</button>
+
+      <span class="upload-hint">JPG, JPEG, PNG or WEBP • Max 20 MB</span>
+
+      <input type="file" id="imageInput" accept="image/jpeg,image/jpg,image/png,image/webp" hidden>
     </div>
+  </section>
+
+  <!-- WORKSPACE -->
+  <section class="workspace" id="workspace" hidden>
+
+    <div class="panel">
+      <div class="panel-heading">
+        <div class="step-number">01</div>
+        <div>
+          <h2>Original Image</h2>
+          <p>Your uploaded image</p>
+        </div>
+      </div>
+
+      <div class="image-preview-box">
+        <img id="originalPreview" src="" alt="Original image preview">
+        <div class="preview-placeholder" id="originalPlaceholder">Original preview</div>
+      </div>
+
+      <div class="image-info">
+        <span id="originalName">Image</span>
+        <span id="originalDimensions">0 × 0 px</span>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-heading">
+        <div class="step-number">02</div>
+        <div>
+          <h2>Removed Background</h2>
+          <p>Transparent result preview</p>
+        </div>
+      </div>
+
+      <div class="image-preview-box checkerboard" id="resultPreviewBox">
+        <img id="resultPreview" src="" alt="Background removed image preview">
+        <div class="preview-placeholder" id="resultPlaceholder">Result will appear here</div>
+      </div>
+
+      <div class="image-info">
+        <span id="resultDimensions">—</span>
+        <span id="resultSize">—</span>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- SETTINGS -->
+  <section class="settings-section" id="settingsSection" hidden>
+
+    <div class="section-heading">
+      <span class="section-kicker">CUSTOMIZE</span>
+      <h2>Result Settings</h2>
+      <p>Adjust the appearance of your background-removed image.</p>
+    </div>
+
+    <div class="settings-grid">
+
+      <div class="setting-card">
+        <label for="backgroundMode">Background</label>
+        <select id="backgroundMode">
+          <option value="transparent" selected>Transparent</option>
+          <option value="white">White</option>
+          <option value="black">Black</option>
+        </select>
+      </div>
+
+      <div class="setting-card">
+        <label for="outputFormat">Output Format</label>
+        <select id="outputFormat">
+          <option value="png" selected>PNG</option>
+          <option value="webp">WEBP</option>
+        </select>
+      </div>
+
+      <div class="setting-card">
+        <label for="outputQuality">Quality</label>
+        <select id="outputQuality">
+          <option value="1">Maximum</option>
+          <option value="0.9" selected>High</option>
+          <option value="0.8">Medium</option>
+        </select>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- PROCESS ACTION -->
+  <section class="process-section" id="processSection" hidden>
+
+    <div class="process-card">
+      <div class="process-icon">✨</div>
+      <div class="process-content">
+        <h2>Ready to Remove Background</h2>
+        <p id="processMessage">Your image is ready for processing.</p>
+      </div>
+      <button type="button" id="removeBackgroundBtn" class="primary-btn large-btn">Remove Background</button>
+    </div>
+
+    <div class="progress-section" id="progressSection" hidden>
+      <div class="progress-header">
+        <span>Processing image...</span>
+        <strong id="progressPercent">0%</strong>
+      </div>
+      <div class="progress-track">
+        <div class="progress-bar" id="progressBar"></div>
+      </div>
+      <p id="progressMessage">Preparing image...</p>
+    </div>
+
+  </section>
+
+  <!-- RESULT ACTIONS -->
+  <section class="result-section" id="resultSection" hidden>
+
+    <div class="result-success">
+      <div class="success-icon">✓</div>
+      <div>
+        <h2>Background Removed Successfully</h2>
+        <p id="resultSummary">Your transparent image is ready.</p>
+      </div>
+    </div>
+
+    <div class="result-actions">
+      <a id="downloadBtn" class="primary-btn download-btn" href="#" download="nidar-background-removed.png">⬇ Download Image</a>
+      <button type="button" id="processAgainBtn" class="secondary-btn">↻ Process Again</button>
+      <button type="button" id="startOverBtn" class="secondary-btn">Start Over</button>
+    </div>
+
+  </section>
+
+  <!-- HOW TO USE -->
+  <section class="info-section">
+    <div class="info-heading">
+      <span>📖</span>
+      <div>
+        <h2>How to remove a background</h2>
+        <p>Three simple steps to get a clean result.</p>
+      </div>
+    </div>
+
+    <div class="steps-grid">
+      <div class="info-step">
+        <span>01</span>
+        <h3>Upload</h3>
+        <p>Select or drag your image into the upload area.</p>
+      </div>
+      <div class="info-step">
+        <span>02</span>
+        <h3>Process</h3>
+        <p>Click Remove Background to run AI processing in your browser.</p>
+      </div>
+      <div class="info-step">
+        <span>03</span>
+        <h3>Download</h3>
+        <p>Preview your result and download the finished image.</p>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- COMMON FOOTER -->
+<div id="site-footer"></div>
+
+<script src="../assets/js/common.js"></script>
+<script src="script.js"></script>
+
 </body>
 </html>

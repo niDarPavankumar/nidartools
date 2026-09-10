@@ -1,192 +1,661 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Image Compressor - niDar Tools</title>
+  <title>Image Compressor — niDar Tools</title>
+  <meta name="description" content="Compress images online for free. Reduce image file size while maintaining good quality with niDar Tools Image Compressor.">
 
-<meta name="description" content="Compress JPG, PNG, and WebP images online for free without losing quality. Fast, secure, and client-side processing in your browser.">
-<meta name="keywords" content="image compressor, compress jpg, reduce png size, webp image optimizer, online photo resizer">
-
-<link rel="canonical" href="https://nidartools.com/image-compressor/">
-
-<!-- Absolute paths for Assets -->
-<link rel="icon" type="image/x-icon" href="/assets/favicon/favicon.ico">
-<link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon/favicon-16x16.png">
-<link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon/favicon-32x32.png">
-<link rel="apple-touch-icon" sizes="180x180" href="/assets/favicon/apple-touch-icon.png">
-<link rel="stylesheet" href="/assets/css/style.css">
+  <link rel="icon" href="/favicon.ico">
+  <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
+<!-- COMMON HEADER -->
+<div id="site-header"></div>
 
-<header class="header">
-  <div class="container navbar">
-    <a href="/" class="logo">niDar<span>Tools</span></a>
-    <nav>
-      <a href="/">Home</a>
-      <a href="/about/">About</a>
-      <a href="/contact/">Contact</a>
-      <a href="/support/">Support</a>
-    </nav>
-    <button class="btn btn-theme" id="themeToggle" aria-label="Toggle theme">🌙 Theme</button>
-  </div>
-</header>
+<main class="compressor-page">
 
-<main class="container mt-40">
+  <!-- HERO -->
+  <section class="tool-hero">
 
-<section class="hero-card text-center mb-30">
-  <span class="badge">🖼️ Professional Image Compression</span>
-  <h1 class="mt-10">Compress Images Without Losing Quality</h1>
-  
-  <!-- Content Guide Interlinking -->
-  <div class="mt-10">
-    <a href="/content/image-compressor/" class="guide-link">
-      <span class="icon">📖</span><span>Read Image Optimization Guide →</span>
-    </a>
-  </div>
+    <span class="tool-badge">⚡ Free Online Image Tool</span>
 
-  <p class="mt-10">
-    Reduce JPG, PNG, and WebP image sizes directly in your browser. Fast, secure, and completely free.
-  </p>
-</section>
+    <h1>Image Compressor</h1>
 
-<section class="card mb-40">
-  <h2>Select &amp; Compress Image</h2>
+    <p>
+      Compress your images quickly and reduce file size while keeping
+      the best possible image quality.
+    </p>
 
-  <div class="mt-20">
-    <label>Choose File</label>
-    <input type="file" id="imageInput" accept="image/jpeg,image/png,image/webp" class="form-control mt-10">
-  </div>
+    <div class="hero-points">
+      <span>🔒 Private</span>
+      <span>⚡ Fast</span>
+      <span>🆓 Free</span>
+      <span>📱 Works on Mobile</span>
+    </div>
 
-  <div class="mt-20">
-    <label>Compression Quality: <strong id="qualityValue">80%</strong></label>
-    <input type="range" id="quality" min="10" max="100" value="80" class="form-control mt-10">
-  </div>
+  </section>
 
-  <div id="previewWrap" class="hidden mt-20 text-center">
-    <p><strong>Original Preview:</strong></p>
-    <img id="previewImg" style="max-width: 100%; max-height: 250px; border-radius: 8px; border: 1px solid var(--border);" class="mt-10">
-    <p id="originalSize" class="text-muted mt-10"></p>
-  </div>
 
-  <button id="compressBtn" class="btn btn-primary mt-20">⚡ Compress Image</button>
+  <!-- MAIN TOOL -->
+  <section class="tool-card">
 
-  <p id="errorMsg" class="alert alert-danger hidden mt-20"></p>
+    <!-- STEP 1 -->
+    <div class="step-heading">
 
-  <div id="resultCard" class="hidden mt-30 text-center">
-    <hr class="mb-20">
-    <h3>Compressed Result</h3>
-    <img id="compressedImg" style="max-width: 100%; max-height: 250px; border-radius: 8px; border: 1px solid var(--border);" class="mt-10">
-    <p id="compressedSize" class="mt-10"></p>
-    <a id="downloadBtn" class="btn btn-primary mt-20" download="compressed-image.jpg">📥 Download Compressed Image</a>
-  </div>
-</section>
+      <span class="step-number">1</span>
+
+      <div>
+        <h2>Upload your image</h2>
+        <p>Select an image to start compressing.</p>
+      </div>
+
+    </div>
+
+
+    <div
+      class="upload-zone"
+      id="uploadZone"
+      tabindex="0"
+      role="button"
+      aria-label="Select image"
+    >
+
+      <div class="upload-icon">🖼️</div>
+
+      <h3>Drop your image here</h3>
+
+      <p>or</p>
+
+      <button
+        type="button"
+        class="upload-btn"
+        id="selectImageBtn"
+      >
+        Select Image
+      </button>
+
+      <small>
+        JPG · JPEG · PNG · WEBP · GIF
+      </small>
+
+      <input
+        type="file"
+        id="imageInput"
+        accept="image/jpeg,image/png,image/webp,image/gif"
+        hidden
+      >
+
+    </div>
+
+
+    <!-- WORKSPACE -->
+    <div
+      class="workspace"
+      id="workspace"
+      hidden
+    >
+
+      <div class="section-divider"></div>
+
+
+      <!-- STEP 2 -->
+      <div class="step-heading">
+
+        <span class="step-number">2</span>
+
+        <div>
+          <h2>Preview your image</h2>
+          <p>Review the original image before compression.</p>
+        </div>
+
+      </div>
+
+
+      <div class="preview-grid">
+
+        <div class="preview-card">
+
+          <div class="preview-label">
+            Original Image
+          </div>
+
+          <div class="image-preview-box">
+
+            <img
+              id="originalPreview"
+              src=""
+              alt="Original image preview"
+            >
+
+          </div>
+
+          <div class="file-details">
+
+            <span id="originalName">
+              Image
+            </span>
+
+            <span id="originalSize">
+              0 KB
+            </span>
+
+          </div>
+
+          <div class="image-dimensions">
+            <span id="originalDimensions">
+              0 × 0 px
+            </span>
+          </div>
+
+        </div>
+
+
+        <div class="preview-card">
+
+          <div class="preview-label">
+            Compressed Preview
+          </div>
+
+          <div class="image-preview-box">
+
+            <img
+              id="compressedPreview"
+              src=""
+              alt="Compressed image preview"
+            >
+
+            <div
+              class="preview-placeholder"
+              id="compressedPlaceholder"
+            >
+              Preview will appear here
+            </div>
+
+          </div>
+
+          <div class="file-details">
+
+            <span>
+              Compressed
+            </span>
+
+            <span id="compressedSize">
+              —
+            </span>
+
+          </div>
+
+          <div class="image-dimensions">
+            <span id="compressedDimensions">
+              —
+            </span>
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <div class="section-divider"></div>
+
+
+      <!-- STEP 3 -->
+      <div class="step-heading">
+
+        <span class="step-number">3</span>
+
+        <div>
+          <h2>Compression settings</h2>
+          <p>Choose how much you want to compress your image.</p>
+        </div>
+
+      </div>
+
+
+      <div class="settings-grid">
+
+        <div class="setting-group">
+
+          <label for="quality">
+            Image Quality
+
+            <strong>
+              <span id="qualityValue">80</span>%
+            </strong>
+
+          </label>
+
+          <input
+            type="range"
+            id="quality"
+            min="10"
+            max="100"
+            value="80"
+            step="1"
+          >
+
+          <div class="range-labels">
+            <span>Smaller file</span>
+            <span>Better quality</span>
+          </div>
+
+        </div>
+
+
+        <div class="setting-group">
+
+          <label for="outputFormat">
+            Output Format
+          </label>
+
+          <select id="outputFormat">
+
+            <option value="auto" selected>
+              Automatic
+            </option>
+
+            <option value="image/jpeg">
+              JPG
+            </option>
+
+            <option value="image/png">
+              PNG
+            </option>
+
+            <option value="image/webp">
+              WEBP
+            </option>
+
+          </select>
+
+        </div>
+
+
+        <div class="setting-group">
+
+          <label for="maxWidth">
+            Maximum Width
+          </label>
+
+          <select id="maxWidth">
+
+            <option value="original" selected>
+              Keep Original
+            </option>
+
+            <option value="1920">
+              1920 px
+            </option>
+
+            <option value="1600">
+              1600 px
+            </option>
+
+            <option value="1280">
+              1280 px
+            </option>
+
+            <option value="1024">
+              1024 px
+            </option>
+
+            <option value="800">
+              800 px
+            </option>
+
+          </select>
+
+        </div>
+
+
+        <div class="setting-group">
+
+          <label for="fileName">
+            Output File Name
+          </label>
+
+          <input
+            type="text"
+            id="fileName"
+            value="nidar-compressed"
+            maxlength="80"
+            autocomplete="off"
+          >
+
+        </div>
+
+      </div>
+
+
+      <!-- ADVANCED -->
+      <details class="advanced-settings">
+
+        <summary>
+          ⚙️ Advanced settings
+        </summary>
+
+        <div class="advanced-content">
+
+          <label class="check-row">
+
+            <input
+              type="checkbox"
+              id="preserveMetadata"
+            >
+
+            <span>
+              Preserve image metadata when supported
+            </span>
+
+          </label>
+
+
+          <label class="check-row">
+
+            <input
+              type="checkbox"
+              id="keepTransparency"
+              checked
+            >
+
+            <span>
+              Preserve transparency when supported
+            </span>
+
+          </label>
+
+        </div>
+
+      </details>
+
+
+      <!-- ACTION -->
+      <div class="action-row">
+
+        <button
+          type="button"
+          class="primary-btn"
+          id="compressBtn"
+        >
+          Compress Image
+        </button>
+
+        <button
+          type="button"
+          class="secondary-btn"
+          id="startOverBtn"
+        >
+          Start Over
+        </button>
+
+      </div>
+
+
+      <!-- PROGRESS -->
+      <div
+        class="progress-section"
+        id="progressSection"
+        hidden
+      >
+
+        <div class="progress-header">
+
+          <span>
+            Compressing image...
+          </span>
+
+          <span id="progressPercent">
+            0%
+          </span>
+
+        </div>
+
+        <div class="progress-track">
+
+          <div
+            class="progress-bar"
+            id="progressBar"
+          ></div>
+
+        </div>
+
+      </div>
+
+
+      <!-- RESULT -->
+      <div
+        class="result-section"
+        id="resultSection"
+        hidden
+      >
+
+        <div class="success-icon">
+          ✓
+        </div>
+
+        <h2>
+          Image Compressed Successfully
+        </h2>
+
+        <p id="resultSummary">
+          Your compressed image is ready.
+        </p>
+
+
+        <div class="compression-stats">
+
+          <div class="stat-card">
+
+            <span>
+              Original
+            </span>
+
+            <strong id="resultOriginalSize">
+              —
+            </strong>
+
+          </div>
+
+
+          <div class="stat-card">
+
+            <span>
+              Compressed
+            </span>
+
+            <strong id="resultCompressedSize">
+              —
+            </strong>
+
+          </div>
+
+
+          <div class="stat-card highlight">
+
+            <span>
+              Saved
+            </span>
+
+            <strong id="savedPercentage">
+              0%
+            </strong>
+
+          </div>
+
+        </div>
+
+
+        <div class="download-actions">
+
+          <a
+            href="#"
+            class="download-btn"
+            id="downloadBtn"
+            download="nidar-compressed.jpg"
+          >
+            Download Compressed Image
+          </a>
+
+          <button
+            type="button"
+            class="secondary-btn"
+            id="compressAgainBtn"
+          >
+            Compress Again
+          </button>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- HOW TO -->
+  <section class="how-to">
+
+    <div class="section-heading">
+
+      <span>📖</span>
+
+      <div>
+        <h2>How to compress an image</h2>
+
+        <p>
+          Four simple steps to reduce your image size.
+        </p>
+      </div>
+
+    </div>
+
+
+    <div class="steps-grid">
+
+      <article class="info-card">
+
+        <span>01</span>
+
+        <h3>Upload</h3>
+
+        <p>
+          Select or drag your image into the upload area.
+        </p>
+
+      </article>
+
+
+      <article class="info-card">
+
+        <span>02</span>
+
+        <h3>Choose quality</h3>
+
+        <p>
+          Adjust the compression quality according to your needs.
+        </p>
+
+      </article>
+
+
+      <article class="info-card">
+
+        <span>03</span>
+
+        <h3>Compress</h3>
+
+        <p>
+          Click Compress Image to process your image directly in the browser.
+        </p>
+
+      </article>
+
+
+      <article class="info-card">
+
+        <span>04</span>
+
+        <h3>Download</h3>
+
+        <p>
+          Download your smaller and optimized image instantly.
+        </p>
+
+      </article>
+
+    </div>
+
+  </section>
+
+
+  <!-- FEATURES -->
+  <section class="features-section">
+
+    <article class="feature-card">
+
+      <span>🔒</span>
+
+      <h3>Private by design</h3>
+
+      <p>
+        Your images can be processed directly in your browser.
+      </p>
+
+    </article>
+
+
+    <article class="feature-card">
+
+      <span>⚡</span>
+
+      <h3>Fast processing</h3>
+
+      <p>
+        Compress images without unnecessary uploads or waiting.
+      </p>
+
+    </article>
+
+
+    <article class="feature-card">
+
+      <span>🎯</span>
+
+      <h3>Quality control</h3>
+
+      <p>
+        Choose the right balance between image quality and file size.
+      </p>
+
+    </article>
+
+
+    <article class="feature-card">
+
+      <span>📱</span>
+
+      <h3>Works anywhere</h3>
+
+      <p>
+        Designed for phones, tablets and desktop browsers.
+      </p>
+
+    </article>
+
+  </section>
 
 </main>
 
-<footer class="footer">
-  <div class="container text-center">
-    <p>© 2026 niDar Tools. All Rights Reserved.</p>
-    <p>Developed by <strong>niDar Marketing And Services</strong></p>
-  </div>
-</footer>
+<!-- COMMON FOOTER -->
+<div id="site-footer"></div>
 
-<script src="/assets/js/script.js"></script>
-<script>
-(function() {
-  const imageInput = document.getElementById('imageInput');
-  const quality = document.getElementById('quality');
-  const qualityValue = document.getElementById('qualityValue');
-  const previewWrap = document.getElementById('previewWrap');
-  const previewImg = document.getElementById('previewImg');
-  const originalSize = document.getElementById('originalSize');
-  const compressBtn = document.getElementById('compressBtn');
-  const errorMsg = document.getElementById('errorMsg');
-  const resultCard = document.getElementById('resultCard');
-  const compressedImg = document.getElementById('compressedImg');
-  const compressedSize = document.getElementById('compressedSize');
-  const downloadBtn = document.getElementById('downloadBtn');
 
-  let selectedFile = null;
-
-  quality.addEventListener('input', () => {
-    qualityValue.textContent = quality.value + '%';
-  });
-
-  imageInput.addEventListener('change', (e) => {
-    const file = e.target.files[0];
-    if (!file) return;
-
-    selectedFile = file;
-    originalSize.textContent = 'Original Size: ' + (file.size / 1024).toFixed(1) + ' KB';
-
-    const reader = new FileReader();
-    reader.onload = (ev) => {
-      previewImg.src = ev.target.result;
-      previewWrap.classList.remove('hidden');
-      resultCard.classList.add('hidden');
-      errorMsg.classList.add('hidden');
-    };
-    reader.readAsDataURL(file);
-  });
-
-  compressBtn.addEventListener('click', () => {
-    errorMsg.classList.add('hidden');
-
-    if (!selectedFile) {
-      errorMsg.textContent = 'Please select an image file first.';
-      errorCard.classList.remove('hidden');
-      return;
-    }
-
-    compressBtn.disabled = true;
-    compressBtn.textContent = '⏳ Compressing...';
-
-    const img = new Image();
-    img.src = previewImg.src;
-
-    img.onload = () => {
-      const canvas = document.createElement('canvas');
-      canvas.width = img.width;
-      canvas.height = img.height;
-
-      const ctx = canvas.getContext('2d');
-      ctx.drawImage(img, 0, 0);
-
-      const q = parseFloat(quality.value) / 100;
-      const mimeType = selectedFile.type === 'image/png' ? 'image/png' : 'image/jpeg';
-
-      canvas.toBlob((blob) => {
-        if (!blob) {
-          errorMsg.textContent = 'Compression failed. Please try a different image.';
-          errorMsg.classList.remove('hidden');
-          compressBtn.disabled = false;
-          compressBtn.textContent = '⚡ Compress Image';
-          return;
-        }
-
-        const url = URL.createObjectURL(blob);
-        compressedImg.src = url;
-        downloadBtn.href = url;
-
-        const ext = mimeType === 'image/png' ? 'png' : 'jpg';
-        downloadBtn.download = `compressed-image.${ext}`;
-
-        const savedPct = (((selectedFile.size - blob.size) / selectedFile.size) * 100).toFixed(1);
-        compressedSize.innerHTML = `<strong>New Size: ${(blob.size / 1024).toFixed(1)} KB</strong> (${savedPct > 0 ? savedPct + '% smaller' : 'original quality maintained'})`;
-
-        resultCard.classList.remove('hidden');
-        resultCard.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-
-        compressBtn.disabled = false;
-        compressBtn.textContent = '⚡ Compress Image';
-      }, mimeType, q);
-    };
-  });
-})();
-</script>
+<script src="../assets/js/common.js"></script>
+<script src="script.js"></script>
 
 </body>
 </html>

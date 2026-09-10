@@ -1,103 +1,935 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Word to PDF Converter - Free Online, No Upload | niDar Tools</title>
-<meta name="description" content="Convert Word documents (.docx) to PDF instantly and free, right in your browser. No upload, no sign-up, no watermark.">
-<meta name="keywords" content="word to pdf, convert docx to pdf, word to pdf converter free, docx to pdf online">
-<link rel="canonical" href="https://nidartools.com/word-to-pdf/">
-<link rel="icon" type="image/x-icon" href="../assets/favicon/favicon.ico">
-<link rel="icon" type="image/png" sizes="16x16" href="../assets/favicon/favicon-16x16.png">
-<link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon/favicon-32x32.png">
-<link rel="apple-touch-icon" sizes="180x180" href="../assets/favicon/apple-touch-icon.png">
-<link rel="stylesheet" href="../assets/css/style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Word to PDF Converter — niDar Tools</title>
+
+  <meta
+    name="description"
+    content="Convert text and Word-style documents to PDF online with niDar Tools. Format your document and download a professional PDF."
+  >
+
+  <meta
+    name="keywords"
+    content="Word to PDF, text to PDF, document to PDF, PDF converter, online Word PDF converter"
+  >
+
+  <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
-<header>
-<div class="container nav">
-<h2>niDar Tools</h2>
-<nav>
-<a href="../">Home</a>
-<a href="/about/">About</a>
-<a href="/contact/">Contact</a>
-<a href="/support/">Support</a>
-</nav>
-</div>
-</header>
-<main class="container">
-<section class="hero">
-<h1>Word to PDF Converter</h1>
-<div class="mt-10"><a href="/content/word-to-pdf/" class="guide-link"><span class="icon">📖</span><span>Read Word to PDF Guide →</span></a></div>
-<p>Convert a .docx file to PDF instantly — 100% free, no watermark, processed entirely in your browser.</p>
-</section>
-<section class="card">
-<h2>1. Upload Word File (.docx)</h2>
-<input type="file" id="docxInput" accept=".docx">
-<p id="statusMsg" class="mt-10"></p>
-</section>
-<section class="card hidden" id="previewCard">
-<h2>2. Preview</h2>
-<div id="docPreview" style="border:1px solid #ddd;padding:16px;max-height:400px;overflow:auto;background:#fff;color:#000;"></div>
-<button id="downloadBtn" class="btn mt-20">Download PDF</button>
-</section>
-</main>
-<footer>
-<p>© 2026 niDar Tools</p>
-<p>Developed by <strong>niDar Marketing And Services</strong></p>
-</footer>
-<script src="../assets/js/script.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/mammoth@1.8.0/mammoth.browser.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/html2pdf.js@0.10.2/dist/html2pdf.bundle.min.js"></script>
-<script>
-const docxInput = document.getElementById('docxInput');
-const statusMsg = document.getElementById('statusMsg');
-const previewCard = document.getElementById('previewCard');
-const docPreview = document.getElementById('docPreview');
-const downloadBtn = document.getElementById('downloadBtn');
+<!-- COMMON HEADER -->
+<div id="site-header"></div>
 
-docxInput.addEventListener('change', (e) => {
-  const file = e.target.files[0];
-  if (!file) return;
-  previewCard.classList.add('hidden');
-  statusMsg.textContent = 'Converting...';
+  <main class="word-to-pdf-page">
 
-  const reader = new FileReader();
-  reader.onload = function(event) {
-    mammoth.convertToHtml({ arrayBuffer: event.target.result })
-      .then(function(result) {
-        docPreview.innerHTML = result.value;
-        previewCard.classList.remove('hidden');
-        statusMsg.textContent = 'Done! Review the preview below, then download as PDF.';
-      })
-      .catch(function(err) {
-        statusMsg.textContent = 'Error: ' + err.message;
-        console.error(err);
-      });
-  };
-  reader.readAsArrayBuffer(file);
-});
+    <!-- =====================================================
+         HERO
+         ===================================================== -->
 
-downloadBtn.addEventListener('click', () => {
-  const originalMaxHeight = docPreview.style.maxHeight;
-  const originalOverflow = docPreview.style.overflow;
-  docPreview.style.maxHeight = 'none';
-  docPreview.style.overflow = 'visible';
+    <section class="tool-hero">
 
-  const opt = {
-    margin: [0.4, 0.4, 0.4, 0.4],
-    filename: 'converted-document.pdf',
-    image: { type: 'jpeg', quality: 0.98 },
-    html2canvas: { scale: 2, windowWidth: docPreview.scrollWidth },
-    jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' },
-    pagebreak: { mode: ['css', 'legacy'], avoid: ['tr', 'td'] }
-  };
+      <div class="tool-badge">
+        📄 Document Tool
+      </div>
 
-  html2pdf().set(opt).from(docPreview).save().then(() => {
-    docPreview.style.maxHeight = originalMaxHeight;
-    docPreview.style.overflow = originalOverflow;
-  });
-});
-</script>
+      <h1>
+        Word to PDF Converter
+      </h1>
+
+      <p>
+        Create a clean PDF document from your text with
+        simple formatting and professional page settings.
+      </p>
+
+    </section>
+
+
+    <!-- =====================================================
+         DOCUMENT WORKSPACE
+         ===================================================== -->
+
+    <section class="workspace">
+
+      <!-- ===================================================
+           EDITOR PANEL
+           =================================================== -->
+
+      <div class="panel editor-panel">
+
+        <div class="panel-heading">
+
+          <div class="step-number">
+            01
+          </div>
+
+          <div>
+            <h2>
+              Write Your Document
+            </h2>
+
+            <p>
+              Enter or paste your content below.
+            </p>
+          </div>
+
+        </div>
+
+
+        <!-- DOCUMENT TITLE -->
+
+        <div class="field-group">
+
+          <label for="documentTitle">
+            Document Title
+          </label>
+
+          <input
+            type="text"
+            id="documentTitle"
+            placeholder="Enter document title"
+            maxlength="150"
+          >
+
+        </div>
+
+
+        <!-- TOOLBAR -->
+
+        <div class="editor-toolbar">
+
+          <button
+            type="button"
+            id="boldBtn"
+            class="toolbar-btn"
+            title="Bold"
+          >
+            <strong>B</strong>
+          </button>
+
+          <button
+            type="button"
+            id="italicBtn"
+            class="toolbar-btn"
+            title="Italic"
+          >
+            <em>I</em>
+          </button>
+
+          <button
+            type="button"
+            id="underlineBtn"
+            class="toolbar-btn"
+            title="Underline"
+          >
+            <u>U</u>
+          </button>
+
+          <span class="toolbar-divider"></span>
+
+          <button
+            type="button"
+            id="headingBtn"
+            class="toolbar-btn"
+            title="Heading"
+          >
+            H
+          </button>
+
+          <button
+            type="button"
+            id="bulletBtn"
+            class="toolbar-btn"
+            title="Bullet List"
+          >
+            • List
+          </button>
+
+          <button
+            type="button"
+            id="numberBtn"
+            class="toolbar-btn"
+            title="Numbered List"
+          >
+            1. List
+          </button>
+
+          <span class="toolbar-divider"></span>
+
+          <button
+            type="button"
+            id="alignLeftBtn"
+            class="toolbar-btn active"
+            title="Align Left"
+          >
+            ☰
+          </button>
+
+          <button
+            type="button"
+            id="alignCenterBtn"
+            class="toolbar-btn"
+            title="Align Center"
+          >
+            ≡
+          </button>
+
+          <button
+            type="button"
+            id="alignRightBtn"
+            class="toolbar-btn"
+            title="Align Right"
+          >
+            ☷
+          </button>
+
+        </div>
+
+
+        <!-- EDITOR -->
+
+        <div
+          id="documentEditor"
+          class="document-editor"
+          contenteditable="true"
+          role="textbox"
+          aria-label="Document editor"
+          spellcheck="true"
+          data-placeholder="Start writing your document here..."
+        ></div>
+
+
+        <!-- EDITOR INFO -->
+
+        <div class="editor-info">
+
+          <span id="wordCount">
+            0 words
+          </span>
+
+          <span id="characterCount">
+            0 characters
+          </span>
+
+        </div>
+
+
+        <!-- QUICK ACTIONS -->
+
+        <div class="editor-actions">
+
+          <button
+            type="button"
+            id="sampleBtn"
+            class="secondary-btn"
+          >
+            Load Sample
+          </button>
+
+          <button
+            type="button"
+            id="clearBtn"
+            class="danger-btn"
+          >
+            Clear
+          </button>
+
+        </div>
+
+      </div>
+
+
+      <!-- ===================================================
+           DOCUMENT SETTINGS
+           =================================================== -->
+
+      <div class="panel settings-panel">
+
+        <div class="panel-heading">
+
+          <div class="step-number">
+            02
+          </div>
+
+          <div>
+            <h2>
+              PDF Settings
+            </h2>
+
+            <p>
+              Customize your PDF document.
+            </p>
+          </div>
+
+        </div>
+
+
+        <!-- PAGE SIZE -->
+
+        <div class="field-group">
+
+          <label for="pageSize">
+            Page Size
+          </label>
+
+          <select id="pageSize">
+
+            <option value="a4" selected>
+              A4
+            </option>
+
+            <option value="letter">
+              Letter
+            </option>
+
+            <option value="legal">
+              Legal
+            </option>
+
+          </select>
+
+        </div>
+
+
+        <!-- ORIENTATION -->
+
+        <div class="field-group">
+
+          <label for="orientation">
+            Orientation
+          </label>
+
+          <select id="orientation">
+
+            <option value="portrait" selected>
+              Portrait
+            </option>
+
+            <option value="landscape">
+              Landscape
+            </option>
+
+          </select>
+
+        </div>
+
+
+        <!-- FONT -->
+
+        <div class="field-group">
+
+          <label for="fontFamily">
+            Font
+          </label>
+
+          <select id="fontFamily">
+
+            <option value="helvetica" selected>
+              Helvetica
+            </option>
+
+            <option value="times">
+              Times
+            </option>
+
+            <option value="courier">
+              Courier
+            </option>
+
+          </select>
+
+        </div>
+
+
+        <!-- FONT SIZE -->
+
+        <div class="field-group">
+
+          <label for="fontSize">
+            Font Size
+          </label>
+
+          <select id="fontSize">
+
+            <option value="10">
+              10 px
+            </option>
+
+            <option value="12" selected>
+              12 px
+            </option>
+
+            <option value="14">
+              14 px
+            </option>
+
+            <option value="16">
+              16 px
+            </option>
+
+            <option value="18">
+              18 px
+            </option>
+
+            <option value="20">
+              20 px
+            </option>
+
+          </select>
+
+        </div>
+
+
+        <!-- MARGINS -->
+
+        <div class="field-group">
+
+          <label for="marginSize">
+            Page Margins
+          </label>
+
+          <select id="marginSize">
+
+            <option value="10">
+              Small
+            </option>
+
+            <option value="15" selected>
+              Normal
+            </option>
+
+            <option value="20">
+              Large
+            </option>
+
+          </select>
+
+        </div>
+
+
+        <!-- LINE SPACING -->
+
+        <div class="field-group">
+
+          <label for="lineSpacing">
+            Line Spacing
+          </label>
+
+          <select id="lineSpacing">
+
+            <option value="1">
+              Single
+            </option>
+
+            <option value="1.25" selected>
+              1.25
+            </option>
+
+            <option value="1.5">
+              1.5
+            </option>
+
+            <option value="2">
+              Double
+            </option>
+
+          </select>
+
+        </div>
+
+
+        <!-- HEADER / FOOTER -->
+
+        <div class="settings-divider"></div>
+
+        <label class="check-row">
+
+          <input
+            type="checkbox"
+            id="includeHeader"
+          >
+
+          <span>
+            Include document header
+          </span>
+
+        </label>
+
+
+        <label class="check-row">
+
+          <input
+            type="checkbox"
+            id="includePageNumbers"
+            checked
+          >
+
+          <span>
+            Include page numbers
+          </span>
+
+        </label>
+
+
+        <label class="check-row">
+
+          <input
+            type="checkbox"
+            id="includeDate"
+          >
+
+          <span>
+            Include creation date
+          </span>
+
+        </label>
+
+      </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         PREVIEW
+         ===================================================== -->
+
+    <section class="preview-section">
+
+      <div class="section-heading">
+
+        <span class="section-kicker">
+          PREVIEW
+        </span>
+
+        <h2>
+          Document Preview
+        </h2>
+
+        <p>
+          Review your document before creating the PDF.
+        </p>
+
+      </div>
+
+
+      <div class="preview-panel">
+
+        <div class="preview-toolbar">
+
+          <span id="previewStatus">
+            Live Preview
+          </span>
+
+          <span id="pageInfo">
+            Page 1
+          </span>
+
+        </div>
+
+
+        <div class="preview-stage">
+
+          <article
+            id="pdfPreview"
+            class="pdf-page"
+          >
+
+            <div
+              id="previewHeader"
+              class="pdf-header"
+              hidden
+            >
+              <span id="previewHeaderTitle">
+                Document
+              </span>
+            </div>
+
+
+            <div
+              id="previewDate"
+              class="pdf-date"
+              hidden
+            ></div>
+
+
+            <h1 id="previewTitle">
+              Your Document
+            </h1>
+
+
+            <div
+              id="previewContent"
+              class="pdf-content"
+            >
+              <p class="empty-preview">
+                Your document preview will appear here.
+              </p>
+            </div>
+
+
+            <div
+              id="previewPageNumber"
+              class="pdf-page-number"
+            >
+              1
+            </div>
+
+          </article>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         GENERATE SECTION
+         ===================================================== -->
+
+    <section class="generate-section">
+
+      <div class="generate-card">
+
+        <div class="generate-icon">
+          📄
+        </div>
+
+        <div class="generate-content">
+
+          <h2>
+            Ready to Create Your PDF?
+          </h2>
+
+          <p>
+            Generate a professional PDF from your document.
+          </p>
+
+        </div>
+
+        <button
+          type="button"
+          id="generatePdfBtn"
+          class="primary-btn large-btn"
+        >
+          Generate PDF
+        </button>
+
+      </div>
+
+
+      <!-- PROGRESS -->
+
+      <div
+        id="progressSection"
+        class="progress-section"
+        hidden
+      >
+
+        <div class="progress-header">
+
+          <span>
+            Creating PDF...
+          </span>
+
+          <strong id="progressPercent">
+            0%
+          </strong>
+
+        </div>
+
+        <div class="progress-track">
+
+          <div
+            id="progressBar"
+            class="progress-bar"
+          ></div>
+
+        </div>
+
+        <p id="progressMessage">
+          Preparing document...
+        </p>
+
+      </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         RESULT
+         ===================================================== -->
+
+    <section
+      id="resultSection"
+      class="result-section"
+      hidden
+    >
+
+      <div class="result-success">
+
+        <div class="success-icon">
+          ✓
+        </div>
+
+        <div>
+
+          <h2>
+            PDF Created Successfully
+          </h2>
+
+          <p id="resultSummary">
+            Your PDF document is ready.
+          </p>
+
+        </div>
+
+      </div>
+
+
+      <div class="result-actions">
+
+        <a
+          id="downloadBtn"
+          class="primary-btn download-btn"
+          href="#"
+          download="nidar-document.pdf"
+        >
+          ⬇ Download PDF
+        </a>
+
+        <button
+          type="button"
+          id="createAgainBtn"
+          class="secondary-btn"
+        >
+          ↻ Create Again
+        </button>
+
+        <button
+          type="button"
+          id="startOverBtn"
+          class="secondary-btn"
+        >
+          Start Over
+        </button>
+
+      </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         HOW TO USE
+         ===================================================== -->
+
+    <section class="info-section">
+
+      <div class="section-heading">
+
+        <span class="section-kicker">
+          HOW IT WORKS
+        </span>
+
+        <h2>
+          How to Convert Word to PDF?
+        </h2>
+
+        <p>
+          Create your PDF in three simple steps.
+        </p>
+
+      </div>
+
+
+      <div class="steps-grid">
+
+        <article class="info-card">
+
+          <span class="info-number">
+            01
+          </span>
+
+          <h3>
+            Write or Paste
+          </h3>
+
+          <p>
+            Enter your document content in the editor.
+          </p>
+
+        </article>
+
+
+        <article class="info-card">
+
+          <span class="info-number">
+            02
+          </span>
+
+          <h3>
+            Customize
+          </h3>
+
+          <p>
+            Select page size, orientation, font and other settings.
+          </p>
+
+        </article>
+
+
+        <article class="info-card">
+
+          <span class="info-number">
+            03
+          </span>
+
+          <h3>
+            Generate PDF
+          </h3>
+
+          <p>
+            Create and download your finished PDF document.
+          </p>
+
+        </article>
+
+      </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         FEATURES
+         ===================================================== -->
+
+    <section class="features-section">
+
+      <div class="section-heading">
+
+        <span class="section-kicker">
+          WHY NIDAR TOOLS
+        </span>
+
+        <h2>
+          Simple, Useful & Private
+        </h2>
+
+      </div>
+
+
+      <div class="features-grid">
+
+        <div class="feature-card">
+
+          <span>
+            ⚡
+          </span>
+
+          <h3>
+            Fast Creation
+          </h3>
+
+          <p>
+            Generate your PDF quickly from the browser.
+          </p>
+
+        </div>
+
+
+        <div class="feature-card">
+
+          <span>
+            🎨
+          </span>
+
+          <h3>
+            Easy Formatting
+          </h3>
+
+          <p>
+            Customize fonts, spacing, margins and page layout.
+          </p>
+
+        </div>
+
+
+        <div class="feature-card">
+
+          <span>
+            🔒
+          </span>
+
+          <h3>
+            Privacy Friendly
+          </h3>
+
+          <p>
+            Your document can be processed directly in your browser.
+          </p>
+
+        </div>
+
+
+        <div class="feature-card">
+
+          <span>
+            📱
+          </span>
+
+          <h3>
+            Works Anywhere
+          </h3>
+
+          <p>
+            Use the converter on mobile, tablet or desktop.
+          </p>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         PRIVACY NOTE
+         ===================================================== -->
+
+    <section class="privacy-note">
+
+      <div class="privacy-icon">
+        🔒
+      </div>
+
+      <div>
+
+        <h3>
+          Your document stays under your control
+        </h3>
+
+        <p>
+          niDar Tools is designed for browser-based document
+          processing. No account is required to create a PDF.
+        </p>
+
+      </div>
+
+    </section>
+
+  </main>
+
+
+  <!-- jsPDF engine -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+  <script src="../assets/js/common.js"></script>
+<script src="script.js"></script>
+
+<!-- COMMON FOOTER -->
+<div id="site-footer"></div>
+
 </body>
 </html>

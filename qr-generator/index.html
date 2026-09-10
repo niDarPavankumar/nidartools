@@ -1,224 +1,580 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>QR Code Generator - niDar Tools</title>
+  <title>QR Code Generator — niDar Tools</title>
+  <meta name="description" content="Create a custom QR code from a URL, text, phone number, email or other information with the free QR Code Generator from niDar Tools.">
 
-<meta name="description" content="Create a free QR code for any link, text, or message. Customize size and color, then download as PNG. Everything runs in your browser.">
-<meta name="keywords" content="qr code generator, free qr code, create qr code online">
-<meta name="author" content="niDar Marketing And Services">
-
-<link rel="canonical" href="https://nidartools.com/qr-generator/">
-
-<!-- Absolute paths for Assets -->
-<link rel="icon" type="image/x-icon" href="/assets/favicon/favicon.ico">
-<link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon/favicon-16x16.png">
-<link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon/favicon-32x32.png">
-<link rel="apple-touch-icon" sizes="180x180" href="/assets/favicon/apple-touch-icon.png">
-<link rel="stylesheet" href="/assets/css/style.css">
-
-<!-- External JS Library -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
-
-<style>
-  .color-picker-wrapper {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-  .color-picker-wrapper input[type="color"] {
-    width: 48px;
-    height: 42px;
-    padding: 2px;
-    border: 1px solid var(--border);
-    border-radius: 6px;
-    cursor: pointer;
-    background: transparent;
-  }
-</style>
+  <link rel="icon" href="/favicon.ico">
+  <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
+<!-- COMMON HEADER -->
+<div id="site-header"></div>
 
-<header class="header">
-  <div class="container navbar">
-    <a href="/" class="logo">niDar<span>Tools</span></a>
-    <nav>
-      <a href="/">Home</a>
-      <a href="/about/">About</a>
-      <a href="/contact/">Contact</a>
-      <a href="/support/">Support</a>
-    </nav>
-    <button class="btn btn-theme" id="themeToggle" aria-label="Toggle theme">🌙 Theme</button>
-  </div>
-</header>
+  <main class="qr-page">
 
-<main class="container mt-40">
+    <!-- HERO -->
+    <section class="tool-hero">
 
-<section class="hero-card text-center mb-30">
-  <h1>QR Code Generator</h1>
-  
-  <div class="mt-10">
-    <a href="/content/qr-generator/" class="guide-link">
-      <span class="icon">📖</span><span>Read Detailed Guide — Business Ideas →</span>
-    </a>
-  </div>
+      <span class="tool-badge">⚡ Free Online Tool</span>
 
-  <p class="mt-10">
-    Enter any link, text, or contact detail — get an instant QR code.
-  </p>
-</section>
+      <h1>QR Code Generator</h1>
 
-<section class="card mb-20">
+      <p>
+        Create a QR code from text, links and other information.
+        Customize it and download your QR code instantly.
+      </p>
 
-  <h2>Text or Link</h2>
-  <textarea id="qrText" rows="3" placeholder="e.g. https://nidartools.com" class="form-control mt-10"></textarea>
-
-  <div class="grid mt-20">
-    <div>
-      <label>Size</label>
-      <select id="qrSize" class="form-control mt-10">
-        <option value="200">Small (200px)</option>
-        <option value="300" selected>Medium (300px)</option>
-        <option value="500">Large (500px)</option>
-      </select>
-    </div>
-    <div>
-      <label>Color</label>
-      <div class="color-picker-wrapper mt-10">
-        <input type="color" id="qrColor" value="#0d6efd">
-        <span class="text-muted" style="font-size: 0.85rem;">Select QR Code Color</span>
+      <div class="hero-points">
+        <span>🔒 Private</span>
+        <span>⚡ Instant</span>
+        <span>🆓 Free</span>
+        <span>📱 Works on Mobile</span>
       </div>
-    </div>
-  </div>
 
-  <button id="genBtn" class="btn btn-primary mt-20">⚡ Generate QR Code</button>
+    </section>
 
-  <p id="errorMsg" class="alert alert-danger hidden mt-20"></p>
 
-</section>
+    <!-- MAIN WORKSPACE -->
+    <section class="tool-card">
 
-<section class="card hidden text-center mb-40" id="resultCard">
+      <!-- STEP 1 -->
+      <div class="step-heading">
 
-  <h2>Your QR Code</h2>
+        <span class="step-number">1</span>
 
-  <div id="qrCanvas" class="flex-center mt-20 mb-20" style="justify-content:center; display:flex;"></div>
+        <div>
+          <h2>Enter your information</h2>
+          <p>Enter a URL, text or other information to create your QR code.</p>
+        </div>
 
-  <button id="downloadBtn" class="btn btn-primary">📥 Download High-Res PNG</button>
+      </div>
 
-</section>
 
-</main>
+      <div class="input-area">
 
-<footer class="footer">
-  <div class="container text-center">
-    <p>© 2026 niDar Tools. All Rights Reserved.</p>
-    <p>Developed by <strong>niDar Marketing And Services</strong></p>
-  </div>
-</footer>
+        <div class="input-group">
 
-<script src="/assets/js/script.js"></script>
-<script>
-(function () {
-  const qrText = document.getElementById('qrText');
-  const qrSize = document.getElementById('qrSize');
-  const qrColor = document.getElementById('qrColor');
-  const genBtn = document.getElementById('genBtn');
-  const resultCard = document.getElementById('resultCard');
-  const qrCanvas = document.getElementById('qrCanvas');
-  const downloadBtn = document.getElementById('downloadBtn');
-  const errorMsg = document.getElementById('errorMsg');
+          <label for="qrType">QR Code Type</label>
 
-  function ensureScannableColor(hex) {
-    let r = parseInt(hex.substr(1, 2), 16);
-    let g = parseInt(hex.substr(3, 2), 16);
-    let b = parseInt(hex.substr(5, 2), 16);
-    let factor = 1;
-    while ((0.299 * r + 0.587 * g + 0.114 * b) > 120 && factor > 0.1) {
-      factor -= 0.05;
-      r = Math.round(r * (1 - 0.05));
-      g = Math.round(g * (1 - 0.05));
-      b = Math.round(b * (1 - 0.05));
-    }
-    const toHex = (v) => v.toString(16).padStart(2, '0');
-    return { hex: '#' + toHex(r) + toHex(g) + toHex(b), adjusted: factor < 1 };
-  }
+          <select id="qrType">
+            <option value="text">Text</option>
+            <option value="url">Website URL</option>
+            <option value="email">Email</option>
+            <option value="phone">Phone Number</option>
+            <option value="sms">SMS</option>
+            <option value="wifi">Wi-Fi</option>
+          </select>
 
-  genBtn.addEventListener('click', () => {
-    errorMsg.classList.add('hidden');
-    const text = qrText.value.trim();
-    if (!text) {
-      errorMsg.textContent = 'Please enter some text or a link.';
-      errorMsg.classList.remove('hidden');
-      return;
-    }
+        </div>
 
-    const safe = ensureScannableColor(qrColor.value);
-    if (safe.adjusted) {
-      errorMsg.textContent = 'Note: your chosen color was too light to scan reliably, so it was automatically darkened for this QR code.';
-      errorMsg.classList.remove('hidden');
-    }
 
-    qrCanvas.innerHTML = '';
-    new QRCode(qrCanvas, {
-      text: text,
-      width: parseInt(qrSize.value),
-      height: parseInt(qrSize.value),
-      colorDark: safe.hex,
-      colorLight: '#ffffff',
-      correctLevel: QRCode.CorrectLevel.H
-    });
+        <div class="input-group" id="mainInputGroup">
 
-    resultCard.classList.remove('hidden');
-    resultCard.scrollIntoView({ behavior: 'smooth' });
-  });
+          <label for="qrText" id="qrTextLabel">
+            Text or URL
+          </label>
 
-  downloadBtn.addEventListener('click', () => {
-    const srcCanvas = qrCanvas.querySelector('canvas');
-    const srcImg = qrCanvas.querySelector('img');
-    
-    if (!srcCanvas && !srcImg) {
-      errorMsg.textContent = 'Please generate a QR code first.';
-      errorMsg.classList.remove('hidden');
-      return;
-    }
+          <textarea
+            id="qrText"
+            rows="4"
+            placeholder="Enter text or paste your URL here..."
+            autocomplete="off"
+          ></textarea>
 
-    const size = 2048;
-    const out = document.createElement('canvas');
-    out.width = size;
-    out.height = size;
+        </div>
 
-    const ctx = out.getContext('2d');
-    ctx.fillStyle = '#ffffff';
-    ctx.fillRect(0, 0, size, size);
 
-    const margin = Math.round(size * 0.08);
+        <!-- EMAIL -->
+        <div
+          class="extra-inputs"
+          id="emailFields"
+          hidden
+        >
 
-    if (srcCanvas) {
-      ctx.drawImage(srcCanvas, margin, margin, size - margin * 2, size - margin * 2);
-      triggerDownload(out);
-    } else if (srcImg) {
-      const img = new Image();
-      img.onload = () => {
-        ctx.drawImage(img, margin, margin, size - margin * 2, size - margin * 2);
-        triggerDownload(out);
-      };
-      img.src = srcImg.src;
-    }
-  });
+          <div class="input-group">
 
-  function triggerDownload(canvasElement) {
-    const link = document.createElement('a');
-    link.download = 'nidar_qrcode.png';
-    link.href = canvasElement.toDataURL('image/png');
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-  }
-})();
-</script>
+            <label for="emailAddress">Email Address</label>
+
+            <input
+              type="email"
+              id="emailAddress"
+              placeholder="example@email.com"
+            >
+
+          </div>
+
+          <div class="input-group">
+
+            <label for="emailSubject">Subject</label>
+
+            <input
+              type="text"
+              id="emailSubject"
+              placeholder="Email subject"
+            >
+
+          </div>
+
+          <div class="input-group">
+
+            <label for="emailBody">Message</label>
+
+            <textarea
+              id="emailBody"
+              rows="3"
+              placeholder="Email message"
+            ></textarea>
+
+          </div>
+
+        </div>
+
+
+        <!-- PHONE -->
+        <div
+          class="extra-inputs"
+          id="phoneFields"
+          hidden
+        >
+
+          <div class="input-group">
+
+            <label for="phoneNumber">Phone Number</label>
+
+            <input
+              type="tel"
+              id="phoneNumber"
+              placeholder="+91 9876543210"
+              inputmode="tel"
+            >
+
+          </div>
+
+        </div>
+
+
+        <!-- SMS -->
+        <div
+          class="extra-inputs"
+          id="smsFields"
+          hidden
+        >
+
+          <div class="input-group">
+
+            <label for="smsNumber">Phone Number</label>
+
+            <input
+              type="tel"
+              id="smsNumber"
+              placeholder="+91 9876543210"
+              inputmode="tel"
+            >
+
+          </div>
+
+          <div class="input-group">
+
+            <label for="smsMessage">Message</label>
+
+            <textarea
+              id="smsMessage"
+              rows="3"
+              placeholder="Enter your SMS message"
+            ></textarea>
+
+          </div>
+
+        </div>
+
+
+        <!-- WIFI -->
+        <div
+          class="extra-inputs"
+          id="wifiFields"
+          hidden
+        >
+
+          <div class="input-group">
+
+            <label for="wifiName">Wi-Fi Network Name</label>
+
+            <input
+              type="text"
+              id="wifiName"
+              placeholder="Network name"
+            >
+
+          </div>
+
+          <div class="input-group">
+
+            <label for="wifiPassword">Wi-Fi Password</label>
+
+            <input
+              type="password"
+              id="wifiPassword"
+              placeholder="Wi-Fi password"
+            >
+
+          </div>
+
+          <div class="input-group">
+
+            <label for="wifiSecurity">Security</label>
+
+            <select id="wifiSecurity">
+              <option value="WPA">WPA / WPA2</option>
+              <option value="WEP">WEP</option>
+              <option value="nopass">No Password</option>
+            </select>
+
+          </div>
+
+          <label class="check-row">
+
+            <input
+              type="checkbox"
+              id="wifiHidden"
+            >
+
+            <span>Hidden network</span>
+
+          </label>
+
+        </div>
+
+      </div>
+
+
+      <!-- STEP 2 -->
+      <div class="section-divider"></div>
+
+      <div class="step-heading">
+
+        <span class="step-number">2</span>
+
+        <div>
+          <h2>Customize your QR code</h2>
+          <p>Choose the size and colors for your QR code.</p>
+        </div>
+
+      </div>
+
+
+      <div class="customize-grid">
+
+        <div class="input-group">
+
+          <label for="qrSize">QR Code Size</label>
+
+          <select id="qrSize">
+            <option value="256">256 × 256 px</option>
+            <option value="384">384 × 384 px</option>
+            <option value="512" selected>512 × 512 px</option>
+            <option value="768">768 × 768 px</option>
+            <option value="1024">1024 × 1024 px</option>
+          </select>
+
+        </div>
+
+
+        <div class="input-group">
+
+          <label for="errorCorrection">
+            Error Correction
+          </label>
+
+          <select id="errorCorrection">
+            <option value="L">Low — 7%</option>
+            <option value="M" selected>Medium — 15%</option>
+            <option value="Q">Quartile — 25%</option>
+            <option value="H">High — 30%</option>
+          </select>
+
+        </div>
+
+
+        <div class="color-group">
+
+          <label for="foregroundColor">
+            QR Color
+          </label>
+
+          <div class="color-control">
+
+            <input
+              type="color"
+              id="foregroundColor"
+              value="#000000"
+            >
+
+            <span id="foregroundValue">
+              #000000
+            </span>
+
+          </div>
+
+        </div>
+
+
+        <div class="color-group">
+
+          <label for="backgroundColor">
+            Background
+          </label>
+
+          <div class="color-control">
+
+            <input
+              type="color"
+              id="backgroundColor"
+              value="#ffffff"
+            >
+
+            <span id="backgroundValue">
+              #FFFFFF
+            </span>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <div class="action-row">
+
+        <button
+          type="button"
+          class="primary-btn"
+          id="generateBtn"
+        >
+          Generate QR Code
+        </button>
+
+        <button
+          type="button"
+          class="secondary-btn"
+          id="resetBtn"
+        >
+          Start Over
+        </button>
+
+      </div>
+
+
+      <!-- STEP 3 RESULT -->
+      <div
+        class="result-section"
+        id="resultSection"
+        hidden
+      >
+
+        <div class="success-icon">✓</div>
+
+        <h2>Your QR Code is Ready</h2>
+
+        <p class="result-summary" id="resultSummary">
+          Your QR code has been generated successfully.
+        </p>
+
+
+        <div class="qr-preview-card">
+
+          <div class="qr-canvas-wrap">
+            <canvas
+              id="qrCanvas"
+              aria-label="Generated QR code"
+            ></canvas>
+          </div>
+
+          <div class="qr-preview-info">
+
+            <span id="qrTypeResult">
+              Text QR Code
+            </span>
+
+            <small id="qrSizeResult">
+              512 × 512 px
+            </small>
+
+          </div>
+
+        </div>
+
+
+        <div class="download-actions">
+
+          <button
+            type="button"
+            class="download-btn"
+            id="downloadPngBtn"
+          >
+            Download PNG
+          </button>
+
+          <button
+            type="button"
+            class="secondary-btn"
+            id="downloadSvgBtn"
+          >
+            Download SVG
+          </button>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- HOW TO -->
+    <section class="how-to">
+
+      <div class="section-heading">
+
+        <span>📖</span>
+
+        <div>
+          <h2>How to create a QR code</h2>
+          <p>Four simple steps to create your QR code.</p>
+        </div>
+
+      </div>
+
+
+      <div class="steps-grid">
+
+        <article class="info-card">
+
+          <span>01</span>
+
+          <h3>Choose a type</h3>
+
+          <p>
+            Select text, website URL, email, phone, SMS or Wi-Fi.
+          </p>
+
+        </article>
+
+
+        <article class="info-card">
+
+          <span>02</span>
+
+          <h3>Enter information</h3>
+
+          <p>
+            Enter the information you want to store in the QR code.
+          </p>
+
+        </article>
+
+
+        <article class="info-card">
+
+          <span>03</span>
+
+          <h3>Customize</h3>
+
+          <p>
+            Choose the size, colors and error correction level.
+          </p>
+
+        </article>
+
+
+        <article class="info-card">
+
+          <span>04</span>
+
+          <h3>Download</h3>
+
+          <p>
+            Generate your QR code and download it as PNG or SVG.
+          </p>
+
+        </article>
+
+      </div>
+
+    </section>
+
+
+    <!-- FEATURES -->
+    <section class="features-section">
+
+      <article class="feature-card">
+
+        <span>🔒</span>
+
+        <h3>Private by design</h3>
+
+        <p>
+          Your QR information is processed directly in your browser.
+        </p>
+
+      </article>
+
+
+      <article class="feature-card">
+
+        <span>⚡</span>
+
+        <h3>Instant generation</h3>
+
+        <p>
+          Create QR codes quickly without unnecessary uploads.
+        </p>
+
+      </article>
+
+
+      <article class="feature-card">
+
+        <span>🎨</span>
+
+        <h3>Custom colors</h3>
+
+        <p>
+          Create QR codes with your preferred foreground and background colors.
+        </p>
+
+      </article>
+
+
+      <article class="feature-card">
+
+        <span>📱</span>
+
+        <h3>Works anywhere</h3>
+
+        <p>
+          Designed for phones, tablets and desktop browsers.
+        </p>
+
+      </article>
+
+    </section>
+
+  </main>
+
+<!-- COMMON FOOTER -->
+<div id="site-footer"></div>
+
+
+  <script src="../assets/js/common.js"></script>
+
+<!-- QR generation library -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
+  <script src="script.js"></script>
 
 </body>
 </html>
