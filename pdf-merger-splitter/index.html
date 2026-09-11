@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Free PDF Merger & Splitter - niDar Tools</title>
+    <link rel="stylesheet" href="../assets/css/common.css">
+    <link rel="stylesheet" href="styles.css">    <!-- या टूलची स्वतःची सीएसएस -->
+</head>
+<body>
+
+    <!-- COMMON HEADER -->
+    <div id="site-header"></div>
+
+    <main class="tool-main-container">
+        <div class="tool-card">
+            <h1>PDF Merger & Splitter</h1>
+            <p class="tool-subtitle">Combine multiple PDFs into one or split a PDF into separate pages securely in your browser.</p>
+
+            <!-- टॅब स्विचिंग बटन्स -->
+            <div class="tab-buttons">
+                <button class="tab-btn active" onclick="switchTab('merge')">Merge PDF</button>
+                <button class="tab-btn" onclick="switchTab('split')">Split PDF</button>
+            </div>
+
+            <!-- MERGE SECTION -->
+            <div id="merge-section" class="tool-section active">
+                <div class="drop-zone" id="merge-drop-zone">
+                    <p>Drag & Drop multiple PDF files here, or <label for="merge-file-input" class="browse-btn">Browse</label></p>
+                    <input type="file" id="merge-file-input" accept="application/pdf" multiple hidden>
+                </div>
+                <ul id="merge-file-list" class="file-list"></ul>
+                <button id="merge-action-btn" class="action-btn" disabled>Merge PDFs</button>
+            </div>
+
+            <!-- SPLIT SECTION -->
+            <div id="split-section" class="tool-section">
+                <div class="drop-zone" id="split-drop-zone">
+                    <p>Drag & Drop a PDF file here, or <label for="split-file-input" class="browse-btn">Browse</label></p>
+                    <input type="file" id="split-file-input" accept="application/pdf" hidden>
+                </div>
+                <div id="split-file-info" class="file-info hidden"></div>
+                <button id="split-action-btn" class="action-btn" disabled>Split PDF (All Pages)</button>
+            </div>
+
+            <!-- आऊटपुट स्टेटस / डाऊनलोड एरिया -->
+            <div id="output-container" class="output-container hidden">
+                <p id="status-message"></p>
+                <a id="download-link" class="download-btn hidden" download>Download Processed PDF</a>
+            </div>
+        </div>
+    </main>
+
+    <!-- COMMON FOOTER -->
+    <div id="site-footer"></div>
+
+    <!-- PDF-lib Library for client-side PDF manipulation -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
+    <script src="../assets/js/common.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
