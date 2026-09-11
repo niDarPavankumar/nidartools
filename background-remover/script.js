@@ -1,274 +1,387 @@
-document.addEventListener('DOMContentLoaded', () => {
-    console.log("niDar Tools: Edge-Inward Background Remover Loaded.");
+(function () {
+  'use strict';
 
-    // DOM Elements
-    const uploadZone = document.getElementById('uploadZone');
-    const selectImageBtn = document.getElementById('selectImageBtn');
-    const imageInput = document.getElementById('imageInput');
-    const workspace = document.getElementById('workspace');
-    const settingsSection = document.getElementById('settingsSection');
-    const processSection = document.getElementById('processSection');
-    const progressSection = document.getElementById('progressSection');
-    const progressBar = document.getElementById('progressBar');
-    const progressPercent = document.getElementById('progressPercent');
-    const progressMessage = document.getElementById('progressMessage');
-    const resultSection = document.getElementById('resultSection');
+  const uploadZone = document.getElementById('uploadZone');
+  const selectImageBtn = document.getElementById('selectImageBtn');
+  const imageInput = document.getElementById('imageInput');
 
-    const originalPreview = document.getElementById('originalPreview');
-    const originalPlaceholder = document.getElementById('originalPlaceholder');
-    const originalName = document.getElementById('originalName');
-    const originalDimensions = document.getElementById('originalDimensions');
+  const workspace = document.getElementById('workspace');
+  const settingsSection = document.getElementById('settingsSection');
+  const processSection = document.getElementById('processSection');
+  const progressSection = document.getElementById('progressSection');
+  const resultSection = document.getElementById('resultSection');
 
-    const resultPreview = document.getElementById('resultPreview');
-    const resultPlaceholder = document.getElementById('resultPlaceholder');
-    const resultDimensions = document.getElementById('resultDimensions');
-    const resultSize = document.getElementById('resultSize');
+  const originalPreview = document.getElementById('originalPreview');
+  const originalPlaceholder = document.getElementById('originalPlaceholder');
+  const originalName = document.getElementById('originalName');
+  const originalDimensions = document.getElementById('originalDimensions');
 
-    const removeBackgroundBtn = document.getElementById('removeBackgroundBtn');
-    const downloadBtn = document.getElementById('downloadBtn');
-    const processAgainBtn = document.getElementById('processAgainBtn');
-    const startOverBtn = document.getElementById('startOverBtn');
+  const resultPreview = document.getElementById('resultPreview');
+  const resultPlaceholder = document.getElementById('resultPlaceholder');
+  const resultDimensions = document.getElementById('resultDimensions');
+  const resultSize = document.getElementById('resultSize');
 
-    const backgroundMode = document.getElementById('backgroundMode');
-    const outputFormat = document.getElementById('outputFormat');
-    const outputQuality = document.getElementById('outputQuality');
+  const backgroundMode = document.getElementById('backgroundMode');
+  const outputFormat = document.getElementById('outputFormat');
+  const outputQuality = document.getElementById('outputQuality');
 
-    let currentFile = null;
+  const removeBackgroundBtn = document.getElementById('removeBackgroundBtn');
+  const processAgainBtn = document.getElementById('processAgainBtn');
+  const startOverBtn = document.getElementById('startOverBtn');
+  const downloadBtn = document.getElementById('downloadBtn');
 
-    if (selectImageBtn) {
-        selectImageBtn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            imageInput.click();
+  const progressPercent = document.getElementById('progressPercent');
+  const progressBar = document.getElementById('progressBar');
+  const progressMessage = document.getElementById('progressMessage');
+  const processMessage = document.getElementById('processMessage');
+  const resultSummary = document.getElementById('resultSummary');
+
+  let originalFile = null;
+  let originalImage = null;
+  let resultBlob = null;
+  let resultUrl = null;
+
+  const MAX_FILE_SIZE = 20 * 1024 * 1024;
+  const ALLOWED_TYPES = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp'];
+  const MAX_PROCESS_DIMENSION = 2000;
+
+  function formatBytes(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / (1024 * 1024)).toFixed(2) + ' MB';
+  }
+
+  function getScaledDimensions(width, height, maxDimension) {
+    if (width <= maxDimension && height <= maxDimension) {
+      return { width: width, height: height };
+    }
+    const scale = maxDimension / Math.max(width, height);
+    return {
+      width: Math.round(width * scale),
+      height: Math.round(height * scale)
+    };
+  }
+
+  function cleanupResultUrl() {
+    if (resultUrl) {
+      URL.revokeObjectURL(resultUrl);
+      resultUrl = null;
+    }
+  }
+
+  function resetResultPreview() {
+    cleanupResultUrl();
+    resultBlob = null;
+    resultPreview.removeAttribute('src');
+    resultPreview.style.display = 'none';
+    resultPlaceholder.style.display = 'block';
+    resultDimensions.textContent = '—';
+    resultSize.textContent = '—';
+    resultSection.hidden = true;
+  }
+
+  function hideWorkspace() {
+    workspace.hidden = true;
+    settingsSection.hidden = true;
+    processSection.hidden = true;
+    progressSection.hidden = true;
+    resultSection.hidden = true;
+  }
+
+  function showWorkspace() {
+    workspace.hidden = false;
+    settingsSection.hidden = false;
+    processSection.hidden = false;
+  }
+
+  function updateProgress(percent, message) {
+    const safePercent = Math.max(0, Math.min(100, percent));
+    progressPercent.textContent = Math.round(safePercent) + '%';
+    progressBar.style.width = safePercent + '%';
+    if (message) progressMessage.textContent = message;
+  }
+
+  function resetAll() {
+    originalFile = null;
+    originalImage = null;
+    cleanupResultUrl();
+    resultBlob = null;
+    imageInput.value = '';
+    originalPreview.removeAttribute('src');
+    originalPreview.style.display = 'none';
+    originalPlaceholder.style.display = 'block';
+    originalName.textContent = 'Image';
+    originalDimensions.textContent = '0 × 0 px';
+    resetResultPreview();
+    hideWorkspace();
+    backgroundMode.value = 'transparent';
+    outputFormat.value = 'png';
+    outputQuality.value = '0.9';
+    uploadZone.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  function readFileAsDataURL(file) {
+    return new Promise(function (resolve, reject) {
+      const reader = new FileReader();
+      reader.onload = function () { resolve(reader.result); };
+      reader.onerror = function () { reject(new Error('Unable to read the selected image.')); };
+      reader.readAsDataURL(file);
+    });
+  }
+
+  function loadImage(dataUrl) {
+    return new Promise(function (resolve, reject) {
+      const img = new Image();
+      img.onload = function () { resolve(img); };
+      img.onerror = function () { reject(new Error('Unable to load the image.')); };
+      img.src = dataUrl;
+    });
+  }
+
+  function validateFile(file) {
+    if (!file) return false;
+    if (!ALLOWED_TYPES.includes(file.type)) {
+      alert('Please select a JPG, JPEG, PNG or WEBP image.');
+      return false;
+    }
+    if (file.size > MAX_FILE_SIZE) {
+      alert('Image size must be 20 MB or less.');
+      return false;
+    }
+    return true;
+  }
+
+  async function handleFile(file) {
+    if (!validateFile(file)) return;
+    try {
+      originalFile = file;
+      resetResultPreview();
+      const dataUrl = await readFileAsDataURL(file);
+      originalImage = await loadImage(dataUrl);
+      originalPreview.src = dataUrl;
+      originalPreview.style.display = 'block';
+      originalPlaceholder.style.display = 'none';
+      originalName.textContent = file.name;
+      originalDimensions.textContent =
+        originalImage.naturalWidth + ' × ' + originalImage.naturalHeight + ' px';
+      processMessage.textContent = 'Your image is ready for background removal.';
+      showWorkspace();
+      workspace.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    } catch (error) {
+      console.error(error);
+      alert('There was a problem loading the image. Please try another image.');
+      resetAll();
+    }
+  }
+
+  selectImageBtn.addEventListener('click', function (event) {
+    event.preventDefault();
+    event.stopPropagation();
+    imageInput.click();
+  });
+
+  uploadZone.addEventListener('click', function (event) {
+    if (event.target === selectImageBtn) return;
+    imageInput.click();
+  });
+
+  uploadZone.addEventListener('keydown', function (event) {
+    if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault();
+      imageInput.click();
+    }
+  });
+
+  imageInput.addEventListener('change', function (event) {
+    const file = event.target.files && event.target.files[0];
+    if (file) handleFile(file);
+  });
+
+  ['dragover', 'dragenter'].forEach(function (eventName) {
+    uploadZone.addEventListener(eventName, function (event) {
+      event.preventDefault();
+      uploadZone.classList.add('drag-over');
+    });
+  });
+
+  uploadZone.addEventListener('dragleave', function (event) {
+    event.preventDefault();
+    uploadZone.classList.remove('drag-over');
+  });
+
+  uploadZone.addEventListener('drop', function (event) {
+    event.preventDefault();
+    uploadZone.classList.remove('drag-over');
+    const file = event.dataTransfer.files && event.dataTransfer.files[0];
+    if (file) handleFile(file);
+  });
+
+  let segmenterInstance = null;
+
+  function getSegmenter() {
+    if (segmenterInstance) return segmenterInstance;
+    if (typeof SelfieSegmentation === 'undefined') {
+      throw new Error(
+        'AI background removal model failed to load. Please check your internet connection and try again.'
+      );
+    }
+    segmenterInstance = new SelfieSegmentation({
+      locateFile: (file) =>
+        `https://cdn.jsdelivr.net/npm/@mediapipe/selfie_segmentation/${file}`
+    });
+    segmenterInstance.setOptions({ modelSelection: 1 });
+    return segmenterInstance;
+  }
+
+  function runSegmentation(image) {
+    return new Promise((resolve, reject) => {
+      try {
+        const segmenter = getSegmenter();
+        segmenter.onResults((results) => {
+          resolve(results.segmentationMask);
         });
+        segmenter.send({ image: image }).catch(reject);
+      } catch (err) {
+        reject(err);
+      }
+    });
+  }
+
+  async function createProcessedCanvas() {
+    if (!originalImage) {
+      throw new Error('No image loaded.');
     }
 
-    if (uploadZone) {
-        uploadZone.addEventListener('click', (e) => {
-            if (e.target !== selectImageBtn) {
-                imageInput.click();
-            }
-        });
+    const scaled = getScaledDimensions(
+      originalImage.naturalWidth,
+      originalImage.naturalHeight,
+      MAX_PROCESS_DIMENSION
+    );
+
+    const width = scaled.width;
+    const height = scaled.height;
+
+    const mask = await runSegmentation(originalImage);
+
+    const canvas = document.createElement('canvas');
+    canvas.width = width;
+    canvas.height = height;
+
+    const ctx = canvas.getContext('2d');
+    if (!ctx) {
+      throw new Error('Canvas is not supported by this browser.');
     }
 
-    if (uploadZone) {
-        uploadZone.addEventListener('dragover', (e) => {
-            e.preventDefault();
-            uploadZone.classList.add('dragover');
-        });
+    ctx.drawImage(originalImage, 0, 0, width, height);
 
-        uploadZone.addEventListener('dragleave', () => {
-            uploadZone.classList.remove('dragover');
-        });
+    ctx.globalCompositeOperation = 'destination-in';
+    ctx.filter = 'blur(1.5px)';
+    ctx.drawImage(mask, 0, 0, width, height);
+    ctx.filter = 'none';
+    ctx.globalCompositeOperation = 'source-over';
 
-        uploadZone.addEventListener('drop', (e) => {
-            e.preventDefault();
-            uploadZone.classList.remove('dragover');
-            if (e.dataTransfer.files && e.dataTransfer.files[0]) {
-                handleImageUpload(e.dataTransfer.files[0]);
-            }
-        });
+    const mode = backgroundMode.value;
+
+    if (mode === 'white' || mode === 'black') {
+      const bgCanvas = document.createElement('canvas');
+      bgCanvas.width = width;
+      bgCanvas.height = height;
+      const bgCtx = bgCanvas.getContext('2d');
+      bgCtx.fillStyle = mode === 'white' ? '#ffffff' : '#000000';
+      bgCtx.fillRect(0, 0, width, height);
+      bgCtx.drawImage(canvas, 0, 0);
+      return bgCanvas;
     }
 
-    if (imageInput) {
-        imageInput.addEventListener('change', (e) => {
-            if (e.target.files && e.target.files[0]) {
-                handleImageUpload(e.target.files[0]);
-            }
-        });
-    }
+    return canvas;
+  }
 
-    function handleImageUpload(file) {
-        if (!file || !file.type.startsWith('image/')) {
-            alert('Please select a valid image file (JPG, PNG, WEBP).');
-            return;
+  function canvasToBlob(canvas) {
+    return new Promise(function (resolve, reject) {
+      const format = outputFormat.value === 'webp' ? 'image/webp' : 'image/png';
+      const quality = parseFloat(outputQuality.value);
+      canvas.toBlob(function (blob) {
+        if (!blob) {
+          reject(new Error('Unable to create output image.'));
+          return;
         }
+        resolve(blob);
+      }, format, quality);
+    });
+  }
 
-        currentFile = file;
-        const reader = new FileReader();
-        reader.onload = (e) => {
-            const img = new Image();
-            img.onload = () => {
-                if (originalPreview) {
-                    originalPreview.src = e.target.result;
-                    originalPreview.style.display = 'block';
-                }
-                if (originalPlaceholder) originalPlaceholder.style.display = 'none';
-                if (originalName) originalName.textContent = file.name;
-                if (originalDimensions) originalDimensions.textContent = `${img.naturalWidth} × ${img.naturalHeight} px`;
-
-                if (workspace) workspace.hidden = false;
-                if (settingsSection) settingsSection.hidden = false;
-                if (processSection) processSection.hidden = false;
-                if (resultSection) resultSection.hidden = true;
-                if (progressSection) progressSection.hidden = true;
-
-                workspace.scrollIntoView({ behavior: 'smooth' });
-            };
-            img.src = e.target.result;
-        };
-        reader.readAsDataURL(file);
+  async function processImage() {
+    if (!originalFile || !originalImage) {
+      alert('Please select an image first.');
+      return;
     }
 
-    // Precise Edge-Inward Background Removal (Strictly targets back layer from borders)
-    if (removeBackgroundBtn) {
-        removeBackgroundBtn.addEventListener('click', async () => {
-            if (!currentFile) return;
+    progressSection.hidden = false;
+    resultSection.hidden = true;
+    removeBackgroundBtn.disabled = true;
 
-            processSection.querySelector('.process-card').style.display = 'none';
-            progressSection.hidden = false;
-            updateProgress(20, 'Scanning outer boundaries...');
+    updateProgress(5, 'Preparing image...');
 
-            setTimeout(async () => {
-                try {
-                    const img = new Image();
-                    img.src = originalPreview.src;
-                    await img.decode();
+    try {
+      await new Promise((resolve) => setTimeout(resolve, 100));
+      updateProgress(25, 'Loading AI model...');
 
-                    const canvas = document.createElement('canvas');
-                    const ctx = canvas.getContext('2d', { willReadFrequently: true });
-                    canvas.width = img.naturalWidth;
-                    canvas.height = img.naturalHeight;
-                    ctx.drawImage(img, 0, 0);
+      await new Promise((resolve) => setTimeout(resolve, 100));
+      updateProgress(50, 'Analyzing image...');
 
-                    updateProgress(50, 'Removing back layer precisely...');
+      const canvas = await createProcessedCanvas();
 
-                    const imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-                    const data = imgData.data;
-                    const width = canvas.width;
-                    const height = canvas.height;
+      updateProgress(85, 'Creating final image...');
 
-                    // Reference color strictly from top-left corner (Back side reference)
-                    const refR = data[0];
-                    const refG = data[1];
-                    const refB = data[2];
+      const blob = await canvasToBlob(canvas);
 
-                    // Tolerance set for deep background removal without leaking inside subject
-                    const tolerance = 65;
+      updateProgress(100, 'Processing complete.');
 
-                    let visited = new Uint8Array(width * height);
-                    let queue = [];
-
-                    // Push all 4 outer border pixels into queue to start processing strictly from outside in
-                    for (let x = 0; x < width; x++) {
-                        queue.push({x, y: 0});
-                        queue.push({x, y: height - 1});
-                        visited[0 * width + x] = 1;
-                        visited[(height - 1) * width + x] = 1;
-                    }
-                    for (let y = 0; y < height; y++) {
-                        queue.push({x: 0, y});
-                        queue.push({x: width - 1, y});
-                        visited[y * width + 0] = 1;
-                        visited[y * width + (width - 1)] = 1;
-                    }
-
-                    while(queue.length > 0) {
-                        let {x, y} = queue.pop();
-                        let idx = (y * width + x) * 4;
-                        let r = data[idx], g = data[idx+1], b = data[idx+2];
-
-                        // Color distance check from outer reference
-                        let diff = Math.abs(r - refR) + Math.abs(g - refG) + Math.abs(b - refB);
-
-                        if (diff <= (tolerance * 3)) {
-                            data[idx + 3] = 0; // Make background transparent
-
-                            // Explore inward neighbors
-                            const neighbors = [
-                                {nx: x+1, ny: y}, {nx: x-1, ny: y},
-                                {nx: x, ny: y+1}, {nx: x, ny: y-1}
-                            ];
-
-                            for(let n of neighbors) {
-                                if(n.nx >= 0 && n.nx < width && n.ny >= 0 && n.ny < height) {
-                                    let nPos = n.ny * width + n.nx;
-                                    if(!visited[nPos]) {
-                                        visited[nPos] = 1;
-                                        queue.push({x: n.nx, y: n.ny});
-                                    }
-                                }
-                            }
-                        }
-                    }
-
-                    ctx.putImageData(imgData, 0, 0);
-
-                    const mode = backgroundMode.value;
-                    if (mode !== 'transparent') {
-                        const tempCanvas = document.createElement('canvas');
-                        tempCanvas.width = canvas.width;
-                        tempCanvas.height = canvas.height;
-                        const tempCtx = tempCanvas.getContext('2d');
-                        tempCtx.fillStyle = mode;
-                        tempCtx.fillRect(0, 0, tempCanvas.width, tempCanvas.height);
-                        tempCtx.drawImage(canvas, 0, 0);
-                        ctx.clearRect(0, 0, canvas.width, canvas.height);
-                        ctx.drawImage(tempCanvas, 0, 0);
-                    }
-
-                    updateProgress(90, 'Generating final clear output...');
-
-                    let format = (outputFormat.value === 'webp') ? 'image/webp' : 'image/png';
-                    let quality = parseFloat(outputQuality.value);
-
-                    canvas.toBlob((blob) => {
-                        const url = URL.createObjectURL(blob);
-                        resultPreview.src = url;
-                        resultPreview.style.display = 'block';
-                        resultPlaceholder.style.display = 'none';
-                        resultDimensions.textContent = `${canvas.width} × ${canvas.height} px`;
-
-                        let s = blob.size;
-                        resultSize.textContent = (s < 1024) ? s + ' B' : (s < 1024*1024) ? (s/1024).toFixed(1) + ' KB' : (s/(1024*1024)).toFixed(2) + ' MB';
-
-                        downloadBtn.href = url;
-                        downloadBtn.download = `niDar-background-removed.${outputFormat.value}`;
-
-                        updateProgress(100, 'Done!');
-                        setTimeout(() => {
-                            progressSection.hidden = true;
-                            resultSection.hidden = false;
-                            processSection.querySelector('.process-card').style.display = 'flex';
-                            processSection.hidden = true;
-                            resultSection.scrollIntoView({ behavior: 'smooth' });
-                        }, 400);
-                    }, format, quality);
-
-                } catch (err) {
-                    console.error(err);
-                    alert('Error processing image.');
-                    progressSection.hidden = true;
-                    processSection.querySelector('.process-card').style.display = 'flex';
-                }
-            }, 200);
-        });
+      showResult(blob, canvas.width, canvas.height);
+    } catch (error) {
+      console.error(error);
+      alert(error.message || 'Unable to process this image. Please try again.');
+    } finally {
+      removeBackgroundBtn.disabled = false;
+      setTimeout(function () {
+        progressSection.hidden = true;
+      }, 300);
     }
+  }
 
-    function updateProgress(percent, msg) {
-        if (progressBar) progressBar.style.width = percent + '%';
-        if (progressPercent) progressPercent.textContent = percent + '%';
-        if (progressMessage) progressMessage.textContent = msg;
-    }
+  removeBackgroundBtn.addEventListener('click', processImage);
 
-    if (processAgainBtn) {
-        processAgainBtn.addEventListener('click', () => {
-            resultSection.hidden = true;
-            processSection.hidden = false;
-            workspace.scrollIntoView({ behavior: 'smooth' });
-        });
-    }
+  function showResult(blob, width, height) {
+    cleanupResultUrl();
+    resultBlob = blob;
+    resultUrl = URL.createObjectURL(blob);
 
-    if (startOverBtn) {
-        startOverBtn.addEventListener('click', () => {
-            currentFile = null;
-            imageInput.value = '';
-            if (originalPreview) originalPreview.style.display = 'none';
-            if (originalPlaceholder) originalPlaceholder.style.display = 'block';
-            workspace.hidden = true;
-            settingsSection.hidden = true;
-            processSection.hidden = true;
-            resultSection.hidden = true;
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        });
-    }
-});
+    resultPreview.src = resultUrl;
+    resultPreview.style.display = 'block';
+    resultPlaceholder.style.display = 'none';
+
+    resultDimensions.textContent = width + ' × ' + height + ' px';
+    resultSize.textContent = formatBytes(blob.size);
+
+    const extension = outputFormat.value === 'webp' ? 'webp' : 'png';
+    const background = backgroundMode.value;
+
+    downloadBtn.href = resultUrl;
+    downloadBtn.download = 'nidar-background-removed-' + background + '.' + extension;
+
+    resultSummary.textContent =
+      'Your processed image is ready to download as a ' + extension.toUpperCase() + ' file.';
+
+    resultSection.hidden = false;
+    resultSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  processAgainBtn.addEventListener('click', function () {
+    processImage();
+  });
+
+  startOverBtn.addEventListener('click', function () {
+    resetAll();
+  });
+
+})();
