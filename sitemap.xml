@@ -47,4 +47,7 @@
   <url><loc>https://nidartools.com/content/pdf-to-word/</loc><priority>0.85</priority></url>
   <url><loc>https://nidartools.com/content/emi-calculator/</loc><priority>0.85</priority></url>
 
+    <url>
+        <loc>https://nidartools.com/pdf-merger-splitter/</loc>
+    </url>
 </urlset>
