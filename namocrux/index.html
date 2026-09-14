@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NamoCrux - AI Name Generator | niDarTools</title>
+<meta name="description" content="NamoCrux is a free AI-powered name generator. Describe your idea and get unique, creative name suggestions for your business, brand, or project.">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="logo">niDarTools</div>
+  <nav class="nav-links">
+    <a href="/">Home</a>
+  </nav>
+</header>
+
+<main class="container">
+  <h1 class="tool-title">NamoCrux</h1>
+  <p class="tool-subtitle">Describe your idea. Get a unique name.</p>
+
+  <div class="card">
+    <label for="ideaInput">What do you need a name for?</label>
+    <textarea id="ideaInput" rows="4" placeholder="e.g. A cozy cafe for pet owners where dogs are welcome..."></textarea>
+
+    <button id="generateBtn">Generate Names</button>
+
+    <div id="loadingBox" class="hidden">
+      <p>Thinking of great names...</p>
+    </div>
+
+    <div id="resultsBox" class="hidden">
+      <h3>Suggestions:</h3>
+      <ul id="resultsList"></ul>
+      <button id="regenerateBtn">Generate More</button>
+    </div>
+
+    <div id="errorBox" class="hidden">
+      <p>Something went wrong. Please try again.</p>
+    </div>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <p>&copy; 2026 niDarTools. All rights reserved.</p>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
