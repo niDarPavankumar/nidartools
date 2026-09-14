@@ -20,9 +20,19 @@ const styleDescriptions = {
   meaningful: "deeply meaningful, symbolic, emotionally significant, tied closely to the details given"
 };
 
+const thankYouMessages = [
+  "Wonderful choice! May this name bring joy every single day.",
+  "Beautiful pick! Wishing you a bright and happy day ahead.",
+  "Great name! May it bring you good fortune and happiness.",
+  "Lovely choice! Here's to a shubh and joyful journey ahead.",
+  "Perfect pick! Wishing you and your loved ones a blessed day."
+];
+
 function buildPrompt(idea, style) {
   const styleDesc = styleDescriptions[style] || styleDescriptions.modern;
-  return "You are a creative naming expert. Based on this idea and details: \"" + idea + "\", suggest 8 unique names that are " + styleDesc + ". " +
+  const randomSeed = Math.floor(Math.random() * 100000);
+  return "You are a creative naming expert. (session " + randomSeed + ") Based on this idea and details: \"" + idea + "\", suggest 8 fresh unique names that are " + styleDesc + ". " +
+    "Give different creative options than typical obvious choices. " +
     "For each name, give a short one-line reason explaining why it fits (connect it to specific details mentioned like people's names, dates, or purpose, where relevant). " +
     "Respond ONLY with valid JSON, no markdown, no code fences, in this exact format: " +
     "[{\"name\": \"NameHere\", \"meaning\": \"short reason here\"}]";
@@ -82,6 +92,25 @@ function renderHistory() {
   });
 }
 
+function showToast(message) {
+  const existing = document.querySelector(".toast");
+  if (existing) existing.remove();
+
+  const toast = document.createElement("div");
+  toast.className = "toast";
+  toast.textContent = message;
+  document.body.appendChild(toast);
+
+  requestAnimationFrame(function () {
+    toast.classList.add("show");
+  });
+
+  setTimeout(function () {
+    toast.classList.remove("show");
+    setTimeout(function () { toast.remove(); }, 300);
+  }, 3200);
+}
+
 function copyToClipboard(text, btn) {
   navigator.clipboard.writeText(text).then(function () {
     btn.textContent = "Copied!";
@@ -90,6 +119,9 @@ function copyToClipboard(text, btn) {
       btn.textContent = "Copy";
       btn.classList.remove("copied");
     }, 1500);
+
+    const msg = thankYouMessages[Math.floor(Math.random() * thankYouMessages.length)];
+    showToast("\"" + text + "\" — " + msg);
   });
 }
 
@@ -119,8 +151,9 @@ async function generateNames() {
     const names = extractJson(text);
 
     resultsList.innerHTML = "";
-    names.forEach(function (item) {
+    names.forEach(function (item, index) {
       const li = document.createElement("li");
+      li.style.animationDelay = (index * 0.08) + "s";
 
       const textWrap = document.createElement("div");
       const nameSpan = document.createElement("span");
