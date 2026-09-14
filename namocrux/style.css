@@ -182,3 +182,76 @@ select:focus {
   font-size: 0.88rem;
   margin-top: 4px;
 }
+
+#resultsList li {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.copy-btn {
+  width: auto;
+  margin-top: 0;
+  padding: 6px 12px;
+  font-size: 0.8rem;
+  background: white;
+  color: var(--mint-dark);
+  border: 1px solid var(--mint);
+  flex-shrink: 0;
+}
+
+.copy-btn:hover {
+  background: var(--mint);
+  color: white;
+}
+
+.copy-btn.copied {
+  background: var(--mint-dark);
+  color: white;
+}
+
+#historySection {
+  max-width: 600px;
+  margin: 30px auto 0;
+  padding: 0 20px;
+}
+
+#historySection h3 {
+  color: var(--mint-dark);
+  margin-bottom: 10px;
+}
+
+.history-item {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 12px 16px;
+  margin-bottom: 8px;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+
+.history-item:hover {
+  border-color: var(--mint);
+}
+
+.history-item .h-idea {
+  color: #555;
+  font-size: 0.82rem;
+  display: block;
+  margin-bottom: 4px;
+}
+
+.history-item .h-names {
+  color: var(--mint-dark);
+  font-weight: 600;
+}
+
+#clearHistoryBtn {
+  background: transparent;
+  color: #999;
+  border: 1px solid #ccc;
+  font-size: 0.85rem;
+  padding: 8px;
+}
