@@ -147,3 +147,38 @@ button:hover {
   color: #888;
   font-size: 0.9rem;
 }
+
+select {
+  width: 100%;
+  padding: 12px;
+  margin-top: 14px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  font-size: 1rem;
+  font-family: inherit;
+  background: white;
+  color: var(--text);
+}
+
+select:focus {
+  outline: none;
+  border-color: var(--mint);
+}
+
+#resultsList li {
+  display: block;
+}
+
+#resultsList li .name-text {
+  font-weight: 700;
+  color: var(--mint-dark);
+  font-size: 1.05rem;
+}
+
+#resultsList li .name-meaning {
+  display: block;
+  font-weight: 400;
+  color: #555;
+  font-size: 0.88rem;
+  margin-top: 4px;
+}

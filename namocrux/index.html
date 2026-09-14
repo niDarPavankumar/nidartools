@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>NamoCrux - AI Name Generator | niDarTools</title>
-<meta name="description" content="NamoCrux is a free AI-powered name generator. Describe your idea and get unique, creative name suggestions for your business, brand, or project.">
+<meta name="description" content="NamoCrux is a free AI-powered name generator. Describe your idea and get unique, meaningful name suggestions with explanations.">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -18,11 +18,19 @@
 
 <main class="container">
   <h1 class="tool-title">NamoCrux</h1>
-  <p class="tool-subtitle">Describe your idea. Get a unique name.</p>
+  <p class="tool-subtitle">Describe your idea. Get a unique name with meaning.</p>
 
   <div class="card">
     <label for="ideaInput">What do you need a name for?</label>
     <textarea id="ideaInput" rows="4" placeholder="e.g. A cozy cafe for pet owners where dogs are welcome..."></textarea>
+
+    <label for="styleSelect">Naming style</label>
+    <select id="styleSelect">
+      <option value="modern">Modern &amp; Catchy</option>
+      <option value="traditional">Traditional / Sanskrit-based</option>
+      <option value="short">Short &amp; Simple</option>
+      <option value="meaningful">Deeply Meaningful</option>
+    </select>
 
     <button id="generateBtn">Generate Names</button>
 
