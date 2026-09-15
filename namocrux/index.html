@@ -1,65 +1,610 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>NamoCrux - AI Name Generator | niDarTools</title>
-<meta name="description" content="NamoCrux is a free AI-powered name generator. Describe your idea and get unique, meaningful name suggestions with explanations.">
-<link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>NamoCrux - AI Name Generator | niDar Tools</title>
+
+  <meta
+    name="description"
+    content="NamoCrux is a free AI name generator that creates unique, meaningful name ideas for businesses, brands, projects, apps, websites and more."
+  >
+
+  <meta
+    name="keywords"
+    content="AI name generator, free name generator, unique name generator, meaningful name generator, business name generator, brand name generator, project name generator, startup name generator, app name generator, creative name generator"
+  >
+
+  <meta name="robots" content="index, follow">
+
+  <link rel="canonical" href="https://nidartools.com/namocrux/">
+
+  <!-- NamoCrux styles -->
+  <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
-<header class="site-header">
-  <div class="logo">niDarTools</div>
-  <nav class="nav-links">
-    <a href="/">Home</a>
-  </nav>
-</header>
+  <!-- =====================================================
+       COMMON niDar TOOLS HEADER
+       ===================================================== -->
+  <div id="site-header"></div>
 
-<main class="container">
-  <h1 class="tool-title">NamoCrux</h1>
-  <p class="tool-subtitle">Describe your idea. Get a unique name with meaning.</p>
 
-  <div class="card">
-    <label for="ideaInput">What do you need a name for?</label>
-    <textarea id="ideaInput" rows="4" placeholder="e.g. A cozy cafe for pet owners where dogs are welcome..."></textarea>
+  <main class="namocrux-page">
 
-    <label for="styleSelect">Naming style</label>
-    <select id="styleSelect">
-      <option value="modern">Modern &amp; Catchy</option>
-      <option value="traditional">Traditional / Sanskrit-based</option>
-      <option value="short">Short &amp; Simple</option>
-      <option value="meaningful">Deeply Meaningful</option>
-    </select>
+    <!-- ===================================================
+         HERO
+         =================================================== -->
+    <section class="namocrux-hero">
 
-    <button id="generateBtn">Generate Names</button>
+      <div class="hero-glow hero-glow-one" aria-hidden="true"></div>
+      <div class="hero-glow hero-glow-two" aria-hidden="true"></div>
 
-    <div id="loadingBox" class="hidden">
-      <div class="spinner"></div><p>Thinking of great names...</p>
-    </div>
+      <div class="namocrux-badge">
+        ✨ AI-Powered Naming Tool
+      </div>
 
-    <div id="resultsBox" class="hidden">
-      <h3>Suggestions:</h3>
-      <ul id="resultsList"></ul>
-      <button id="regenerateBtn">Generate More</button>
-    </div>
+      <h1 class="tool-title">
+        Namo<span>Crux</span>
+      </h1>
 
-    <div id="errorBox" class="hidden">
-      <p>Something went wrong. Please try again.</p>
-    </div>
-  </div>
+      <p class="tool-subtitle">
+        Describe your idea. Get a unique name with meaning.
+      </p>
 
-  <div id="historySection" class="hidden">
-    <h3>Recent Searches</h3>
-    <div id="historyList"></div>
-    <button id="clearHistoryBtn">Clear History</button>
-  </div>
-</main>
+      <p class="hero-description">
+        Turn your ideas, stories and concepts into memorable name suggestions
+        with the help of AI.
+      </p>
 
-<footer class="site-footer">
-  <p>&copy; 2026 niDarTools. All rights reserved.</p>
-</footer>
+      <div class="hero-pills" aria-label="NamoCrux features">
+        <span>💡 Creative Ideas</span>
+        <span>✨ Meaningful Names</span>
+        <span>🌍 Modern Styles</span>
+      </div>
 
-<script src="script.js"></script>
+    </section>
+
+
+    <!-- ===================================================
+         NAMING WORKSPACE
+         =================================================== -->
+    <section class="namocrux-workspace">
+
+      <div class="workspace-card">
+
+        <div class="workspace-heading">
+
+          <div class="workspace-icon" aria-hidden="true">
+            ✦
+          </div>
+
+          <div>
+            <span class="section-kicker">
+              NAME YOUR IDEA
+            </span>
+
+            <h2>
+              What do you need a name for?
+            </h2>
+
+            <p>
+              Tell NamoCrux about your idea, purpose, people or story.
+            </p>
+          </div>
+
+        </div>
+
+
+        <!-- =================================================
+             IDEA INPUT
+             ================================================= -->
+        <div class="field-group">
+
+          <label for="ideaInput">
+            Describe your idea
+          </label>
+
+          <div class="textarea-wrap">
+
+            <textarea
+              id="ideaInput"
+              rows="5"
+              maxlength="1200"
+              placeholder="e.g. A cozy cafe for pet owners where dogs are welcome..."
+              aria-describedby="ideaHint"
+            ></textarea>
+
+            <span class="input-decoration" aria-hidden="true">
+              ✎
+            </span>
+
+          </div>
+
+          <div class="field-meta">
+            <span id="ideaHint">
+              The more useful details you provide, the better the suggestions can be.
+            </span>
+
+            <span class="character-hint">
+              Up to 1200 characters
+            </span>
+          </div>
+
+        </div>
+
+
+        <!-- =================================================
+             NAMING STYLE
+             ================================================= -->
+        <div class="field-group style-field">
+
+          <label for="styleSelect">
+            Choose a naming style
+          </label>
+
+          <div class="select-wrap">
+
+            <select id="styleSelect">
+              <option value="modern">
+                Modern &amp; Catchy
+              </option>
+
+              <option value="traditional">
+                Traditional / Sanskrit-based
+              </option>
+
+              <option value="short">
+                Short &amp; Simple
+              </option>
+
+              <option value="meaningful">
+                Deeply Meaningful
+              </option>
+            </select>
+
+            <span class="select-arrow" aria-hidden="true">
+              ▾
+            </span>
+
+          </div>
+
+        </div>
+
+
+        <!-- =================================================
+             STYLE GUIDE
+             ================================================= -->
+        <div class="style-guide">
+
+          <div class="style-guide-item">
+            <span>⚡</span>
+            <strong>Modern</strong>
+            <small>Trendy &amp; catchy</small>
+          </div>
+
+          <div class="style-guide-item">
+            <span>🪷</span>
+            <strong>Traditional</strong>
+            <small>Indian-rooted</small>
+          </div>
+
+          <div class="style-guide-item">
+            <span>◆</span>
+            <strong>Short</strong>
+            <small>Simple &amp; clean</small>
+          </div>
+
+          <div class="style-guide-item">
+            <span>💎</span>
+            <strong>Meaningful</strong>
+            <small>Deep &amp; symbolic</small>
+          </div>
+
+        </div>
+
+
+        <!-- =================================================
+             GENERATE BUTTON
+             ================================================= -->
+        <button
+          id="generateBtn"
+          type="button"
+          class="generate-btn"
+        >
+          <span class="generate-icon" aria-hidden="true">✦</span>
+          <span>Generate Names</span>
+          <span class="generate-arrow" aria-hidden="true">→</span>
+        </button>
+
+
+        <!-- =================================================
+             LOADING
+             ================================================= -->
+        <div
+          id="loadingBox"
+          class="loading-box hidden"
+          aria-live="polite"
+        >
+
+          <div class="loading-orbit" aria-hidden="true">
+            <div></div>
+          </div>
+
+          <div class="loading-content">
+            <strong>Thinking of great names...</strong>
+            <p>NamoCrux is creating fresh ideas for you.</p>
+          </div>
+
+        </div>
+
+
+        <!-- =================================================
+             RESULTS
+             ================================================= -->
+        <div
+          id="resultsBox"
+          class="results-box hidden"
+          aria-live="polite"
+        >
+
+          <div class="results-heading">
+
+            <div>
+              <span class="section-kicker">
+                AI SUGGESTIONS
+              </span>
+
+              <h2>
+                Names created for you
+              </h2>
+            </div>
+
+            <span class="results-count">
+              8 ideas
+            </span>
+
+          </div>
+
+
+          <div class="results-intro">
+            Explore the suggestions below. Each name includes a short explanation
+            of why it fits your idea.
+          </div>
+
+
+          <ul id="resultsList"></ul>
+
+
+          <button
+            id="regenerateBtn"
+            type="button"
+            class="regenerate-btn"
+          >
+            <span aria-hidden="true">↻</span>
+            Generate More Names
+          </button>
+
+        </div>
+
+
+        <!-- =================================================
+             ERROR
+             ================================================= -->
+        <div
+          id="errorBox"
+          class="error-box hidden"
+          role="alert"
+        >
+
+          <div class="error-icon" aria-hidden="true">
+            !
+          </div>
+
+          <div>
+            <strong>We couldn't generate the names.</strong>
+            <p>
+              Please check your connection and try again.
+            </p>
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- ===================================================
+         HOW NAMOCRUX WORKS
+         =================================================== -->
+    <section class="how-it-works">
+
+      <div class="section-heading">
+
+        <span class="section-kicker">
+          SIMPLE PROCESS
+        </span>
+
+        <h2>
+          How NamoCrux Works
+        </h2>
+
+        <p>
+          From an idea to a meaningful name in three simple steps.
+        </p>
+
+      </div>
+
+
+      <div class="steps-grid">
+
+        <article class="step-card">
+
+          <span class="step-number">
+            01
+          </span>
+
+          <div class="step-icon">
+            💭
+          </div>
+
+          <h3>
+            Describe
+          </h3>
+
+          <p>
+            Tell us about your business, project, family, product or any idea
+            that needs a name.
+          </p>
+
+        </article>
+
+
+        <article class="step-card">
+
+          <span class="step-number">
+            02
+          </span>
+
+          <div class="step-icon">
+            ✨
+          </div>
+
+          <h3>
+            Generate
+          </h3>
+
+          <p>
+            Choose your preferred naming style and let NamoCrux create fresh
+            name ideas.
+          </p>
+
+        </article>
+
+
+        <article class="step-card">
+
+          <span class="step-number">
+            03
+          </span>
+
+          <div class="step-icon">
+            ❤️
+          </div>
+
+          <h3>
+            Choose
+          </h3>
+
+          <p>
+            Review the meanings, copy your favorite name and use it as
+            inspiration for your project.
+          </p>
+
+        </article>
+
+      </div>
+
+    </section>
+
+
+    <!-- ===================================================
+         NAMING USE CASES
+         =================================================== -->
+    <section class="use-cases">
+
+      <div class="section-heading">
+
+        <span class="section-kicker">
+          BUILT FOR IDEAS
+        </span>
+
+        <h2>
+          What Can You Name?
+        </h2>
+
+        <p>
+          NamoCrux can help you explore names for many different purposes.
+        </p>
+
+      </div>
+
+
+      <div class="use-case-grid">
+
+        <div class="use-case-card">
+          <span>🏢</span>
+          <strong>Business</strong>
+          <small>Company &amp; business ideas</small>
+        </div>
+
+        <div class="use-case-card">
+          <span>🚀</span>
+          <strong>Startup</strong>
+          <small>Fresh startup concepts</small>
+        </div>
+
+        <div class="use-case-card">
+          <span>📱</span>
+          <strong>App</strong>
+          <small>Mobile &amp; web applications</small>
+        </div>
+
+        <div class="use-case-card">
+          <span>🌐</span>
+          <strong>Website</strong>
+          <small>Memorable website names</small>
+        </div>
+
+        <div class="use-case-card">
+          <span>🎨</span>
+          <strong>Brand</strong>
+          <small>Creative brand ideas</small>
+        </div>
+
+        <div class="use-case-card">
+          <span>📦</span>
+          <strong>Product</strong>
+          <small>Product &amp; service names</small>
+        </div>
+
+        <div class="use-case-card">
+          <span>📚</span>
+          <strong>Project</strong>
+          <small>Personal &amp; professional projects</small>
+        </div>
+
+        <div class="use-case-card">
+          <span>💚</span>
+          <strong>Personal</strong>
+          <small>Names with a personal meaning</small>
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- ===================================================
+         TRUST / PRIVACY NOTE
+         =================================================== -->
+    <section class="privacy-note">
+
+      <div class="privacy-icon" aria-hidden="true">
+        🔒
+      </div>
+
+      <div>
+        <h2>
+          Create names without the clutter
+        </h2>
+
+        <p>
+          NamoCrux is designed to make the naming process simple, focused and
+          easy to use. Your recent searches are stored locally in your browser
+          for convenience.
+        </p>
+      </div>
+
+    </section>
+
+
+    <!-- ===================================================
+         RECENT SEARCHES
+         =================================================== -->
+    <section
+      id="historySection"
+      class="history-section hidden"
+    >
+
+      <div class="section-heading history-heading">
+
+        <span class="section-kicker">
+          YOUR ACTIVITY
+        </span>
+
+        <h2>
+          Recent Searches
+        </h2>
+
+        <p>
+          Revisit your recent naming ideas from this browser.
+        </p>
+
+      </div>
+
+
+      <div id="historyList" class="history-list"></div>
+
+
+      <button
+        id="clearHistoryBtn"
+        type="button"
+        class="clear-history-btn"
+      >
+        Clear History
+      </button>
+
+    </section>
+
+
+    <!-- ===================================================
+         SEO / DISCOVERY CTA
+         =================================================== -->
+    <section class="namocrux-cta">
+
+      <div class="cta-content">
+
+        <span class="section-kicker">
+          NEED MORE INSPIRATION?
+        </span>
+
+        <h2>
+          Turn your idea into a name.
+        </h2>
+
+        <p>
+          Explore the NamoCrux guide to learn naming ideas, styles and practical
+          tips for choosing a memorable name.
+        </p>
+
+        <a
+          href="/content/namocrux/"
+          class="cta-link"
+        >
+          Explore the NamoCrux Guide
+          <span aria-hidden="true">→</span>
+        </a>
+
+      </div>
+
+      <div class="cta-decoration" aria-hidden="true">
+        <span>✦</span>
+        <span>✧</span>
+        <span>✦</span>
+      </div>
+
+    </section>
+
+  </main>
+
+
+  <!-- =====================================================
+       COMMON niDar TOOLS FOOTER
+       ===================================================== -->
+  <div id="site-footer"></div>
+
+
+  <!-- =====================================================
+       COMMON SYSTEM
+       ===================================================== -->
+  <script src="../assets/js/common.js"></script>
+
+  <!-- NamoCrux engine — UNCHANGED -->
+  <script src="script.js"></script>
+
 </body>
 </html>
