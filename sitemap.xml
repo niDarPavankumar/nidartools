@@ -48,5 +48,7 @@
   <url><loc>https://nidartools.com/content/emi-calculator/</loc><priority>0.85</priority></url>
 
   <url><loc>https://nidartools.com/pdf-merger-splitter/</loc><priority>0.90</priority></url>
+  <url><loc>https://nidartools.com/content/pdf-merger-splitter/</loc><priority>0.85</priority></url>
   <url><loc>https://nidartools.com/ats-checker/</loc><priority>0.90</priority></url>
+  <url><loc>https://nidartools.com/namocrux/</loc><priority>0.90</priority></url>
 </urlset>

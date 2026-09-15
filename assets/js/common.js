@@ -184,6 +184,7 @@
             ['Image to PDF', '/image-to-pdf/'],
             ['Word to PDF', '/word-to-pdf/'],
             ['PDF to Word', '/pdf-to-word/'],
+            ['PDF Merger & Splitter', '/pdf-merger-splitter/'],
             ['QR Generator', '/qr-generator/'],
             ['Word Counter', '/word-counter/'],
             ['Age Calculator', '/age-calculator/'],
@@ -191,7 +192,8 @@
             ['EMI Calculator', '/emi-calculator/'],
             ['Construction Cost Estimator', '/construction-cost-estimator/'],
             ['JSON Formatter', '/json-formatter/'],
-            ['Base64 Encoder/Decoder', '/base64-encoder-decoder/']
+            ['Base64 Encoder/Decoder', '/base64-encoder-decoder/'],
+            ['NamoCrux – AI Name Generator', '/namocrux/']
         ];
 
         function showResults(query) {
