@@ -23,15 +23,6 @@
     margin:0; font-family:-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
     background:var(--bg); color:var(--text); transition:background .2s,color .2s;
   }
-  header{
-    display:flex; align-items:center; justify-content:space-between;
-    padding:14px 20px; border-bottom:1px solid var(--border); background:var(--card);
-    position:sticky; top:0; z-index:10;
-  }
-  .brand{font-weight:700; font-size:1.15rem; text-decoration:none; color:var(--text);}
-  nav a{color:var(--muted); text-decoration:none; margin-left:16px; font-size:.9rem;}
-  nav a:hover{color:var(--primary);}
-  .theme-btn{background:none;border:1px solid var(--border);border-radius:8px;padding:6px 10px;cursor:pointer;color:var(--text);}
   main{max-width:1000px;margin:0 auto;padding:24px 16px 60px;}
   h1{font-size:1.6rem;margin-bottom:4px;}
   .sub{color:var(--muted);margin-bottom:20px;font-size:.95rem;}
@@ -59,22 +50,14 @@
   .status.err{color:var(--err);}
   .stats{display:flex;gap:16px;flex-wrap:wrap;margin-top:14px;font-size:.85rem;color:var(--muted);}
   .stats b{color:var(--text);}
-  footer{border-top:1px solid var(--border);padding:24px 16px;text-align:center;color:var(--muted);font-size:.85rem;}
-  footer a{color:var(--muted);text-decoration:none;margin:0 8px;}
   .string{color:#198754;} .number{color:#0d6efd;} .boolean{color:#e8590c;} .null{color:#adb5bd;} .key{color:#8c1cff;font-weight:600;}
   [data-theme="dark"] .string{color:#7ee2a8;} [data-theme="dark"] .number{color:#7cb8ff;}
   [data-theme="dark"] .boolean{color:#ffa156;} [data-theme="dark"] .key{color:#c792ea;}
 </style>
+<link rel="stylesheet" href="/assets/css/common.css">
 </head>
 <body>
-<header>
-  <a href="https://nidartools.com/" class="brand">niDar Tools</a>
-  <nav>
-    <a href="https://nidartools.com/#tools">Tools</a>
-    <a href="https://nidartools.com/about/">About</a>
-    <button class="theme-btn" id="themeToggle" aria-label="Toggle theme">🌙</button>
-  </nav>
-</header>
+<div id="site-header"></div>
 
 <main>
   <h1>JSON Formatter & Validator</h1>
@@ -103,35 +86,14 @@
   <div class="stats" id="stats"></div>
 </main>
 
-<footer>
-  <div>
-    <a href="https://nidartools.com/">Home</a>
-    <a href="https://nidartools.com/about/">About</a>
-    <a href="https://nidartools.com/contact/">Contact</a>
-    <a href="https://nidartools.com/privacy-policy/">Privacy</a>
-    <a href="https://nidartools.com/terms/">Terms</a>
-  </div>
-  <p style="margin-top:10px;">Developed by <strong>niDar Marketing And Services</strong><br>© 2026 niDar Tools. All Rights Reserved.</p>
-</footer>
+<div id="site-footer"></div>
 
+<script src="/assets/js/common.js"></script>
 <script>
   const input = document.getElementById('input');
   const output = document.getElementById('output');
   const status = document.getElementById('status');
   const stats = document.getElementById('stats');
-  const themeToggle = document.getElementById('themeToggle');
-
-  // Theme
-  const saved = localStorage_safe_get();
-  function localStorage_safe_get(){ try{ return localStorage.getItem('theme'); }catch(e){ return null; } }
-  function localStorage_safe_set(v){ try{ localStorage.setItem('theme', v); }catch(e){} }
-  if(saved === 'dark'){ document.documentElement.setAttribute('data-theme','dark'); themeToggle.textContent='☀️'; }
-  themeToggle.addEventListener('click', () => {
-    const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
-    if(isDark){ document.documentElement.removeAttribute('data-theme'); themeToggle.textContent='🌙'; localStorage_safe_set('light'); }
-    else{ document.documentElement.setAttribute('data-theme','dark'); themeToggle.textContent='☀️'; localStorage_safe_set('dark'); }
-  });
-
   function syntaxHighlight(json){
     json = json.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
     return json.replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false)\b|\bnull\b|-?\d+(\.\d+)?([eE][+-]?\d+)?)/g, function(match){
