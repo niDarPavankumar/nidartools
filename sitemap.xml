@@ -30,27 +30,8 @@
   <url><loc>https://nidartools.com/emi-calculator/</loc><priority>0.90</priority></url>
 
   <!-- Content Guides -->
-  <url><loc>https://nidartools.com/content/image-resizer/</loc><priority>0.85</priority></url>
-  <url><loc>https://nidartools.com/content/image-converter/</loc><priority>0.85</priority></url>
-  <url><loc>https://nidartools.com/content/image-to-pdf/</loc><priority>0.85</priority></url>
-  <url><loc>https://nidartools.com/content/age-calculator/</loc><priority>0.85</priority></url>
-  <url><loc>https://nidartools.com/content/qr-generator/</loc><priority>0.85</priority></url>
-  <url><loc>https://nidartools.com/content/image-compressor/</loc><priority>0.85</priority></url>
-  <url><loc>https://nidartools.com/content/icon-kit-generator/</loc><priority>0.85</priority></url>
-  <url><loc>https://nidartools.com/content/percentage-calculator/</loc><priority>0.85</priority></url>
-  <url><loc>https://nidartools.com/content/construction-cost-estimator/</loc><priority>0.85</priority></url>
-  <url><loc>https://nidartools.com/content/word-counter/</loc><priority>0.85</priority></url>
-  <url><loc>https://nidartools.com/content/base64-encoder-decoder/</loc><priority>0.85</priority></url>
-  <url><loc>https://nidartools.com/content/json-formatter/</loc><priority>0.85</priority></url>
-  <url><loc>https://nidartools.com/content/background-remover/</loc><priority>0.85</priority></url>
-  <url><loc>https://nidartools.com/content/word-to-pdf/</loc><priority>0.85</priority></url>
-  <url><loc>https://nidartools.com/content/pdf-to-word/</loc><priority>0.85</priority></url>
-  <url><loc>https://nidartools.com/content/emi-calculator/</loc><priority>0.85</priority></url>
 
   <url><loc>https://nidartools.com/pdf-merger-splitter/</loc><priority>0.90</priority></url>
-  <url><loc>https://nidartools.com/content/pdf-merger-splitter/</loc><priority>0.85</priority></url>
   <url><loc>https://nidartools.com/ats-checker/</loc><priority>0.90</priority></url>
-  <url><loc>https://nidartools.com/content/ats-checker/</loc><priority>0.85</priority></url>
   <url><loc>https://nidartools.com/namocrux/</loc><priority>0.90</priority></url>
-  <url><loc>https://nidartools.com/content/namocrux/</loc><priority>0.85</priority></url>
 </urlset>

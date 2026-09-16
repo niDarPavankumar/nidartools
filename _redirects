@@ -19,3 +19,24 @@
 /word-to-pdf.html /word-to-pdf/ 301
 /pdf-to-word.html /pdf-to-word/ 301
 /ats-checker.html /ats-checker/ 301
+
+# Legacy /content/ URLs → Clean URLs
+/content/age-calculator/ /age-calculator/ 301
+/content/ats-checker/ /ats-checker/ 301
+/content/background-remover/ /background-remover/ 301
+/content/base64-encoder-decoder/ /base64-encoder-decoder/ 301
+/content/construction-cost-estimator/ /construction-cost-estimator/ 301
+/content/emi-calculator/ /emi-calculator/ 301
+/content/icon-kit-generator/ /icon-kit-generator/ 301
+/content/image-compressor/ /image-compressor/ 301
+/content/image-converter/ /image-converter/ 301
+/content/image-resizer/ /image-resizer/ 301
+/content/image-to-pdf/ /image-to-pdf/ 301
+/content/json-formatter/ /json-formatter/ 301
+/content/namocrux/ /namocrux/ 301
+/content/pdf-merger-splitter/ /pdf-merger-splitter/ 301
+/content/pdf-to-word/ /pdf-to-word/ 301
+/content/percentage-calculator/ /percentage-calculator/ 301
+/content/qr-generator/ /qr-generator/ 301
+/content/word-counter/ /word-counter/ 301
+/content/word-to-pdf/ /word-to-pdf/ 301
