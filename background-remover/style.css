@@ -14,6 +14,15 @@
     --radius: 12px;
 }
 
+html[data-theme="dark"] {
+    --bg-color: #0d1510;
+    --card-bg: #152019;
+    --text-main: #edf5ef;
+    --text-muted: #a5b3aa;
+    --border-color: #2b3a31;
+    --border-light: #1a2820;
+}
+
 .background-remover-page {
     max-width: 1000px;
     margin: 20px auto 60px auto;
