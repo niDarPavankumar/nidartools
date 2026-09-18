@@ -344,7 +344,7 @@ textarea {
 .field-group textarea:focus {
   border-color: var(--primary);
 
-  background: #ffffff;
+  background: var(--card);
 
   box-shadow:
     0 0 0 4px rgba(0, 143, 60, 0.10);
@@ -420,7 +420,7 @@ textarea {
   flex: 0 1 auto;
 
   border: 1px solid #cfdad3;
-  background: #ffffff;
+  background: var(--card);
 
   color: var(--text);
 }
@@ -492,7 +492,7 @@ textarea {
   border: 1px solid #cbd9d0;
   border-radius: 14px;
 
-  background: #ffffff;
+  background: var(--card);
   color: #17301f;
 
   outline: none;
@@ -537,7 +537,7 @@ textarea {
   width: 100%;
 
   border: 1px solid #cfdad3;
-  background: #ffffff;
+  background: var(--card);
 
   color: var(--text);
 }
@@ -676,7 +676,7 @@ textarea {
   border: 1px solid var(--border);
   border-radius: var(--radius);
 
-  background: #ffffff;
+  background: var(--card);
 
   box-shadow: var(--shadow);
 
@@ -742,7 +742,7 @@ textarea {
   border: 1px solid var(--border);
   border-radius: 20px;
 
-  background: #ffffff;
+  background: var(--card);
 
   box-shadow: 0 8px 25px rgba(0, 70, 35, 0.06);
 }
@@ -798,7 +798,7 @@ textarea {
   border: 1px solid var(--border);
   border-radius: 20px;
 
-  background: #ffffff;
+  background: var(--card);
 
   box-shadow: 0 8px 25px rgba(0, 70, 35, 0.05);
 }
