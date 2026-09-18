@@ -849,12 +849,12 @@ input {
 
 html[data-theme="dark"] body,
 body.dark-theme {
-  --ir-bg: #0d1510;
-  --ir-card: #152019;
+  --ir-bg: #0b1118;
+  --ir-card: #172235;
   --ir-card-soft: #1a2820;
-  --ir-text: #edf5ef;
-  --ir-muted: #a5b3aa;
-  --ir-border: #2b3a31;
+  --ir-text: #f1f5f9;
+  --ir-muted: #a5b4c3;
+  --ir-border: rgba(148, 163, 184, 0.16);
   --ir-primary-soft: #17351d;
   --ir-warning-bg: #332b13;
 

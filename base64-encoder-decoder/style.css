@@ -25,6 +25,19 @@
   --radius-small: 16px;
 }
 
+html[data-theme="dark"] {
+  --primary: #4ade80;
+  --primary-dark: #22c55e;
+  --primary-light: rgba(74, 222, 128, 0.11);
+
+  --text: #f1f5f9;
+  --muted: #a5b4c3;
+
+  --bg: #0b1118;
+  --card: #172235;
+  --border: rgba(148, 163, 184, 0.16);
+}
+
 
 /* =========================================================
    RESET

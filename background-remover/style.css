@@ -15,12 +15,12 @@
 }
 
 html[data-theme="dark"] {
-    --bg-color: #0d1510;
-    --card-bg: #152019;
-    --text-main: #edf5ef;
-    --text-muted: #a5b3aa;
-    --border-color: #2b3a31;
-    --border-light: #1a2820;
+    --bg-color: #0b1118;
+    --card-bg: #172235;
+    --text-main: #f1f5f9;
+    --text-muted: #a5b4c3;
+    --border-color: rgba(148, 163, 184, 0.16);
+    --border-light: rgba(148, 163, 184, 0.10);
 }
 
 .background-remover-page {
