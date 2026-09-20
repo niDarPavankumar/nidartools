@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Free GST Calculator Online – Add or Remove GST Instantly | niDar Tools</title>
+
+  <meta
+    name="description"
+    content="Calculate GST instantly — add GST to a price or remove GST from a price. Supports 5%, 12%, 18%, 28% slabs. Free, fast, and 100% private."
+  >
+
+  <meta
+    name="keywords"
+    content="gst calculator, gst calculator online, add gst, remove gst, gst percentage calculator, indian gst calculator, gst amount calculator"
+  >
+
+  <meta name="robots" content="index, follow">
+
+  <link rel="canonical" href="https://nidartools.com/gst-calculator/">
+
+  <!-- GST Calculator styles -->
+  <link rel="stylesheet" href="/assets/css/common.css">
+  <link rel="stylesheet" href="style.css">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "How is GST calculated?",
+        "acceptedAnswer": { "@type": "Answer", "text": "GST amount is calculated by multiplying the base price by the GST rate percentage. When adding GST, the final price is the base price plus the GST amount." }
+      },
+      {
+        "@type": "Question",
+        "name": "What are the common GST slabs in India?",
+        "acceptedAnswer": { "@type": "Answer", "text": "The most common GST slabs in India are 5%, 12%, 18%, and 28%, depending on the category of goods or services." }
+      },
+      {
+        "@type": "Question",
+        "name": "Is this GST Calculator free?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Yes, completely free with no sign-up required, and calculations happen instantly in your browser." }
+      }
+    ]
+  }
+  </script>
+</head>
+
+<body>
+
+  <!-- =====================================================
+       COMMON niDar TOOLS HEADER
+       ===================================================== -->
+  <div id="site-header"></div>
+
+
+  <main class="gst-page">
+
+    <!-- ===================================================
+         HERO
+         =================================================== -->
+    <section class="gst-hero">
+
+      <div class="hero-glow hero-glow-one" aria-hidden="true"></div>
+      <div class="hero-glow hero-glow-two" aria-hidden="true"></div>
+
+      <div class="gst-badge">
+        🧾 Free Financial Tool
+      </div>
+
+      <h1 class="tool-title">
+        GST<span> Calculator</span>
+      </h1>
+
+      <p class="tool-subtitle">
+        Add or remove GST from any price. Instantly, accurately.
+      </p>
+
+      <p class="hero-description">
+        Calculate GST for any Indian tax slab in seconds — no manual math needed.
+      </p>
+
+      <div class="hero-pills" aria-label="GST Calculator features">
+        <span>➕ Add GST</span>
+        <span>➖ Remove GST</span>
+        <span>🇮🇳 All Indian Slabs</span>
+      </div>
+
+    </section>
+
+
+    <!-- ===================================================
+         GST WORKSPACE
+         =================================================== -->
+    <section class="gst-workspace">
+
+      <div class="workspace-card">
+
+        <div class="workspace-heading">
+
+          <div class="workspace-icon" aria-hidden="true">
+            ₹
+          </div>
+
+          <div>
+            <span class="section-kicker">
+              CALCULATE GST
+            </span>
+
+            <h2>
+              What's your amount?
+            </h2>
+
+            <p>
+              Choose a mode, enter the amount and GST rate.
+            </p>
+          </div>
+
+        </div>
+
+
+        <!-- =================================================
+             MODE TABS
+             ================================================= -->
+        <div class="field-group">
+          <div class="gst-tabs">
+            <button type="button" class="gst-tab active" id="addTab" data-mode="add">Add GST</button>
+            <button type="button" class="gst-tab" id="removeTab" data-mode="remove">Remove GST</button>
+          </div>
+        </div>
+
+
+        <!-- =================================================
+             AMOUNT INPUT
+             ================================================= -->
+        <div class="field-group">
+
+          <label for="gstAmount" id="amountLabel">
+            Amount (Before GST)
+          </label>
+
+          <div class="textarea-wrap">
+            <input
+              type="number"
+              id="gstAmount"
+              min="0"
+              step="0.01"
+              placeholder="e.g. 1000"
+              aria-describedby="amountHint"
+            >
+            <span class="input-decoration" aria-hidden="true">₹</span>
+          </div>
+
+          <div class="field-meta">
+            <span id="amountHint">
+              Enter the amount you want to calculate GST on.
+            </span>
+          </div>
+
+        </div>
+
+
+        <!-- =================================================
+             GST RATE
+             ================================================= -->
+        <div class="field-group style-field">
+
+          <label for="gstRate">
+            Choose GST rate
+          </label>
+
+          <div class="select-wrap">
+            <select id="gstRate">
+              <option value="5">5%</option>
+              <option value="12">12%</option>
+              <option value="18" selected>18%</option>
+              <option value="28">28%</option>
+            </select>
+            <span class="select-arrow" aria-hidden="true">▾</span>
+          </div>
+
+        </div>
+
+
+        <!-- =================================================
+             SLAB GUIDE
+             ================================================= -->
+        <div class="style-guide">
+
+          <div class="style-guide-item">
+            <span>🥗</span>
+            <strong>5%</strong>
+            <small>Essential goods</small>
+          </div>
+
+          <div class="style-guide-item">
+            <span>📦</span>
+            <strong>12%</strong>
+            <small>Standard goods</small>
+          </div>
+
+          <div class="style-guide-item">
+            <span>🛍️</span>
+            <strong>18%</strong>
+            <small>Most goods &amp; services</small>
+          </div>
+
+          <div class="style-guide-item">
+            <span>💎</span>
+            <strong>28%</strong>
+            <small>Luxury items</small>
+          </div>
+
+        </div>
+
+
+        <!-- =================================================
+             CALCULATE BUTTON
+             ================================================= -->
+        <button
+          id="calculateBtn"
+          type="button"
+          class="generate-btn"
+        >
+          <span class="generate-icon" aria-hidden="true">✦</span>
+          <span>Calculate GST</span>
+          <span class="generate-arrow" aria-hidden="true">→</span>
+        </button>
+
+
+        <!-- =================================================
+             RESULTS
+             ================================================= -->
+        <div
+          id="resultsBox"
+          class="results-box hidden"
+          aria-live="polite"
+        >
+
+          <div class="results-heading">
+            <div>
+              <span class="section-kicker">
+                RESULT
+              </span>
+              <h2>
+                GST Breakdown
+              </h2>
+            </div>
+          </div>
+
+          <div class="gst-result">
+            <div class="gst-result-row">
+              <span>Original Amount</span>
+              <strong id="resOriginal">₹0.00</strong>
+            </div>
+            <div class="gst-result-row">
+              <span id="resGstLabel">GST Amount</span>
+              <strong id="resGst">₹0.00</strong>
+            </div>
+            <div class="gst-result-row gst-result-total">
+              <span id="resTotalLabel">Total Amount</span>
+              <strong id="resTotal">₹0.00</strong>
+            </div>
+          </div>
+
+        </div>
+
+
+        <!-- =================================================
+             ERROR
+             ================================================= -->
+        <div
+          id="errorBox"
+          class="error-box hidden"
+          role="alert"
+        >
+          <div class="error-icon" aria-hidden="true">!</div>
+          <div>
+            <strong>Please enter a valid amount.</strong>
+            <p>Amount must be a positive number.</p>
+          </div>
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- ===================================================
+         HOW IT WORKS
+         =================================================== -->
+    <section class="how-it-works">
+
+      <div class="section-heading">
+        <span class="section-kicker">SIMPLE PROCESS</span>
+        <h2>How GST Calculator Works</h2>
+        <p>Calculate GST in three simple steps.</p>
+      </div>
+
+      <div class="steps-grid">
+
+        <article class="step-card">
+          <span class="step-number">01</span>
+          <div class="step-icon">✏️</div>
+          <h3>Choose Mode</h3>
+          <p>Select Add GST to find the final price, or Remove GST to find the base price.</p>
+        </article>
+
+        <article class="step-card">
+          <span class="step-number">02</span>
+          <div class="step-icon">🧮</div>
+          <h3>Enter Details</h3>
+          <p>Type the amount and pick the applicable GST slab.</p>
+        </article>
+
+        <article class="step-card">
+          <span class="step-number">03</span>
+          <div class="step-icon">✅</div>
+          <h3>Get Result</h3>
+          <p>See the GST amount and total or base price instantly.</p>
+        </article>
+
+      </div>
+
+    </section>
+
+
+    <!-- ===================================================
+         USE CASES
+         =================================================== -->
+    <section class="use-cases">
+
+      <div class="section-heading">
+        <span class="section-kicker">BUILT FOR</span>
+        <h2>Who Uses This Calculator?</h2>
+        <p>GST Calculator helps with everyday billing and pricing needs.</p>
+      </div>
+
+      <div class="use-case-grid">
+        <div class="use-case-card"><span>🏪</span><strong>Shopkeepers</strong><small>Billing &amp; pricing</small></div>
+        <div class="use-case-card"><span>🧾</span><strong>Invoices</strong><small>Adding GST to invoices</small></div>
+        <div class="use-case-card"><span>🛒</span><strong>Shoppers</strong><small>Checking final price</small></div>
+        <div class="use-case-card"><span>💼</span><strong>Freelancers</strong><small>Quoting with GST</small></div>
+      </div>
+
+    </section>
+
+
+    <!-- ===================================================
+         TRUST / PRIVACY NOTE
+         =================================================== -->
+    <section class="privacy-note">
+      <div class="privacy-icon" aria-hidden="true">🔒</div>
+      <div>
+        <h2>Fast, simple and private</h2>
+        <p>All GST calculations happen instantly in your browser. Nothing is uploaded or stored.</p>
+      </div>
+    </section>
+
+  </main>
+
+
+  <!-- =====================================================
+       COMMON niDar TOOLS FOOTER
+       ===================================================== -->
+  <div id="site-footer"></div>
+
+
+  <!-- =====================================================
+       COMMON SYSTEM
+       ===================================================== -->
+  <script src="/assets/js/common.js"></script>
+
+  <!-- GST Calculator engine -->
+  <script src="script.js"></script>
+
+</body>
+</html>

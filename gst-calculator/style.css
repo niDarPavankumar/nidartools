@@ -1,0 +1,739 @@
+/* =========================================================
+   GST Calculator — Premium UI
+   niDar Tools
+   Engine-safe stylesheet (mirrors NamoCrux design tokens)
+   ========================================================= */
+
+/* ---------- Design Tokens ---------- */
+
+.gst-page {
+    --nc-accent: #00b894;
+    --nc-accent-dark: #008f76;
+    --nc-accent-soft: rgba(0, 184, 148, 0.12);
+    --nc-accent-border: rgba(0, 184, 148, 0.28);
+    --nc-page-bg: #effcf8;
+    --nc-surface: rgba(255, 255, 255, 0.82);
+    --nc-surface-solid: #ffffff;
+    --nc-text: #13221f;
+    --nc-muted: #60736f;
+    --nc-border: rgba(0, 120, 100, 0.12);
+    --nc-shadow: 0 18px 50px rgba(0, 111, 91, 0.12);
+    --nc-radius: 24px;
+    --nc-radius-small: 14px;
+
+    position: relative;
+    overflow: hidden;
+    min-height: 100vh;
+    padding: 0 20px 70px;
+    color: var(--nc-text);
+    background:
+        radial-gradient(circle at 8% 8%, rgba(0, 184, 148, 0.10), transparent 28%),
+        radial-gradient(circle at 92% 22%, rgba(83, 185, 255, 0.08), transparent 26%),
+        linear-gradient(180deg, var(--nc-page-bg), var(--nc-page-bg));
+}
+
+html[data-theme="dark"] .gst-page {
+    --nc-accent: #4ade80;
+    --nc-accent-dark: #22c55e;
+    --nc-accent-soft: rgba(74, 222, 128, 0.11);
+    --nc-accent-border: rgba(74, 222, 128, 0.25);
+    --nc-page-bg: #0b1118;
+    --nc-surface: rgba(23, 34, 53, 0.84);
+    --nc-surface-solid: #172235;
+    --nc-text: #f1f5f9;
+    --nc-muted: #a5b4c3;
+    --nc-border: rgba(148, 163, 184, 0.16);
+    --nc-shadow: 0 20px 55px rgba(0, 0, 0, 0.28);
+
+    background:
+        radial-gradient(circle at 8% 8%, rgba(74, 222, 128, 0.08), transparent 28%),
+        radial-gradient(circle at 92% 22%, rgba(59, 130, 246, 0.07), transparent 26%),
+        linear-gradient(180deg, #0b1118, #0b1118);
+}
+
+html[data-theme="senior"] .gst-page {
+    --nc-accent: #ffff00;
+    --nc-accent-dark: #ffff00;
+    --nc-accent-soft: rgba(255, 255, 0, 0.10);
+    --nc-accent-border: #ffffff;
+    --nc-page-bg: #000000;
+    --nc-surface: #111111;
+    --nc-surface-solid: #111111;
+    --nc-text: #ffffff;
+    --nc-muted: #ffffff;
+    --nc-border: #ffffff;
+    --nc-shadow: none;
+
+    background: #000000;
+}
+
+
+/* =========================================================
+   HERO
+   ========================================================= */
+
+.gst-hero {
+    position: relative;
+    max-width: 920px;
+    margin: 0 auto;
+    padding: 74px 20px 54px;
+    text-align: center;
+    isolation: isolate;
+}
+
+.hero-glow {
+    position: absolute;
+    width: 230px;
+    height: 230px;
+    border-radius: 50%;
+    filter: blur(55px);
+    opacity: 0.32;
+    pointer-events: none;
+    z-index: -1;
+}
+
+.hero-glow-one {
+    top: 20px;
+    left: 5%;
+    background: rgba(0, 184, 148, 0.24);
+}
+
+.hero-glow-two {
+    right: 4%;
+    bottom: 20px;
+    background: rgba(74, 144, 226, 0.16);
+}
+
+.gst-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 8px 15px;
+    border: 1px solid var(--nc-accent-border);
+    border-radius: 999px;
+    background: var(--nc-accent-soft);
+    color: var(--nc-accent-dark);
+    font-size: 0.82rem;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+}
+
+.tool-title {
+    margin: 18px 0 8px;
+    font-size: clamp(3rem, 8vw, 5.3rem);
+    line-height: 0.98;
+    letter-spacing: -0.055em;
+    font-weight: 900;
+    color: var(--nc-text);
+}
+
+.tool-title span {
+    background: linear-gradient(100deg, var(--nc-accent-dark), var(--nc-accent));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+.tool-subtitle {
+    margin: 0 auto;
+    max-width: 700px;
+    font-size: clamp(1.2rem, 3vw, 1.65rem);
+    line-height: 1.45;
+    font-weight: 700;
+    color: var(--nc-text);
+}
+
+.hero-description {
+    max-width: 620px;
+    margin: 14px auto 0;
+    color: var(--nc-muted);
+    font-size: 1rem;
+    line-height: 1.7;
+}
+
+.hero-pills {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 22px;
+}
+
+.hero-pills span {
+    padding: 7px 12px;
+    border: 1px solid var(--nc-border);
+    border-radius: 999px;
+    background: var(--nc-surface);
+    color: var(--nc-muted);
+    font-size: 0.82rem;
+    font-weight: 700;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+
+
+/* =========================================================
+   WORKSPACE
+   ========================================================= */
+
+.gst-workspace {
+    max-width: 850px;
+    margin: 0 auto;
+}
+
+.workspace-card {
+    position: relative;
+    padding: clamp(22px, 5vw, 38px);
+    border: 1px solid var(--nc-border);
+    border-radius: var(--nc-radius);
+    background: var(--nc-surface);
+    box-shadow: var(--nc-shadow);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+}
+
+.workspace-heading {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    margin-bottom: 28px;
+}
+
+.workspace-icon {
+    width: 48px;
+    height: 48px;
+    flex: 0 0 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 15px;
+    background: linear-gradient(135deg, var(--nc-accent), var(--nc-accent-dark));
+    color: #ffffff;
+    font-size: 1.4rem;
+    box-shadow: 0 10px 25px rgba(0, 184, 148, 0.22);
+}
+
+html[data-theme="senior"] .workspace-icon {
+    color: #000000;
+    box-shadow: none;
+}
+
+.section-kicker {
+    display: block;
+    margin-bottom: 5px;
+    color: var(--nc-accent-dark);
+    font-size: 0.72rem;
+    font-weight: 900;
+    letter-spacing: 0.12em;
+}
+
+.workspace-heading h2,
+.section-heading h2 {
+    margin: 0;
+    color: var(--nc-text);
+    font-size: clamp(1.35rem, 3vw, 1.8rem);
+    line-height: 1.25;
+}
+
+.workspace-heading p,
+.section-heading p {
+    margin: 7px 0 0;
+    color: var(--nc-muted);
+    line-height: 1.6;
+}
+
+
+/* =========================================================
+   MODE TABS (Add / Remove GST)
+   ========================================================= */
+
+.gst-tabs {
+    display: flex;
+    gap: 8px;
+    padding: 5px;
+    border: 1px solid var(--nc-border);
+    border-radius: 15px;
+    background: var(--nc-surface-solid);
+}
+
+.gst-tab {
+    flex: 1;
+    padding: 11px;
+    border: 0;
+    border-radius: 11px;
+    background: transparent;
+    color: var(--nc-muted);
+    font: inherit;
+    font-weight: 800;
+    cursor: pointer;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.gst-tab.active {
+    background: linear-gradient(135deg, var(--nc-accent), var(--nc-accent-dark));
+    color: #ffffff;
+}
+
+html[data-theme="senior"] .gst-tab.active {
+    color: #000000;
+}
+
+
+/* =========================================================
+   FORM
+   ========================================================= */
+
+.field-group {
+    margin-bottom: 22px;
+}
+
+.field-group > label {
+    display: block;
+    margin-bottom: 9px;
+    color: var(--nc-text);
+    font-size: 0.94rem;
+    font-weight: 800;
+}
+
+.textarea-wrap {
+    position: relative;
+}
+
+.gst-page input,
+.gst-page select {
+    width: 100%;
+    border: 1px solid var(--nc-border);
+    border-radius: 15px;
+    outline: none;
+    background: var(--nc-surface-solid);
+    color: var(--nc-text);
+    font: inherit;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.gst-page input {
+    padding: 17px 44px 17px 17px;
+    height: 56px;
+}
+
+.gst-page input::placeholder {
+    color: var(--nc-muted);
+    opacity: 0.75;
+}
+
+.gst-page input:focus,
+.gst-page select:focus {
+    border-color: var(--nc-accent);
+    box-shadow: 0 0 0 4px var(--nc-accent-soft);
+}
+
+.input-decoration {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    color: var(--nc-accent);
+    font-size: 1.15rem;
+    font-weight: 800;
+    pointer-events: none;
+}
+
+.field-meta {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    margin-top: 7px;
+    color: var(--nc-muted);
+    font-size: 0.75rem;
+    line-height: 1.4;
+}
+
+.select-wrap {
+    position: relative;
+}
+
+.gst-page select {
+    appearance: none;
+    -webkit-appearance: none;
+    padding: 14px 44px 14px 15px;
+    cursor: pointer;
+}
+
+.select-arrow {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--nc-accent-dark);
+    pointer-events: none;
+    font-weight: 900;
+}
+
+
+/* =========================================================
+   SLAB GUIDE (reuses style-guide tokens)
+   ========================================================= */
+
+.style-guide {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 9px;
+    margin: 4px 0 22px;
+}
+
+.style-guide-item {
+    min-width: 0;
+    padding: 12px 9px;
+    border: 1px solid var(--nc-border);
+    border-radius: 14px;
+    background: var(--nc-accent-soft);
+    text-align: center;
+}
+
+.style-guide-item span {
+    display: block;
+    margin-bottom: 5px;
+    font-size: 1.05rem;
+}
+
+.style-guide-item strong {
+    display: block;
+    overflow: hidden;
+    color: var(--nc-text);
+    font-size: 0.76rem;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.style-guide-item small {
+    display: block;
+    margin-top: 3px;
+    overflow: hidden;
+    color: var(--nc-muted);
+    font-size: 0.68rem;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+
+/* =========================================================
+   CALCULATE BUTTON
+   ========================================================= */
+
+.generate-btn {
+    width: 100%;
+    min-height: 56px;
+    margin: 0;
+    padding: 13px 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 11px;
+    border: 0;
+    border-radius: 15px;
+    background: linear-gradient(135deg, var(--nc-accent), var(--nc-accent-dark));
+    color: #ffffff;
+    font: inherit;
+    font-size: 1rem;
+    font-weight: 900;
+    cursor: pointer;
+    box-shadow: 0 12px 28px rgba(0, 184, 148, 0.24);
+    transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
+}
+
+.generate-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 16px 32px rgba(0, 184, 148, 0.30);
+    filter: brightness(1.03);
+}
+
+.generate-btn:active {
+    transform: translateY(0);
+}
+
+html[data-theme="senior"] .generate-btn {
+    color: #000000;
+}
+
+.generate-icon,
+.generate-arrow {
+    font-size: 1.15rem;
+}
+
+
+/* =========================================================
+   RESULTS
+   ========================================================= */
+
+.results-box {
+    margin-top: 28px;
+    padding-top: 25px;
+    border-top: 1px solid var(--nc-border);
+}
+
+.results-heading {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 14px;
+}
+
+.gst-result {
+    margin-top: 15px;
+    padding: 18px;
+    border: 1px solid var(--nc-border);
+    border-radius: 17px;
+    background: var(--nc-surface-solid);
+}
+
+.gst-result-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    color: var(--nc-muted);
+    font-size: 0.92rem;
+    border-bottom: 1px solid var(--nc-border);
+}
+
+.gst-result-row:last-child {
+    border-bottom: 0;
+}
+
+.gst-result-row strong {
+    color: var(--nc-text);
+    font-size: 1.02rem;
+}
+
+.gst-result-total {
+    margin-top: 4px;
+    padding-top: 14px;
+    border-top: 1px dashed var(--nc-accent-border);
+}
+
+.gst-result-total span,
+.gst-result-total strong {
+    color: var(--nc-accent-dark);
+    font-weight: 900;
+    font-size: 1.15rem;
+}
+
+
+/* =========================================================
+   ERROR
+   ========================================================= */
+
+.error-box {
+    margin-top: 20px;
+    padding: 16px;
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    border: 1px solid rgba(220, 38, 38, 0.25);
+    border-radius: 15px;
+    background: rgba(220, 38, 38, 0.07);
+    color: var(--nc-text);
+}
+
+.error-icon {
+    width: 30px;
+    height: 30px;
+    flex: 0 0 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: #dc2626;
+    color: #ffffff;
+    font-weight: 900;
+}
+
+.error-box strong {
+    display: block;
+}
+
+.error-box p {
+    margin: 3px 0 0;
+    color: var(--nc-muted);
+    font-size: 0.82rem;
+}
+
+
+/* =========================================================
+   HOW IT WORKS / USE CASES
+   ========================================================= */
+
+.how-it-works,
+.use-cases {
+    max-width: 1000px;
+    margin: 78px auto 0;
+}
+
+.section-heading {
+    max-width: 680px;
+    margin: 0 auto 28px;
+    text-align: center;
+}
+
+.steps-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 16px;
+}
+
+.step-card {
+    position: relative;
+    padding: 25px 21px 22px;
+    border: 1px solid var(--nc-border);
+    border-radius: 20px;
+    background: var(--nc-surface);
+    box-shadow: 0 10px 30px rgba(0, 80, 65, 0.07);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+}
+
+.step-number {
+    position: absolute;
+    top: 15px;
+    right: 17px;
+    color: var(--nc-accent);
+    font-size: 0.7rem;
+    font-weight: 900;
+    letter-spacing: 0.08em;
+}
+
+.step-icon {
+    width: 46px;
+    height: 46px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 17px;
+    border-radius: 14px;
+    background: var(--nc-accent-soft);
+    font-size: 1.3rem;
+}
+
+.step-card h3 {
+    margin: 0 0 7px;
+    color: var(--nc-text);
+    font-size: 1.05rem;
+}
+
+.step-card p {
+    margin: 0;
+    color: var(--nc-muted);
+    font-size: 0.86rem;
+    line-height: 1.65;
+}
+
+.use-case-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 12px;
+}
+
+.use-case-card {
+    padding: 18px 13px;
+    border: 1px solid var(--nc-border);
+    border-radius: 16px;
+    background: var(--nc-surface);
+    text-align: center;
+    box-shadow: 0 7px 22px rgba(0, 80, 65, 0.05);
+    transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.use-case-card:hover {
+    transform: translateY(-3px);
+    border-color: var(--nc-accent-border);
+}
+
+.use-case-card span {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 1.45rem;
+}
+
+.use-case-card strong {
+    display: block;
+    color: var(--nc-text);
+    font-size: 0.88rem;
+}
+
+.use-case-card small {
+    display: block;
+    margin-top: 4px;
+    color: var(--nc-muted);
+    font-size: 0.7rem;
+    line-height: 1.35;
+}
+
+
+/* =========================================================
+   PRIVACY NOTE
+   ========================================================= */
+
+.privacy-note {
+    max-width: 850px;
+    margin: 65px auto 0;
+    padding: 22px;
+    display: flex;
+    align-items: flex-start;
+    gap: 15px;
+    border: 1px solid var(--nc-border);
+    border-radius: 19px;
+    background: var(--nc-accent-soft);
+}
+
+.privacy-icon {
+    width: 44px;
+    height: 44px;
+    flex: 0 0 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 13px;
+    background: var(--nc-surface-solid);
+    font-size: 1.2rem;
+}
+
+.privacy-note h2 {
+    margin: 0;
+    color: var(--nc-text);
+    font-size: 1rem;
+}
+
+.privacy-note p {
+    margin: 5px 0 0;
+    color: var(--nc-muted);
+    font-size: 0.82rem;
+    line-height: 1.6;
+}
+
+
+/* =========================================================
+   UTILITIES
+   ========================================================= */
+
+.hidden {
+    display: none !important;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 640px) {
+    .style-guide {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .steps-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .use-case-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}

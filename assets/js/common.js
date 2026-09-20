@@ -190,6 +190,7 @@
             ['Age Calculator', '/age-calculator/'],
             ['Percentage Calculator', '/percentage-calculator/'],
             ['EMI Calculator', '/emi-calculator/'],
+            ['GST Calculator', '/gst-calculator/'],
             ['Construction Cost Estimator', '/construction-cost-estimator/'],
             ['JSON Formatter', '/json-formatter/'],
             ['Base64 Encoder/Decoder', '/base64-encoder-decoder/'],
