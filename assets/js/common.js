@@ -237,6 +237,7 @@
             ['Construction Cost Estimator', '/construction-cost-estimator/'],
             ['JSON Formatter', '/json-formatter/'],
             ['Base64 Encoder/Decoder', '/base64-encoder-decoder/'],
+            ['Password Generator', '/password-generator/'],
             ['ATS Resume Checker', '/ats-checker/'],
             ['NamoCrux – AI Name Generator', '/namocrux/']
         ];
