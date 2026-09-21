@@ -41,6 +41,49 @@
         document.head.appendChild(link);
     }
 
+    /* ---------- Trustpilot ---------- */
+
+    function loadTrustpilot() {
+
+        if (window.Trustpilot) {
+            initializeTrustpilotWidgets();
+            return;
+        }
+
+        if (document.querySelector('script[data-nidar-trustpilot]')) {
+            return;
+        }
+
+        const script = document.createElement('script');
+
+        script.type = 'text/javascript';
+        script.src = 'https://widget.trustpilot.com/bootstrap/v5/tp.widget.bootstrap.min.js';
+        script.async = true;
+        script.dataset.nidarTrustpilot = 'true';
+
+        script.onload = function () {
+            initializeTrustpilotWidgets();
+        };
+
+        document.head.appendChild(script);
+    }
+
+    function initializeTrustpilotWidgets() {
+
+        if (!window.Trustpilot) return;
+
+        document.querySelectorAll('.trustpilot-widget').forEach(function (element) {
+
+            if (element.dataset.trustpilotInitialized === 'true') {
+                return;
+            }
+
+            window.Trustpilot.loadFromElement(element, true);
+            element.dataset.trustpilotInitialized = 'true';
+
+        });
+    }
+
     /* ---------- Theme System ---------- */
 
     function initTheme() {
@@ -356,7 +399,10 @@
 
             loadComponent(
                 'site-footer',
-                'footer.html'
+                'footer.html',
+                function () {
+                    loadTrustpilot();
+                }
             );
 
             createScrollTopButton();
