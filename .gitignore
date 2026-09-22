@@ -18,3 +18,5 @@ testing-backup-20260903/
 
 # Local archive - never deploy or track
 archive/
+nidar-healthcheck.sh
+*.bak*
