@@ -1,6 +1,6 @@
 /* =========================================================
    niDar Tools — About Us Page
-   Original Website Page Design
+   Modified & Fully Optimized Original Page Design
    ========================================================= */
 
 .about-page {
@@ -19,6 +19,8 @@
   color: var(--about-text);
   background: var(--about-soft);
   line-height: 1.7;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
 }
 
 .about-page *,
@@ -33,7 +35,7 @@
 }
 
 /* =========================================================
-   HERO
+   HERO SECTION
    ========================================================= */
 
 .about-hero {
