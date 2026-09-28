@@ -2,7 +2,7 @@
   --primary: #2e7d32;
   --primary-dark: #1b5e20;
   --primary-soft: #eaf7ed;
-  --text: #18201b;
+  --text: #172235;
   --muted: #68716b;
   --bg: #f5f8f6;
   --card: #ffffff;
@@ -508,16 +508,19 @@ a {
 /* DARK MODE */
 
 html[data-theme="dark"] body {
-  --text: #edf4ef;
-  --muted: #aebbb2;
-  --bg: #101512;
-  --card: #18201b;
-  --border: #303b34;
+    --primary: #4ade80;
+    --primary-dark: #22c55e;
+    --primary-soft: rgba(74, 222, 128, 0.11);
+  --text: #f1f5f9;
+  --muted: #a5b4c3;
+  --bg: #0b1118;
+  --card: #172235;
+  --border: rgba(148, 163, 184, 0.16);
 
   background:
     radial-gradient(circle at 20% 0%, #172c1d 0, transparent 35%),
     radial-gradient(circle at 90% 10%, #18281d 0, transparent 30%),
-    #101512;
+    #0b1118;
 }
 
 html[data-theme="dark"] .tool-badge {
@@ -527,16 +530,16 @@ html[data-theme="dark"] .tool-badge {
 }
 
 html[data-theme="dark"] .hero-points span {
-  background: #18201b;
-  border-color: #303b34;
-  color: #aebbb2;
+  background: #172235;
+  border-color: rgba(148, 163, 184, 0.16);
+  color: #a5b4c3;
 }
 
 html[data-theme="dark"] .tool-card,
 html[data-theme="dark"] .info-card,
 html[data-theme="dark"] .feature-card {
-  background: #18201b;
-  border-color: #303b34;
+  background: #172235;
+  border-color: rgba(148, 163, 184, 0.16);
 }
 
 html[data-theme="dark"] .upload-zone {
@@ -559,8 +562,8 @@ html[data-theme="dark"] .settings-section {
 
 html[data-theme="dark"] .setting-group select,
 html[data-theme="dark"] .secondary-btn {
-  background: #1c251f;
-  color: #edf4ef;
+  background: #172235;
+  color: #f1f5f9;
   border-color: #39463e;
 }
 
