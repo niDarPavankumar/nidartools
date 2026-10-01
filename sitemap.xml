@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-
   <!-- Main Pages -->
   <url><loc>https://nidartools.com/</loc><priority>1.00</priority></url>
   <url><loc>https://nidartools.com/about/</loc><priority>0.80</priority></url>
@@ -11,7 +10,7 @@
   <url><loc>https://nidartools.com/privacy-policy/</loc><priority>0.50</priority></url>
   <url><loc>https://nidartools.com/terms/</loc><priority>0.50</priority></url>
 
-  <!-- Tool Pages -->
+  <!-- Main Tool Pages -->
   <url><loc>https://nidartools.com/image-resizer/</loc><priority>0.90</priority></url>
   <url><loc>https://nidartools.com/image-converter/</loc><priority>0.90</priority></url>
   <url><loc>https://nidartools.com/image-to-pdf/</loc><priority>0.90</priority></url>
@@ -25,17 +24,35 @@
   <url><loc>https://nidartools.com/base64-encoder-decoder/</loc><priority>0.90</priority></url>
   <url><loc>https://nidartools.com/json-formatter/</loc><priority>0.90</priority></url>
   <url><loc>https://nidartools.com/password-generator/</loc><priority>0.90</priority></url>
-  <url><loc>https://nidartools.com/content/password-generator/</loc><priority>0.85</priority></url>
   <url><loc>https://nidartools.com/background-remover/</loc><priority>0.90</priority></url>
   <url><loc>https://nidartools.com/word-to-pdf/</loc><priority>0.90</priority></url>
   <url><loc>https://nidartools.com/pdf-to-word/</loc><priority>0.90</priority></url>
   <url><loc>https://nidartools.com/emi-calculator/</loc><priority>0.90</priority></url>
   <url><loc>https://nidartools.com/gst-calculator/</loc><priority>0.90</priority></url>
-  <url><loc>https://nidartools.com/content/gst-calculator/</loc><priority>0.85</priority></url>
-
-  <!-- Content Guides -->
-
   <url><loc>https://nidartools.com/pdf-merger-splitter/</loc><priority>0.90</priority></url>
   <url><loc>https://nidartools.com/ats-checker/</loc><priority>0.90</priority></url>
   <url><loc>https://nidartools.com/namocrux/</loc><priority>0.90</priority></url>
+
+  <!-- SEO Content Guide Pages (All 21 Tools) -->
+  <url><loc>https://nidartools.com/content/age-calculator/</loc><priority>0.85</priority></url>
+  <url><loc>https://nidartools.com/content/ats-checker/</loc><priority>0.85</priority></url>
+  <url><loc>https://nidartools.com/content/background-remover/</loc><priority>0.85</priority></url>
+  <url><loc>https://nidartools.com/content/base64-encoder-decoder/</loc><priority>0.85</priority></url>
+  <url><loc>https://nidartools.com/content/construction-cost-estimator/</loc><priority>0.85</priority></url>
+  <url><loc>https://nidartools.com/content/emi-calculator/</loc><priority>0.85</priority></url>
+  <url><loc>https://nidartools.com/content/favicon-generator/</loc><priority>0.85</priority></url>
+  <url><loc>https://nidartools.com/content/gst-calculator/</loc><priority>0.85</priority></url>
+  <url><loc>https://nidartools.com/content/image-compressor/</loc><priority>0.85</priority></url>
+  <url><loc>https://nidartools.com/content/image-format-converter/</loc><priority>0.85</priority></url>
+  <url><loc>https://nidartools.com/content/image-resizer/</loc><priority>0.85</priority></url>
+  <url><loc>https://nidartools.com/content/image-to-pdf/</loc><priority>0.85</priority></url>
+  <url><loc>https://nidartools.com/content/json-formatter/</loc><priority>0.85</priority></url>
+  <url><loc>https://nidartools.com/content/namocrux/</loc><priority>0.85</priority></url>
+  <url><loc>https://nidartools.com/content/password-generator/</loc><priority>0.85</priority></url>
+  <url><loc>https://nidartools.com/content/pdf-merger-splitter/</loc><priority>0.85</priority></url>
+  <url><loc>https://nidartools.com/content/pdf-to-word/</loc><priority>0.85</priority></url>
+  <url><loc>https://nidartools.com/content/percentage-calculator/</loc><priority>0.85</priority></url>
+  <url><loc>https://nidartools.com/content/qr-generator/</loc><priority>0.85</priority></url>
+  <url><loc>https://nidartools.com/content/word-counter/</loc><priority>0.85</priority></url>
+  <url><loc>https://nidartools.com/content/word-to-pdf/</loc><priority>0.85</priority></url>
 </urlset>
