@@ -1,0 +1,102 @@
+.tool-main-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem 1rem;
+}
+.tool-header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+.tool-header h1 {
+    font-size: 2.5rem;
+    color: #333;
+}
+.calculator-grid {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 2rem;
+}
+.card {
+    background: #fff;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    border: 1px solid #eee;
+}
+.input-group {
+    margin-bottom: 1.5rem;
+}
+.input-group label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: #444;
+}
+.input-group input, .input-group select {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 1rem;
+}
+.w-100 {
+    width: 100%;
+    padding: 1rem;
+    font-size: 1.1rem;
+}
+.summary-boxes {
+    margin-bottom: 2rem;
+}
+.summary-box {
+    background: #f8fafc;
+    padding: 1.5rem;
+    border-radius: 10px;
+    text-align: center;
+    margin-bottom: 1rem;
+}
+.summary-box.primary {
+    background: #e0f2fe;
+    border: 1px solid #bae6fd;
+}
+.summary-box h3, .summary-box h4 {
+    margin: 0 0 0.5rem 0;
+    color: #475569;
+}
+.amount {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #0369a1;
+}
+.sub-amount {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #334155;
+}
+.summary-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+}
+.chart-container {
+    position: relative;
+    height: 400px;
+    width: 100%;
+}
+.tool-guide-link {
+    text-align: center;
+    margin-top: 1.5rem;
+}
+.tool-guide-link a {
+    color: #0ea5e9;
+    text-decoration: none;
+    font-weight: 600;
+}
+.tool-guide-link a:hover {
+    text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+    .calculator-grid {
+        grid-template-columns: 1fr;
+    }
+}

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Compound Interest Calculator | niDar Tools</title>
+    <meta name="description" content="Calculate compound interest and visualize your wealth growth over time. The ultimate investment and FIRE planner tool.">
+    <link rel="icon" href="/assets/favicon/favicon.ico">
+    <link rel="stylesheet" href="/style.css"> <!-- Main CSS -->
+    <link rel="stylesheet" href="style.css"> <!-- Tool Specific CSS -->
+    <!-- Chart.js for Visual Graphs -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <!-- Common Header -->
+    <div id="site-header"></div>
+
+    <main class="tool-main-container">
+        <div class="tool-header">
+            <h1>Compound Interest Calculator</h1>
+            <p>Visualize your investment growth and plan for Financial Independence.</p>
+        </div>
+
+        <div class="calculator-grid">
+            <!-- Inputs Section -->
+            <div class="input-section card">
+                <div class="input-group">
+                    <label for="currency">Currency</label>
+                    <select id="currency">
+                        <option value="$">US Dollar ($)</option>
+                        <option value="€">Euro (€)</option>
+                        <option value="£">British Pound (£)</option>
+                        <option value="₹">Indian Rupee (₹)</option>
+                    </select>
+                </div>
+
+                <div class="input-group">
+                    <label for="initialAmount">Initial Investment</label>
+                    <input type="number" id="initialAmount" value="10000" min="0">
+                </div>
+
+                <div class="input-group">
+                    <label for="monthlyContribution">Monthly Contribution</label>
+                    <input type="number" id="monthlyContribution" value="500" min="0">
+                </div>
+
+                <div class="input-group">
+                    <label for="interestRate">Annual Interest Rate (%)</label>
+                    <input type="number" id="interestRate" value="8" step="0.1" min="0">
+                </div>
+
+                <div class="input-group">
+                    <label for="years">Investment Period (Years)</label>
+                    <input type="number" id="years" value="20" min="1" max="100">
+                </div>
+
+                <button id="calculateBtn" class="nidar-primary-btn w-100">Calculate Growth</button>
+            </div>
+
+            <!-- Results & Chart Section -->
+            <div class="result-section card">
+                <div class="summary-boxes">
+                    <div class="summary-box primary">
+                        <h3>Total Balance</h3>
+                        <div id="totalBalance" class="amount">0.00</div>
+                    </div>
+                    <div class="summary-grid">
+                        <div class="summary-box">
+                            <h4>Total Principal</h4>
+                            <div id="totalPrincipal" class="sub-amount">0.00</div>
+                        </div>
+                        <div class="summary-box">
+                            <h4>Total Interest</h4>
+                            <div id="totalInterest" class="sub-amount">0.00</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="chart-container">
+                    <canvas id="growthChart"></canvas>
+                </div>
+                
+                <div class="tool-guide-link">
+                    <a href="/content/compound-interest-calculator/">📖 Read the detailed guide & FIRE strategies</a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Common Footer -->
+    <div id="site-footer"></div>
+
+    <script src="/assets/js/common.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
