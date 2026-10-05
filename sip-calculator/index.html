@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SIP Calculator | Mutual Fund Returns | niDar Tools</title>
+    <meta name="description" content="Calculate your mutual fund SIP returns accurately. Visualize your investment and estimated wealth with our interactive SIP calculator.">
+    <link rel="icon" href="/assets/favicon/favicon.ico">
+    <link rel="stylesheet" href="/style.css">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <!-- Common Header -->
+    <div id="site-header"></div>
+
+    <main class="tool-main-container">
+        <div class="tool-header">
+            <h1>SIP Return Calculator</h1>
+            <p>Calculate the future value of your monthly Mutual Fund investments.</p>
+        </div>
+
+        <div class="calculator-grid">
+            <!-- Inputs Section -->
+            <div class="input-section card">
+                
+                <div class="input-group">
+                    <label for="currency">Currency</label>
+                    <select id="currency">
+                        <option value="₹">Indian Rupee (₹)</option>
+                        <option value="$">US Dollar ($)</option>
+                        <option value="€">Euro (€)</option>
+                    </select>
+                </div>
+
+                <div class="input-group">
+                    <label for="monthlyInvestment">Monthly Investment</label>
+                    <input type="number" id="monthlyInvestment" value="5000" min="100" step="100">
+                </div>
+
+                <div class="input-group">
+                    <label for="expectedReturn">Expected Return Rate (p.a %)</label>
+                    <input type="number" id="expectedReturn" value="12" step="0.5" min="1" max="50">
+                </div>
+
+                <div class="input-group">
+                    <label for="timePeriod">Time Period (Years)</label>
+                    <input type="number" id="timePeriod" value="10" min="1" max="50">
+                </div>
+
+                <button id="calculateBtn" class="nidar-primary-btn w-100">Calculate SIP Returns</button>
+            </div>
+
+            <!-- Results & Chart Section -->
+            <div class="result-section card">
+                <div class="summary-boxes">
+                    <div class="summary-box primary">
+                        <h3>Total Value (Estimated)</h3>
+                        <div id="totalValue" class="amount">₹0</div>
+                    </div>
+                    <div class="summary-grid">
+                        <div class="summary-box">
+                            <h4>Invested Amount</h4>
+                            <div id="investedAmount" class="sub-amount">₹0</div>
+                        </div>
+                        <div class="summary-box">
+                            <h4>Est. Returns</h4>
+                            <div id="estReturns" class="sub-amount text-success">₹0</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Pie Chart Container -->
+                <div class="chart-container">
+                    <canvas id="sipChart"></canvas>
+                </div>
+                
+            </div>
+        </div>
+
+        <!-- Affiliate / Monetization Section Placeholder -->
+        <div class="affiliate-section card">
+            <h2>🚀 Ready to start your SIP?</h2>
+            <p>Open a free Demat account with our top recommended partners and start investing in the best Mutual Funds today.</p>
+            <div class="affiliate-buttons">
+                <!-- Replace # with your actual affiliate links later -->
+                <a href="#" class="affiliate-btn groww-btn">Start SIP on Groww</a>
+                <a href="#" class="affiliate-btn zerodha-btn">Open Zerodha Account</a>
+                <a href="#" class="affiliate-btn upstox-btn">Invest via Upstox</a>
+            </div>
+        </div>
+
+        <div class="tool-guide-link">
+            <a href="/content/sip-calculator/">📖 Read our guide: How to choose the best Mutual Funds</a>
+        </div>
+    </main>
+
+    <!-- Common Footer -->
+    <div id="site-footer"></div>
+
+    <script src="/assets/js/common.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
