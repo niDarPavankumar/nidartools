@@ -71,4 +71,12 @@
 <loc>https://nidartools.com/content/sip-calculator/</loc>
 <priority>0.85</priority>
 </url>
+<url>
+<loc>https://nidartools.com/unit-converter/</loc>
+<priority>0.80</priority>
+</url>
+<url>
+<loc>https://nidartools.com/content/unit-converter/</loc>
+<priority>0.75</priority>
+</url>
 </urlset>

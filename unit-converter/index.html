@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All-in-One Unit Converter | niDar Tools</title>
+    <meta name="description" content="Fast and free online unit converter. Convert length, weight, temperature, and more in real-time.">
+    <link rel="icon" href="/assets/favicon/favicon.ico">
+    <link rel="stylesheet" href="/style.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="site-header"></div>
+    <main class="tool-main-container">
+        <div class="tool-header">
+            <h1>Unit Converter</h1>
+            <p>Convert Length, Weight, and Temperature instantly.</p>
+        </div>
+        <div class="converter-card">
+            <div class="input-group">
+                <label for="categorySelect">Select Category</label>
+                <select id="categorySelect">
+                    <option value="length">📏 Length</option>
+                    <option value="weight">⚖️ Weight</option>
+                    <option value="temperature">🌡️️ Temperature</option>
+                </select>
+            </div>
+            <div class="converter-grid">
+                <div class="convert-box">
+                    <label for="inputValue">From</label>
+                    <input type="number" id="inputValue" value="1" placeholder="Enter value">
+                    <select id="inputUnit"></select>
+                </div>
+                <div class="swap-btn-container">
+                    <button id="swapBtn" class="swap-btn" aria-label="Swap units">⇄</button>
+                </div>
+                <div class="convert-box">
+                    <label for="outputValue">To</label>
+                    <input type="number" id="outputValue" readonly placeholder="Result">
+                    <select id="outputUnit"></select>
+                </div>
+            </div>
+        </div>
+    </main>
+    <div id="site-footer"></div>
+    <script src="/assets/js/common.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
