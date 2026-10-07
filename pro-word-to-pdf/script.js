@@ -6,7 +6,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const convertBtn = document.getElementById("convertBtn");
     const statusText = document.getElementById("statusText");
     const progressBar = document.getElementById("progressBar");
-    const pdfContent = document.getElementById("pdfContent");
     let currentFile = null;
 
     dropZone.addEventListener("dragover", (e) => { e.preventDefault(); dropZone.classList.add("dragover"); });
@@ -42,20 +41,23 @@ document.addEventListener("DOMContentLoaded", () => {
             mammoth.convertToHtml({arrayBuffer: arrayBuffer}).then(function(result) {
                 statusText.textContent = "Generating PDF...";
                 progressBar.style.width = "60%";
-                pdfContent.innerHTML = result.value;
+                
+                // Bypass hidden div completely - Pass HTML string directly!
+                const htmlContent = '<div style="padding: 20px; font-family: Arial, sans-serif; color: #000; line-height: 1.6;">' + result.value + '</div>';
+                
                 const opt = {
                     margin: 10,
                     filename: currentFile.name.replace('.docx', '.pdf'),
                     image: { type: 'jpeg', quality: 0.98 },
-                    html2canvas: { scale: 2 },
+                    html2canvas: { scale: 2, useCORS: true },
                     jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
                 };
-                html2pdf().set(opt).from(pdfContent).save().then(() => {
+                
+                html2pdf().set(opt).from(htmlContent).save().then(() => {
                     statusText.textContent = "Success! PDF Downloaded.";
                     progressBar.style.width = "100%";
                     convertBtn.textContent = "Conversion Complete";
                     convertBtn.classList.add("success");
-                    pdfContent.innerHTML = "";
                 }).catch(err => {
                     statusText.textContent = "Error generating PDF.";
                     convertBtn.disabled = false;
