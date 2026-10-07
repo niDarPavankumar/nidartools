@@ -1,6 +1,22 @@
 let mortgageChart = null;
 
 document.addEventListener("DOMContentLoaded", () => {
+
+    // Reset form on page load/refresh
+    const inputs = document.querySelectorAll(".input-section input");
+    inputs.forEach(input => {
+        if(input.id !== "interestRate" && input.id !== "loanTerm" && input.id !== "homePrice") {
+             input.value = "";
+        }
+    });
+    // Set default values for main fields so chart does not look empty on load
+    document.getElementById("homePrice").value = 350000;
+    document.getElementById("interestRate").value = 6.5;
+    document.getElementById("loanTerm").value = 30;
+    document.getElementById("downPayment").value = 70000;
+    document.getElementById("propertyTax").value = 4200;
+    document.getElementById("homeInsurance").value = 1200;
+
     calculateMortgage();
     document.getElementById("calculateBtn").addEventListener("click", calculateMortgage);
     
