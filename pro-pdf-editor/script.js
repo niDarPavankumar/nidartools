@@ -31,7 +31,6 @@ const ui = {
     cancelTextBtn: document.getElementById('cancelTextBtn')
 };
 
-// Render Page Function
 function renderPage(num) {
     pageRendering = true;
     pdfDocView.getPage(num).then(function(page) {
@@ -80,32 +79,29 @@ ui.fileInput.addEventListener('change', async (e) => {
     const arrayBuffer = await file.arrayBuffer();
     currentPdfBytes = new Uint8Array(arrayBuffer);
     
-    // Load for editing
     editPdfDoc = await PDFLib.PDFDocument.load(currentPdfBytes);
-    // Load for viewing
     pageNum = 1;
     await loadPdfToView(currentPdfBytes);
 });
 
-// Navigation
 ui.prevBtn.addEventListener('click', () => { if (pageNum <= 1) return; pageNum--; queueRenderPage(pageNum); });
 ui.nextBtn.addEventListener('click', () => { if (pageNum >= pdfDocView.numPages) return; pageNum++; queueRenderPage(pageNum); });
 
-// Zoom
 ui.zoomIn.addEventListener('click', () => { scale += 0.2; queueRenderPage(pageNum); });
 ui.zoomOut.addEventListener('click', () => { if (scale <= 0.4) return; scale -= 0.2; queueRenderPage(pageNum); });
 
-// Delete Page
 ui.deletePageBtn.addEventListener('click', async () => {
     if(pdfDocView.numPages <= 1) { alert("Cannot delete the last remaining page."); return; }
     if(!confirm(`Are you sure you want to delete Page ${pageNum}?`)) return;
     
     editPdfDoc.removePage(pageNum - 1);
+    // CRITICAL FIX: Save changes and reload the viewer
     const pdfBytes = await editPdfDoc.save();
-    await loadPdfToView(pdfBytes);
+    currentPdfBytes = pdfBytes; 
+    editPdfDoc = await PDFLib.PDFDocument.load(currentPdfBytes);
+    await loadPdfToView(currentPdfBytes);
 });
 
-// Add Text - Modal Logic
 ui.addTextBtn.addEventListener('click', () => {
     ui.textInputArea.value = '';
     ui.textModal.classList.remove('hidden');
@@ -125,21 +121,25 @@ ui.confirmTextBtn.addEventListener('click', async () => {
     const currentPage = pages[pageNum - 1];
     const { width, height } = currentPage.getSize();
     
+    // Add text slightly lower so it's more visible, and black color
     currentPage.drawText(text, {
         x: 50,
-        y: height - 50,
+        y: height - 100,
         size: 24,
-        color: PDFLib.rgb(0.85, 0.1, 0.1), // Red text to stand out
+        color: PDFLib.rgb(0, 0, 0), 
     });
     
+    // CRITICAL FIX: Save changes and reload the viewer immediately
     const pdfBytes = await editPdfDoc.save();
-    await loadPdfToView(pdfBytes);
+    currentPdfBytes = pdfBytes;
+    editPdfDoc = await PDFLib.PDFDocument.load(currentPdfBytes);
+    await loadPdfToView(currentPdfBytes);
 });
 
-// Save PDF
 ui.saveBtn.addEventListener('click', async () => {
-    const pdfBytes = await editPdfDoc.save();
-    const blob = new Blob([pdfBytes], { type: 'application/pdf' });
+    // We already save changes immediately in the addText/deletePage functions.
+    // So currentPdfBytes has the latest edits.
+    const blob = new Blob([currentPdfBytes], { type: 'application/pdf' });
     const link = document.createElement('a');
     link.href = URL.createObjectURL(blob);
     link.download = 'edited_' + originalFileName;
