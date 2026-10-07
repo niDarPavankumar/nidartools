@@ -7,7 +7,12 @@ document.addEventListener("DOMContentLoaded", () => {
     const readingTimeEl = document.getElementById("readingTime");
     const keywordListEl = document.getElementById("keywordList");
 
-    const commonWords = new Set(["the","be","to","of","and","a","in","that","have","i","it","for","not","on","with","he","as","you","do","at","this","but","his","by","from","they","we","say","her","she","or","an","will","my","one","all","would","there","their","what","so","up","out","if","about","who","get","which","go","me"]);
+    // Added English, Marathi, and Hindi common words to filter out
+    const commonWords = new Set([
+        "the","be","to","of","and","a","in","that","have","i","it","for","not","on","with","he","as","you","do","at","this","but","his","by","from","they","we","say","her","she","or","an","will","my","one","all","would","there","their","what","so","up","out","if","about","who","get","which","go","me",
+        "आहे", "व", "आणि", "ते", "हे", "की", "या", "तर", "हा", "ही", "ची", "चा", "चे", "ला",
+        "है", "और", "कि", "यह", "से", "को", "का", "की", "में", "के", "एक", "हैं", "तो"
+    ]);
 
     function analyzeText() {
         const text = textInput.value;
@@ -17,7 +22,8 @@ document.addEventListener("DOMContentLoaded", () => {
         const wordCount = words.length;
         wordCountEl.textContent = wordCount;
         
-        const sentences = text.split(/[.!?]+/).filter(s => s.trim().length > 0);
+        // Added Hindi Danda (।) and double Danda (॥) for sentence calculation
+        const sentences = text.split(/[.!?।॥]+/).filter(s => s.trim().length > 0);
         sentenceCountEl.textContent = text.length === 0 ? 0 : sentences.length;
         
         const paragraphs = text.split(/\n+/).filter(p => p.trim().length > 0);
@@ -33,8 +39,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
         const wordFreq = {};
         words.forEach(w => {
-            let cw = w.toLowerCase().replace(/[^a-z0-9]/g, '');
-            if (cw.length > 2 && !commonWords.has(cw)) {
+            // \p{L} matches any kind of letter from any language globally.
+            let cw = w.toLowerCase().replace(/[^\p{L}\p{N}]/gu, '');
+            if (cw.length > 1 && !commonWords.has(cw)) {
                 wordFreq[cw] = (wordFreq[cw] || 0) + 1;
             }
         });
