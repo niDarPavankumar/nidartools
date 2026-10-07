@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pro Word to PDF Converter | niDar Tools</title>
+    <meta name="description" content="Convert Word (DOCX) documents to PDF instantly in your browser. 100% Free, secure, and fast.">
+    <link rel="icon" href="/assets/favicon/favicon.ico">
+    <link rel="stylesheet" href="/style.css">
+    <link rel="stylesheet" href="style.css">
+    <!-- Required Libraries for Client-Side Conversion -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+</head>
+<body>
+    <div id="site-header"></div>
+    <main class="tool-main-container">
+        <div class="tool-header">
+            <h1>Pro Word to PDF Converter</h1>
+            <p>Convert your DOCX files to high-quality PDF instantly. No files are uploaded to our servers.</p>
+        </div>
+        <div class="converter-box card">
+            <div class="upload-area" id="dropZone">
+                <div class="upload-icon">📄 ➡️ 📑</div>
+                <h3>Drag & Drop your Word (.docx) file here</h3>
+                <p>or</p>
+                <input type="file" id="fileInput" accept=".docx" hidden>
+                <button class="nidar-primary-btn" onclick="document.getElementById('fileInput').click()">Select Word File</button>
+            </div>
+            <div id="statusArea" class="status-area hidden">
+                <div class="file-info">
+                    <span id="fileName">document.docx</span>
+                </div>
+                <div class="progress-bar-container">
+                    <div id="progressBar" class="progress-bar"></div>
+                </div>
+                <p id="statusText">Ready to convert...</p>
+                <button id="convertBtn" class="nidar-primary-btn w-100 mt-3">Convert to PDF</button>
+            </div>
+            <!-- Hidden div for converting docx html to pdf -->
+            <div id="pdfContent" style="display: none; padding: 20px; font-family: Arial, sans-serif;"></div>
+        </div>
+    </main>
+    <div id="site-footer"></div>
+    <script src="/assets/js/common.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
