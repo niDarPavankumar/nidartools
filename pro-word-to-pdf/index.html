@@ -37,8 +37,9 @@
                 <p id="statusText">Ready to convert...</p>
                 <button id="convertBtn" class="nidar-primary-btn w-100 mt-3">Convert to PDF</button>
             </div>
-            <!-- Hidden div for converting docx html to pdf -->
-            <div id="pdfContent" style="display: none; padding: 20px; font-family: Arial, sans-serif;"></div>
+            
+            <!-- Hidden div for converting docx html to pdf (Fixed for html2pdf rendering) -->
+            <div id="pdfContent" style="position: absolute; left: -9999px; top: -9999px; width: 800px; padding: 40px; font-family: Arial, sans-serif; background: #ffffff; color: #000000; text-align: left; line-height: 1.6;"></div>
         </div>
     </main>
     <div id="site-footer"></div>
