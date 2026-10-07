@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pro Word & Character Counter | niDar Tools</title>
+    <meta name="description" content="Free real-time Pro word counter, character counter, reading time calculator, and SEO keyword density analyzer.">
+    <link rel="icon" href="/assets/favicon/favicon.ico">
+    <link rel="stylesheet" href="/style.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="site-header"></div>
+
+    <main class="tool-main-container">
+        <div class="tool-header">
+            <h1>Pro Word & Character Counter</h1>
+            <p>Advanced real-time text analysis, reading time, and keyword density. 100% Free forever!</p>
+        </div>
+
+        <div class="counter-grid">
+            <!-- Left Side: Text Area -->
+            <div class="text-section card">
+                <div class="action-bar">
+                    <button id="uppercaseBtn" class="action-btn">UPPERCASE</button>
+                    <button id="lowercaseBtn" class="action-btn">lowercase</button>
+                    <button id="titlecaseBtn" class="action-btn">Title Case</button>
+                    <button id="clearBtn" class="action-btn clear-btn">Clear Text</button>
+                </div>
+                <textarea id="textInput" placeholder="Type or paste your text here to begin analyzing..."></textarea>
+            </div>
+
+            <!-- Right Side: Stats Panel -->
+            <div class="stats-section card">
+                <h3>Text Statistics</h3>
+                <div class="stats-grid">
+                    <div class="stat-box primary">
+                        <span class="stat-label">Words</span>
+                        <strong id="wordCount" class="stat-value">0</strong>
+                    </div>
+                    <div class="stat-box primary">
+                        <span class="stat-label">Characters</span>
+                        <strong id="charCount" class="stat-value">0</strong>
+                    </div>
+                    <div class="stat-box">
+                        <span class="stat-label">Sentences</span>
+                        <strong id="sentenceCount" class="stat-value">0</strong>
+                    </div>
+                    <div class="stat-box">
+                        <span class="stat-label">Paragraphs</span>
+                        <strong id="paragraphCount" class="stat-value">0</strong>
+                    </div>
+                </div>
+
+                <div class="reading-time-box">
+                    <span>⏱️ Est. Reading Time:</span>
+                    <strong id="readingTime">0 min</strong>
+                </div>
+
+                <div class="keyword-density">
+                    <h3>Top Keywords (Density)</h3>
+                    <ul id="keywordList" class="keyword-list">
+                        <li class="empty-msg">No words to analyze yet.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <div id="site-footer"></div>
+    <script src="/assets/js/common.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
