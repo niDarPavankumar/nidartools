@@ -24,7 +24,11 @@ const ui = {
     zoomOut: document.getElementById('zoomOut'),
     addTextBtn: document.getElementById('addTextBtn'),
     deletePageBtn: document.getElementById('deletePageBtn'),
-    saveBtn: document.getElementById('saveBtn')
+    saveBtn: document.getElementById('saveBtn'),
+    textModal: document.getElementById('textModal'),
+    textInputArea: document.getElementById('textInputArea'),
+    confirmTextBtn: document.getElementById('confirmTextBtn'),
+    cancelTextBtn: document.getElementById('cancelTextBtn')
 };
 
 // Render Page Function
@@ -101,9 +105,20 @@ ui.deletePageBtn.addEventListener('click', async () => {
     await loadPdfToView(pdfBytes);
 });
 
-// Add Text
-ui.addTextBtn.addEventListener('click', async () => {
-    const text = prompt("Enter text to add at the top of this page:");
+// Add Text - Modal Logic
+ui.addTextBtn.addEventListener('click', () => {
+    ui.textInputArea.value = '';
+    ui.textModal.classList.remove('hidden');
+    ui.textInputArea.focus();
+});
+
+ui.cancelTextBtn.addEventListener('click', () => {
+    ui.textModal.classList.add('hidden');
+});
+
+ui.confirmTextBtn.addEventListener('click', async () => {
+    const text = ui.textInputArea.value;
+    ui.textModal.classList.add('hidden');
     if (!text) return;
     
     const pages = editPdfDoc.getPages();
