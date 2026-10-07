@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pro PDF Reader & Editor | niDar Tools</title>
+    <meta name="description" content="Free online PDF reader and editor. View, zoom, add text, delete pages, and save directly in your browser.">
+    <link rel="icon" href="/assets/favicon/favicon.ico">
+    <link rel="stylesheet" href="/style.css">
+    <link rel="stylesheet" href="style.css">
+    
+    <!-- PDF.js for rendering -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.min.js"></script>
+    <!-- pdf-lib for editing -->
+    <script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
+</head>
+<body>
+    <div id="site-header"></div>
+    <main class="tool-main-container">
+        <div class="tool-header">
+            <h1>Pro PDF Reader & Editor</h1>
+            <p>Read, annotate, delete pages, and edit PDFs 100% securely in your browser. No server uploads!</p>
+        </div>
+
+        <div class="editor-container card">
+            <!-- Top Toolbar -->
+            <div class="toolbar">
+                <button class="nidar-primary-btn" onclick="document.getElementById('fileInput').click()">📁 Open PDF</button>
+                <input type="file" id="fileInput" accept="application/pdf" hidden>
+                
+                <div class="nav-controls hidden" id="navControls">
+                    <button id="prevBtn" class="nidar-secondary-btn">◀ Prev</button>
+                    <span id="pageInfo">Page <span id="pageNum">0</span> / <span id="pageCount">0</span></span>
+                    <button id="nextBtn" class="nidar-secondary-btn">Next ▶</button>
+                </div>
+
+                <div class="edit-controls hidden" id="editControls">
+                    <button id="zoomOut" class="nidar-icon-btn" title="Zoom Out">➖</button>
+                    <button id="zoomIn" class="nidar-icon-btn" title="Zoom In">➕</button>
+                    <span class="divider">|</span>
+                    <button id="addTextBtn" class="nidar-secondary-btn" title="Add Text to current page">📝 Add Text</button>
+                    <button id="deletePageBtn" class="nidar-secondary-btn" style="color: #ef4444; border-color: #ef4444;" title="Delete Current Page">🗑️ Delete Page</button>
+                    <button id="saveBtn" class="nidar-primary-btn success">💾 Save PDF</button>
+                </div>
+            </div>
+
+            <!-- PDF Viewer -->
+            <div id="pdfViewer" class="pdf-viewer">
+                <div id="uploadPrompt" class="upload-prompt">
+                    <div class="upload-icon">📄</div>
+                    <h3>Select a PDF file to start editing</h3>
+                </div>
+                <canvas id="pdfCanvas" class="hidden"></canvas>
+            </div>
+        </div>
+    </main>
+    <div id="site-footer"></div>
+    <script src="/assets/js/common.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
