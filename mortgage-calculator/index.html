@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced Mortgage Calculator | niDar Tools</title>
+    <meta name="description" content="Calculate your monthly mortgage payments accurately. Include property tax, home insurance, and down payment to see your real monthly cost.">
+    <link rel="icon" href="/assets/favicon/favicon.ico">
+    <link rel="stylesheet" href="/style.css">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div id="site-header"></div>
+
+    <main class="tool-main-container">
+        <div class="tool-header">
+            <h1>Advanced Mortgage Calculator</h1>
+            <p>Calculate your true monthly house payment including taxes and insurance.</p>
+        </div>
+
+        <div class="calculator-grid">
+            <!-- Inputs Section -->
+            <div class="input-section card">
+                <div class="input-group">
+                    <label for="currency">Currency</label>
+                    <select id="currency">
+                        <option value="$">US Dollar ($)</option>
+                        <option value="€">Euro (€)</option>
+                        <option value="£">British Pound (£)</option>
+                        <option value="₹">Indian Rupee (₹)</option>
+                    </select>
+                </div>
+
+                <div class="input-group">
+                    <label for="homePrice">Home Price</label>
+                    <input type="number" id="homePrice" value="350000" min="1000">
+                </div>
+
+                <div class="input-group">
+                    <label for="downPayment">Down Payment</label>
+                    <input type="number" id="downPayment" value="70000" min="0">
+                </div>
+
+                <div class="input-group">
+                    <label for="interestRate">Interest Rate (%)</label>
+                    <input type="number" id="interestRate" value="6.5" step="0.1" min="0.1" max="30">
+                </div>
+
+                <div class="input-group">
+                    <label for="loanTerm">Loan Term (Years)</label>
+                    <input type="number" id="loanTerm" value="30" min="1" max="50">
+                </div>
+
+                <div class="input-group">
+                    <label for="propertyTax">Property Tax (Yearly)</label>
+                    <input type="number" id="propertyTax" value="4200" min="0">
+                </div>
+
+                <div class="input-group">
+                    <label for="homeInsurance">Home Insurance (Yearly)</label>
+                    <input type="number" id="homeInsurance" value="1200" min="0">
+                </div>
+
+                <button id="calculateBtn" class="nidar-primary-btn w-100">Calculate Mortgage</button>
+            </div>
+
+            <!-- Results & Chart Section -->
+            <div class="result-section card">
+                <div class="summary-boxes">
+                    <div class="summary-box primary">
+                        <h3>Estimated Monthly Payment</h3>
+                        <div id="monthlyPayment" class="amount">$0</div>
+                    </div>
+                </div>
+                
+                <!-- Pie Chart Container -->
+                <div class="chart-container">
+                    <canvas id="mortgageChart"></canvas>
+                </div>
+
+                <div class="breakdown-list">
+                    <div class="breakdown-item">
+                        <span class="color-box" style="background: #3b82f6;"></span>
+                        <span>Principal & Interest</span>
+                        <strong id="valPI">$0</strong>
+                    </div>
+                    <div class="breakdown-item">
+                        <span class="color-box" style="background: #f59e0b;"></span>
+                        <span>Property Tax</span>
+                        <strong id="valTax">$0</strong>
+                    </div>
+                    <div class="breakdown-item">
+                        <span class="color-box" style="background: #10b981;"></span>
+                        <span>Home Insurance</span>
+                        <strong id="valIns">$0</strong>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="tool-guide-link">
+            <a href="/content/mortgage-calculator/">📖 Read our guide: How Mortgage is calculated</a>
+        </div>
+    </main>
+
+    <div id="site-footer"></div>
+    <script src="/assets/js/common.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
