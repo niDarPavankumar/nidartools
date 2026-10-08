@@ -287,3 +287,55 @@
 
 /* Hidden Image Input */
 #imageUploadInput { display: none; }
+
+/* --- Advanced Signature Modal --- */
+.sig-tabs {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+    border-bottom: 1px solid var(--nc-border);
+    padding-bottom: 10px;
+}
+.sig-tab {
+    flex: 1;
+    padding: 8px;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    font-weight: bold;
+    color: var(--nc-muted);
+    font-size: 15px;
+}
+.sig-tab.active {
+    color: var(--nc-accent);
+    border-bottom: 2px solid var(--nc-accent);
+}
+.sig-panel {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 200px;
+}
+.sig-panel.active {
+    display: flex;
+}
+.sig-type-input {
+    width: 100%;
+    padding: 15px;
+    font-size: 32px;
+    font-family: 'Brush Script MT', 'cursive', sans-serif;
+    text-align: center;
+    border: 1px solid var(--nc-border);
+    border-radius: 8px;
+    margin-bottom: 10px;
+    background: #f8fafc;
+}
+.sig-upload-box {
+    border: 2px dashed var(--nc-accent-border);
+    padding: 40px;
+    border-radius: 8px;
+    cursor: pointer;
+    background: #f8fafc;
+    width: 100%;
+}

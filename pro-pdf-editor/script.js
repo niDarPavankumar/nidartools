@@ -3,7 +3,6 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs
 document.addEventListener("DOMContentLoaded", () => {
     "use strict";
 
-    // Global Elements
     const topTools = document.querySelectorAll(".t-btn");
     const openPdfBtn = document.getElementById("openPdfBtn");
     const exportPdfBtn = document.getElementById("exportPdfBtn");
@@ -20,7 +19,6 @@ document.addEventListener("DOMContentLoaded", () => {
     let currentTool = "select";
     let addedElements = []; 
 
-    // Setup Canvas
     pdfDocumentWrapper.innerHTML = ""; 
     const renderCanvas = document.createElement("canvas");
     renderCanvas.id = "mainRenderCanvas";
@@ -36,55 +34,133 @@ document.addEventListener("DOMContentLoaded", () => {
     pdfDocumentWrapper.appendChild(canvasContainer);
     const ctx = renderCanvas.getContext("2d");
 
-    // --- Image Upload Element ---
     const imageInput = document.createElement("input");
     imageInput.type = "file";
     imageInput.accept = "image/png, image/jpeg, image/jpg";
     imageInput.style.display = "none";
     document.body.appendChild(imageInput);
 
-    // --- Signature Modal Setup ---
+    // --- Advanced Signature Modal ---
     const sigModal = document.createElement("div");
     sigModal.className = "signature-modal";
     sigModal.innerHTML = `
-        <div class="signature-content">
-            <h3 style="margin-top:0;">Draw Your Signature</h3>
-            <canvas id="sigPadCanvas" width="400" height="200" style="border: 2px dashed #cbd5e1; background: #f8fafc; cursor: crosshair;"></canvas>
-            <div style="display:flex; justify-content:space-between; margin-top:15px;">
-                <button id="clearSigBtn" class="action-btn">Clear</button>
-                <div>
-                    <button id="cancelSigBtn" class="action-btn">Cancel</button>
-                    <button id="saveSigBtn" class="action-btn primary">Add</button>
+        <div class="signature-content" style="width: 90%; max-width: 450px;">
+            <h3 style="margin-top:0; margin-bottom:15px;">Create Signature</h3>
+            
+            <div class="sig-tabs">
+                <button class="sig-tab active" data-tab="draw">Draw</button>
+                <button class="sig-tab" data-tab="type">Type</button>
+                <button class="sig-tab" data-tab="upload">Upload</button>
+            </div>
+            
+            <div id="panel-draw" class="sig-panel active">
+                <canvas id="sigPadCanvas" width="400" height="180" style="border: 2px dashed #cbd5e1; background: #f8fafc; cursor: crosshair; width: 100%;"></canvas>
+                <button id="clearSigBtn" class="action-btn" style="margin-top:10px; width:100%;">Clear Drawing</button>
+            </div>
+            
+            <div id="panel-type" class="sig-panel">
+                <input type="text" id="sigTypeInput" class="sig-type-input" placeholder="Type your name here...">
+                <p style="font-size:12px; color:#64748b;">This will be converted into a digital signature.</p>
+            </div>
+            
+            <div id="panel-upload" class="sig-panel">
+                <div id="sigUploadArea" class="sig-upload-box">
+                    <span style="font-size:24px;">📁</span><br>
+                    Tap to upload signature image
                 </div>
+                <input type="file" id="sigActualUpload" accept="image/*" style="display:none;">
+            </div>
+
+            <div style="display:flex; justify-content:flex-end; margin-top:20px; gap:10px;">
+                <button id="cancelSigBtn" class="action-btn">Cancel</button>
+                <button id="saveSigBtn" class="action-btn primary">Add Signature</button>
             </div>
         </div>
     `;
     document.body.appendChild(sigModal);
 
+    // Signature Tab Switching
+    const sigTabs = document.querySelectorAll('.sig-tab');
+    const sigPanels = document.querySelectorAll('.sig-panel');
+    let activeSigMethod = 'draw';
+    let uploadedSigDataUrl = null;
+
+    sigTabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+            sigTabs.forEach(t => t.classList.remove('active'));
+            sigPanels.forEach(p => p.classList.remove('active'));
+            tab.classList.add('active');
+            const target = tab.dataset.tab;
+            document.getElementById(`panel-${target}`).classList.add('active');
+            activeSigMethod = target;
+        });
+    });
+
+    // Drawing Logic
     const sigPadCanvas = document.getElementById("sigPadCanvas");
     const sigCtx = sigPadCanvas.getContext("2d");
     let isDrawing = false;
-
-    // Signature Drawing Logic (Mouse & Touch)
+    
     function getTouchPos(canvasDom, touchEvent) {
         var rect = canvasDom.getBoundingClientRect();
         return { x: touchEvent.touches[0].clientX - rect.left, y: touchEvent.touches[0].clientY - rect.top };
     }
-    
     sigPadCanvas.addEventListener("mousedown", (e) => { isDrawing = true; sigCtx.beginPath(); sigCtx.moveTo(e.offsetX, e.offsetY); });
     sigPadCanvas.addEventListener("mousemove", (e) => { if(isDrawing) { sigCtx.lineTo(e.offsetX, e.offsetY); sigCtx.stroke(); }});
     sigPadCanvas.addEventListener("mouseup", () => { isDrawing = false; });
-    
-    sigPadCanvas.addEventListener("touchstart", (e) => { e.preventDefault(); isDrawing = true; const pos = getTouchPos(sigPadCanvas, e); sigCtx.beginPath(); sigCtx.moveTo(pos.x, pos.y); });
-    sigPadCanvas.addEventListener("touchmove", (e) => { e.preventDefault(); if(isDrawing) { const pos = getTouchPos(sigPadCanvas, e); sigCtx.lineTo(pos.x, pos.y); sigCtx.stroke(); }});
+    sigPadCanvas.addEventListener("touchstart", (e) => { e.preventDefault(); isDrawing = true; const pos = getTouchPos(sigPadCanvas, e); sigCtx.beginPath(); sigCtx.moveTo(pos.x, pos.y); }, {passive: false});
+    sigPadCanvas.addEventListener("touchmove", (e) => { e.preventDefault(); if(isDrawing) { const pos = getTouchPos(sigPadCanvas, e); sigCtx.lineTo(pos.x, pos.y); sigCtx.stroke(); }}, {passive: false});
     sigPadCanvas.addEventListener("touchend", () => { isDrawing = false; });
-
     document.getElementById("clearSigBtn").addEventListener("click", () => sigCtx.clearRect(0, 0, sigPadCanvas.width, sigPadCanvas.height));
+
+    // Upload Logic for Signature
+    const sigUploadArea = document.getElementById("sigUploadArea");
+    const sigActualUpload = document.getElementById("sigActualUpload");
+    sigUploadArea.addEventListener("click", () => sigActualUpload.click());
+    sigActualUpload.addEventListener("change", (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = (event) => {
+                uploadedSigDataUrl = event.target.result;
+                sigUploadArea.innerHTML = `<img src="${uploadedSigDataUrl}" style="max-width:100%; max-height:120px;">`;
+            };
+            reader.readAsDataURL(file);
+        }
+    });
+
+    // Save Signature Button
     document.getElementById("cancelSigBtn").addEventListener("click", () => sigModal.style.display = "none");
     document.getElementById("saveSigBtn").addEventListener("click", () => {
-        addDraggableImage(sigPadCanvas.toDataURL("image/png"), 'signature');
-        sigModal.style.display = "none";
-        resetToSelectTool();
+        let finalDataUrl = null;
+        
+        if(activeSigMethod === 'draw') {
+            finalDataUrl = sigPadCanvas.toDataURL("image/png");
+        } 
+        else if (activeSigMethod === 'type') {
+            const typedText = document.getElementById("sigTypeInput").value;
+            if(!typedText) return alert("Please type your signature.");
+            // Create a temporary canvas to draw the typed text as an image
+            const tempCanvas = document.createElement("canvas");
+            tempCanvas.width = 400; tempCanvas.height = 100;
+            const tempCtx = tempCanvas.getContext("2d");
+            tempCtx.font = "40px 'Brush Script MT', cursive";
+            tempCtx.fillStyle = "black";
+            tempCtx.textAlign = "center";
+            tempCtx.textBaseline = "middle";
+            tempCtx.fillText(typedText, 200, 50);
+            finalDataUrl = tempCanvas.toDataURL("image/png");
+        }
+        else if (activeSigMethod === 'upload') {
+            if(!uploadedSigDataUrl) return alert("Please upload an image.");
+            finalDataUrl = uploadedSigDataUrl;
+        }
+
+        if(finalDataUrl) {
+            addDraggableImage(finalDataUrl, 'signature');
+            sigModal.style.display = "none";
+            resetToSelectTool();
+        }
     });
 
     // --- Formatting Toolbar (Text) ---
@@ -133,14 +209,10 @@ document.addEventListener("DOMContentLoaded", () => {
             
             if(currentTool !== "text") hideFormattingToolbar();
             
-            // Trigger specific tool actions
             if (currentTool === "image") {
                 imageInput.click();
             } else if (currentTool === "sign") {
-                sigCtx.clearRect(0, 0, sigPadCanvas.width, sigPadCanvas.height);
                 sigModal.style.display = "flex";
-            } else if (currentTool === "annotate") {
-                alert("Annotate (Eraser/Whiteout) Selected! Click and drag on canvas to hide existing text.");
             }
         });
     });
@@ -182,7 +254,8 @@ document.addEventListener("DOMContentLoaded", () => {
             addedElements.push({ type: 'text', element: textBox, page: currentPageNum });
             resetToSelectTool();
         } 
-        else if (currentTool === "annotate") { // Whiteout Tool
+        else if (currentTool === "annotate") { 
+            // Whiteout (Eraser) Tool
             const whiteout = document.createElement("div");
             whiteout.className = "draggable-whiteout";
             whiteout.style.left = `${x}px`;
@@ -190,7 +263,6 @@ document.addEventListener("DOMContentLoaded", () => {
             whiteout.style.width = "100px";
             whiteout.style.height = "25px";
             
-            // Double click to remove whiteout
             whiteout.addEventListener("dblclick", () => {
                 whiteout.remove();
                 addedElements = addedElements.filter(el => el.element !== whiteout);
@@ -210,7 +282,6 @@ document.addEventListener("DOMContentLoaded", () => {
         img.style.left = `${renderCanvas.width / 2 - 50}px`;
         img.style.top = `${renderCanvas.height / 2 - 50}px`;
         
-        // Double click to remove
         img.addEventListener("dblclick", () => {
             img.remove();
             addedElements = addedElements.filter(el => el.element !== img);
@@ -354,7 +425,6 @@ document.addEventListener("DOMContentLoaded", () => {
                     const textVal = htmlEl.innerText || htmlEl.textContent;
                     if(textVal && textVal !== "New Text") {
                         const pdfY = height - (elTop * scaleY) - (parseInt(htmlEl.style.fontSize) * scaleY);
-                        // Convert RGB to PDFLib color (simplified for black)
                         const isBold = htmlEl.style.fontWeight === "bold";
                         page.drawText(textVal, { x: pdfX, y: pdfY, size: parseInt(htmlEl.style.fontSize) * scaleY, font: isBold ? helveticaBold : helveticaFont });
                     }
