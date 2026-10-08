@@ -419,3 +419,35 @@
     );
 
 })();
+
+// --- AUTO FILTER ON CATEGORY CLICK (Footer Links) ---
+document.addEventListener("DOMContentLoaded", function() {
+    let hash = window.location.hash.toLowerCase();
+    if (hash) {
+        let target = hash.substring(1); 
+        let mapping = {
+            "image": "image",
+            "pdf": "pdf",
+            "calculators": "calculator",
+            "calculator": "calculator",
+            "text": "text",
+            "developer": "developer",
+            "ai": "ai"
+        };
+        let keyword = mapping[target] || target;
+        
+        // होम पेजवरील योग्य फिल्टर बटन शोधून त्यावर क्लिक करणे
+        let buttons = document.querySelectorAll('button'); 
+        for(let btn of buttons) {
+            if(btn.innerText.toLowerCase().includes(keyword)) {
+                btn.click(); // आपोआप फिल्टर अप्लाय होईल!
+                
+                // स्क्रीनला टूल्सच्या बरोबर समोर आणण्यासाठी थोडं खाली स्क्रोल करणे
+                setTimeout(() => {
+                    window.scrollBy({ top: 350, behavior: 'smooth' });
+                }, 400);
+                break;
+            }
+        }
+    }
+});
