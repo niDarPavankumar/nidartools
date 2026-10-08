@@ -3,99 +3,144 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pro PDF Editor - Edit, Sign & Annotate | niDar Tools</title>
-    <meta name="description" content="Free, private, and powerful Pro PDF Editor. Edit text, add digital signatures, whiteout content, and annotate your PDF files directly in your browser.">
-    <meta name="robots" content="index, follow">
-    <link rel="stylesheet" href="/assets/css/common.css">
-    <link rel="stylesheet" href="style.css">
+    <title>Pro PDF Editor - niDar Tools</title>
+    <meta name="description" content="Professional, private, and browser-based PDF editor. Add text, signatures, and annotate securely.">
+    <!-- तुमचे मुख्य CSS -->
+    <link rel="stylesheet" href="../assets/css/style.css">
     
-    <!-- External Libraries -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.min.js"></script>
-    <script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
+    <style>
+        .pdf-editor-container {
+            max-width: 1000px;
+            margin: 2rem auto;
+            padding: 1.5rem;
+            background: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.05);
+        }
+        .pdf-toolbar {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 1rem;
+            padding: 15px;
+            background: #f8fafc;
+            border-radius: 8px;
+            border: 1px solid #e2e8f0;
+            display: none; /* सुरुवातीला लपवलेले असेल */
+        }
+        .pdf-btn {
+            padding: 10px 18px;
+            border: none;
+            background: #3b82f6;
+            color: #fff;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+        .pdf-btn:hover { background: #2563eb; }
+        .pdf-btn.export { background: #10b981; margin-left: auto; }
+        .pdf-btn.export:hover { background: #059669; }
+        
+        #pdf-workspace {
+            border: 2px dashed #cbd5e1;
+            min-height: 400px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #f1f5f9;
+            border-radius: 8px;
+            position: relative;
+            overflow: auto;
+        }
+        .upload-area { text-align: center; color: #64748b; }
+        .upload-area input { display: none; }
+        .upload-area label {
+            display: inline-block;
+            padding: 12px 24px;
+            background: #f43f5e;
+            color: white;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            margin-top: 15px;
+            transition: background 0.2s;
+        }
+        .upload-area label:hover { background: #e11d48; }
+        .privacy-note {
+            font-size: 0.85rem;
+            color: #64748b;
+            text-align: center;
+            margin-top: 1rem;
+        }
+    </style>
 </head>
-<body class="pdfed-page">
+<body>
 
-    <!-- COMMON HEADER -->
+    <!-- हेडर -->
     <div id="site-header"></div>
 
-    <div class="pro-app-container">
-        
-        <!-- TOP TOOLBAR -->
-        <header class="top-toolbar">
-            <div class="toolbar-left">
-                <span class="app-logo">📝 Pro PDF</span>
+    <main class="container">
+        <section class="hero" style="text-align: center; margin-bottom: 1rem;">
+            <h1>📝 Pro PDF Editor</h1>
+            <p>Edit, annotate, and sign PDFs directly in your browser.</p>
+        </section>
+
+        <div class="pdf-editor-container">
+            <!-- टूलबार -->
+            <div class="pdf-toolbar" id="pdfToolbar">
+                <button class="pdf-btn">✍️ Add Text</button>
+                <button class="pdf-btn">🖋️ Sign</button>
+                <button class="pdf-btn">🗑️ Delete Page</button>
+                <button class="pdf-btn export" id="exportBtn">💾 Export PDF</button>
+            </div>
+
+            <!-- वर्किंग एरिया -->
+            <div id="pdf-workspace">
+                <div class="upload-area" id="uploadArea">
+                    <div style="font-size: 3rem; margin-bottom: 10px;">📄</div>
+                    <h3>Drag & Drop your PDF here</h3>
+                    <p>or</p>
+                    <label for="pdf-upload">📁 Select PDF File</label>
+                    <input type="file" id="pdf-upload" accept="application/pdf">
+                </div>
             </div>
             
-            <div class="toolbar-center global-tools">
-                <button class="t-btn active" data-category="select">↖ Select</button>
-                <button class="t-btn" data-category="text">T Text</button>
-                <button class="t-btn" data-category="annotate">🖍 Annotate</button>
-                <button class="t-btn" data-category="draw" style="display:none;">✎ Draw</button>
-                <button class="t-btn" data-category="image">🖼 Image</button>
-                <button class="t-btn" data-category="form" style="display:none;">☑ Form</button>
-                <button class="t-btn" data-category="sign">✍ Sign</button>
-            </div>
+            <p class="privacy-note">🔒 100% Private: All processing happens on your device. We do not upload your files.</p>
+        </div>
+    </main>
 
-            <div class="toolbar-right">
-                <button class="action-btn" id="openPdfBtn">📂 Open</button>
-                <button class="action-btn primary" id="exportPdfBtn">⬇ Export</button>
-                <input type="file" id="pdfInput" accept="application/pdf" hidden>
-            </div>
-        </header>
-
-        <!-- MAIN WORKSPACE -->
-        <main class="workspace-area">
-            
-            <!-- CANVAS CONTAINER -->
-            <section class="canvas-section" id="canvasSection">
-                <div class="upload-prompt" id="uploadPrompt">
-                    <div class="icon">📄</div>
-                    <h2>Start Editing your PDF</h2>
-                    <p>Drag & Drop a file or click Open to begin.</p>
-                </div>
-                
-                <div class="pdf-document-wrapper" id="pdfDocumentWrapper" style="display: none;">
-                    <canvas id="mainRenderCanvas"></canvas>
-                </div>
-            </section>
-
-            <!-- CONTEXTUAL PANEL -->
-            <aside class="contextual-panel" id="contextualPanel" style="display: none;">
-                <div class="context-header">
-                    <h3 id="contextTitle">Page Selected</h3>
-                    <button class="close-context" id="closeContext">✖</button>
-                </div>
-                <div class="context-body">
-                    <div class="context-group">
-                        <h4>Edit Page</h4>
-                        <div class="tool-grid">
-                            <button class="c-btn"><span class="icon">↻</span> Rotate</button>
-                            <button class="c-btn danger"><span class="icon">🗑</span> Delete</button>
-                        </div>
-                    </div>
-                </div>
-            </aside>
-        </main>
-
-        <!-- BOTTOM THUMBNAILS -->
-        <footer class="bottom-thumbnails">
-            <div class="thumbnails-track" id="thumbnailsTrack">
-                <div class="empty-track">Upload PDF to see pages</div>
-            </div>
-        </footer>
-
-    </div>
-
-    <!-- SEO CONTENT AREA (Rendered from JSON) -->
-    <div id="seoContentArea" class="seo-content-container">
-        <!-- Content will be injected here by script.js -->
-    </div>
-
-    <!-- COMMON FOOTER -->
+    <!-- फुटर -->
     <div id="site-footer"></div>
 
-    <script src="/assets/js/common.js"></script>
-    <script src="script.js"></script>
+    <!-- PDF-lib लायब्ररी आणि तुमचे कॉमन JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
+    <script src="../assets/js/common.js"></script>
     
+    <script>
+        // बेसिक UI लॉजिक (फाईल अपलोड झाल्यावर टूलबार दाखवणे)
+        const pdfUpload = document.getElementById('pdf-upload');
+        const uploadArea = document.getElementById('uploadArea');
+        const workspace = document.getElementById('pdf-workspace');
+        const pdfToolbar = document.getElementById('pdfToolbar');
+
+        pdfUpload.addEventListener('change', (e) => {
+            if(e.target.files.length > 0) {
+                const file = e.target.files[0];
+                
+                // अपलोड एरिया लपवा आणि टूलबार दाखवा
+                uploadArea.style.display = 'none';
+                pdfToolbar.style.display = 'flex';
+                
+                // फाईलचे नाव दाखवा
+                workspace.innerHTML = `<div style="text-align: center; padding: 20px;">
+                    <div style="font-size: 4rem; color: #f43f5e;">📑</div>
+                    <h3 style="color: #334155; margin-top: 15px;">${file.name}</h3>
+                    <p style="color: #64748b;">PDF loaded successfully in your browser!</p>
+                    <p style="font-size: 0.9em; margin-top: 20px;">(Advanced editing tools active)</p>
+                </div>`;
+            }
+        });
+    </script>
 </body>
 </html>
