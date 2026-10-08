@@ -258,3 +258,32 @@
     }
     .action-btn { width: 48%; text-align: center; }
 }
+
+/* =========================================================
+   Phase 4: Advanced Tools (Whiteout, Image, Signature)
+   ========================================================= */
+
+/* Whiteout (Eraser) Box */
+.draggable-whiteout {
+    position: absolute;
+    background-color: white;
+    border: 1px dashed #cbd5e1; /* Visible while editing */
+    z-index: 90;
+    cursor: grab;
+    min-width: 50px;
+    min-height: 20px;
+}
+.draggable-whiteout:hover { border: 1px dashed var(--nc-danger); }
+
+/* Resizable Image */
+.draggable-image {
+    position: absolute;
+    z-index: 95;
+    cursor: grab;
+    max-width: 300px; /* Default max width */
+    border: 2px dashed transparent;
+}
+.draggable-image:hover { border: 2px dashed var(--nc-accent); }
+
+/* Hidden Image Input */
+#imageUploadInput { display: none; }
