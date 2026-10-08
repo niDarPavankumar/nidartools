@@ -219,6 +219,14 @@
         }
 
         const tools = [
+            ["Compound Interest & FIRE", "/compound-interest-calculator/"],
+            ["SIP Return Calculator", "/sip-calculator/"],
+            ["Advanced Mortgage Calculator", "/mortgage-calculator/"],
+            ["Pro Word Counter", "/pro-word-counter/"],
+            ["Pro Word to PDF", "/pro-word-to-pdf/"],
+            ["Unit Converter", "/unit-converter/"],
+
+['Pro PDF Editor', '/pro-pdf-editor/'],
             ['Image Resizer', '/image-resizer/'],
             ['Image Compressor', '/image-compressor/'],
             ['Image Converter', '/image-converter/'],
