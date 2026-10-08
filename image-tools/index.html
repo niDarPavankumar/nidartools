@@ -3,30 +3,138 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Image Tools - niDar Tools</title>
-    <meta name="description" content="Free online image tools to resize, compress, convert, and edit images directly in your browser.">
+    <title>Image Tools - Pro Suite by niDar Tools</title>
+    <meta name="description" content="Professional, browser-based image editing tools. Resize, compress, convert and remove backgrounds instantly.">
     <!-- मुख्य CSS फाईल जोडली -->
     <link rel="stylesheet" href="../assets/css/style.css">
+    
     <style>
-        /* पेजचे टायटल अधिक आकर्षक दिसण्यासाठी थोडे स्टायलिंग */
-        .category-hero {
+        /* NamoCrux Inspired Premium Styling */
+        body {
+            background-color: #f8fafc; /* अतिशय हलका निळा/राखाडी बेस */
+        }
+        
+        .pro-hero {
             text-align: center;
-            padding: 3rem 1rem 2rem;
-            background: linear-gradient(to bottom, #f8fafc, #ffffff);
-            border-bottom: 1px solid #f1f5f9;
-            margin-bottom: 2rem;
-            border-radius: 0 0 24px 24px;
+            padding: 4rem 1rem 3rem;
+            background: linear-gradient(135deg, #e0f2fe 0%, #dcfce7 100%);
+            border-bottom: 1px solid #e2e8f0;
+            border-radius: 0 0 40px 40px;
+            margin-bottom: 3rem;
+            box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.05);
         }
-        .category-hero h1 {
-            font-size: 2.5rem;
+        
+        .pro-badge {
+            display: inline-block;
+            padding: 6px 16px;
+            background: #ffffff;
+            color: #059669; /* डार्क ग्रीन */
+            font-size: 0.85rem;
+            font-weight: 700;
+            border-radius: 20px;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        .pro-hero h1 {
+            font-size: 3rem;
             color: #0f172a;
-            margin-bottom: 1rem;
+            margin: 0 0 1rem 0;
+            font-weight: 800;
+            letter-spacing: -1px;
         }
-        .category-hero p {
-            color: #64748b;
-            font-size: 1.1rem;
-            max-width: 600px;
+
+        .pro-hero p {
+            color: #475569;
+            font-size: 1.15rem;
+            max-width: 650px;
             margin: 0 auto;
+            line-height: 1.6;
+        }
+        
+        .pro-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            max-width: 1100px;
+            margin: 0 auto 5rem;
+            padding: 0 1rem;
+        }
+
+        .pro-card {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 16px;
+            padding: 1.8rem;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .pro-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px -10px rgba(0,0,0,0.1);
+            border-color: #10b981;
+        }
+
+        .pro-icon-wrapper {
+            width: 56px;
+            height: 56px;
+            background: #f1f5f9;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            margin-bottom: 1.2rem;
+            transition: background 0.3s ease;
+        }
+
+        .pro-card:hover .pro-icon-wrapper {
+            background: #dcfce7; /* Hover केल्यावर आयकॉनच्या मागे हिरवा रंग */
+        }
+
+        .pro-card h3 {
+            font-size: 1.25rem;
+            color: #1e293b;
+            margin: 0 0 0.5rem 0;
+            font-weight: 700;
+        }
+
+        .pro-card p {
+            font-size: 0.95rem;
+            color: #64748b;
+            margin: 0;
+            line-height: 1.5;
+            flex-grow: 1;
+        }
+        
+        .pro-arrow {
+            position: absolute;
+            bottom: 1.8rem;
+            right: 1.8rem;
+            color: #cbd5e1;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+        }
+        
+        .pro-card:hover .pro-arrow {
+            color: #10b981;
+            transform: translateX(3px) translateY(-3px);
+        }
+
+        /* मोबाईलसाठी ॲडजस्टमेंट */
+        @media (max-width: 768px) {
+            .pro-hero {
+                padding: 3rem 1rem 2rem;
+                border-radius: 0 0 24px 24px;
+            }
+            .pro-hero h1 { font-size: 2.2rem; }
         }
     </style>
 </head>
@@ -35,62 +143,57 @@
     <!-- हेडर -->
     <div id="site-header"></div>
 
-    <!-- मुख्य कंटेंट -->
-    <main class="container">
-        <section class="category-hero">
-            <h1>🖼️ Image Tools</h1>
-            <p>Everything you need to edit, convert, compress, and optimize your images instantly in your browser.</p>
+    <main>
+        <!-- Hero Section (NamoCrux सारखा) -->
+        <section class="pro-hero">
+            <div class="pro-badge">✨ PRO IMAGE STUDIO</div>
+            <h1>Perfect Your Images.</h1>
+            <p>A professional suite of tools designed to resize, compress, and edit images effortlessly directly in your browser. 100% private and fast.</p>
         </section>
 
-        <!-- फक्त Image Tools ची ग्रिड -->
-        <div class="nidar-tool-grid" style="margin-bottom: 4rem;">
+        <!-- Tools Grid -->
+        <div class="pro-grid">
             
-            <!-- 1. Image Resizer -->
-            <a href="/image-resizer/" class="nidar-tool-card">
-                <div class="nidar-tool-icon">🖼️</div>
-                <h3 class="nidar-tool-title">Image Resizer</h3>
-                <p class="nidar-tool-desc">Resize images to your exact dimensions quickly and easily.</p>
-                <span class="nidar-tool-arrow">↗</span>
+            <a href="/image-resizer/" class="pro-card">
+                <div class="pro-icon-wrapper">🖼️</div>
+                <h3>Image Resizer</h3>
+                <p>Resize images to your exact dimensions quickly without losing quality.</p>
+                <div class="pro-arrow">↗</div>
             </a>
 
-            <!-- 2. Image Format Converter -->
-            <a href="/image-converter/" class="nidar-tool-card">
-                <div class="nidar-tool-icon">🔄</div>
-                <h3 class="nidar-tool-title">Image Format Converter</h3>
-                <p class="nidar-tool-desc">Convert images between JPG, PNG and WebP formats.</p>
-                <span class="nidar-tool-arrow">↗</span>
+            <a href="/image-compressor/" class="pro-card">
+                <div class="pro-icon-wrapper">📦</div>
+                <h3>Image Compressor</h3>
+                <p>Reduce heavy image file sizes for faster website loading speeds.</p>
+                <div class="pro-arrow">↗</div>
             </a>
 
-            <!-- 3. Image Compressor -->
-            <a href="/image-compressor/" class="nidar-tool-card">
-                <div class="nidar-tool-icon">📦</div>
-                <h3 class="nidar-tool-title">Image Compressor</h3>
-                <p class="nidar-tool-desc">Reduce image file size while maintaining useful quality.</p>
-                <span class="nidar-tool-arrow">↗</span>
+            <a href="/image-converter/" class="pro-card">
+                <div class="pro-icon-wrapper">🔄</div>
+                <h3>Format Converter</h3>
+                <p>Convert images smoothly between JPG, PNG, WebP, and other formats.</p>
+                <div class="pro-arrow">↗</div>
             </a>
 
-            <!-- 4. Background Remover -->
-            <a href="/background-remover/" class="nidar-tool-card">
-                <div class="nidar-tool-icon">✂️</div>
-                <h3 class="nidar-tool-title">Background Remover</h3>
-                <p class="nidar-tool-desc">Remove image backgrounds quickly and easily.</p>
-                <span class="nidar-tool-arrow">↗</span>
+            <a href="/background-remover/" class="pro-card">
+                <div class="pro-icon-wrapper">✂️</div>
+                <h3>Background Remover</h3>
+                <p>Instantly remove backgrounds from images with precision and ease.</p>
+                <div class="pro-arrow">↗</div>
             </a>
 
-            <!-- 5. Favicon & Icon Kit -->
-            <a href="/icon-kit-generator/" class="nidar-tool-card">
-                <div class="nidar-tool-icon">🎨</div>
-                <h3 class="nidar-tool-title">Favicon & Icon Kit</h3>
-                <p class="nidar-tool-desc">Generate website favicons and useful icon sizes.</p>
-                <span class="nidar-tool-arrow">↗</span>
+            <a href="/image-to-pdf/" class="pro-card">
+                <div class="pro-icon-wrapper">📄</div>
+                <h3>Image to PDF</h3>
+                <p>Combine one or multiple image files into a single, structured PDF document.</p>
+                <div class="pro-arrow">↗</div>
             </a>
 
-            <!-- 6. Image to PDF -->
-            <a href="/image-to-pdf/" class="nidar-tool-card">
-                <div class="nidar-tool-icon">📄</div>
-                <h3 class="nidar-tool-title">Image to PDF</h3>
-                <p class="nidar-tool-desc">Combine one or more images into a single PDF.</p>
-                <span class="nidar-tool-arrow">↗</span>
+            <a href="/icon-kit-generator/" class="pro-card">
+                <div class="pro-icon-wrapper">🎨</div>
+                <h3>Favicon & Icon Kit</h3>
+                <p>Generate perfectly sized website favicons and app icons in seconds.</p>
+                <div class="pro-arrow">↗</div>
             </a>
 
         </div>
