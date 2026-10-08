@@ -1,51 +1,328 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="canonical" href="https://nidartools.com/unit-converter/">
-
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>All-in-One Unit Converter | niDar Tools</title>
-    <meta name="description" content="Fast and free online unit converter. Convert length, weight, temperature, and more in real-time.">
-    <link rel="icon" href="/assets/favicon/favicon.ico">
-    <link rel="stylesheet" href="/style.css">
-    <link rel="stylesheet" href="style.css">
+    <title>Unit Converter - Pro Suite by niDar Tools</title>
+    <meta name="description" content="Fast and accurate unit converter for length, weight, temperature, and more.">
+    <!-- मुख्य CSS -->
+    <link rel="stylesheet" href="../assets/css/style.css">
+    
+    <style>
+        /* NamoCrux Inspired Premium Styling */
+        body {
+            background-color: #f8fafc;
+        }
+        
+        .pro-hero {
+            text-align: center;
+            padding: 4rem 1rem 3rem;
+            background: linear-gradient(135deg, #e0f2fe 0%, #dcfce7 100%);
+            border-bottom: 1px solid #e2e8f0;
+            border-radius: 0 0 40px 40px;
+            margin-bottom: 3rem;
+            box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.05);
+        }
+        
+        .pro-badge {
+            display: inline-block;
+            padding: 6px 16px;
+            background: #ffffff;
+            color: #059669;
+            font-size: 0.85rem;
+            font-weight: 700;
+            border-radius: 20px;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        .pro-hero h1 {
+            font-size: 3rem;
+            color: #0f172a;
+            margin: 0 0 1rem 0;
+            font-weight: 800;
+            letter-spacing: -1px;
+        }
+
+        .pro-hero p {
+            color: #475569;
+            font-size: 1.15rem;
+            max-width: 650px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        /* Converter Box Styling */
+        .converter-container {
+            max-width: 800px;
+            margin: -2rem auto 4rem;
+            background: #ffffff;
+            border-radius: 24px;
+            padding: 2.5rem;
+            box-shadow: 0 20px 40px -15px rgba(0,0,0,0.1);
+            position: relative;
+            z-index: 10;
+        }
+
+        .category-select-wrapper {
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .category-select-wrapper select {
+            padding: 12px 24px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #0f172a;
+            background: #f1f5f9;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            cursor: pointer;
+            outline: none;
+            transition: all 0.3s;
+            appearance: none;
+            -webkit-appearance: none;
+            text-align: center;
+            width: 100%;
+            max-width: 300px;
+        }
+
+        .category-select-wrapper select:focus {
+            border-color: #10b981;
+            background: #ffffff;
+            box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.1);
+        }
+
+        .conversion-grid {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            gap: 1.5rem;
+            align-items: center;
+        }
+
+        .input-group {
+            background: #f8fafc;
+            padding: 1.5rem;
+            border-radius: 16px;
+            border: 1px solid #e2e8f0;
+            transition: all 0.3s;
+        }
+
+        .input-group:focus-within {
+            border-color: #10b981;
+            background: #ffffff;
+            box-shadow: 0 10px 25px -5px rgba(16, 185, 129, 0.1);
+        }
+
+        .input-group select {
+            width: 100%;
+            padding: 8px 0;
+            font-size: 1rem;
+            color: #64748b;
+            border: none;
+            background: transparent;
+            outline: none;
+            cursor: pointer;
+            margin-bottom: 10px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .input-group input {
+            width: 100%;
+            font-size: 2rem;
+            font-weight: 700;
+            color: #0f172a;
+            border: none;
+            background: transparent;
+            outline: none;
+        }
+        
+        .input-group input::placeholder {
+            color: #cbd5e1;
+        }
+
+        .swap-btn {
+            background: #10b981;
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 10px rgba(16, 185, 129, 0.3);
+        }
+
+        .swap-btn:hover {
+            transform: rotate(180deg);
+            background: #059669;
+        }
+
+        @media (max-width: 768px) {
+            .conversion-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+            .swap-btn {
+                margin: 0 auto;
+                transform: rotate(90deg);
+            }
+            .swap-btn:hover {
+                transform: rotate(270deg);
+            }
+            .pro-hero {
+                padding: 3rem 1rem 4rem;
+            }
+        }
+    </style>
 </head>
 <body>
+
     <div id="site-header"></div>
-    <main class="tool-main-container">
-        <div class="tool-header">
-            <h1>Unit Converter</h1>
-            <p>Convert Length, Weight, and Temperature instantly.</p>
-        </div>
-        <div class="converter-card">
-            <div class="input-group">
-                <label for="categorySelect">Select Category</label>
-                <select id="categorySelect">
-                    <option value="length">📏 Length</option>
-                    <option value="weight">⚖️ Weight</option>
-                    <option value="temperature">🌡️️ Temperature</option>
+
+    <main>
+        <section class="pro-hero">
+            <div class="pro-badge">✨ PRO CONVERTER</div>
+            <h1>Instant Unit Converter.</h1>
+            <p>Fast, accurate, and seamless conversions for length, weight, temperature, and more directly in your browser.</p>
+        </section>
+
+        <div class="converter-container">
+            
+            <div class="category-select-wrapper">
+                <select id="unitType" onchange="updateUnits()">
+                    <option value="length">📏 Length & Distance</option>
+                    <option value="weight">⚖️ Weight & Mass</option>
+                    <option value="temp">🌡️ Temperature</option>
                 </select>
             </div>
-            <div class="converter-grid">
-                <div class="convert-box">
-                    <label for="inputValue">From</label>
-                    <input type="number" id="inputValue" value="1" placeholder="Enter value">
-                    <select id="inputUnit"></select>
+
+            <div class="conversion-grid">
+                
+                <!-- From Input -->
+                <div class="input-group">
+                    <select id="fromUnit" onchange="convert()"></select>
+                    <input type="number" id="fromValue" placeholder="0" oninput="convert()" value="1">
                 </div>
-                <div class="swap-btn-container">
-                    <button id="swapBtn" class="swap-btn" aria-label="Swap units">⇄</button>
+
+                <!-- Swap Button -->
+                <button class="swap-btn" onclick="swapUnits()" aria-label="Swap units">⇆</button>
+
+                <!-- To Input -->
+                <div class="input-group">
+                    <select id="toUnit" onchange="convert()"></select>
+                    <input type="number" id="toValue" placeholder="0" oninput="convertReverse()" readonly>
                 </div>
-                <div class="convert-box">
-                    <label for="outputValue">To</label>
-                    <input type="number" id="outputValue" readonly placeholder="Result">
-                    <select id="outputUnit"></select>
-                </div>
+
             </div>
+
         </div>
     </main>
+
     <div id="site-footer"></div>
-    <script src="/assets/js/common.js"></script>
-    <script src="script.js"></script>
+
+    <!-- Common JS -->
+    <script src="../assets/js/common.js"></script>
+    
+    <!-- Converter Logic -->
+    <script>
+        const units = {
+            length: {
+                meter: "Meter (m)",
+                kilometer: "Kilometer (km)",
+                centimeter: "Centimeter (cm)",
+                millimeter: "Millimeter (mm)",
+                mile: "Mile (mi)",
+                yard: "Yard (yd)",
+                foot: "Foot (ft)",
+                inch: "Inch (in)"
+            },
+            weight: {
+                kilogram: "Kilogram (kg)",
+                gram: "Gram (g)",
+                milligram: "Milligram (mg)",
+                pound: "Pound (lb)",
+                ounce: "Ounce (oz)"
+            },
+            temp: {
+                celsius: "Celsius (°C)",
+                fahrenheit: "Fahrenheit (°F)",
+                kelvin: "Kelvin (K)"
+            }
+        };
+
+        const conversionRates = {
+            length: { meter: 1, kilometer: 1000, centimeter: 0.01, millimeter: 0.001, mile: 1609.34, yard: 0.9144, foot: 0.3048, inch: 0.0254 },
+            weight: { kilogram: 1, gram: 0.001, milligram: 0.000001, pound: 0.453592, ounce: 0.0283495 }
+        };
+
+        function updateUnits() {
+            const type = document.getElementById('unitType').value;
+            const fromSelect = document.getElementById('fromUnit');
+            const toSelect = document.getElementById('toUnit');
+            
+            fromSelect.innerHTML = '';
+            toSelect.innerHTML = '';
+            
+            for (let key in units[type]) {
+                fromSelect.innerHTML += `<option value="${key}">${units[type][key]}</option>`;
+                toSelect.innerHTML += `<option value="${key}">${units[type][key]}</option>`;
+            }
+            
+            // Set default different options
+            if(fromSelect.options.length > 1) toSelect.selectedIndex = 1;
+            
+            convert();
+        }
+
+        function convert() {
+            const type = document.getElementById('unitType').value;
+            const fromUnit = document.getElementById('fromUnit').value;
+            const toUnit = document.getElementById('toUnit').value;
+            const fromValue = parseFloat(document.getElementById('fromValue').value);
+            
+            if (isNaN(fromValue)) {
+                document.getElementById('toValue').value = "";
+                return;
+            }
+
+            let result;
+            if (type === 'temp') {
+                if (fromUnit === toUnit) result = fromValue;
+                else if (fromUnit === 'celsius' && toUnit === 'fahrenheit') result = (fromValue * 9/5) + 32;
+                else if (fromUnit === 'celsius' && toUnit === 'kelvin') result = fromValue + 273.15;
+                else if (fromUnit === 'fahrenheit' && toUnit === 'celsius') result = (fromValue - 32) * 5/9;
+                else if (fromUnit === 'fahrenheit' && toUnit === 'kelvin') result = (fromValue - 32) * 5/9 + 273.15;
+                else if (fromUnit === 'kelvin' && toUnit === 'celsius') result = fromValue - 273.15;
+                else if (fromUnit === 'kelvin' && toUnit === 'fahrenheit') result = (fromValue - 273.15) * 9/5 + 32;
+            } else {
+                const baseValue = fromValue * conversionRates[type][fromUnit];
+                result = baseValue / conversionRates[type][toUnit];
+            }
+
+            // Format result to avoid long decimals
+            document.getElementById('toValue').value = Number.isInteger(result) ? result : parseFloat(result.toFixed(6));
+        }
+
+        function swapUnits() {
+            const fromSelect = document.getElementById('fromUnit');
+            const toSelect = document.getElementById('toUnit');
+            
+            const temp = fromSelect.value;
+            fromSelect.value = toSelect.value;
+            toSelect.value = temp;
+            
+            convert();
+        }
+
+        // Initialize on load
+        window.onload = updateUnits;
+    </script>
 </body>
 </html>
