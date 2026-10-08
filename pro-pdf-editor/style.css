@@ -155,3 +155,106 @@
 .thumb-item:hover { border-color: #94a3b8; transform: translateY(-2px); }
 .thumb-item.selected { border-color: var(--nc-accent); box-shadow: 0 0 0 3px var(--nc-accent-soft); }
 .thumb-number { position: absolute; bottom: -20px; font-size: 0.75rem; font-weight: 700; color: var(--nc-text); }
+
+/* =========================================================
+   Phase 3: Formatting Toolbar & Mobile UI Fixes
+   ========================================================= */
+
+/* Formatting Menu (Appears when text is selected) */
+.formatting-toolbar {
+    display: none;
+    position: absolute;
+    top: -50px;
+    left: 0;
+    background: #1e293b;
+    padding: 6px 12px;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    z-index: 200;
+    align-items: center;
+    gap: 8px;
+    white-space: nowrap;
+}
+.formatting-toolbar.show {
+    display: flex;
+}
+.fmt-btn {
+    background: transparent;
+    border: none;
+    color: white;
+    cursor: pointer;
+    font-size: 14px;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-weight: bold;
+}
+.fmt-btn:hover { background: rgba(255,255,255,0.2); }
+.fmt-input-color {
+    width: 24px;
+    height: 24px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    padding: 0;
+}
+.fmt-input-size {
+    width: 45px;
+    padding: 2px 4px;
+    border-radius: 4px;
+    border: 1px solid #475569;
+    background: #334155;
+    color: white;
+}
+
+/* Draggable Text Input Enhancements */
+.draggable-text {
+    position: absolute;
+    background: transparent;
+    border: 1px dashed transparent;
+    color: #000;
+    font-size: 16px;
+    font-family: Inter, sans-serif;
+    padding: 4px;
+    min-width: 50px;
+    outline: none;
+    z-index: 100;
+    /* Make it look like a seamless part of the PDF until clicked */
+    resize: none; 
+    overflow: hidden;
+    line-height: 1.5;
+}
+.draggable-text:focus {
+    border: 2px dashed var(--nc-accent);
+    background: rgba(255,255,255,0.9);
+    cursor: text;
+}
+.draggable-text.dragging {
+    cursor: grabbing;
+}
+
+/* --- Mobile UI Fixes --- */
+@media (max-width: 768px) {
+    .top-toolbar {
+        height: auto;
+        flex-direction: column;
+        padding: 10px;
+        gap: 10px;
+    }
+    .global-tools {
+        flex-wrap: wrap;
+        justify-content: center;
+        width: 100%;
+    }
+    .t-btn {
+        flex: 1 1 auto;
+        text-align: center;
+        font-size: 12px;
+        padding: 6px;
+    }
+    .toolbar-right {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+    }
+    .action-btn { width: 48%; text-align: center; }
+}
