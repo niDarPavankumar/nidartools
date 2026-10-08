@@ -451,3 +451,49 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     }
 });
+
+// --- SMART HASH FILTERING ---
+function applyHashFilter() {
+    let hash = window.location.hash.toLowerCase();
+    if (hash) {
+        let target = hash.substring(1); 
+        let mapping = {
+            "image": "image",
+            "pdf": "pdf",
+            "calculators": "calculator",
+            "calculator": "calculator",
+            "text": "text",
+            "developer": "developer",
+            "ai": "ai"
+        };
+        let keyword = mapping[target] || target;
+        
+        let buttons = document.querySelectorAll('.nidar-filter-btn'); 
+        if (buttons.length === 0) {
+            // जर क्लासने सापडले नाही, तर सर्व बटणे तपासा
+            buttons = document.querySelectorAll('button');
+        }
+        
+        for(let btn of buttons) {
+            if(btn.innerText.toLowerCase().includes(keyword)) {
+                btn.click(); // क्लिक करा
+                
+                // स्मूथ स्क्रोल
+                setTimeout(() => {
+                    const toolsSection = document.querySelector('.nidar-tool-grid') || document.querySelector('.hero').nextElementSibling;
+                    if(toolsSection) {
+                        toolsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        window.scrollBy(0, -100); // हेडरसाठी थोडी जागा सोडा
+                    }
+                }, 200);
+                break;
+            }
+        }
+    }
+}
+
+// पेज लोड झाल्यावर रन करा
+document.addEventListener("DOMContentLoaded", applyHashFilter);
+
+// जेव्हा URL मधील हॅश (उदा. #pdf) बदलेल तेव्हाही रन करा!
+window.addEventListener("hashchange", applyHashFilter);
