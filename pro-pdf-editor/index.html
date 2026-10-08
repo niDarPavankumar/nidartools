@@ -3,16 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pro PDF Editor – Edit, Annotate & Manage PDFs | niDar Tools</title>
-    <meta name="description" content="Pro PDF Editor by niDar Tools. Edit, annotate, draw, highlight, sign, organize and manage PDF files directly in your browser.">
+    <title>Pro PDF Editor | niDar Tools</title>
     <meta name="robots" content="index, follow">
-    <link rel="canonical" href="https://nidartools.com/pro-pdf-editor/">
-    
-    <!-- CSS Files -->
     <link rel="stylesheet" href="/assets/css/common.css">
     <link rel="stylesheet" href="style.css">
     
-    <!-- PDF Engine Libraries -->
+    <!-- External Libraries (Will be handled by engine modules later) -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.min.js"></script>
     <script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
 </head>
@@ -21,78 +17,105 @@
     <!-- COMMON HEADER -->
     <div id="site-header"></div>
 
-    <main class="pdf-hero">
-        <div class="pdf-hero-content">
-            <div>
-                <span class="pdfed-badge">📝 Pro PDF Tool</span>
-                <h1 class="tool-title">Pro PDF <span>Editor</span></h1>
-                <p class="tool-subtitle">Edit, annotate, and manage your PDF documents instantly.</p>
+    <div class="pro-app-container">
+        
+        <!-- TOP TOOLBAR -->
+        <header class="top-toolbar">
+            <div class="toolbar-left">
+                <span class="app-logo">📝 Pro PDF</span>
             </div>
-            <div class="privacy-badge">🔒 100% Private (Browser-based)</div>
-        </div>
-    </main>
-
-    <section class="pdfed-workspace">
-        <div class="workspace-card">
             
-            <!-- TOOLBAR -->
-            <div class="pdf-toolbar" role="toolbar">
-                <button class="pdf-tool active" data-tool="select">↖ Select</button>
-                <button class="pdf-tool" data-tool="text">T Text</button>
-                <button class="pdf-tool" data-tool="signature">✍ Sign</button>
-                <span class="pdf-toolbar-separator"></span>
-                <button class="pdf-tool" data-action="rotate">↻ Rotate</button>
-                <button class="pdf-tool pdf-action-danger" data-action="delete">🗑 Delete</button>
-                <span class="pdf-toolbar-separator"></span>
-                <button class="pdf-tool" id="zoomOut">−</button>
-                <span id="zoomValue" style="min-width:48px; text-align:center; font-size:13px; font-weight:800;">100%</span>
-                <button class="pdf-tool" id="zoomIn">+</button>
-                <span class="pdf-toolbar-spacer"></span>
-                <button class="pdf-action" id="openPdf">📂 Open PDF</button>
-                <button class="pdf-action pdf-action-primary" id="downloadPdf">⬇ Download</button>
-                <input id="pdfInput" class="pdf-hidden-file" type="file" accept="application/pdf" hidden>
+            <div class="toolbar-center global-tools">
+                <button class="t-btn active" data-category="select">↖ Select</button>
+                <button class="t-btn" data-category="text">T Text</button>
+                <button class="t-btn" data-category="annotate">🖍 Annotate</button>
+                <button class="t-btn" data-category="draw">✎ Draw</button>
+                <button class="t-btn" data-category="image">🖼 Image</button>
+                <button class="t-btn" data-category="form">☑ Form</button>
+                <button class="t-btn" data-category="sign">✍ Sign</button>
             </div>
 
-            <!-- WORKSPACE -->
-            <div class="pdf-workspace">
-                
-                <!-- SIDEBAR -->
-                <aside class="pdf-sidebar">
-                    <div class="pdf-sidebar-header">
-                        <span class="pdf-sidebar-title">Pages</span>
-                        <span class="pdf-page-count" id="pageCount">0 pages</span>
-                    </div>
-                    <div class="pdf-page-list" id="pageList">
-                        <div class="pdf-empty-pages">Upload a PDF to view pages.</div>
-                    </div>
-                </aside>
+            <div class="toolbar-right">
+                <button class="action-btn" id="openPdfBtn">📂 Open</button>
+                <button class="action-btn primary" id="exportPdfBtn">⬇ Export</button>
+                <input type="file" id="pdfInput" accept="application/pdf" hidden>
+            </div>
+        </header>
 
-                <!-- CANVAS -->
-                <div class="pdf-canvas" id="pdfCanvas">
-                    <!-- Upload Prompt -->
-                    <div class="pdf-upload-card" id="uploadCard">
-                        <div class="pdf-upload-icon">📄</div>
-                        <h2>Start editing your PDF</h2>
-                        <p>Drag and drop a PDF here, or select a PDF to open the editor.</p>
-                        <button class="pdf-action pdf-action-primary" id="choosePdf">Choose PDF</button>
-                    </div>
-
-                    <!-- PDF Render Area -->
-                    <div class="pdf-document" id="pdfDocument" style="display:none; padding:0; border:none; background:transparent;">
-                        <!-- Canvas will be injected here by JS -->
-                    </div>
-
-                    <div class="pdf-status" id="pdfStatus">Ready</div>
+        <!-- MAIN WORKSPACE -->
+        <main class="workspace-area">
+            
+            <!-- CANVAS CONTAINER -->
+            <section class="canvas-section" id="canvasSection">
+                <div class="upload-prompt" id="uploadPrompt">
+                    <div class="icon">📄</div>
+                    <h2>Start Editing your PDF</h2>
+                    <p>Drag & Drop a file or click Open to begin.</p>
                 </div>
+                
+                <!-- Engine will render PDF here -->
+                <div class="pdf-document-wrapper" id="pdfDocumentWrapper" style="display: none;">
+                    <canvas id="mainRenderCanvas"></canvas>
+                </div>
+            </section>
+
+            <!-- CONTEXTUAL MENU (Right Panel) -->
+            <aside class="contextual-panel" id="contextualPanel" style="display: none;">
+                
+                <div class="context-header">
+                    <h3 id="contextTitle">Page 2 Selected</h3>
+                    <button class="close-context" id="closeContext">✖</button>
+                </div>
+
+                <div class="context-body">
+                    <!-- Page Edit Tools -->
+                    <div class="context-group">
+                        <h4>Edit Page</h4>
+                        <div class="tool-grid">
+                            <button class="c-btn"><span class="icon">✂</span> Crop</button>
+                            <button class="c-btn"><span class="icon">↻</span> Rotate</button>
+                            <button class="c-btn"><span class="icon">⤢</span> Resize</button>
+                            <button class="c-btn"><span class="icon">⎘</span> Duplicate</button>
+                            <button class="c-btn"><span class="icon">📤</span> Extract</button>
+                            <button class="c-btn danger"><span class="icon">🗑</span> Delete</button>
+                        </div>
+                    </div>
+
+                    <!-- Insert Tools -->
+                    <div class="context-group">
+                        <h4>Insert</h4>
+                        <div class="tool-list">
+                            <button class="c-list-btn">T Add Text</button>
+                            <button class="c-list-btn">🖼 Add Image</button>
+                            <button class="c-list-btn">✍ Add Signature</button>
+                            <button class="c-list-btn">◇ Add Shape</button>
+                            <button class="c-list-btn">💮 Add Stamp</button>
+                        </div>
+                    </div>
+                </div>
+
+            </aside>
+        </main>
+
+        <!-- BOTTOM THUMBNAILS -->
+        <footer class="bottom-thumbnails">
+            <div class="thumbnails-track" id="thumbnailsTrack">
+                <div class="empty-track">Upload PDF to see pages</div>
             </div>
-        </div>
-    </section>
+        </footer>
+
+    </div>
 
     <!-- COMMON FOOTER -->
     <div id="site-footer"></div>
 
-    <!-- JS Files -->
     <script src="/assets/js/common.js"></script>
     <script src="script.js"></script>
+    
+    <!-- Engine Modules (To be built in Phase 2) -->
+    <!-- 
+    <script src="engine/pdf-renderer.js"></script>
+    <script src="engine/page-manager.js"></script>
+    -->
 </body>
 </html>
