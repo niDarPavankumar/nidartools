@@ -455,3 +455,50 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 });
+
+    // --- Phase 6: Load SEO Content ---
+    async function loadSeoContent() {
+        const seoArea = document.getElementById("seoContentArea");
+        if(!seoArea) return;
+        
+        try {
+            const response = await fetch('content/seo-content.json');
+            if(!response.ok) throw new Error("Could not load content");
+            
+            const data = await response.json();
+            
+            let html = `<div class="seo-inner">`;
+            html += `<h1>${data.title}</h1>`;
+            html += `<p>${data.description}</p>`;
+            
+            // Features Grid
+            html += `<div class="seo-grid">`;
+            data.features.forEach(f => {
+                html += `
+                <div class="seo-feature">
+                    <h3>✨ ${f.title}</h3>
+                    <p>${f.desc}</p>
+                </div>`;
+            });
+            html += `</div>`;
+            
+            // FAQ Section
+            html += `<div class="seo-faq"><h2>Frequently Asked Questions</h2>`;
+            data.faq.forEach(q => {
+                html += `
+                <div class="faq-item">
+                    <h4>Q: ${q.q}</h4>
+                    <p>A: ${q.a}</p>
+                </div>`;
+            });
+            html += `</div></div>`;
+            
+            seoArea.innerHTML = html;
+            
+        } catch(e) {
+            console.error("SEO Content Load Error:", e);
+        }
+    }
+    
+    // Call the function
+    loadSeoContent();

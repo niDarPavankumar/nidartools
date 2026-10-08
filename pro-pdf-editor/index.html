@@ -3,12 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pro PDF Editor | niDar Tools</title>
+    <title>Pro PDF Editor - Edit, Sign & Annotate | niDar Tools</title>
+    <meta name="description" content="Free, private, and powerful Pro PDF Editor. Edit text, add digital signatures, whiteout content, and annotate your PDF files directly in your browser.">
     <meta name="robots" content="index, follow">
     <link rel="stylesheet" href="/assets/css/common.css">
     <link rel="stylesheet" href="style.css">
     
-    <!-- External Libraries (Will be handled by engine modules later) -->
+    <!-- External Libraries -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.min.js"></script>
     <script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
 </head>
@@ -29,9 +30,9 @@
                 <button class="t-btn active" data-category="select">↖ Select</button>
                 <button class="t-btn" data-category="text">T Text</button>
                 <button class="t-btn" data-category="annotate">🖍 Annotate</button>
-                <button class="t-btn" data-category="draw">✎ Draw</button>
+                <button class="t-btn" data-category="draw" style="display:none;">✎ Draw</button>
                 <button class="t-btn" data-category="image">🖼 Image</button>
-                <button class="t-btn" data-category="form">☑ Form</button>
+                <button class="t-btn" data-category="form" style="display:none;">☑ Form</button>
                 <button class="t-btn" data-category="sign">✍ Sign</button>
             </div>
 
@@ -53,47 +54,26 @@
                     <p>Drag & Drop a file or click Open to begin.</p>
                 </div>
                 
-                <!-- Engine will render PDF here -->
                 <div class="pdf-document-wrapper" id="pdfDocumentWrapper" style="display: none;">
                     <canvas id="mainRenderCanvas"></canvas>
                 </div>
             </section>
 
-            <!-- CONTEXTUAL MENU (Right Panel) -->
+            <!-- CONTEXTUAL PANEL -->
             <aside class="contextual-panel" id="contextualPanel" style="display: none;">
-                
                 <div class="context-header">
-                    <h3 id="contextTitle">Page 2 Selected</h3>
+                    <h3 id="contextTitle">Page Selected</h3>
                     <button class="close-context" id="closeContext">✖</button>
                 </div>
-
                 <div class="context-body">
-                    <!-- Page Edit Tools -->
                     <div class="context-group">
                         <h4>Edit Page</h4>
                         <div class="tool-grid">
-                            <button class="c-btn"><span class="icon">✂</span> Crop</button>
                             <button class="c-btn"><span class="icon">↻</span> Rotate</button>
-                            <button class="c-btn"><span class="icon">⤢</span> Resize</button>
-                            <button class="c-btn"><span class="icon">⎘</span> Duplicate</button>
-                            <button class="c-btn"><span class="icon">📤</span> Extract</button>
                             <button class="c-btn danger"><span class="icon">🗑</span> Delete</button>
                         </div>
                     </div>
-
-                    <!-- Insert Tools -->
-                    <div class="context-group">
-                        <h4>Insert</h4>
-                        <div class="tool-list">
-                            <button class="c-list-btn">T Add Text</button>
-                            <button class="c-list-btn">🖼 Add Image</button>
-                            <button class="c-list-btn">✍ Add Signature</button>
-                            <button class="c-list-btn">◇ Add Shape</button>
-                            <button class="c-list-btn">💮 Add Stamp</button>
-                        </div>
-                    </div>
                 </div>
-
             </aside>
         </main>
 
@@ -106,16 +86,16 @@
 
     </div>
 
+    <!-- SEO CONTENT AREA (Rendered from JSON) -->
+    <div id="seoContentArea" class="seo-content-container">
+        <!-- Content will be injected here by script.js -->
+    </div>
+
     <!-- COMMON FOOTER -->
     <div id="site-footer"></div>
 
     <script src="/assets/js/common.js"></script>
     <script src="script.js"></script>
     
-    <!-- Engine Modules (To be built in Phase 2) -->
-    <!-- 
-    <script src="engine/pdf-renderer.js"></script>
-    <script src="engine/page-manager.js"></script>
-    -->
 </body>
 </html>

@@ -339,3 +339,60 @@
     background: #f8fafc;
     width: 100%;
 }
+
+/* =========================================================
+   Phase 6: SEO Content Area
+   ========================================================= */
+.seo-content-container {
+    background: var(--nc-surface);
+    padding: 60px 20px;
+    border-top: 1px solid var(--nc-border);
+}
+
+.seo-inner {
+    max-width: 1000px;
+    margin: 0 auto;
+    font-family: Inter, sans-serif;
+    color: var(--nc-text);
+}
+
+.seo-inner h1 {
+    font-size: 2.2rem;
+    color: var(--nc-accent-dark);
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+.seo-inner > p {
+    font-size: 1.1rem;
+    color: var(--nc-muted);
+    text-align: center;
+    margin-bottom: 50px;
+    line-height: 1.6;
+}
+
+.seo-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 30px;
+    margin-bottom: 50px;
+}
+
+.seo-feature {
+    background: var(--nc-bg);
+    padding: 25px;
+    border-radius: 12px;
+    border: 1px solid var(--nc-border);
+}
+.seo-feature h3 { margin-top: 0; color: var(--nc-accent-dark); font-size: 1.2rem;}
+.seo-feature p { color: var(--nc-muted); line-height: 1.5; font-size: 0.95rem; margin-bottom: 0;}
+
+.seo-faq {
+    background: var(--nc-surface);
+    border-top: 1px solid var(--nc-border);
+    padding-top: 40px;
+}
+.seo-faq h2 { text-align: center; font-size: 1.8rem; margin-bottom: 30px; color: var(--nc-text); }
+.faq-item { margin-bottom: 20px; padding-bottom: 15px; border-bottom: 1px solid #f1f5f9; }
+.faq-item h4 { margin: 0 0 10px; font-size: 1.1rem; color: var(--nc-text); }
+.faq-item p { margin: 0; color: var(--nc-muted); line-height: 1.5; }

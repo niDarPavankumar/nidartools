@@ -1,0 +1,36 @@
+{
+  "title": "Pro PDF Editor - Edit, Annotate, and Sign PDFs Online for Free",
+  "description": "The most powerful, browser-based, private Pro PDF Editor. Edit text, add signatures, draw, and annotate your PDF files instantly without uploading them to any server.",
+  "features": [
+    {
+      "title": "100% Privacy & Security",
+      "desc": "Your files never leave your device. All PDF rendering, editing, and saving happen locally in your browser. No server uploads."
+    },
+    {
+      "title": "Advanced Signature Tool",
+      "desc": "Easily draw your signature on the screen, type it using professional cursive fonts, or upload a pre-saved image to sign your documents."
+    },
+    {
+      "title": "Smart Text Editing & Whiteout",
+      "desc": "Add new text with custom fonts and colors. Use our smart Whiteout (eraser) tool to hide unwanted existing text or watermarks seamlessly."
+    },
+    {
+      "title": "Contextual Page Management",
+      "desc": "A professional UI allows you to select any page to rotate, delete, or manage it instantly using the contextual side panel."
+    }
+  ],
+  "faq": [
+    {
+      "q": "Is this PDF Editor truly free and private?",
+      "a": "Yes! niDar Tools Pro PDF Editor is completely free. We prioritize your privacy—your PDF files are processed directly on your computer/phone and are never uploaded to our servers."
+    },
+    {
+      "q": "Can I edit existing text in a PDF?",
+      "a": "PDFs are essentially flat images of text. You can use our 'Annotate (Whiteout)' tool to erase existing text and then use the 'Text' tool to type new content over it."
+    },
+    {
+      "q": "Does it work on mobile phones?",
+      "a": "Absolutely. The interface is optimized for both desktop and mobile devices, including touch-friendly drag-and-drop and signature features."
+    }
+  ]
+}
