@@ -227,6 +227,7 @@
             ["Unit Converter", "/unit-converter/"],
 
 ['Pro PDF Editor', '/pro-pdf-editor/'],
+            ['Pro Image Watermark', '/image-watermark/'],
             ['Image Resizer', '/image-resizer/'],
             ['Image Compressor', '/image-compressor/'],
             ['Image Converter', '/image-converter/'],
