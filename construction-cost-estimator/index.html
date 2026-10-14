@@ -3,950 +3,170 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pro Construction Cost & BOQ Estimator - Calculate Material & Labor</title>
+    <meta name="description" content="Free online construction cost estimator. Calculate total building cost, material estimates, labor costs, and generate a detailed BOQ instantly.">
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <style>
+        .pro-container { max-width: 900px; margin: 3rem auto; padding: 0 1rem; }
+        .hero-section { text-align: center; margin-bottom: 2rem; }
+        .hero-section h1 { font-size: 2.2rem; color: #1e293b; margin-bottom: 0.5rem; }
+        .hero-section p { color: #475569; font-size: 1.1rem; }
+        
+        .calculator-card { background: white; padding: 2rem; border-radius: 12px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); margin-bottom: 2rem; }
+        
+        .input-group { margin-bottom: 1.5rem; }
+        .input-group label { display: block; font-weight: 600; color: #334155; margin-bottom: 0.5rem; }
+        .input-group input, .input-group select { width: 100%; padding: 12px; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 1rem; outline: none; }
+        .input-group input:focus, .input-group select:focus { border-color: #3b82f6; box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1); }
+        
+        .btn-calculate { width: 100%; background: #3b82f6; color: white; border: none; padding: 14px; font-size: 1.1rem; font-weight: bold; border-radius: 8px; cursor: pointer; transition: 0.3s; }
+        .btn-calculate:hover { background: #2563eb; }
+        
+        .results-section { display: none; margin-top: 2rem; }
+        .total-cost-box { background: #f8fafc; border-left: 5px solid #10b981; padding: 1.5rem; border-radius: 8px; margin-bottom: 2rem; text-align: center; }
+        .total-cost-box h2 { color: #0f172a; font-size: 2rem; margin: 0; }
+        .total-cost-box p { color: #64748b; margin: 0; font-size: 1.1rem; }
+        
+        .cost-split { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem; margin-bottom: 2rem; }
+        .split-card { background: white; border: 1px solid #e2e8f0; padding: 1.5rem; border-radius: 8px; text-align: center; }
+        .split-card h3 { margin: 0 0 0.5rem 0; color: #475569; font-size: 1.1rem; }
+        .split-card .amount { font-size: 1.5rem; font-weight: bold; color: #0f172a; }
+        
+        .boq-table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+        .boq-table th, .boq-table td { padding: 12px; text-align: left; border-bottom: 1px solid #e2e8f0; }
+        .boq-table th { background: #f1f5f9; color: #334155; font-weight: 600; }
+        .boq-table tr:hover { background: #f8fafc; }
+        
+        .btn-print { background: #64748b; color: white; border: none; padding: 10px 20px; border-radius: 6px; cursor: pointer; float: right; margin-bottom: 1rem; }
+        .btn-print:hover { background: #475569; }
 
-    <title>Free Construction Cost Estimator – Calculate Building Costs | niDar Tools</title>
-
-    <meta name="description" content="Estimate brick, cement, sand, steel and labor costs instantly using your wall dimensions and local rates. Free, fast, no sign-up required.">
-
-    <meta name="keywords" content="construction cost calculator, construction cost estimator, brick calculator, cement calculator, sand calculator, building cost calculator India, wall material calculator">
-
-    <meta name="author" content="niDar Marketing And Services">
-    <meta name="robots" content="index, follow">
-
-    <link rel="canonical" href="https://nidartools.com/construction-cost-estimator/">
-
-    <link rel="icon" type="image/x-icon" href="/assets/favicon/favicon.ico">
-    <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon/favicon-16x16.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon/favicon-32x32.png">
-    <link rel="apple-touch-icon" sizes="180x180" href="/assets/favicon/apple-touch-icon.png">
-
-    <link rel="stylesheet" href="/assets/css/common.css">
-    <link rel="stylesheet" href="style.css">
+        @media print {
+            body * { visibility: hidden; }
+            #printableArea, #printableArea * { visibility: visible; }
+            #printableArea { position: absolute; left: 0; top: 0; width: 100%; }
+            .btn-print { display: none; }
+        }
+    </style>
 </head>
-
 <body>
-<!-- COMMON HEADER -->
-<div id="site-header"></div>
+    <div id="site-header"></div>
+    <main class="pro-container">
+        <div class="hero-section">
+            <h1>Pro Construction Cost Estimator</h1>
+            <p>Calculate BOQ, Material & Labor Costs for your dream home.</p>
+        </div>
 
-    <!-- ==============================
-         TOOL PAGE
-    =============================== -->
-
-    <main class="tool-page">
-
-        <!-- Hero -->
-        <section class="tool-hero">
-
-            <div class="tool-hero-icon" aria-hidden="true">
-                🏗️
+        <div class="calculator-card">
+            <div class="input-group">
+                <label>Built-up Area (in Sq. Ft.)</label>
+                <input type="number" id="areaInput" placeholder="e.g., 1000" min="100">
             </div>
-
-            <div class="tool-hero-content">
-
-                <span class="tool-badge">
-                    Construction Calculator
-                </span>
-
-                <h1>
-                    Construction Cost Estimator
-                </h1>
-
-                <p>
-                    Calculate brickwork quantities and estimate construction
-                    costs using your wall dimensions and local material rates.
-                </p>
-
-                <a
-                    href="/construction-cost-estimator/"
-                    class="guide-link"
-                >
-                    📖 Read Construction Material Guide →
-                </a>
-
+            <div class="input-group">
+                <label>Construction Quality</label>
+                <select id="qualityInput">
+                    <option value="1300">Basic / Standard (₹1300/sq.ft)</option>
+                    <option value="1600" selected>Premium / Medium (₹1600/sq.ft)</option>
+                    <option value="2200">Luxury / High-End (₹2200/sq.ft)</option>
+                </select>
             </div>
+            <button class="btn-calculate" onclick="calculateCost()">Calculate Total Cost & BOQ</button>
+        </div>
 
-        </section>
-
-
-        <!-- Important Notice -->
-        <section class="info-card warning-card">
-
-            <div class="info-icon">
-                ⚠️
-            </div>
-
-            <div class="info-content">
-
-                <h2>Important Note</h2>
-
-                <p>
-                    This tool provides a rough estimate using standard
-                    construction formulas. Actual material quantities,
-                    material rates, labor charges and structural requirements
-                    can vary by location and project.
-                </p>
-
-                <p>
-                    Always confirm the final requirements with a qualified
-                    contractor, mason or structural engineer before starting
-                    construction.
-                </p>
-
-            </div>
-
-        </section>
-
-
-        <!-- ==============================
-             SECTION 1
-        =============================== -->
-
-        <section class="tool-card">
-
-            <div class="section-heading">
-
-                <div class="section-number">
-                    1
+        <div class="results-section" id="resultsSection">
+            <button class="btn-print" onclick="window.print()">🖨️ Print / Save as PDF</button>
+            <div id="printableArea">
+                <div class="total-cost-box">
+                    <p>Estimated Total Construction Cost</p>
+                    <h2 id="totalCostResult">₹ 0</h2>
                 </div>
 
-                <div>
-                    <h2>Wall / Brickwork Quantity</h2>
-
-                    <p>
-                        Enter your wall dimensions and brick details.
-                        The required quantities will be calculated automatically.
-                    </p>
-                </div>
-
-            </div>
-
-
-            <!-- Wall Dimensions -->
-            <div class="form-group-title">
-                Wall Dimensions
-            </div>
-
-            <div class="input-grid">
-
-                <div class="input-field">
-
-                    <label for="wallLen">
-                        Wall Length
-                        <span>(ft)</span>
-                    </label>
-
-                    <input
-                        type="number"
-                        id="wallLen"
-                        placeholder="e.g. 20"
-                        min="0"
-                        step="any"
-                        inputmode="decimal"
-                    >
-
-                </div>
-
-
-                <div class="input-field">
-
-                    <label for="wallHt">
-                        Wall Height
-                        <span>(ft)</span>
-                    </label>
-
-                    <input
-                        type="number"
-                        id="wallHt"
-                        placeholder="e.g. 10"
-                        min="0"
-                        step="any"
-                        inputmode="decimal"
-                    >
-
-                </div>
-
-
-                <div class="input-field">
-
-                    <label for="wallThk">
-                        Wall Thickness
-                        <span>(inch)</span>
-                    </label>
-
-                    <input
-                        type="number"
-                        id="wallThk"
-                        placeholder="e.g. 9"
-                        min="0"
-                        step="any"
-                        inputmode="decimal"
-                    >
-
-                </div>
-
-            </div>
-
-
-            <!-- Brick Dimensions -->
-            <div class="form-group-title">
-                Brick Dimensions
-            </div>
-
-            <div class="input-grid">
-
-                <div class="input-field">
-
-                    <label for="brickL">
-                        Brick Length
-                        <span>(inch)</span>
-                    </label>
-
-                    <input
-                        type="number"
-                        id="brickL"
-                        value="9"
-                        min="0"
-                        step="any"
-                        inputmode="decimal"
-                    >
-
-                </div>
-
-
-                <div class="input-field">
-
-                    <label for="brickW">
-                        Brick Width
-                        <span>(inch)</span>
-                    </label>
-
-                    <input
-                        type="number"
-                        id="brickW"
-                        value="4.5"
-                        min="0"
-                        step="any"
-                        inputmode="decimal"
-                    >
-
-                </div>
-
-
-                <div class="input-field">
-
-                    <label for="brickH">
-                        Brick Height
-                        <span>(inch)</span>
-                    </label>
-
-                    <input
-                        type="number"
-                        id="brickH"
-                        value="3"
-                        min="0"
-                        step="any"
-                        inputmode="decimal"
-                    >
-
-                </div>
-
-            </div>
-
-
-            <!-- Mortar -->
-            <div class="form-group-title">
-                Mortar Settings
-            </div>
-
-            <div class="input-grid two-columns">
-
-                <div class="input-field">
-
-                    <label for="joint">
-                        Mortar Joint Thickness
-                        <span>(inch)</span>
-                    </label>
-
-                    <input
-                        type="number"
-                        id="joint"
-                        value="0.4"
-                        min="0"
-                        step="0.1"
-                        inputmode="decimal"
-                    >
-
-                </div>
-
-
-                <div class="input-field">
-
-                    <label for="ratio">
-                        Cement : Sand Ratio
-                    </label>
-
-                    <select id="ratio">
-
-                        <option value="1:4">
-                            1 : 4
-                        </option>
-
-                        <option value="1:6" selected>
-                            1 : 6
-                        </option>
-
-                        <option value="1:8">
-                            1 : 8
-                        </option>
-
-                    </select>
-
-                </div>
-
-            </div>
-
-
-            <button
-                type="button"
-                class="primary-button"
-                id="calculateQuantityBtn"
-                onclick="calcBricks()"
-            >
-                Calculate Quantity
-            </button>
-
-
-            <!-- Error -->
-            <div
-                id="brickError"
-                class="message-box error-message hidden"
-                role="alert"
-            ></div>
-
-
-            <!-- Quantity Result -->
-            <div
-                id="brickResult"
-                class="result-panel hidden"
-            >
-
-                <div class="result-header">
-
-                    <div>
-                        <span class="result-label">
-                            Calculation Result
-                        </span>
-
-                        <h3>
-                            Estimated Material Quantity
-                        </h3>
+                <div class="cost-split">
+                    <div class="split-card" style="border-top: 4px solid #3b82f6;">
+                        <h3>🛠️ Material Cost (65%)</h3>
+                        <div class="amount" id="materialCost">₹ 0</div>
                     </div>
-
-                    <span class="result-icon">
-                        📊
-                    </span>
-
-                </div>
-
-
-                <div class="result-grid">
-
-                    <div class="result-stat">
-
-                        <span>
-                            Wall Volume
-                        </span>
-
-                        <strong id="wallVolOut">
-                            -
-                        </strong>
-
+                    <div class="split-card" style="border-top: 4px solid #f59e0b;">
+                        <h3>👷 Labor Cost (25%)</h3>
+                        <div class="amount" id="laborCost">₹ 0</div>
                     </div>
-
-
-                    <div class="result-stat">
-
-                        <span>
-                            Estimated Bricks
-                        </span>
-
-                        <strong id="brickCountOut">
-                            -
-                        </strong>
-
+                    <div class="split-card" style="border-top: 4px solid #8b5cf6;">
+                        <h3>📐 Architect & Misc (10%)</h3>
+                        <div class="amount" id="miscCost">₹ 0</div>
                     </div>
-
-
-                    <div class="result-stat">
-
-                        <span>
-                            Cement Required
-                        </span>
-
-                        <strong id="cementBagsOut">
-                            -
-                        </strong>
-
-                    </div>
-
-
-                    <div class="result-stat">
-
-                        <span>
-                            Sand Required
-                        </span>
-
-                        <strong id="sandCftOut">
-                            -
-                        </strong>
-
-                    </div>
-
                 </div>
 
+                <div class="calculator-card">
+                    <h3 style="margin-top: 0; color: #1e293b;">Bill of Quantities (BOQ) - Material Breakdown</h3>
+                    <p style="color: #64748b; font-size: 0.9rem;">Estimated breakdown of the material cost.</p>
+                    <table class="boq-table">
+                        <thead>
+                            <tr>
+                                <th>Material Type</th>
+                                <th>% of Total Material</th>
+                                <th>Estimated Cost (₹)</th>
+                            </tr>
+                        </thead>
+                        <tbody id="boqBody">
+                            <!-- JS will populate this -->
+                        </tbody>
+                    </table>
+                </div>
             </div>
-
-        </section>
-
-
-        <!-- ==============================
-             SECTION 2
-        =============================== -->
-
-        <section class="tool-card">
-
-            <div class="section-heading">
-
-                <div class="section-number">
-                    2
-                </div>
-
-                <div>
-
-                    <h2>
-                        Your Material &amp; Labor Rates
-                    </h2>
-
-                    <p>
-                        Enter the rates applicable in your local area.
-                        These rates will be used to calculate the estimated cost.
-                    </p>
-
-                </div>
-
-            </div>
-
-
-            <div class="input-grid">
-
-                <div class="input-field">
-
-                    <label for="rateBrick">
-                        Rate per Brick
-                        <span>(₹)</span>
-                    </label>
-
-                    <input
-                        type="number"
-                        id="rateBrick"
-                        placeholder="e.g. 8"
-                        min="0"
-                        step="any"
-                        inputmode="decimal"
-                    >
-
-                </div>
-
-
-                <div class="input-field">
-
-                    <label for="rateCement">
-                        Rate per Cement Bag
-                        <span>(₹)</span>
-                    </label>
-
-                    <input
-                        type="number"
-                        id="rateCement"
-                        placeholder="e.g. 380"
-                        min="0"
-                        step="any"
-                        inputmode="decimal"
-                    >
-
-                </div>
-
-
-                <div class="input-field">
-
-                    <label for="rateSand">
-                        Rate per cft Sand
-                        <span>(₹)</span>
-                    </label>
-
-                    <input
-                        type="number"
-                        id="rateSand"
-                        placeholder="e.g. 60"
-                        min="0"
-                        step="any"
-                        inputmode="decimal"
-                    >
-
-                </div>
-
-            </div>
-
-        </section>
-
-
-        <!-- ==============================
-             SECTION 3
-        =============================== -->
-
-        <section class="tool-card">
-
-            <div class="section-heading">
-
-                <div class="section-number">
-                    3
-                </div>
-
-                <div>
-
-                    <h2>
-                        Other Costs / Quantities
-                    </h2>
-
-                    <p>
-                        Add optional materials and additional project costs.
-                    </p>
-
-                </div>
-
-            </div>
-
-
-            <div class="input-grid">
-
-                <div class="input-field">
-
-                    <label for="steelQty">
-                        Steel / Saria
-                        <span>(kg)</span>
-                    </label>
-
-                    <input
-                        type="number"
-                        id="steelQty"
-                        placeholder="Quantity"
-                        min="0"
-                        step="any"
-                        inputmode="decimal"
-                    >
-
-                </div>
-
-
-                <div class="input-field">
-
-                    <label for="steelRate">
-                        Rate per kg Steel
-                        <span>(₹)</span>
-                    </label>
-
-                    <input
-                        type="number"
-                        id="steelRate"
-                        placeholder="Rate"
-                        min="0"
-                        step="any"
-                        inputmode="decimal"
-                    >
-
-                </div>
-
-
-                <div class="input-field">
-
-                    <label for="gittiQty">
-                        Aggregate / Gitti
-                        <span>(cft)</span>
-                    </label>
-
-                    <input
-                        type="number"
-                        id="gittiQty"
-                        placeholder="Quantity"
-                        min="0"
-                        step="any"
-                        inputmode="decimal"
-                    >
-
-                </div>
-
-
-                <div class="input-field">
-
-                    <label for="gittiRate">
-                        Rate per cft Gitti
-                        <span>(₹)</span>
-                    </label>
-
-                    <input
-                        type="number"
-                        id="gittiRate"
-                        placeholder="Rate"
-                        min="0"
-                        step="any"
-                        inputmode="decimal"
-                    >
-
-                </div>
-
-
-                <div class="input-field">
-
-                    <label for="laborCost">
-                        Labor Charge
-                        <span>(₹)</span>
-                    </label>
-
-                    <input
-                        type="number"
-                        id="laborCost"
-                        placeholder="Lump sum"
-                        min="0"
-                        step="any"
-                        inputmode="decimal"
-                    >
-
-                </div>
-
-
-                <div class="input-field">
-
-                    <label for="centeringCost">
-                        Centering Cost
-                        <span>(₹)</span>
-                    </label>
-
-                    <input
-                        type="number"
-                        id="centeringCost"
-                        placeholder="Lump sum"
-                        min="0"
-                        step="any"
-                        inputmode="decimal"
-                    >
-
-                </div>
-
-
-                <div class="input-field">
-
-                    <label for="electricalCost">
-                        Electrical Cost
-                        <span>(₹)</span>
-                    </label>
-
-                    <input
-                        type="number"
-                        id="electricalCost"
-                        placeholder="Lump sum"
-                        min="0"
-                        step="any"
-                        inputmode="decimal"
-                    >
-
-                </div>
-
-
-                <div class="input-field">
-
-                    <label for="transportCost">
-                        Transport Cost
-                        <span>(₹)</span>
-                    </label>
-
-                    <input
-                        type="number"
-                        id="transportCost"
-                        placeholder="Lump sum"
-                        min="0"
-                        step="any"
-                        inputmode="decimal"
-                    >
-
-                </div>
-
-
-                <div class="input-field">
-
-                    <label for="architectCost">
-                        Architect / Builder Fee
-                        <span>(₹)</span>
-                    </label>
-
-                    <input
-                        type="number"
-                        id="architectCost"
-                        placeholder="Lump sum"
-                        min="0"
-                        step="any"
-                        inputmode="decimal"
-                    >
-
-                </div>
-
-            </div>
-
-
-            <button
-                type="button"
-                class="primary-button"
-                id="calculateTotalBtn"
-                onclick="calcTotal()"
-            >
-                Calculate Total Estimated Cost
-            </button>
-
-        </section>
-
-
-        <!-- ==============================
-             TOTAL RESULT
-        =============================== -->
-
-        <section
-            class="total-result-card hidden"
-            id="totalCard"
-        >
-
-            <div class="total-result-header">
-
-                <div>
-
-                    <span class="result-label">
-                        Final Estimate
-                    </span>
-
-                    <h2>
-                        Total Estimated Cost
-                    </h2>
-
-                </div>
-
-                <div class="total-icon">
-                    💰
-                </div>
-
-            </div>
-
-
-            <div class="cost-table-wrapper">
-
-                <table
-                    id="costTable"
-                    class="cost-table"
-                ></table>
-
-            </div>
-
-
-            <div class="grand-total">
-
-                <span>
-                    Grand Total
-                </span>
-
-                <strong id="grandTotalOut">
-                    ₹0
-                </strong>
-
-                <small>
-                    Approximate estimated cost
-                </small>
-
-            </div>
-
-        </section>
-
-
-        <!-- ==============================
-             HOW TO USE
-        =============================== -->
-
-        <section class="information-card">
-
-            <div class="information-header">
-
-                <span class="information-icon">
-                    📘
-                </span>
-
-                <div>
-
-                    <h2>
-                        How to Use This Calculator
-                    </h2>
-
-                    <p>
-                        Follow these simple steps to get an estimate.
-                    </p>
-
-                </div>
-
-            </div>
-
-
-            <ol class="guide-list">
-
-                <li>
-                    Enter the wall length, height and thickness.
-                </li>
-
-                <li>
-                    Enter your brick dimensions and mortar joint thickness.
-                </li>
-
-                <li>
-                    Select the required cement-to-sand mortar ratio.
-                </li>
-
-                <li>
-                    Click <strong>Calculate Quantity</strong> to calculate
-                    estimated bricks, cement and sand.
-                </li>
-
-                <li>
-                    Enter your local material and labor rates.
-                </li>
-
-                <li>
-                    Add optional steel, aggregate and other project costs.
-                </li>
-
-                <li>
-                    Click <strong>Calculate Total Estimated Cost</strong>
-                    to view the approximate project cost.
-                </li>
-
-            </ol>
-
-        </section>
-
-
-        <!-- ==============================
-             CALCULATION INFORMATION
-        =============================== -->
-
-        <section class="information-card">
-
-            <div class="information-header">
-
-                <span class="information-icon">
-                    🧮
-                </span>
-
-                <div>
-
-                    <h2>
-                        Calculation Information
-                    </h2>
-
-                    <p>
-                        The estimator uses standard volume-based calculations.
-                    </p>
-
-                </div>
-
-            </div>
-
-
-            <div class="formula-list">
-
-                <div class="formula-item">
-
-                    <strong>
-                        Wall Volume
-                    </strong>
-
-                    <span>
-                        Wall Length × Wall Height × Wall Thickness
-                    </span>
-
-                </div>
-
-
-                <div class="formula-item">
-
-                    <strong>
-                        Brick Quantity
-                    </strong>
-
-                    <span>
-                        Wall Volume ÷ Effective Brick Volume
-                    </span>
-
-                </div>
-
-
-                <div class="formula-item">
-
-                    <strong>
-                        Mortar
-                    </strong>
-
-                    <span>
-                        Calculated from the wall volume after accounting
-                        for brick volume and the selected cement : sand ratio.
-                    </span>
-
-                </div>
-
-
-                <div class="formula-item">
-
-                    <strong>
-                        Total Cost
-                    </strong>
-
-                    <span>
-                        Material Costs + Labor + Other Additional Costs
-                    </span>
-
-                </div>
-
-            </div>
-
-        </section>
-
-
-        <!-- Disclaimer -->
-        <section class="disclaimer-card">
-
-            <strong>
-                Disclaimer
-            </strong>
-
-            <p>
-                This calculator is intended for estimation and planning purposes
-                only. It does not replace professional engineering, architectural
-                or construction advice.
-            </p>
-
-        </section>
-
+        </div>
     </main>
+    <div id="site-footer"></div>
+    <script src="../assets/js/common.js"></script>
+    <script>
+        function formatCurrency(num) {
+            return "₹ " + num.toLocaleString('en-IN', { maximumFractionDigits: 0 });
+        }
 
+        function calculateCost() {
+            let area = parseFloat(document.getElementById('areaInput').value);
+            let rate = parseFloat(document.getElementById('qualityInput').value);
 
-    <!-- Independent tool script -->
-    <script src="/assets/js/common.js"></script>
-<script src="script.js"></script>
+            if (!area || area <= 0) {
+                alert("Please enter a valid Built-up Area.");
+                return;
+            }
 
-<!-- COMMON FOOTER -->
-<div id="site-footer"></div>
+            let totalCost = area * rate;
+            let materialCost = totalCost * 0.65;
+            let laborCost = totalCost * 0.25;
+            let miscCost = totalCost * 0.10;
 
+            document.getElementById('totalCostResult').innerText = formatCurrency(totalCost);
+            document.getElementById('materialCost').innerText = formatCurrency(materialCost);
+            document.getElementById('laborCost').innerText = formatCurrency(laborCost);
+            document.getElementById('miscCost').innerText = formatCurrency(miscCost);
+
+            // BOQ Breakdown (Percentages of Material Cost)
+            const materials = [
+                { name: "Cement (16%)", percent: 0.16 },
+                { name: "Steel / Rebar (24%)", percent: 0.24 },
+                { name: "Sand (10%)", percent: 0.10 },
+                { name: "Aggregate / Gravel (8%)", percent: 0.08 },
+                { name: "Bricks / Blocks (10%)", percent: 0.10 },
+                { name: "Finishing (Paint, Tiles) (16%)", percent: 0.16 },
+                { name: "Fittings (Plumbing, Elec) (16%)", percent: 0.16 }
+            ];
+
+            let boqHtml = "";
+            materials.forEach(item => {
+                let cost = materialCost * item.percent;
+                boqHtml += `<tr>
+                    <td><strong>${item.name.split(' (')[0]}</strong></td>
+                    <td>${item.name.match(/\(([^)]+)\)/)[1]}</td>
+                    <td>${formatCurrency(cost)}</td>
+                </tr>`;
+            });
+
+            document.getElementById('boqBody').innerHTML = boqHtml;
+            document.getElementById('resultsSection').style.display = 'block';
+            
+            // Scroll to results
+            document.getElementById('resultsSection').scrollIntoView({ behavior: 'smooth' });
+        }
+    </script>
 </body>
 </html>
