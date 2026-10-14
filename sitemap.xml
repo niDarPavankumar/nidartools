@@ -95,4 +95,18 @@
 <loc>https://nidartools.com/pro-word-to-pdf/</loc>
 <priority>0.90</priority>
 </url>
+
+    <url>
+        <loc>https://nidartools.com/image-watermark/</loc>
+        <lastmod>2026-10-14</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+
+    <url>
+        <loc>https://nidartools.com/content/image-watermark-guide/</loc>
+        <lastmod>2026-10-14</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+    </url>
 </urlset>
