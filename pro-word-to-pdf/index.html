@@ -1,51 +1,159 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="canonical" href="https://nidartools.com/pro-word-to-pdf/">
-
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pro Word to PDF Converter | niDar Tools</title>
-    <meta name="description" content="Convert Word (DOCX) documents to PDF instantly in your browser. 100% Free, secure, and fast.">
-    <link rel="icon" href="/assets/favicon/favicon.ico">
-    <link rel="stylesheet" href="/style.css">
-    <link rel="stylesheet" href="style.css">
+    <title>Pro Word to PDF Converter - 100% Free & Secure</title>
+    <meta name="description" content="Convert Microsoft Word (DOCX) files to PDF instantly in your browser. 100% free, secure, and private. No files are uploaded to any server.">
+    <link rel="stylesheet" href="../assets/css/style.css">
     <!-- Required Libraries for Client-Side Conversion -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <style>
+        .pro-container { max-width: 800px; margin: 4rem auto; padding: 0 1.5rem; text-align: center; }
+        .hero-section h1 { font-size: 2.5rem; color: #1e293b; margin-bottom: 1rem; }
+        .hero-section p { color: #475569; font-size: 1.1rem; margin-bottom: 2rem; }
+        
+        .upload-area { border: 3px dashed #3b82f6; border-radius: 12px; padding: 4rem 2rem; background: #f8fafc; cursor: pointer; transition: all 0.3s ease; position: relative; }
+        .upload-area:hover { background: #eff6ff; border-color: #2563eb; }
+        .upload-icon { font-size: 4rem; margin-bottom: 1rem; }
+        .upload-text { font-size: 1.2rem; color: #334155; font-weight: 500; }
+        .upload-subtext { color: #64748b; font-size: 0.9rem; margin-top: 0.5rem; }
+        
+        input[type="file"] { position: absolute; width: 100%; height: 100%; top: 0; left: 0; opacity: 0; cursor: pointer; }
+        
+        .file-info { margin-top: 2rem; display: none; background: white; padding: 1.5rem; border-radius: 12px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); }
+        .file-name { font-size: 1.1rem; color: #0f172a; font-weight: 600; margin-bottom: 1rem; }
+        
+        .btn-action { background: #10b981; color: white; border: none; padding: 12px 28px; border-radius: 8px; cursor: pointer; font-weight: bold; font-size: 1.1rem; transition: background 0.3s; display: inline-flex; align-items: center; gap: 8px; }
+        .btn-action:hover { background: #059669; }
+        .btn-action:disabled { background: #94a3b8; cursor: not-allowed; }
+        
+        .status-message { margin-top: 1rem; font-weight: 500; color: #2563eb; }
+        
+        /* Hidden div to render HTML before PDF generation */
+        #render-container { display: none; }
+        
+        .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; margin-top: 4rem; text-align: left; }
+        .feature-card { background: white; padding: 1.5rem; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
+        .feature-card h3 { font-size: 1.1rem; color: #1e293b; margin-bottom: 0.5rem; }
+        .feature-card p { font-size: 0.95rem; color: #64748b; }
+    </style>
 </head>
 <body>
     <div id="site-header"></div>
-    <main class="tool-main-container">
-        <div class="tool-header">
+    <main class="pro-container">
+        <div class="hero-section">
             <h1>Pro Word to PDF Converter</h1>
-            <p>Convert your DOCX files to high-quality PDF instantly. No files are uploaded to our servers.</p>
+            <p>Convert your DOCX files to PDF directly in your browser. 100% Secure & Private.</p>
         </div>
-        <div class="converter-box card">
-            <div class="upload-area" id="dropZone">
-                <div class="upload-icon">📄 ➡️ 📑</div>
-                <h3>Drag & Drop your Word (.docx) file here</h3>
-                <p>or</p>
-                <input type="file" id="fileInput" accept=".docx" hidden>
-                <button class="nidar-primary-btn" onclick="document.getElementById('fileInput').click()">Select Word File</button>
+
+        <div class="upload-area" id="dropZone">
+            <div class="upload-icon">📄</div>
+            <div class="upload-text">Drag & Drop your Word file here</div>
+            <div class="upload-subtext">or click to browse (Only .docx files)</div>
+            <input type="file" id="fileInput" accept=".docx">
+        </div>
+
+        <div class="file-info" id="fileInfo">
+            <div class="file-name" id="fileName">No file selected</div>
+            <button class="btn-action" id="convertBtn">Convert to PDF</button>
+            <div class="status-message" id="statusMessage"></div>
+        </div>
+        
+        <div id="render-container"></div>
+
+        <div class="features-grid">
+            <div class="feature-card">
+                <h3>🔒 100% Private</h3>
+                <p>Your files are converted in your device. We never upload them to any server.</p>
             </div>
-            <div id="statusArea" class="status-area hidden">
-                <div class="file-info">
-                    <span id="fileName">document.docx</span>
-                </div>
-                <div class="progress-bar-container">
-                    <div id="progressBar" class="progress-bar"></div>
-                </div>
-                <p id="statusText">Ready to convert...</p>
-                <button id="convertBtn" class="nidar-primary-btn w-100 mt-3">Convert to PDF</button>
+            <div class="feature-card">
+                <h3>⚡ Lightning Fast</h3>
+                <p>No waiting in queues. Conversion happens instantly using your device's power.</p>
             </div>
-            
-            <!-- Hidden div for converting docx html to pdf (Fixed for html2pdf rendering) -->
-            <div id="pdfContent" style="position: absolute; left: -9999px; top: -9999px; width: 800px; padding: 40px; font-family: Arial, sans-serif; background: #ffffff; color: #000000; text-align: left; line-height: 1.6;"></div>
+            <div class="feature-card">
+                <h3>🆓 Completely Free</h3>
+                <p>No hidden limits, no sign-ups, and no watermarks on your documents.</p>
+            </div>
         </div>
     </main>
     <div id="site-footer"></div>
-    <script src="/assets/js/common.js"></script>
-    <script src="script.js"></script>
+    
+    <script src="../assets/js/common.js"></script>
+    <script>
+        const fileInput = document.getElementById('fileInput');
+        const fileInfo = document.getElementById('fileInfo');
+        const fileNameDisplay = document.getElementById('fileName');
+        const convertBtn = document.getElementById('convertBtn');
+        const statusMessage = document.getElementById('statusMessage');
+        const renderContainer = document.getElementById('render-container');
+
+        let currentFile = null;
+
+        fileInput.addEventListener('change', function(e) {
+            if (e.target.files.length > 0) {
+                currentFile = e.target.files[0];
+                if (currentFile.name.toLowerCase().endsWith('.docx')) {
+                    fileNameDisplay.textContent = currentFile.name;
+                    fileInfo.style.display = 'block';
+                    statusMessage.textContent = '';
+                    convertBtn.disabled = false;
+                } else {
+                    alert('Please select a valid .docx file.');
+                    fileInput.value = '';
+                    fileInfo.style.display = 'none';
+                }
+            }
+        });
+
+        convertBtn.addEventListener('click', function() {
+            if (!currentFile) return;
+            
+            convertBtn.disabled = true;
+            statusMessage.textContent = '⏳ Reading Word Document...';
+            
+            const reader = new FileReader();
+            reader.onload = function(event) {
+                const arrayBuffer = event.target.result;
+                
+                mammoth.convertToHtml({arrayBuffer: arrayBuffer})
+                    .then(function(result) {
+                        statusMessage.textContent = '⏳ Generating PDF... Please wait.';
+                        const htmlContent = result.value;
+                        
+                        // Prepare content for PDF
+                        renderContainer.innerHTML = '<div style="padding: 20px; font-family: Arial, sans-serif; line-height: 1.6;">' + htmlContent + '</div>';
+                        
+                        const opt = {
+                            margin:       10,
+                            filename:     currentFile.name.replace('.docx', '.pdf'),
+                            image:        { type: 'jpeg', quality: 0.98 },
+                            html2canvas:  { scale: 2 },
+                            jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
+                        };
+                        
+                        html2pdf().set(opt).from(renderContainer).save().then(() => {
+                            statusMessage.textContent = '✅ Conversion Complete! Your PDF is downloading.';
+                            convertBtn.disabled = false;
+                            // Clean up
+                            setTimeout(() => { renderContainer.innerHTML = ''; }, 2000);
+                        }).catch(err => {
+                            console.error(err);
+                            statusMessage.textContent = '❌ Error generating PDF.';
+                            convertBtn.disabled = false;
+                        });
+                        
+                    })
+                    .catch(function(err) {
+                        console.error(err);
+                        statusMessage.textContent = '❌ Error reading the DOCX file. Make sure it is a valid Word document.';
+                        convertBtn.disabled = false;
+                    });
+            };
+            
+            reader.readAsArrayBuffer(currentFile);
+        });
+    </script>
 </body>
 </html>
