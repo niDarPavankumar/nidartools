@@ -4,35 +4,44 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pro PDF Editor - Pro Suite by niDar Tools</title>
-    <meta name="description" content="Professional, private, and browser-based PDF editor. Render, view, and annotate securely.">
+    <meta name="description" content="Professional, private, and browser-based PDF editor. Add text, draw, and annotate securely.">
     <link rel="stylesheet" href="../assets/css/style.css">
     
     <style>
         body { background-color: #f8fafc; }
-        .pro-hero { text-align: center; padding: 3rem 1rem 2rem; background: linear-gradient(135deg, #e0f2fe 0%, #dcfce7 100%); border-bottom: 1px solid #e2e8f0; border-radius: 0 0 40px 40px; margin-bottom: 2rem; }
-        .pro-badge { display: inline-block; padding: 6px 16px; background: #ffffff; color: #059669; font-size: 0.85rem; font-weight: 700; border-radius: 20px; margin-bottom: 1rem; }
-        .pro-hero h1 { font-size: 2.5rem; color: #0f172a; margin: 0 0 1rem 0; font-weight: 800; }
-        .pro-hero p { color: #475569; font-size: 1.1rem; max-width: 650px; margin: 0 auto; }
+        .pro-hero { text-align: center; padding: 2rem 1rem 1.5rem; background: linear-gradient(135deg, #e0f2fe 0%, #dcfce7 100%); border-bottom: 1px solid #e2e8f0; border-radius: 0 0 30px 30px; margin-bottom: 1.5rem; }
+        .pro-badge { display: inline-block; padding: 5px 14px; background: #ffffff; color: #059669; font-size: 0.8rem; font-weight: 700; border-radius: 20px; margin-bottom: 0.8rem; }
+        .pro-hero h1 { font-size: 2.2rem; color: #0f172a; margin: 0 0 0.5rem 0; font-weight: 800; }
+        .pro-hero p { color: #475569; font-size: 1rem; max-width: 600px; margin: 0 auto; }
         
-        .pdf-editor-container { max-width: 1000px; margin: 0 auto 4rem; padding: 1.5rem; background: #ffffff; border-radius: 16px; box-shadow: 0 10px 30px -10px rgba(0,0,0,0.1); }
+        .pdf-editor-container { max-width: 1100px; margin: 0 auto 3rem; padding: 1rem; background: #ffffff; border-radius: 12px; box-shadow: 0 8px 25px -10px rgba(0,0,0,0.1); }
         
-        .pdf-toolbar { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 1rem; padding: 15px; background: #f1f5f9; border-radius: 8px; border: 1px solid #e2e8f0; align-items: center; display: none; }
-        .pdf-btn { padding: 8px 16px; border: none; background: #ffffff; color: #1e293b; border-radius: 6px; cursor: pointer; font-weight: 600; border: 1px solid #cbd5e1; transition: all 0.2s; }
-        .pdf-btn:hover { background: #f8fafc; border-color: #94a3b8; }
+        .pdf-toolbar { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 1rem; padding: 12px; background: #f1f5f9; border-radius: 8px; border: 1px solid #e2e8f0; align-items: center; display: none; }
+        
+        .tool-group { display: flex; gap: 8px; padding-right: 12px; border-right: 2px solid #cbd5e1; align-items: center; }
+        .tool-group:last-child { border-right: none; }
+        
+        .pdf-btn { padding: 6px 12px; border: none; background: #ffffff; color: #1e293b; border-radius: 6px; cursor: pointer; font-weight: 600; font-size: 0.9rem; border: 1px solid #cbd5e1; transition: all 0.2s; display: flex; align-items: center; gap: 5px; }
+        .pdf-btn:hover { background: #e2e8f0; }
+        .pdf-btn.active { background: #3b82f6; color: white; border-color: #2563eb; }
         .pdf-btn.primary { background: #10b981; color: #fff; border: none; }
         .pdf-btn.primary:hover { background: #059669; }
+        .pdf-btn.danger { background: #ef4444; color: white; border: none; }
         
-        .page-info { margin: 0 15px; font-weight: 600; color: #475569; }
-        .toolbar-spacer { flex-grow: 1; }
-
-        #pdf-workspace { border: 2px dashed #cbd5e1; min-height: 500px; display: flex; flex-direction: column; align-items: center; justify-content: center; background: #f8fafc; border-radius: 8px; position: relative; overflow: auto; padding: 20px; }
+        .page-info { margin: 0 10px; font-weight: 600; color: #475569; font-size: 0.9rem; }
         
-        .upload-area { text-align: center; color: #64748b; }
+        #pdf-workspace { border: 2px dashed #cbd5e1; min-height: 500px; display: flex; justify-content: center; background: #e2e8f0; border-radius: 8px; position: relative; overflow: auto; padding: 20px; }
+        
+        .upload-area { text-align: center; color: #64748b; margin-top: 100px; }
         .upload-area input { display: none; }
         .upload-area label { display: inline-block; padding: 12px 24px; background: #10b981; color: white; border-radius: 8px; cursor: pointer; font-weight: bold; margin-top: 15px; transition: background 0.2s; }
         .upload-area label:hover { background: #059669; }
         
-        canvas#pdf-render { border: 1px solid #cbd5e1; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); display: none; }
+        .canvas-wrapper { position: relative; display: none; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2); }
+        
+        canvas#pdf-render { display: block; }
+        .canvas-container { position: absolute !important; top: 0; left: 0; }
+        
     </style>
 </head>
 <body>
@@ -43,31 +52,50 @@
         <section class="pro-hero">
             <div class="pro-badge">✨ PRO PDF STUDIO</div>
             <h1>Pro PDF Editor</h1>
-            <p>View, annotate, and manage your PDFs securely in your browser.</p>
+            <p>Add text, draw, highlight, and manage your PDFs securely in your browser.</p>
         </section>
 
         <div class="pdf-editor-container">
+            
             <div class="pdf-toolbar" id="pdfToolbar">
-                <button class="pdf-btn" id="prev-page">⬅ Prev</button>
-                <span class="page-info">Page: <span id="page-num"></span> / <span id="page-count"></span></span>
-                <button class="pdf-btn" id="next-page">Next ➡</button>
-                <button class="pdf-btn" id="zoom-out" style="margin-left: 15px;">🔍-</button>
-                <button class="pdf-btn" id="zoom-in">🔍+</button>
                 
-                <div class="toolbar-spacer"></div>
-                <button class="pdf-btn primary" onclick="alert('Annotation tools coming in next update!')">✍️ Add Text</button>
+                <div class="tool-group">
+                    <button class="pdf-btn" id="prev-page">⬅ Prev</button>
+                    <span class="page-info"><span id="page-num">1</span> / <span id="page-count">?</span></span>
+                    <button class="pdf-btn" id="next-page">Next ➡</button>
+                </div>
+                
+                <div class="tool-group">
+                    <button class="pdf-btn" id="zoom-out">🔍-</button>
+                    <button class="pdf-btn" id="zoom-in">🔍+</button>
+                </div>
+                
+                <div class="tool-group">
+                    <button class="pdf-btn" id="add-text-btn">✍️ Text</button>
+                    <button class="pdf-btn" id="draw-btn">✏️ Draw</button>
+                    <input type="color" id="color-picker" value="#000000" style="height: 30px; width: 35px; cursor: pointer; border: none; border-radius: 4px;">
+                </div>
+                
+                <div class="tool-group" style="border-right: none; margin-left: auto;">
+                    <button class="pdf-btn danger" id="delete-btn">🗑️ Delete</button>
+                    <button class="pdf-btn primary" id="export-btn">💾 Save PDF</button>
+                </div>
+                
             </div>
 
             <div id="pdf-workspace">
                 <div class="upload-area" id="uploadArea">
                     <div style="font-size: 3rem; margin-bottom: 10px;">📄</div>
-                    <h3>Upload your PDF</h3>
+                    <h3>Upload your PDF to Edit</h3>
                     <p>Processing happens entirely on your device.</p>
                     <label for="pdf-upload">📁 Select PDF File</label>
                     <input type="file" id="pdf-upload" accept="application/pdf">
                 </div>
                 
-                <canvas id="pdf-render"></canvas>
+                <div class="canvas-wrapper" id="canvasWrapper">
+                    <canvas id="pdf-render"></canvas>
+                    <canvas id="fabric-canvas"></canvas>
+                </div>
             </div>
         </div>
     </main>
@@ -75,24 +103,50 @@
     <div id="site-footer"></div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/5.3.1/fabric.min.js"></script>
     <script src="../assets/js/common.js"></script>
     
     <script>
         pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.worker.min.js';
 
-        let pdfDoc = null, pageNum = 1, pageIsRendering = false, pageNumIsPending = null, scale = 1.2;
+        let pdfDoc = null, 
+            pageNum = 1, 
+            pageIsRendering = false, 
+            pageNumIsPending = null, 
+            scale = 1.2,
+            fabricCanvas = null;
 
-        const canvas = document.getElementById('pdf-render'),
-              ctx = canvas.getContext('2d'),
+        const canvasRender = document.getElementById('pdf-render'),
+              ctx = canvasRender.getContext('2d'),
               uploadArea = document.getElementById('uploadArea'),
-              pdfToolbar = document.getElementById('pdfToolbar');
+              pdfToolbar = document.getElementById('pdfToolbar'),
+              canvasWrapper = document.getElementById('canvasWrapper');
+
+        function initFabric(width, height) {
+            if (fabricCanvas) {
+                fabricCanvas.dispose();
+            }
+            const fabricEl = document.getElementById('fabric-canvas');
+            fabricEl.width = width;
+            fabricEl.height = height;
+            
+            fabricCanvas = new fabric.Canvas('fabric-canvas', {
+                isDrawingMode: false
+            });
+            
+            fabricCanvas.freeDrawingBrush.color = document.getElementById('color-picker').value;
+            fabricCanvas.freeDrawingBrush.width = 3;
+        }
 
         const renderPage = num => {
             pageIsRendering = true;
             pdfDoc.getPage(num).then(page => {
                 const viewport = page.getViewport({ scale });
-                canvas.height = viewport.height;
-                canvas.width = viewport.width;
+                
+                canvasRender.height = viewport.height;
+                canvasRender.width = viewport.width;
+                
+                initFabric(viewport.width, viewport.height);
 
                 const renderCtx = { canvasContext: ctx, viewport: viewport };
                 page.render(renderCtx).promise.then(() => {
@@ -111,8 +165,16 @@
             else renderPage(num);
         };
 
-        const showPrevPage = () => { if (pageNum <= 1) return; pageNum--; queueRenderPage(pageNum); };
-        const showNextPage = () => { if (pageNum >= pdfDoc.numPages) return; pageNum++; queueRenderPage(pageNum); };
+        const showPrevPage = () => { 
+            if (pageNum <= 1) return; 
+            pageNum--; 
+            queueRenderPage(pageNum); 
+        };
+        const showNextPage = () => { 
+            if (pageNum >= pdfDoc.numPages) return; 
+            pageNum++; 
+            queueRenderPage(pageNum); 
+        };
         const zoomIn = () => { scale += 0.2; queueRenderPage(pageNum); };
         const zoomOut = () => { if (scale <= 0.6) return; scale -= 0.2; queueRenderPage(pageNum); };
 
@@ -125,20 +187,86 @@
                     pdfjsLib.getDocument(typedarray).promise.then(pdf => {
                         pdfDoc = pdf;
                         document.getElementById('page-count').textContent = pdf.numPages;
+                        
                         uploadArea.style.display = 'none';
                         pdfToolbar.style.display = 'flex';
-                        canvas.style.display = 'block';
+                        canvasWrapper.style.display = 'block';
+                        
                         renderPage(pageNum);
                     }).catch(err => alert("Error loading PDF: " + err.message));
                 };
                 fileReader.readAsArrayBuffer(file);
             }
         });
+        
+        document.getElementById('add-text-btn').addEventListener('click', () => {
+            if(!fabricCanvas) return;
+            fabricCanvas.isDrawingMode = false;
+            document.getElementById('draw-btn').classList.remove('active');
+            
+            const text = new fabric.IText('Tap to Edit Text', {
+                left: fabricCanvas.width / 2 - 50,
+                top: fabricCanvas.height / 2,
+                fontFamily: 'Arial',
+                fill: document.getElementById('color-picker').value,
+                fontSize: 24 * scale
+            });
+            fabricCanvas.add(text);
+            fabricCanvas.setActiveObject(text);
+        });
+
+        document.getElementById('draw-btn').addEventListener('click', (e) => {
+            if(!fabricCanvas) return;
+            fabricCanvas.isDrawingMode = !fabricCanvas.isDrawingMode;
+            
+            if(fabricCanvas.isDrawingMode) {
+                e.target.classList.add('active');
+            } else {
+                e.target.classList.remove('active');
+            }
+        });
+
+        document.getElementById('color-picker').addEventListener('change', (e) => {
+            if(!fabricCanvas) return;
+            const color = e.target.value;
+            fabricCanvas.freeDrawingBrush.color = color;
+            
+            const activeObj = fabricCanvas.getActiveObject();
+            if (activeObj) {
+                activeObj.set('fill', color);
+                fabricCanvas.renderAll();
+            }
+        });
+
+        document.getElementById('delete-btn').addEventListener('click', () => {
+            if(!fabricCanvas) return;
+            const activeObjects = fabricCanvas.getActiveObjects();
+            if (activeObjects.length) {
+                fabricCanvas.discardActiveObject();
+                activeObjects.forEach(function(object) {
+                    fabricCanvas.remove(object);
+                });
+            }
+        });
+
+        document.getElementById('export-btn').addEventListener('click', () => {
+            if(!fabricCanvas) return;
+            alert("Pro Export Feature: Currently under final testing! Will be available soon.");
+        });
 
         document.getElementById('prev-page').addEventListener('click', showPrevPage);
         document.getElementById('next-page').addEventListener('click', showNextPage);
         document.getElementById('zoom-in').addEventListener('click', zoomIn);
         document.getElementById('zoom-out').addEventListener('click', zoomOut);
+        
+        window.addEventListener('keydown', (e) => {
+            if((e.key === 'Delete' || e.key === 'Backspace') && fabricCanvas) {
+                const activeObj = fabricCanvas.getActiveObject();
+                if (activeObj && !activeObj.isEditing) {
+                    fabricCanvas.remove(activeObj);
+                }
+            }
+        });
     </script>
 </body>
 </html>
