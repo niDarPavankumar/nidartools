@@ -3,144 +3,142 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pro PDF Editor - niDar Tools</title>
-    <meta name="description" content="Professional, private, and browser-based PDF editor. Add text, signatures, and annotate securely.">
-    <!-- तुमचे मुख्य CSS -->
+    <title>Pro PDF Editor - Pro Suite by niDar Tools</title>
+    <meta name="description" content="Professional, private, and browser-based PDF editor. Render, view, and annotate securely.">
     <link rel="stylesheet" href="../assets/css/style.css">
     
     <style>
-        .pdf-editor-container {
-            max-width: 1000px;
-            margin: 2rem auto;
-            padding: 1.5rem;
-            background: #ffffff;
-            border-radius: 12px;
-            box-shadow: 0 8px 16px rgba(0,0,0,0.05);
-        }
-        .pdf-toolbar {
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-            margin-bottom: 1rem;
-            padding: 15px;
-            background: #f8fafc;
-            border-radius: 8px;
-            border: 1px solid #e2e8f0;
-            display: none; /* सुरुवातीला लपवलेले असेल */
-        }
-        .pdf-btn {
-            padding: 10px 18px;
-            border: none;
-            background: #3b82f6;
-            color: #fff;
-            border-radius: 6px;
-            cursor: pointer;
-            font-weight: 600;
-            transition: all 0.2s;
-        }
-        .pdf-btn:hover { background: #2563eb; }
-        .pdf-btn.export { background: #10b981; margin-left: auto; }
-        .pdf-btn.export:hover { background: #059669; }
+        body { background-color: #f8fafc; }
+        .pro-hero { text-align: center; padding: 3rem 1rem 2rem; background: linear-gradient(135deg, #e0f2fe 0%, #dcfce7 100%); border-bottom: 1px solid #e2e8f0; border-radius: 0 0 40px 40px; margin-bottom: 2rem; }
+        .pro-badge { display: inline-block; padding: 6px 16px; background: #ffffff; color: #059669; font-size: 0.85rem; font-weight: 700; border-radius: 20px; margin-bottom: 1rem; }
+        .pro-hero h1 { font-size: 2.5rem; color: #0f172a; margin: 0 0 1rem 0; font-weight: 800; }
+        .pro-hero p { color: #475569; font-size: 1.1rem; max-width: 650px; margin: 0 auto; }
         
-        #pdf-workspace {
-            border: 2px dashed #cbd5e1;
-            min-height: 400px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: #f1f5f9;
-            border-radius: 8px;
-            position: relative;
-            overflow: auto;
-        }
+        .pdf-editor-container { max-width: 1000px; margin: 0 auto 4rem; padding: 1.5rem; background: #ffffff; border-radius: 16px; box-shadow: 0 10px 30px -10px rgba(0,0,0,0.1); }
+        
+        .pdf-toolbar { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 1rem; padding: 15px; background: #f1f5f9; border-radius: 8px; border: 1px solid #e2e8f0; align-items: center; display: none; }
+        .pdf-btn { padding: 8px 16px; border: none; background: #ffffff; color: #1e293b; border-radius: 6px; cursor: pointer; font-weight: 600; border: 1px solid #cbd5e1; transition: all 0.2s; }
+        .pdf-btn:hover { background: #f8fafc; border-color: #94a3b8; }
+        .pdf-btn.primary { background: #10b981; color: #fff; border: none; }
+        .pdf-btn.primary:hover { background: #059669; }
+        
+        .page-info { margin: 0 15px; font-weight: 600; color: #475569; }
+        .toolbar-spacer { flex-grow: 1; }
+
+        #pdf-workspace { border: 2px dashed #cbd5e1; min-height: 500px; display: flex; flex-direction: column; align-items: center; justify-content: center; background: #f8fafc; border-radius: 8px; position: relative; overflow: auto; padding: 20px; }
+        
         .upload-area { text-align: center; color: #64748b; }
         .upload-area input { display: none; }
-        .upload-area label {
-            display: inline-block;
-            padding: 12px 24px;
-            background: #f43f5e;
-            color: white;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: bold;
-            margin-top: 15px;
-            transition: background 0.2s;
-        }
-        .upload-area label:hover { background: #e11d48; }
-        .privacy-note {
-            font-size: 0.85rem;
-            color: #64748b;
-            text-align: center;
-            margin-top: 1rem;
-        }
+        .upload-area label { display: inline-block; padding: 12px 24px; background: #10b981; color: white; border-radius: 8px; cursor: pointer; font-weight: bold; margin-top: 15px; transition: background 0.2s; }
+        .upload-area label:hover { background: #059669; }
+        
+        canvas#pdf-render { border: 1px solid #cbd5e1; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); display: none; }
     </style>
 </head>
 <body>
 
-    <!-- हेडर -->
     <div id="site-header"></div>
 
-    <main class="container">
-        <section class="hero" style="text-align: center; margin-bottom: 1rem;">
-            <h1>📝 Pro PDF Editor</h1>
-            <p>Edit, annotate, and sign PDFs directly in your browser.</p>
+    <main>
+        <section class="pro-hero">
+            <div class="pro-badge">✨ PRO PDF STUDIO</div>
+            <h1>Pro PDF Editor</h1>
+            <p>View, annotate, and manage your PDFs securely in your browser.</p>
         </section>
 
         <div class="pdf-editor-container">
-            <!-- टूलबार -->
             <div class="pdf-toolbar" id="pdfToolbar">
-                <button class="pdf-btn">✍️ Add Text</button>
-                <button class="pdf-btn">🖋️ Sign</button>
-                <button class="pdf-btn">🗑️ Delete Page</button>
-                <button class="pdf-btn export" id="exportBtn">💾 Export PDF</button>
+                <button class="pdf-btn" id="prev-page">⬅ Prev</button>
+                <span class="page-info">Page: <span id="page-num"></span> / <span id="page-count"></span></span>
+                <button class="pdf-btn" id="next-page">Next ➡</button>
+                <button class="pdf-btn" id="zoom-out" style="margin-left: 15px;">🔍-</button>
+                <button class="pdf-btn" id="zoom-in">🔍+</button>
+                
+                <div class="toolbar-spacer"></div>
+                <button class="pdf-btn primary" onclick="alert('Annotation tools coming in next update!')">✍️ Add Text</button>
             </div>
 
-            <!-- वर्किंग एरिया -->
             <div id="pdf-workspace">
                 <div class="upload-area" id="uploadArea">
                     <div style="font-size: 3rem; margin-bottom: 10px;">📄</div>
-                    <h3>Drag & Drop your PDF here</h3>
-                    <p>or</p>
+                    <h3>Upload your PDF</h3>
+                    <p>Processing happens entirely on your device.</p>
                     <label for="pdf-upload">📁 Select PDF File</label>
                     <input type="file" id="pdf-upload" accept="application/pdf">
                 </div>
+                
+                <canvas id="pdf-render"></canvas>
             </div>
-            
-            <p class="privacy-note">🔒 100% Private: All processing happens on your device. We do not upload your files.</p>
         </div>
     </main>
 
-    <!-- फुटर -->
     <div id="site-footer"></div>
 
-    <!-- PDF-lib लायब्ररी आणि तुमचे कॉमन JS -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
     <script src="../assets/js/common.js"></script>
     
     <script>
-        // बेसिक UI लॉजिक (फाईल अपलोड झाल्यावर टूलबार दाखवणे)
-        const pdfUpload = document.getElementById('pdf-upload');
-        const uploadArea = document.getElementById('uploadArea');
-        const workspace = document.getElementById('pdf-workspace');
-        const pdfToolbar = document.getElementById('pdfToolbar');
+        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.worker.min.js';
 
-        pdfUpload.addEventListener('change', (e) => {
-            if(e.target.files.length > 0) {
-                const file = e.target.files[0];
-                
-                // अपलोड एरिया लपवा आणि टूलबार दाखवा
-                uploadArea.style.display = 'none';
-                pdfToolbar.style.display = 'flex';
-                
-                // फाईलचे नाव दाखवा
-                workspace.innerHTML = `<div style="text-align: center; padding: 20px;">
-                    <div style="font-size: 4rem; color: #f43f5e;">📑</div>
-                    <h3 style="color: #334155; margin-top: 15px;">${file.name}</h3>
-                    <p style="color: #64748b;">PDF loaded successfully in your browser!</p>
-                    <p style="font-size: 0.9em; margin-top: 20px;">(Advanced editing tools active)</p>
-                </div>`;
+        let pdfDoc = null, pageNum = 1, pageIsRendering = false, pageNumIsPending = null, scale = 1.2;
+
+        const canvas = document.getElementById('pdf-render'),
+              ctx = canvas.getContext('2d'),
+              uploadArea = document.getElementById('uploadArea'),
+              pdfToolbar = document.getElementById('pdfToolbar');
+
+        const renderPage = num => {
+            pageIsRendering = true;
+            pdfDoc.getPage(num).then(page => {
+                const viewport = page.getViewport({ scale });
+                canvas.height = viewport.height;
+                canvas.width = viewport.width;
+
+                const renderCtx = { canvasContext: ctx, viewport: viewport };
+                page.render(renderCtx).promise.then(() => {
+                    pageIsRendering = false;
+                    if (pageNumIsPending !== null) {
+                        renderPage(pageNumIsPending);
+                        pageNumIsPending = null;
+                    }
+                });
+                document.getElementById('page-num').textContent = num;
+            });
+        };
+
+        const queueRenderPage = num => {
+            if (pageIsRendering) pageNumIsPending = num;
+            else renderPage(num);
+        };
+
+        const showPrevPage = () => { if (pageNum <= 1) return; pageNum--; queueRenderPage(pageNum); };
+        const showNextPage = () => { if (pageNum >= pdfDoc.numPages) return; pageNum++; queueRenderPage(pageNum); };
+        const zoomIn = () => { scale += 0.2; queueRenderPage(pageNum); };
+        const zoomOut = () => { if (scale <= 0.6) return; scale -= 0.2; queueRenderPage(pageNum); };
+
+        document.getElementById('pdf-upload').addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if(file && file.type === "application/pdf") {
+                const fileReader = new FileReader();
+                fileReader.onload = function() {
+                    const typedarray = new Uint8Array(this.result);
+                    pdfjsLib.getDocument(typedarray).promise.then(pdf => {
+                        pdfDoc = pdf;
+                        document.getElementById('page-count').textContent = pdf.numPages;
+                        uploadArea.style.display = 'none';
+                        pdfToolbar.style.display = 'flex';
+                        canvas.style.display = 'block';
+                        renderPage(pageNum);
+                    }).catch(err => alert("Error loading PDF: " + err.message));
+                };
+                fileReader.readAsArrayBuffer(file);
             }
         });
+
+        document.getElementById('prev-page').addEventListener('click', showPrevPage);
+        document.getElementById('next-page').addEventListener('click', showNextPage);
+        document.getElementById('zoom-in').addEventListener('click', zoomIn);
+        document.getElementById('zoom-out').addEventListener('click', zoomOut);
     </script>
 </body>
 </html>
