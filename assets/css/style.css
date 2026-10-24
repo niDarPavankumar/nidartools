@@ -4,15 +4,15 @@
 
 /* ---------- Root Variables (Light Theme) ---------- */
 :root {
-  --bg-color: #e6f9f5;
-  --card-bg: rgba(255, 255, 255, 0.85);
+  --bg-color: #ffffff;
+  --card-bg: #ffffff;
   --text-color: #0f172a;
-  --text-muted: #334155;
-  --primary: #0d9488; /* Dark Mint Green / Teal */
+  --text-muted: #475569;
+  --primary: #0d9488;
   --primary-hover: #0f766e;
-  --border-color: rgba(13, 148, 136, 0.25);
-  --shadow: 0 12px 30px -10px rgba(13, 148, 136, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.6);
-  --card-hover-translate: -8px;
+  --border-color: rgba(226, 232, 240, 0.8);
+  --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+  --card-hover-translate: -4px;
   --radius: 16px;
   --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
@@ -66,11 +66,13 @@ html {
 }
 
 body {
-  background: linear-gradient(135deg, #e0f8f5 0%, #ccfbf1 50%, #f1f5f9 100%);
-  background-attachment: fixed;
+  background: linear-gradient(180deg, #ccfbf1 0%, #ffffff 35%, #ffffff 100%);
+  background-repeat: no-repeat;
+  background-attachment: scroll;
   color: var(--text-color);
   line-height: 1.6;
   overflow-x: hidden;
+  min-height: 100vh;
 }
 
 img {
@@ -80,13 +82,19 @@ img {
 
 /* ---------- Header & Navigation ---------- */
 header {
-  background: var(--card-bg);
-  border-bottom: 1px solid var(--border-color);
+  background: #ffffff;
   position: sticky;
   top: 0;
   z-index: 1000;
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+}
+header::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #8b5cf6, #ec4899, #eab308, #10b981, #06b6d4);
 }
 
 .navbar, .nav {
