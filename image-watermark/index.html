@@ -7,39 +7,124 @@
     <meta name="description" content="Add custom text watermarks to your photos instantly in your browser. 100% private, free, and secure. Protect your images with our next-generation Pro Image Watermark tool.">
     <link rel="stylesheet" href="../assets/css/style.css">
     <style>
-                /* NamoCrux Inspired Premium Styling */
-        body { background-color: #f8fafc; }
-        .pro-hero { text-align: center; padding: 3rem 1rem 2rem; background: transparent; border-bottom: none; border-radius: 0 0 40px 40px; margin-bottom: 3rem; }
-        .pro-badge { display: inline-block; padding: 6px 16px; background: #ffffff; color: var(--primary); font-size: 0.85rem; font-weight: 700; border-radius: 20px; margin-bottom: 1rem; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
-        .pro-hero h1 { font-size: 2.5rem; color: var(--text-color); margin: 0 0 1rem 0; font-weight: 800; }
-        .pro-hero p { color: var(--text-muted); font-size: 1.1rem; max-width: 700px; margin: 0 auto; line-height: 1.6; }
+        :root {
+            --nc-accent: #4ade80;
+            --nc-accent-dark: #22c55e;
+            --nc-accent-soft: rgba(74, 222, 128, 0.11);
+            --nc-accent-border: rgba(74, 222, 128, 0.25);
+            --nc-page-bg: #0b1118;
+            --nc-surface: rgba(23, 34, 53, 0.84);
+            --nc-surface-solid: #172235;
+            --nc-text: #f1f5f9;
+            --nc-muted: #a5b4c3;
+            --nc-border: rgba(148, 163, 184, 0.16);
+            --nc-shadow: 0 20px 55px rgba(0, 0, 0, 0.28);
+            --nc-radius: 24px;
+        }
 
-        .tool-layout { display: grid; grid-template-columns: 350px 1fr; gap: 2rem; max-width: 1200px; margin: 0 auto 3rem; padding: 0 1rem; }
-        .controls-panel { background: #ffffff; border-radius: 16px; padding: 1.5rem; box-shadow: 0 10px 30px -10px rgba(0,0,0,0.1); border: 1px solid #e2e8f0; height: fit-content; }
-        .preview-panel { background: #f8fafc; border-radius: 16px; padding: 1.5rem; box-shadow: inset 0 2px 10px rgba(0,0,0,0.05); border: 2px dashed #cbd5e1; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 450px; overflow: hidden; position: relative; }
+        body { 
+            background: radial-gradient(circle at 8% 8%, rgba(74, 222, 128, 0.08), transparent 28%),
+                        radial-gradient(circle at 92% 22%, rgba(59, 130, 246, 0.07), transparent 26%),
+                        linear-gradient(180deg, #0b1118, #0b1118);
+            color: var(--nc-text);
+            min-height: 100vh;
+        }
 
-        .control-group { margin-bottom: 1.2rem; }
-        .control-group label { display: block; font-weight: 600; color: #1e293b; margin-bottom: 0.5rem; font-size: 0.95rem; }
-        .control-group input[type="text"], .control-group select { width: 100%; padding: 10px; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 1rem; outline: none; transition: border-color 0.2s; box-sizing: border-box; }
-        .control-group input[type="text"]:focus, .control-group select:focus { border-color: #0d9488; box-shadow: 0 0 0 3px rgba(13, 148, 136, 0.1); }
-        .control-group input[type="range"] { width: 100%; cursor: pointer; accent-color: #0d9488; }
-        .control-group input[type="color"] { width: 100%; height: 40px; border: none; border-radius: 8px; cursor: pointer; background: none; padding: 0; }
+        .pro-hero { 
+            text-align: center; 
+            padding: 4rem 1rem 2rem; 
+            margin-bottom: 2rem; 
+            position: relative;
+        }
+        
+        .pro-badge { 
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            padding: 8px 15px;
+            border: 1px solid var(--nc-accent-border);
+            border-radius: 999px;
+            background: var(--nc-accent-soft);
+            color: var(--nc-accent);
+            font-size: 0.82rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+        }
+        
+        .pro-hero h1 { 
+            font-size: clamp(2.5rem, 6vw, 4rem);
+            color: var(--nc-text); 
+            margin: 0 0 1rem 0; 
+            font-weight: 900; 
+        }
+        
+        .pro-hero p { 
+            color: var(--nc-muted); 
+            font-size: 1.1rem; 
+            max-width: 600px; 
+            margin: 0 auto; 
+            line-height: 1.6; 
+        }
 
-        .primary-btn { display: block; width: 100%; padding: 12px; background: linear-gradient(135deg, var(--primary) 0%, var(--primary-hover) 100%); color: white; border: none; border-radius: 12px; font-size: 1.1rem; font-weight: bold; cursor: pointer; transition: all 0.3s; text-align: center; box-sizing: border-box; box-shadow: 0 4px 15px rgba(13, 148, 136, 0.3); }
-        .primary-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(13, 148, 136, 0.45); }
+        .tool-layout { 
+            display: grid; 
+            grid-template-columns: 350px 1fr; 
+            gap: 2rem; 
+            max-width: 1100px; 
+            margin: 0 auto 3rem; 
+            padding: 2rem;
+            background: var(--nc-surface);
+            border: 1px solid var(--nc-border);
+            border-radius: var(--nc-radius);
+            box-shadow: var(--nc-shadow);
+            backdrop-filter: blur(18px);
+        }
+
+        .controls-panel { display: flex; flex-direction: column; gap: 1.5rem; }
+        
+        .preview-panel { 
+            background: var(--nc-surface-solid); 
+            border-radius: 16px; 
+            padding: 1.5rem; 
+            border: 2px dashed var(--nc-border); 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            justify-content: center; 
+            min-height: 450px; 
+        }
+
+        .control-group label { display: block; font-weight: 700; color: var(--nc-text); margin-bottom: 0.5rem; font-size: 0.95rem; }
+        .control-group input[type="text"], .control-group select { 
+            width: 100%; padding: 12px; border: 1px solid var(--nc-border); border-radius: 12px; 
+            background: var(--nc-surface-solid); color: var(--nc-text); font-size: 1rem; outline: none; 
+        }
+        .control-group input[type="text"]:focus, .control-group select:focus { border-color: var(--nc-accent); box-shadow: 0 0 0 3px var(--nc-accent-soft); }
+        .control-group input[type="range"] { width: 100%; accent-color: var(--nc-accent); }
+        .control-group input[type="color"] { width: 100%; height: 44px; border: 1px solid var(--nc-border); border-radius: 12px; cursor: pointer; background: var(--nc-surface-solid); }
+
+        .primary-btn { 
+            display: block; width: 100%; padding: 14px; 
+            background: linear-gradient(135deg, var(--nc-accent), var(--nc-accent-dark)); 
+            color: #000; border: none; border-radius: 14px; font-size: 1.1rem; font-weight: 800; 
+            cursor: pointer; transition: all 0.2s ease; box-shadow: 0 10px 25px rgba(74, 222, 128, 0.2); 
+        }
+        .primary-btn:hover { transform: translateY(-2px); box-shadow: 0 14px 30px rgba(74, 222, 128, 0.3); }
 
         #canvas-container { max-width: 100%; max-height: 60vh; display: flex; justify-content: center; align-items: center; }
-        canvas { max-width: 100%; max-height: 100%; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+        canvas { max-width: 100%; max-height: 100%; border-radius: 8px; }
 
-        @media (max-width: 768px) { .tool-layout { grid-template-columns: 1fr; } }
+        @media (max-width: 850px) { 
+            .tool-layout { grid-template-columns: 1fr; padding: 1.5rem; } 
+        }
 
-        /* SEO Content Styling */
-        .seo-content { max-width: 1000px; margin: 0 auto 4rem; padding: 2rem; background: var(--card-bg); border-radius: 16px; box-shadow: var(--shadow); border: 1px solid var(--border-color); }
-        .seo-content h2 { color: var(--text-color); font-size: 1.8rem; margin-bottom: 1rem; font-weight: 800; }
-        .seo-content h3 { color: var(--text-color); font-size: 1.3rem; margin-top: 1.5rem; margin-bottom: 0.8rem; }
-        .seo-content p, .seo-content ul { color: var(--text-muted); line-height: 1.7; font-size: 1.05rem; }
-        .seo-content ul { margin-left: 1.5rem; margin-bottom: 1.5rem; }
-        .seo-content li { margin-bottom: 0.5rem; }
+        .seo-content { 
+            max-width: 900px; margin: 0 auto 4rem; padding: 2.5rem; 
+            background: var(--nc-surface); border-radius: var(--nc-radius); 
+            border: 1px solid var(--nc-border); box-shadow: var(--nc-shadow); 
+        }
+        .seo-content h2, .seo-content h3 { color: var(--nc-text); font-weight: 800; }
+        .seo-content p, .seo-content ul { color: var(--nc-muted); line-height: 1.7; }
     </style>
 </head>
 <body>
