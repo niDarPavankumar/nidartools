@@ -1,292 +1,251 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pro Image Watermark | Free Online Photo Copyright Tool - niDar Tools</title>
-    <meta name="description" content="Add custom text watermarks to your photos instantly in your browser. 100% private, free, and secure. Protect your images with our next-generation Pro Image Watermark tool.">
-    <link rel="stylesheet" href="../assets/css/style.css">
-    <style>
-        :root {
-            --nc-accent: #4ade80;
-            --nc-accent-dark: #22c55e;
-            --nc-accent-soft: rgba(74, 222, 128, 0.11);
-            --nc-accent-border: rgba(74, 222, 128, 0.25);
-            --nc-page-bg: #0b1118;
-            --nc-surface: rgba(23, 34, 53, 0.84);
-            --nc-surface-solid: #172235;
-            --nc-text: #f1f5f9;
-            --nc-muted: #a5b4c3;
-            --nc-border: rgba(148, 163, 184, 0.16);
-            --nc-shadow: 0 20px 55px rgba(0, 0, 0, 0.28);
-            --nc-radius: 24px;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pro Image Watermark | Free Online Photo Copyright Tool - niDar Tools</title>
+  <meta name="description" content="Add custom text watermarks to your photos instantly in your browser. 100% private, free, and secure.">
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <style>
+    /* Exact NamoCrux Light Theme Structure */
+    :root {
+        --nc-accent: #00b894;
+        --nc-accent-dark: #008f76;
+        --nc-accent-soft: rgba(0, 184, 148, 0.12);
+        --nc-accent-border: rgba(0, 184, 148, 0.28);
+        --nc-page-bg: #effcf8;
+        --nc-surface: rgba(255, 255, 255, 0.82);
+        --nc-surface-solid: #ffffff;
+        --nc-text: #13221f;
+        --nc-muted: #60736f;
+        --nc-border: rgba(0, 120, 100, 0.12);
+        --nc-shadow: 0 18px 50px rgba(0, 111, 91, 0.12);
+        --nc-radius: 24px;
+    }
 
-        body { 
-            background: radial-gradient(circle at 8% 8%, rgba(74, 222, 128, 0.08), transparent 28%),
-                        radial-gradient(circle at 92% 22%, rgba(59, 130, 246, 0.07), transparent 26%),
-                        linear-gradient(180deg, #0b1118, #0b1118);
-            color: var(--nc-text);
-            min-height: 100vh;
-        }
+    body {
+        background: radial-gradient(circle at 8% 8%, rgba(0, 184, 148, 0.10), transparent 28%),
+                    radial-gradient(circle at 92% 22%, rgba(83, 185, 255, 0.08), transparent 26%),
+                    linear-gradient(180deg, var(--nc-page-bg), var(--nc-page-bg));
+        color: var(--nc-text);
+        min-height: 100vh;
+    }
 
-        .pro-hero { 
-            text-align: center; 
-            padding: 4rem 1rem 2rem; 
-            margin-bottom: 2rem; 
-            position: relative;
-        }
-        
-        .pro-badge { 
-            display: inline-flex;
-            align-items: center;
-            gap: 7px;
-            padding: 8px 15px;
-            border: 1px solid var(--nc-accent-border);
-            border-radius: 999px;
-            background: var(--nc-accent-soft);
-            color: var(--nc-accent);
-            font-size: 0.82rem;
-            font-weight: 800;
-            margin-bottom: 1rem;
-        }
-        
-        .pro-hero h1 { 
-            font-size: clamp(2.5rem, 6vw, 4rem);
-            color: var(--nc-text); 
-            margin: 0 0 1rem 0; 
-            font-weight: 900; 
-        }
-        
-        .pro-hero p { 
-            color: var(--nc-muted); 
-            font-size: 1.1rem; 
-            max-width: 600px; 
-            margin: 0 auto; 
-            line-height: 1.6; 
-        }
+    /* Hero Section */
+    .namocrux-hero { text-align: center; padding: 60px 20px 40px; }
+    .namocrux-badge {
+        display: inline-flex; gap: 7px; padding: 8px 15px; border: 1px solid var(--nc-accent-border);
+        border-radius: 999px; background: var(--nc-accent-soft); color: var(--nc-accent-dark);
+        font-size: 0.82rem; font-weight: 800; margin-bottom: 15px;
+    }
+    .tool-title { font-size: clamp(2.5rem, 6vw, 4rem); font-weight: 900; color: var(--nc-text); margin: 0 0 10px; }
+    .tool-subtitle { font-size: 1.1rem; color: var(--nc-muted); max-width: 600px; margin: 0 auto 30px; line-height: 1.6;}
 
-        .tool-layout { 
-            display: grid; 
-            grid-template-columns: 350px 1fr; 
-            gap: 2rem; 
-            max-width: 1100px; 
-            margin: 0 auto 3rem; 
-            padding: 2rem;
-            background: var(--nc-surface);
-            border: 1px solid var(--nc-border);
-            border-radius: var(--nc-radius);
-            box-shadow: var(--nc-shadow);
-            backdrop-filter: blur(18px);
-        }
+    /* Main Card Layout */
+    .tool-layout {
+        display: grid; grid-template-columns: 350px 1fr; gap: 2rem; max-width: 1100px; margin: 0 auto 3rem; padding: 2rem;
+        background: var(--nc-surface); border: 1px solid var(--nc-border); border-radius: var(--nc-radius);
+        box-shadow: var(--nc-shadow); backdrop-filter: blur(18px);
+    }
+    @media (max-width: 850px) { .tool-layout { grid-template-columns: 1fr; padding: 1.5rem; } }
 
-        .controls-panel { display: flex; flex-direction: column; gap: 1.5rem; }
-        
-        .preview-panel { 
-            background: var(--nc-surface-solid); 
-            border-radius: 16px; 
-            padding: 1.5rem; 
-            border: 2px dashed var(--nc-border); 
-            display: flex; 
-            flex-direction: column; 
-            align-items: center; 
-            justify-content: center; 
-            min-height: 450px; 
-        }
+    /* Controls Panel */
+    .controls-panel { display: flex; flex-direction: column; gap: 1.2rem; }
+    .control-group label { display: block; font-weight: 700; margin-bottom: 0.5rem; font-size: 0.95rem; color: var(--nc-text); }
+    .control-group input[type="text"], .control-group select {
+        width: 100%; padding: 12px; border: 1px solid var(--nc-border); border-radius: 12px;
+        background: var(--nc-surface-solid); color: var(--nc-text); font-size: 1rem; outline: none;
+    }
+    .control-group input[type="text"]:focus, .control-group select:focus { border-color: var(--nc-accent); box-shadow: 0 0 0 3px var(--nc-accent-soft); }
+    .control-group input[type="range"] { width: 100%; accent-color: var(--nc-accent); }
+    .control-group input[type="color"] { width: 100%; height: 44px; border: 1px solid var(--nc-border); border-radius: 12px; cursor: pointer; background: var(--nc-surface-solid); }
+    
+    /* Glossy Button */
+    .generate-btn {
+        width: 100%; padding: 14px; background: linear-gradient(135deg, var(--nc-accent), var(--nc-accent-dark));
+        color: #ffffff; border: none; border-radius: 14px; font-size: 1.1rem; font-weight: 800;
+        cursor: pointer; box-shadow: 0 12px 28px rgba(0, 184, 148, 0.24); transition: all 0.2s ease;
+    }
+    .generate-btn:hover { transform: translateY(-2px); box-shadow: 0 16px 32px rgba(0, 184, 148, 0.30); }
 
-        .control-group label { display: block; font-weight: 700; color: var(--nc-text); margin-bottom: 0.5rem; font-size: 0.95rem; }
-        .control-group input[type="text"], .control-group select { 
-            width: 100%; padding: 12px; border: 1px solid var(--nc-border); border-radius: 12px; 
-            background: var(--nc-surface-solid); color: var(--nc-text); font-size: 1rem; outline: none; 
-        }
-        .control-group input[type="text"]:focus, .control-group select:focus { border-color: var(--nc-accent); box-shadow: 0 0 0 3px var(--nc-accent-soft); }
-        .control-group input[type="range"] { width: 100%; accent-color: var(--nc-accent); }
-        .control-group input[type="color"] { width: 100%; height: 44px; border: 1px solid var(--nc-border); border-radius: 12px; cursor: pointer; background: var(--nc-surface-solid); }
-
-        .primary-btn { 
-            display: block; width: 100%; padding: 14px; 
-            background: linear-gradient(135deg, var(--nc-accent), var(--nc-accent-dark)); 
-            color: #000; border: none; border-radius: 14px; font-size: 1.1rem; font-weight: 800; 
-            cursor: pointer; transition: all 0.2s ease; box-shadow: 0 10px 25px rgba(74, 222, 128, 0.2); 
-        }
-        .primary-btn:hover { transform: translateY(-2px); box-shadow: 0 14px 30px rgba(74, 222, 128, 0.3); }
-
-        #canvas-container { max-width: 100%; max-height: 60vh; display: flex; justify-content: center; align-items: center; }
-        canvas { max-width: 100%; max-height: 100%; border-radius: 8px; }
-
-        @media (max-width: 850px) { 
-            .tool-layout { grid-template-columns: 1fr; padding: 1.5rem; } 
-        }
-
-        .seo-content { 
-            max-width: 900px; margin: 0 auto 4rem; padding: 2.5rem; 
-            background: var(--nc-surface); border-radius: var(--nc-radius); 
-            border: 1px solid var(--nc-border); box-shadow: var(--nc-shadow); 
-        }
-        .seo-content h2, .seo-content h3 { color: var(--nc-text); font-weight: 800; }
-        .seo-content p, .seo-content ul { color: var(--nc-muted); line-height: 1.7; }
-    </style>
+    /* Preview Panel */
+    .preview-panel {
+        background: var(--nc-surface-solid); border-radius: 16px; padding: 1.5rem;
+        border: 2px dashed var(--nc-border); display: flex; flex-direction: column;
+        align-items: center; justify-content: center; min-height: 450px; text-align: center;
+    }
+    #canvas-container { max-width: 100%; max-height: 60vh; display: flex; justify-content: center; align-items: center; }
+    canvas { max-width: 100%; max-height: 100%; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+    
+    /* SEO Content */
+    .seo-content {
+        max-width: 900px; margin: 0 auto 4rem; padding: 2.5rem;
+        background: var(--nc-surface); border-radius: var(--nc-radius);
+        border: 1px solid var(--nc-border); box-shadow: var(--nc-shadow);
+    }
+    .seo-content h2, .seo-content h3 { color: var(--nc-text); font-weight: 800; margin-bottom: 1rem; }
+    .seo-content p, .seo-content ul { color: var(--nc-muted); line-height: 1.7; margin-bottom: 1rem; }
+  </style>
 </head>
 <body>
-    <div id="site-header"></div>
-    <main>
-        <section class="pro-hero">
-            <div class="pro-badge">✨ PRO WATERMARK STUDIO</div>
-            <h1>Pro Image Watermark</h1>
-            <p>Protect your visual content with custom text watermarks instantly. 100% private processing, completely free for everyone.</p>
-        </section>
+  <div id="site-header"></div>
+  
+  <main class="namocrux-page">
+    <section class="namocrux-hero">
+      <div class="namocrux-badge">✨ PRO WATERMARK STUDIO</div>
+      <h1 class="tool-title">Pro Image Watermark</h1>
+      <p class="tool-subtitle">Protect your visual content with custom text watermarks instantly. 100% private processing, completely free for everyone.</p>
+    </section>
 
-        <div class="tool-layout">
-            <div class="controls-panel">
-                <div class="control-group">
-                    <label for="img-upload">1. Upload Image</label>
-                    <input type="file" id="img-upload" accept="image/*" class="primary-btn" style="background: #e2e8f0; color: #1e293b; padding: 8px; font-size: 0.9rem;">
-                </div>
-                
-                <div class="control-group">
-                    <label for="wm-text">2. Watermark Text</label>
-                    <input type="text" id="wm-text" value="© niDar Tools" placeholder="Enter your text here">
-                </div>
-
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
-                    <div class="control-group">
-                        <label for="wm-color">Text Color</label>
-                        <input type="color" id="wm-color" value="#ffffff">
-                    </div>
-                    <div class="control-group">
-                        <label for="wm-position">Position</label>
-                        <select id="wm-position">
-                            <option value="center">Center</option>
-                            <option value="bottom-right">Bottom Right</option>
-                            <option value="bottom-left">Bottom Left</option>
-                            <option value="top-right">Top Right</option>
-                            <option value="top-left">Top Left</option>
-                        </select>
-                    </div>
-                </div>
-
-                <div class="control-group">
-                    <label for="wm-size">Text Size</label>
-                    <input type="range" id="wm-size" min="10" max="300" value="60">
-                </div>
-
-                <div class="control-group">
-                    <label for="wm-opacity">Transparency</label>
-                    <input type="range" id="wm-opacity" min="0.1" max="1" step="0.1" value="0.7">
-                </div>
-
-                <button class="primary-btn" id="download-btn" style="margin-top: 1.5rem;">⬇ Download Image</button>
+    <div class="tool-layout">
+        <div class="controls-panel">
+            <div class="control-group">
+                <label for="img-upload">1. Upload Image</label>
+                <input type="file" id="img-upload" accept="image/*" class="generate-btn" style="background: var(--nc-surface-solid); color: var(--nc-text); border: 1px solid var(--nc-border); box-shadow: none; padding: 10px;">
             </div>
-            
-            <div class="preview-panel">
-                <div id="placeholder-text" style="text-align: center; color: #64748b;">
-                    <div style="font-size: 4rem; margin-bottom: 10px;">🛡️</div>
-                    <h3>Upload an image to preview</h3>
-                    <p>Your photos never leave your device.</p>
+
+            <div class="control-group">
+                <label for="wm-text">2. Watermark Text</label>
+                <input type="text" id="wm-text" value="© niDar Tools" placeholder="Enter your text here">
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                <div class="control-group">
+                    <label for="wm-color">Text Color</label>
+                    <input type="color" id="wm-color" value="#ffffff">
                 </div>
-                <div id="canvas-container" style="display: none;">
-                    <canvas id="canvas"></canvas>
+                <div class="control-group">
+                    <label for="wm-position">Position</label>
+                    <select id="wm-position">
+                        <option value="center">Center</option>
+                        <option value="bottom-right">Bottom Right</option>
+                        <option value="bottom-left">Bottom Left</option>
+                        <option value="top-right">Top Right</option>
+                        <option value="top-left">Top Left</option>
+                    </select>
                 </div>
             </div>
+
+            <div class="control-group">
+                <label for="wm-size">Text Size</label>
+                <input type="range" id="wm-size" min="10" max="300" value="60">
+            </div>
+
+            <div class="control-group">
+                <label for="wm-opacity">Transparency</label>
+                <input type="range" id="wm-opacity" min="0.1" max="1" step="0.1" value="0.7">
+            </div>
+
+            <button class="generate-btn" id="download-btn" style="margin-top: 1rem;">⬇ Download Image</button>
         </div>
 
-        <section class="seo-content">
-            <h2>Why Use Pro Image Watermark?</h2>
-            <p><strong>Our tool is available completely free of cost for everyone.</strong> In the digital age, protecting your creative work is more important than ever. The Pro Image Watermark tool allows photographers, designers, and business owners to securely add custom copyright text or branding to their images.</p>
-            
-            <h3>100% Private & Secure</h3>
-            <p>Our tool runs entirely in your browser using Client-Side processing. This means your sensitive photos and personal documents are <strong>never uploaded to any server</strong>, ensuring absolute privacy and lightning-fast performance.</p>
-            
-            <h3>Key Features of Our Watermark Maker</h3>
-            <ul>
-                <li><strong>Instant Live Preview:</strong> See your watermark changes in real-time as you adjust settings.</li>
-                <li><strong>Fully Customizable:</strong> Adjust text size, position, color, and opacity effortlessly.</li>
-                <li><strong>High Quality Export:</strong> Maintain original image quality upon download.</li>
-                <li><strong>No Watermarks on the Watermark:</strong> We do not force our own logo on your images. The tool is truly yours to use.</li>
-            </ul>
-        </section>
-    </main>
-    <div id="site-footer"></div>
-    
-    <script src="../assets/js/common.js"></script>
-    <script>
-        const canvas = document.getElementById('canvas');
-        const ctx = canvas.getContext('2d');
-        const container = document.getElementById('canvas-container');
-        let img = new Image();
-        let isImageLoaded = false;
+        <div class="preview-panel">
+            <div id="placeholder-text" style="color: var(--nc-muted);">
+                <div style="font-size: 4rem; margin-bottom: 10px;">🛡️</div>
+                <h3 style="color: var(--nc-text); margin-bottom: 5px;">Upload an image to preview</h3>
+                <p>Your photos never leave your device.</p>
+            </div>
+            <div id="canvas-container" style="display: none;">
+                <canvas id="canvas"></canvas>
+            </div>
+        </div>
+    </div>
 
-        const inputs = ['wm-text', 'wm-color', 'wm-size', 'wm-opacity', 'wm-position'];
-        inputs.forEach(id => document.getElementById(id).addEventListener('input', drawWatermark));
+    <section class="seo-content">
+        <h2>Why Use Pro Image Watermark?</h2>
+        <p><strong>Our tool is available completely free of cost for everyone.</strong> In the digital age, protecting your creative work is more important than ever. The Pro Image Watermark tool allows photographers, designers, and business owners to securely add custom copyright text or branding to their images.</p>
 
-        document.getElementById('img-upload').addEventListener('change', function(e) {
-            const file = e.target.files[0];
-            if (!file) return;
-            
-            const reader = new FileReader();
-            reader.onload = function(event) {
-                img.onload = function() {
-                    isImageLoaded = true;
-                    canvas.width = img.width;
-                    canvas.height = img.height;
-                    document.getElementById('placeholder-text').style.display = 'none';
-                    container.style.display = 'flex';
-                    drawWatermark();
-                }
-                img.src = event.target.result;
+        <h3>100% Private & Secure</h3>
+        <p>Our tool runs entirely in your browser using Client-Side processing. This means your sensitive photos and personal documents are <strong>never uploaded to any server</strong>, ensuring absolute privacy and lightning-fast performance.</p>
+
+        <h3>Key Features of Our Watermark Maker</h3>
+        <ul style="margin-left: 1.5rem;">
+            <li><strong>Instant Live Preview:</strong> See your watermark changes in real-time as you adjust settings.</li>
+            <li><strong>Fully Customizable:</strong> Adjust text size, position, color, and opacity effortlessly.</li>
+            <li><strong>High Quality Export:</strong> Maintain original image quality upon download.</li>
+            <li><strong>No Watermarks on the Watermark:</strong> We do not force our own logo on your images. The tool is truly yours to use.</li>
+        </ul>
+    </section>
+  </main>
+  
+  <div id="site-footer"></div>
+  
+  <script src="../assets/js/common.js"></script>
+  <script>
+    const canvas = document.getElementById('canvas');
+    const ctx = canvas.getContext('2d');
+    const container = document.getElementById('canvas-container');
+    let img = new Image();
+    let isImageLoaded = false;
+
+    const inputs = ['wm-text', 'wm-color', 'wm-size', 'wm-opacity', 'wm-position'];
+    inputs.forEach(id => document.getElementById(id).addEventListener('input', drawWatermark));
+
+    document.getElementById('img-upload').addEventListener('change', function(e) {
+        const file = e.target.files[0];
+        if (!file) return;
+
+        const reader = new FileReader();
+        reader.onload = function(event) {
+            img.onload = function() {
+                isImageLoaded = true;
+                canvas.width = img.width;
+                canvas.height = img.height;
+                document.getElementById('placeholder-text').style.display = 'none';
+                container.style.display = 'flex';
+                drawWatermark();
             }
-            reader.readAsDataURL(file);
-        });
+            img.src = event.target.result;
+        }
+        reader.readAsDataURL(file);
+    });
 
-        function drawWatermark() {
-            if (!isImageLoaded) return;
-            
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            ctx.drawImage(img, 0, 0);
+    function drawWatermark() {
+        if (!isImageLoaded) return;
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.drawImage(img, 0, 0);
 
-            const text = document.getElementById('wm-text').value;
-            const color = document.getElementById('wm-color').value;
-            const size = document.getElementById('wm-size').value;
-            const opacity = document.getElementById('wm-opacity').value;
-            const position = document.getElementById('wm-position').value;
+        const text = document.getElementById('wm-text').value;
+        const color = document.getElementById('wm-color').value;
+        const size = document.getElementById('wm-size').value;
+        const opacity = document.getElementById('wm-opacity').value;
+        const position = document.getElementById('wm-position').value;
 
-            ctx.globalAlpha = opacity;
-            ctx.font = `bold ${size}px Arial, sans-serif`;
-            ctx.fillStyle = color;
-            
-            ctx.shadowColor = 'rgba(0,0,0,0.8)';
-            ctx.shadowBlur = 8;
-            ctx.shadowOffsetX = 3;
-            ctx.shadowOffsetY = 3;
+        ctx.globalAlpha = opacity;
+        ctx.font = `bold ${size}px Arial, sans-serif`;
+        ctx.fillStyle = color;
+        ctx.shadowColor = 'rgba(0,0,0,0.8)';
+        ctx.shadowBlur = 8;
+        ctx.shadowOffsetX = 3;
+        ctx.shadowOffsetY = 3;
 
-            const metrics = ctx.measureText(text);
-            const textWidth = metrics.width;
-            const textHeight = parseInt(size);
-            
-            let x, y;
-            const padding = Math.max(30, textHeight);
+        const metrics = ctx.measureText(text);
+        const textWidth = metrics.width;
+        const textHeight = parseInt(size);
 
-            switch(position) {
-                case 'top-left': x = padding; y = textHeight + padding; break;
-                case 'top-right': x = canvas.width - textWidth - padding; y = textHeight + padding; break;
-                case 'bottom-left': x = padding; y = canvas.height - padding; break;
-                case 'bottom-right': x = canvas.width - textWidth - padding; y = canvas.height - padding; break;
-                case 'center': x = (canvas.width - textWidth) / 2; y = (canvas.height + textHeight / 3) / 2; break;
-            }
+        let x, y;
+        const padding = Math.max(30, textHeight);
 
-            ctx.fillText(text, x, y);
-            
-            ctx.globalAlpha = 1.0; 
-            ctx.shadowColor = 'transparent';
+        switch(position) {
+            case 'top-left': x = padding; y = textHeight + padding; break;
+            case 'top-right': x = canvas.width - textWidth - padding; y = textHeight + padding; break;
+            case 'bottom-left': x = padding; y = canvas.height - padding; break;
+            case 'bottom-right': x = canvas.width - textWidth - padding; y = canvas.height - padding; break;
+            case 'center': x = (canvas.width - textWidth) / 2; y = (canvas.height + textHeight / 3) / 2; break;
         }
 
-        document.getElementById('download-btn').addEventListener('click', () => {
-            if (!isImageLoaded) return alert("Please upload an image first!");
-            const link = document.createElement('a');
-            link.download = 'watermarked-by-nidartools.jpg';
-            link.href = canvas.toDataURL('image/jpeg', 0.95);
-            link.click();
-        });
-    </script>
+        ctx.fillText(text, x, y);
+        ctx.globalAlpha = 1.0;
+        ctx.shadowColor = 'transparent';
+    }
+
+    document.getElementById('download-btn').addEventListener('click', () => {
+        if (!isImageLoaded) return alert("Please upload an image first!");
+        const link = document.createElement('a');
+        link.download = 'watermarked-by-nidartools.jpg';
+        link.href = canvas.toDataURL('image/jpeg', 0.95);
+        link.click();
+    });
+  </script>
 </body>
 </html>
