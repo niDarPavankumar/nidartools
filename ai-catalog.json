@@ -1,0 +1,20 @@
+{
+  "schema_version": "1.0",
+  "name": "niDar Tools",
+  "description": "Free online tools for image processing, PDF manipulation, calculators, and developer utilities.",
+  "contact": {
+    "email": "support@nidartools.com"
+  },
+  "resources": [
+    {
+      "name": "Pro Image Watermark",
+      "url": "https://nidartools.com/image-watermark/",
+      "type": "web"
+    },
+    {
+      "name": "NamoCrux",
+      "url": "https://nidartools.com/namocrux/",
+      "type": "web"
+    }
+  ]
+}

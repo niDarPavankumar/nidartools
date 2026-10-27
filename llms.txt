@@ -1,0 +1,8 @@
+# niDar Tools
+
+Welcome to the niDar Tools AI overview. We provide a suite of free online utilities for everyday tasks.
+
+## Available Tools
+- [Pro Image Watermark](https://nidartools.com/image-watermark/)
+- [User Guide](https://nidartools.com/user-guide/)
+- [NamoCrux](https://nidartools.com/namocrux/)
