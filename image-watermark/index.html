@@ -124,6 +124,48 @@
     html[data-theme="senior"] * { text-shadow: none; border-width: 2px !important; }
     
   </style>
+
+  <!-- SEO Schema Markup -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "SoftwareApplication",
+        "name": "Pro Image Watermark",
+        "applicationCategory": "DesignApplication",
+        "operatingSystem": "Any",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD"
+        },
+        "description": "Add custom text watermarks to your photos instantly in your browser. 100% private, free, and secure."
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Is the Pro Image Watermark tool free to use?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes, our tool is available completely free of cost for everyone. No hidden charges."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Are my photos uploaded to a server?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "No, our tool runs entirely in your browser using Client-Side processing. Your photos are never uploaded to any server, ensuring absolute privacy."
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
 </head>
 <body>
   <div id="site-header"></div>
