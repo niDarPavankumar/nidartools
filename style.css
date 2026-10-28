@@ -996,3 +996,10 @@ html[data-theme="senior"] .nidar-primary-btn {
   }
 }
 
+
+/* Fix CLS for workspace-card on Desktop */
+@media (min-width: 768px) {
+  .workspace-card {
+    min-height: 800px;
+  }
+}
