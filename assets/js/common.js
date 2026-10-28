@@ -411,7 +411,7 @@
                 'site-footer',
                 'footer.html',
                 function () {
-                    loadTrustpilot();
+                    setTimeout(loadTrustpilot, 3500);
                 }
             );
 

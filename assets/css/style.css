@@ -14,7 +14,7 @@
   --shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.5), 0 4px 6px -2px rgba(0, 0, 0, 0.3);
   --card-hover-translate: -6px;
   --radius: 16px;
-  --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  --/* PageSpeed Fix */
 }
 
 /* ---------- Dark Theme Overrides ---------- */
@@ -58,7 +58,7 @@ body.senior-theme .card {
   margin: 0;
   padding: 0;
   font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+  /* PageSpeed Fix */
 }
 
 html {
@@ -589,7 +589,7 @@ body.senior-theme footer a:hover {
   border: none;
   cursor: pointer;
   box-shadow: 0 4px 15px rgba(13, 148, 136, 0.4), inset 0 2px 0 rgba(255, 255, 255, 0.3);
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  /* PageSpeed Fix */
 }
 .btn:hover, .nidar-primary-btn:hover, .primary-btn:hover {
   background: linear-gradient(135deg, #14b8a6 0%, #0d9488 100%);
