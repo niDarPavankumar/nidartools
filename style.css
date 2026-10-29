@@ -1018,3 +1018,11 @@ html[data-theme="senior"] .nidar-primary-btn {
     object-fit: contain;
   }
 }
+
+/* Final Hard Fix for #tools section CLS on Desktop */
+@media (min-width: 768px) {
+  section#tools.workspace-card {
+    min-height: 900px;
+    contain: layout;
+  }
+}
