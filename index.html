@@ -14,6 +14,7 @@
     <meta name="robots" content="index, follow">
     
     <!-- Using inline premium CSS to avoid old style.css errors and enforce NamoCrux theme -->
+    <link rel="stylesheet" href="/assets/css/common.css" data-nidar-common-css="true">
     <style>
         /* Exact NamoCrux Light Theme Structure for Home Page */
         :root {
@@ -152,6 +153,15 @@
         
         .badge-new { position: absolute; top: 15px; right: 15px; background: #ef4444; color: white; font-size: 0.65rem; padding: 3px 8px; border-radius: 12px; font-weight: 900; }
         .badge-pro { position: absolute; top: 15px; right: 15px; background: linear-gradient(90deg, #ff8a00, #e52e71); color: white; font-size: 0.65rem; padding: 3px 8px; border-radius: 12px; font-weight: 900; }
+
+        /* CLS fixes */
+        html { scrollbar-gutter: stable; }
+        .nidar-tool-icon { height: 40px; line-height: 40px; overflow: hidden; font-family: "Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif; }
+        .nidar-filter-btn { line-height: 1.4; }
+        @media (min-width: 768px) {
+            .namocrux-hero { min-height: 420px; }
+            .nidar-tool-card { min-height: 190px; }
+        }
     </style>
 </head>
 
