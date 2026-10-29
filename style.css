@@ -1003,3 +1003,18 @@ html[data-theme="senior"] .nidar-primary-btn {
     min-height: 800px;
   }
 }
+
+/* Responsive layout for Trustpilot and Image Tools & Image CLS Fix */
+@media (min-width: 768px) {
+  .trustpilot-widget, .image-tool-container, .tool-container {
+    width: 100%;
+    max-width: 900px;
+    margin: 0 auto;
+    display: block;
+  }
+  .workspace-card img {
+    width: 48px;
+    height: 48px;
+    object-fit: contain;
+  }
+}

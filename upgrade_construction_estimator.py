@@ -1,0 +1,239 @@
+import os
+
+# 1. Upgrade the Tool Page
+tool_dir = 'construction-cost-estimator'
+if not os.path.exists(tool_dir):
+    os.makedirs(tool_dir)
+
+tool_file = f"{tool_dir}/index.html"
+tool_html = """<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pro Construction Cost & BOQ Estimator - Calculate Material & Labor</title>
+    <meta name="description" content="Free online construction cost estimator. Calculate total building cost, material estimates, labor costs, and generate a detailed BOQ instantly.">
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <style>
+        .pro-container { max-width: 900px; margin: 3rem auto; padding: 0 1rem; }
+        .hero-section { text-align: center; margin-bottom: 2rem; }
+        .hero-section h1 { font-size: 2.2rem; color: #1e293b; margin-bottom: 0.5rem; }
+        .hero-section p { color: #475569; font-size: 1.1rem; }
+        
+        .calculator-card { background: white; padding: 2rem; border-radius: 12px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); margin-bottom: 2rem; }
+        
+        .input-group { margin-bottom: 1.5rem; }
+        .input-group label { display: block; font-weight: 600; color: #334155; margin-bottom: 0.5rem; }
+        .input-group input, .input-group select { width: 100%; padding: 12px; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 1rem; outline: none; }
+        .input-group input:focus, .input-group select:focus { border-color: #3b82f6; box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1); }
+        
+        .btn-calculate { width: 100%; background: #3b82f6; color: white; border: none; padding: 14px; font-size: 1.1rem; font-weight: bold; border-radius: 8px; cursor: pointer; transition: 0.3s; }
+        .btn-calculate:hover { background: #2563eb; }
+        
+        .results-section { display: none; margin-top: 2rem; }
+        .total-cost-box { background: #f8fafc; border-left: 5px solid #10b981; padding: 1.5rem; border-radius: 8px; margin-bottom: 2rem; text-align: center; }
+        .total-cost-box h2 { color: #0f172a; font-size: 2rem; margin: 0; }
+        .total-cost-box p { color: #64748b; margin: 0; font-size: 1.1rem; }
+        
+        .cost-split { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem; margin-bottom: 2rem; }
+        .split-card { background: white; border: 1px solid #e2e8f0; padding: 1.5rem; border-radius: 8px; text-align: center; }
+        .split-card h3 { margin: 0 0 0.5rem 0; color: #475569; font-size: 1.1rem; }
+        .split-card .amount { font-size: 1.5rem; font-weight: bold; color: #0f172a; }
+        
+        .boq-table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+        .boq-table th, .boq-table td { padding: 12px; text-align: left; border-bottom: 1px solid #e2e8f0; }
+        .boq-table th { background: #f1f5f9; color: #334155; font-weight: 600; }
+        .boq-table tr:hover { background: #f8fafc; }
+        
+        .btn-print { background: #64748b; color: white; border: none; padding: 10px 20px; border-radius: 6px; cursor: pointer; float: right; margin-bottom: 1rem; }
+        .btn-print:hover { background: #475569; }
+
+        @media print {
+            body * { visibility: hidden; }
+            #printableArea, #printableArea * { visibility: visible; }
+            #printableArea { position: absolute; left: 0; top: 0; width: 100%; }
+            .btn-print { display: none; }
+        }
+    </style>
+</head>
+<body>
+    <div id="site-header"></div>
+    <main class="pro-container">
+        <div class="hero-section">
+            <h1>Pro Construction Cost Estimator</h1>
+            <p>Calculate BOQ, Material & Labor Costs for your dream home.</p>
+        </div>
+
+        <div class="calculator-card">
+            <div class="input-group">
+                <label>Built-up Area (in Sq. Ft.)</label>
+                <input type="number" id="areaInput" placeholder="e.g., 1000" min="100">
+            </div>
+            <div class="input-group">
+                <label>Construction Quality</label>
+                <select id="qualityInput">
+                    <option value="1300">Basic / Standard (₹1300/sq.ft)</option>
+                    <option value="1600" selected>Premium / Medium (₹1600/sq.ft)</option>
+                    <option value="2200">Luxury / High-End (₹2200/sq.ft)</option>
+                </select>
+            </div>
+            <button class="btn-calculate" onclick="calculateCost()">Calculate Total Cost & BOQ</button>
+        </div>
+
+        <div class="results-section" id="resultsSection">
+            <button class="btn-print" onclick="window.print()">🖨️ Print / Save as PDF</button>
+            <div id="printableArea">
+                <div class="total-cost-box">
+                    <p>Estimated Total Construction Cost</p>
+                    <h2 id="totalCostResult">₹ 0</h2>
+                </div>
+
+                <div class="cost-split">
+                    <div class="split-card" style="border-top: 4px solid #3b82f6;">
+                        <h3>🛠️ Material Cost (65%)</h3>
+                        <div class="amount" id="materialCost">₹ 0</div>
+                    </div>
+                    <div class="split-card" style="border-top: 4px solid #f59e0b;">
+                        <h3>👷 Labor Cost (25%)</h3>
+                        <div class="amount" id="laborCost">₹ 0</div>
+                    </div>
+                    <div class="split-card" style="border-top: 4px solid #8b5cf6;">
+                        <h3>📐 Architect & Misc (10%)</h3>
+                        <div class="amount" id="miscCost">₹ 0</div>
+                    </div>
+                </div>
+
+                <div class="calculator-card">
+                    <h3 style="margin-top: 0; color: #1e293b;">Bill of Quantities (BOQ) - Material Breakdown</h3>
+                    <p style="color: #64748b; font-size: 0.9rem;">Estimated breakdown of the material cost.</p>
+                    <table class="boq-table">
+                        <thead>
+                            <tr>
+                                <th>Material Type</th>
+                                <th>% of Total Material</th>
+                                <th>Estimated Cost (₹)</th>
+                            </tr>
+                        </thead>
+                        <tbody id="boqBody">
+                            <!-- JS will populate this -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </main>
+    <div id="site-footer"></div>
+    <script src="../assets/js/common.js"></script>
+    <script>
+        function formatCurrency(num) {
+            return "₹ " + num.toLocaleString('en-IN', { maximumFractionDigits: 0 });
+        }
+
+        function calculateCost() {
+            let area = parseFloat(document.getElementById('areaInput').value);
+            let rate = parseFloat(document.getElementById('qualityInput').value);
+
+            if (!area || area <= 0) {
+                alert("Please enter a valid Built-up Area.");
+                return;
+            }
+
+            let totalCost = area * rate;
+            let materialCost = totalCost * 0.65;
+            let laborCost = totalCost * 0.25;
+            let miscCost = totalCost * 0.10;
+
+            document.getElementById('totalCostResult').innerText = formatCurrency(totalCost);
+            document.getElementById('materialCost').innerText = formatCurrency(materialCost);
+            document.getElementById('laborCost').innerText = formatCurrency(laborCost);
+            document.getElementById('miscCost').innerText = formatCurrency(miscCost);
+
+            // BOQ Breakdown (Percentages of Material Cost)
+            const materials = [
+                { name: "Cement (16%)", percent: 0.16 },
+                { name: "Steel / Rebar (24%)", percent: 0.24 },
+                { name: "Sand (10%)", percent: 0.10 },
+                { name: "Aggregate / Gravel (8%)", percent: 0.08 },
+                { name: "Bricks / Blocks (10%)", percent: 0.10 },
+                { name: "Finishing (Paint, Tiles) (16%)", percent: 0.16 },
+                { name: "Fittings (Plumbing, Elec) (16%)", percent: 0.16 }
+            ];
+
+            let boqHtml = "";
+            materials.forEach(item => {
+                let cost = materialCost * item.percent;
+                boqHtml += `<tr>
+                    <td><strong>${item.name.split(' (')[0]}</strong></td>
+                    <td>${item.name.match(/\(([^)]+)\)/)[1]}</td>
+                    <td>${formatCurrency(cost)}</td>
+                </tr>`;
+            });
+
+            document.getElementById('boqBody').innerHTML = boqHtml;
+            document.getElementById('resultsSection').style.display = 'block';
+            
+            // Scroll to results
+            document.getElementById('resultsSection').scrollIntoView({ behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>
+"""
+with open(tool_file, 'w', encoding='utf-8') as f:
+    f.write(tool_html)
+print(f"✅ Upgraded Pro Tool page: {tool_file}")
+
+# 2. Upgrade the SEO Content Guide
+content_dir = 'content'
+if not os.path.exists(content_dir):
+    os.makedirs(content_dir)
+
+content_file = f"{content_dir}/construction-cost-estimator-guide.html"
+content_html = """<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How to Calculate Building & Labor Cost (BOQ Guide) - niDar Tools</title>
+    <meta name="description" content="Learn how to accurately calculate building construction costs, material estimates, labor expenses, and generate a BOQ using our free estimator.">
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <style>
+        .article-container { max-width: 800px; margin: 4rem auto; padding: 2rem; background: white; border-radius: 12px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); }
+        h1 { color: #1e3a8a; font-size: 2.5rem; margin-bottom: 1.5rem; }
+        h2 { color: #2563eb; font-size: 1.8rem; margin-top: 2rem; margin-bottom: 1rem; }
+        p { color: #475569; line-height: 1.8; font-size: 1.1rem; margin-bottom: 1.5rem; }
+        ul { margin-bottom: 1.5rem; color: #475569; line-height: 1.8; }
+        .try-tool-btn { display: inline-block; background: #3b82f6; color: white; padding: 12px 24px; text-decoration: none; border-radius: 8px; font-weight: bold; margin-top: 1rem; }
+    </style>
+</head>
+<body>
+    <div id="site-header"></div>
+    <main class="article-container">
+        <h1>Understanding Construction Costs: Material, Labor & BOQ</h1>
+        <p>Building a home or a commercial property requires strict financial planning. Without a proper Bill of Quantities (BOQ) and cost estimation, projects often go over budget. Our Pro Construction Cost Estimator helps you avoid this.</p>
+        
+        <h2>How is Construction Cost Calculated?</h2>
+        <p>The total cost is generally divided into three major categories:</p>
+        <ul>
+            <li><strong>Material Cost (65%):</strong> This includes everything from cement, steel, sand, to finishing materials like tiles and paint.</li>
+            <li><strong>Labor Cost (25%):</strong> The cost of masons, plumbers, electricians, and daily wage workers.</li>
+            <li><strong>Architect & Miscellaneous (10%):</strong> Fees for design, approvals, and unexpected small expenses.</li>
+        </ul>
+
+        <h2>What is a BOQ (Bill of Quantities)?</h2>
+        <p>A BOQ is a document used in the construction industry which itemizes materials, parts, and labor. Our online builder cost estimator automatically generates a basic BOQ for you based on standard industry practices.</p>
+        
+        <h2>How to Use Our Tool</h2>
+        <p>Simply enter your expected Built-up Area (in Sq. Ft.) and select the quality of construction (Basic, Premium, or Luxury). The tool will instantly provide a split of Material and Labor costs, along with a printable BOQ summary.</p>
+        
+        <a href="/construction-cost-estimator/" class="try-tool-btn">Use Pro BOQ Estimator Now ↗</a>
+    </main>
+    <div id="site-footer"></div>
+    <script src="../assets/js/common.js"></script>
+</body>
+</html>
+"""
+with open(content_file, 'w', encoding='utf-8') as f:
+    f.write(content_html)
+print(f"✅ Upgraded Content Guide page: {content_file}")
+
